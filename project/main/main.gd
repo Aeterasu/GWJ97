@@ -10,6 +10,7 @@ enum State
 	EPILEPSY_WARNING,
 }
 
+@export var viewport : Viewport = null
 @export var transition : Transition = null
 @export var world : WorldEnvironment = null
 @export var fps_counter : Control = null
@@ -104,7 +105,10 @@ func load_state(state : State, with_transition : bool = true, transition_alt_col
 	if node:
 		currently_loaded = node
 		current_state = state
-		add_child.call_deferred(node)
+		if viewport:
+			viewport.add_child.call_deferred(node)
+		else:
+			add_child.call_deferred(node)
 
 	Engine.set_deferred("time_scale", 1.0)
 

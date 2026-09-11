@@ -1,0 +1,26 @@
+class_name Game extends Node2D
+
+@export var player: Player = null
+
+const BOARD_SIZE: Vector2 = Vector2(240.0, 320.0)
+const PLAYER_STARTING_POSITION: Vector2 = Vector2(54.0, 260.0)
+
+func _ready() -> void:
+	animate_player_intro()
+
+func animate_player_intro() -> void:
+	player.control_state = Player.ControlState.IN_CUTSCENE
+	player.global_position = PLAYER_STARTING_POSITION + Vector2.DOWN * 96.0
+	player.reset_physics_interpolation()
+
+	var tween: Tween = create_tween()
+	tween.tween_property(player, "global_position", PLAYER_STARTING_POSITION, 1.0)\
+		.set_ease(Tween.EASE_OUT)\
+		.set_trans(Tween.TRANS_BACK)
+	tween.tween_callback(func(): player.control_state = Player.ControlState.NORMAL)
+
+func _physics_process(delta: float) -> void:
+	pass
+
+func _process(delta: float) -> void:
+	pass

@@ -16,10 +16,11 @@ font = ExtResource("4_4dugh")
 outline_size = 3
 outline_color = Color(0, 0, 0, 0.47843137)
 
-[node name="Main" type="Node" unique_id=1833842509 node_paths=PackedStringArray("world", "fps_counter", "audio_manager", "bgm_manager")]
+[node name="Main" type="Node" unique_id=1833842509 node_paths=PackedStringArray("viewport", "world", "fps_counter", "audio_manager", "bgm_manager")]
 script = ExtResource("1_53q0u")
+viewport = NodePath("GameLayer/SubViewportContainer/SubViewport")
 world = NodePath("WorldEnvironment")
-fps_counter = NodePath("CanvasLayer/FpsCounter")
+fps_counter = NodePath("TopLayer/FpsCounter")
 scenes = Dictionary[int, PackedScene]({
 1: ExtResource("2_kfbq2")
 })
@@ -37,9 +38,23 @@ metadata/_custom_type_script = "uid://upphqgb3vovy"
 script = ExtResource("3_kfbq2")
 metadata/_custom_type_script = "uid://dtytuvraaohro"
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1550420199]
+[node name="GameLayer" type="CanvasLayer" parent="." unique_id=796037030]
 
-[node name="FpsCounter" type="Label" parent="CanvasLayer" unique_id=1083675519]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="GameLayer" unique_id=185568765]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="GameLayer/SubViewportContainer" unique_id=1270011132]
+handle_input_locally = false
+size = Vector2i(240, 320)
+render_target_update_mode = 4
+
+[node name="TopLayer" type="CanvasLayer" parent="." unique_id=1550420199]
+
+[node name="FpsCounter" type="Label" parent="TopLayer" unique_id=1083675519]
 offset_left = 3.0
 offset_top = -1.0
 offset_right = 26.0
