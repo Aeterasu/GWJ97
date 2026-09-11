@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bjvwqcehq80f5" path="res://player/player.tscn" id="1_l1rk1"]
 [ext_resource type="Script" uid="uid://dsn2rdoa26phn" path="res://game/game.gd" id="1_vasa2"]
-[ext_resource type="Script" uid="uid://dpcpbpske8jii" path="res://bullet/bullet.gd" id="2_4fuuu"]
+[ext_resource type="Script" uid="uid://dpcpbpske8jii" path="res://bullet/bullet_manager.gd" id="2_4fuuu"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_dakft"]
 size = Vector2(24, 24)
@@ -24,13 +24,37 @@ fill_to = Vector2(0.8, 0.1)
 script = ExtResource("1_vasa2")
 player = NodePath("Player")
 
-[node name="Bullet" type="Node" parent="." unique_id=186166208 node_paths=PackedStringArray("bullet_visual")]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1323206809]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 240.0
+offset_bottom = 320.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.2552118, 0, 0.080417074, 1)
+
+[node name="Player" parent="." unique_id=151246520 node_paths=PackedStringArray("bullet") instance=ExtResource("1_l1rk1")]
+base_speed = 240.0
+focus_speed = 180.0
+bullet = NodePath("../PlayerBulletManager")
+
+[node name="PlayerBulletManager" type="Node" parent="." unique_id=107471320 node_paths=PackedStringArray("bullet_visual")]
 script = ExtResource("2_4fuuu")
-bullet_visual = NodePath("../BulletVisual")
+max_bullet_count = 1024
+bullet_visual = NodePath("../EnemyBulletVisual")
 metadata/_custom_type_script = "uid://dpcpbpske8jii"
 
-[node name="BulletVisual" type="MultiMeshInstance2D" parent="." unique_id=833129313]
+[node name="PlayerBulletVisual" type="MultiMeshInstance2D" parent="." unique_id=1722292251]
 multimesh = SubResource("MultiMesh_dxrkv")
 texture = SubResource("GradientTexture2D_dxrkv")
 
-[node name="Player" parent="." unique_id=151246520 instance=ExtResource("1_l1rk1")]
+[node name="EnemyBulletManager" type="Node" parent="." unique_id=186166208 node_paths=PackedStringArray("bullet_visual")]
+script = ExtResource("2_4fuuu")
+max_bullet_count = 4096
+bullet_visual = NodePath("../EnemyBulletVisual")
+metadata/_custom_type_script = "uid://dpcpbpske8jii"
+
+[node name="EnemyBulletVisual" type="MultiMeshInstance2D" parent="." unique_id=833129313]
+multimesh = SubResource("MultiMesh_dxrkv")
+texture = SubResource("GradientTexture2D_dxrkv")

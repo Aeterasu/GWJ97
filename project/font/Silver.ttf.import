@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/Silver.ttf-c351a892221a012a360210c17357f3e3.f
 [params]
 
 Rendering=null
-antialiasing=1
+antialiasing=0
 generate_mipmaps=false
 disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false

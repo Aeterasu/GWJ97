@@ -41,18 +41,24 @@ metadata/_custom_type_script = "uid://dtytuvraaohro"
 [node name="GameLayer" type="CanvasLayer" parent="." unique_id=796037030]
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="GameLayer" unique_id=185568765]
-anchors_preset = 15
-anchor_right = 1.0
+texture_filter = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
 anchor_bottom = 1.0
+offset_left = -120.0
+offset_right = 120.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="SubViewport" type="SubViewport" parent="GameLayer/SubViewportContainer" unique_id=1270011132]
 handle_input_locally = false
+oversampling = false
 size = Vector2i(240, 320)
 render_target_update_mode = 4
 
 [node name="TopLayer" type="CanvasLayer" parent="." unique_id=1550420199]
+layer = 4096
 
 [node name="FpsCounter" type="Label" parent="TopLayer" unique_id=1083675519]
 offset_left = 3.0

@@ -1,16 +1,19 @@
-class_name Bullet extends Node
+class_name Bullet extends RefCounted
 
-@export var bullet_visual: MultiMeshInstance2D = null
+var position: Vector2 = Vector2.ZERO
+var angle: float = 0.0
+var speed: float = 0.0
 
-const MAX_BULLET_COUNT: int = 4096
+var behaviour: Callable = process_standard_bullet
 
-func _ready() -> void:
-	bullet_visual.multimesh.instance_count = MAX_BULLET_COUNT
-	
-	for i in MAX_BULLET_COUNT:
-		var transform = Transform2D.IDENTITY
-		transform = transform.translated(Vector2(randf_range(0.0, Game.BOARD_SIZE.x), randf_range(0.0, Game.BOARD_SIZE.y)))
-		bullet_visual.multimesh.set_instance_transform_2d(i, transform)
+var is_active: bool = false
 
-func _process(delta: float) -> void:
-	pass
+func update(delta: float) -> void:
+	position = process_standard_bullet(delta)
+
+	if position.x <= -32.0 or position.x >= Game.BOARD_SIZE.x + 32.0\
+		or position.y <= -32.0 or position.y >= Game.BOARD_SIZE.y + 32.0:
+		is_active = false
+
+func process_standard_bullet(delta: float) -> Vector2:
+	return position + Vector2.from_angle(angle) * speed * delta
