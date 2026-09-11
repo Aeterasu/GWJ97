@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://v8a2mtc8m2as"]
+
+[ext_resource type="Script" uid="uid://ccvhgevg7ggna" path="res://main/main.gd" id="1_53q0u"]
+[ext_resource type="Script" uid="uid://upphqgb3vovy" path="res://audio/audio_manager.gd" id="2_3wy1v"]
+[ext_resource type="PackedScene" uid="uid://ctecfpecb846x" path="res://game/game.tscn" id="2_kfbq2"]
+[ext_resource type="Script" uid="uid://dtytuvraaohro" path="res://audio/bgm_manager.gd" id="3_kfbq2"]
+[ext_resource type="FontFile" uid="uid://cuavx05ndjw5g" path="res://font/m3x6.ttf" id="4_4dugh"]
+[ext_resource type="Script" uid="uid://cmfa1d5fwckcb" path="res://util/ui/colored_fps_counter.gd" id="5_67ri8"]
+
+[sub_resource type="Environment" id="Environment_3b7yk"]
+background_mode = 3
+background_canvas_max_layer = 1000
+
+[sub_resource type="LabelSettings" id="LabelSettings_3b7yk"]
+font = ExtResource("4_4dugh")
+outline_size = 3
+outline_color = Color(0, 0, 0, 0.47843137)
+
+[node name="Main" type="Node" unique_id=1833842509 node_paths=PackedStringArray("world", "fps_counter", "audio_manager", "bgm_manager")]
+script = ExtResource("1_53q0u")
+world = NodePath("WorldEnvironment")
+fps_counter = NodePath("CanvasLayer/FpsCounter")
+scenes = Dictionary[int, PackedScene]({
+1: ExtResource("2_kfbq2")
+})
+audio_manager = NodePath("AudioManager")
+bgm_manager = NodePath("BGMManager")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1118035484]
+environment = SubResource("Environment_3b7yk")
+
+[node name="AudioManager" type="Node" parent="." unique_id=1791605055]
+script = ExtResource("2_3wy1v")
+metadata/_custom_type_script = "uid://upphqgb3vovy"
+
+[node name="BGMManager" type="Node" parent="." unique_id=630858695]
+script = ExtResource("3_kfbq2")
+metadata/_custom_type_script = "uid://dtytuvraaohro"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1550420199]
+
+[node name="FpsCounter" type="Label" parent="CanvasLayer" unique_id=1083675519]
+offset_left = 3.0
+offset_top = -1.0
+offset_right = 26.0
+offset_bottom = 12.0
+text = "FPS: 0"
+label_settings = SubResource("LabelSettings_3b7yk")
+script = ExtResource("5_67ri8")
+great_color = Color(0, 1, 0, 1)
+ok_color = Color(1, 1, 1, 1)
+bad_color = Color(1, 0, 0, 1)
