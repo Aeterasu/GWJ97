@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BulletSkin" format=3 uid="uid://dca7kp5a3c0ng"]
+
+[ext_resource type="Script" uid="uid://cnhr5ggnp7gby" path="res://bullet/bullet_skin.gd" id="1_b5q0w"]
+
+[resource]
+script = ExtResource("1_b5q0w")
+size = Vector2(1, 1)
+h_frames = 1
+metadata/_custom_type_script = "uid://cnhr5ggnp7gby"

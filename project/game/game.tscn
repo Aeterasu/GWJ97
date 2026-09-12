@@ -9,6 +9,8 @@
 [ext_resource type="Script" uid="uid://dlc3jkre3x6x8" path="res://enemy/test_enemy.gd" id="4_dxrkv"]
 [ext_resource type="Texture2D" uid="uid://5lbu4jhq605g" path="res://icon.svg" id="5_dakft"]
 [ext_resource type="Texture2D" uid="uid://cag6n42kgn62k" path="res://bullet/texture/texture_player_bullet.png" id="7_l8g03"]
+[ext_resource type="Shader" uid="uid://brnm1dduy7bpo" path="res://bullet/bullet_shader.gdshader" id="8_j8tme"]
+[ext_resource type="Texture2D" uid="uid://ca8qamvsoarpw" path="res://bullet/texture/texture_enemy_bullet_small.png" id="9_3vho3"]
 
 [sub_resource type="Environment" id="Environment_y36n6"]
 background_mode = 1
@@ -26,27 +28,25 @@ albedo_color = Color(0.36862746, 0.11372549, 0.05490196, 1)
 size = Vector2(9, -28)
 
 [sub_resource type="MultiMesh" id="MultiMesh_dxrkv"]
+use_custom_data = true
 mesh = SubResource("QuadMesh_dakft")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3vho3"]
+shader = ExtResource("8_j8tme")
+shader_parameter/atlas = ExtResource("9_3vho3")
+shader_parameter/hFrames = 4
+shader_parameter/vFrames = 1
+shader_parameter/speed = 8.0
+
 [sub_resource type="QuadMesh" id="QuadMesh_u5opy"]
-size = Vector2(16, 16)
+size = Vector2(1, -1)
 
 [sub_resource type="MultiMesh" id="MultiMesh_y36n6"]
+use_custom_data = true
 mesh = SubResource("QuadMesh_u5opy")
 
-[sub_resource type="Gradient" id="Gradient_h7iqs"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0.62650603, 0.71686745, 0.9578313, 1)
-colors = PackedColorArray(1, 1, 0.8, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_dxrkv"]
-gradient = SubResource("Gradient_h7iqs")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.8, 0.1)
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_3b7yk"]
-radius = 19.2
+radius = 24.0
 
 [node name="Game" type="Node2D" unique_id=1170915870 node_paths=PackedStringArray("player")]
 script = ExtResource("1_vasa2")
@@ -129,8 +129,8 @@ collision_mask = 2
 metadata/_custom_type_script = "uid://dpcpbpske8jii"
 
 [node name="EnemyBulletVisual" type="MultiMeshInstance2D" parent="." unique_id=833129313]
+material = SubResource("ShaderMaterial_3vho3")
 multimesh = SubResource("MultiMesh_y36n6")
-texture = SubResource("GradientTexture2D_dxrkv")
 
 [node name="TestEnemy" type="Area2D" parent="." unique_id=2115164083 node_paths=PackedStringArray("bullet_engine")]
 collision_layer = 4

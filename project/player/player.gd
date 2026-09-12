@@ -17,6 +17,11 @@ var is_focused: bool = false
 var options_transition_current_timer: float = 0.0
 var options_angle: float = 0.0
 
+@export var sprite: Sprite2D = null
+var sprite_shader: ShaderMaterial = null
+var sprite_tilt: float = 0.0
+var sprite_yaw: float = 0.0
+
 @export var muzzle_flashes: Array[Node2D] = []
 
 var lives: int = 0
@@ -54,6 +59,8 @@ func _ready() -> void:
 	for flash in muzzle_flashes:
 		flash.scale.x = 0.0
 
+	sprite_shader = sprite.material as ShaderMaterial
+
 func _physics_process(delta: float) -> void:
 	if control_state == ControlState.NORMAL:
 		if is_dead:
@@ -88,6 +95,23 @@ func process_movement(delta: float) -> void:
 	global_position += dir.normalized() * move_speed * delta
 	global_position.x = clampf(global_position.x, 0.0, Game.BOARD_SIZE.x)
 	global_position.y = clampf(global_position.y, 0.0, Game.BOARD_SIZE.y)
+
+	# visual
+
+	var lerp_weight: float = 1.0 - exp(-10.0 * delta)
+	var target_tilt: float = 0.0
+	var target_yaw: float = 0.0
+
+	if dir.x < -0.1 or dir.x > 0.1:
+		target_tilt = 30.0 * sign(dir.x)
+
+	if dir.y < -0.1 or dir.y > 0.1:
+		target_yaw = 35.0 * -sign(dir.y)
+
+	sprite_tilt = lerp(sprite_tilt, target_tilt, lerp_weight)
+	sprite_yaw = lerp(sprite_yaw, target_yaw, lerp_weight)
+	sprite_shader.set_shader_parameter("rot_y_deg", sprite_tilt)
+	sprite_shader.set_shader_parameter("rot_x_deg", sprite_yaw)
 
 func process_weapon(delta: float) -> void:
 	is_focused = Input.is_action_pressed("player_input_action_2")

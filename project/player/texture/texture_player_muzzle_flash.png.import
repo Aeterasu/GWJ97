@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://pbvi3x36nsw6"
-path="res://.godot/imported/texture_player_muzzle_flash.png-cf7010b915256313ab01b8ea2c5d182e.ctex"
+path="res://.godot/imported/texture_player_muzzle_flash.png-001b0aa5bd71f311533424e858f00edb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://bullet/texture/texture_player_muzzle_flash.png"
-dest_files=["res://.godot/imported/texture_player_muzzle_flash.png-cf7010b915256313ab01b8ea2c5d182e.ctex"]
+source_file="res://player/texture/texture_player_muzzle_flash.png"
+dest_files=["res://.godot/imported/texture_player_muzzle_flash.png-001b0aa5bd71f311533424e858f00edb.ctex"]
 
 [params]
 

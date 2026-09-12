@@ -1,16 +1,25 @@
 [gd_scene format=3 uid="uid://bjvwqcehq80f5"]
 
 [ext_resource type="Script" uid="uid://bghv017mpdmfg" path="res://player/player.gd" id="1_rkbax"]
-[ext_resource type="Texture2D" uid="uid://vc3iv2rrc83u" path="res://bullet/texture/texture_player.png" id="2_g1dw6"]
+[ext_resource type="Texture2D" uid="uid://vc3iv2rrc83u" path="res://player/texture/texture_player.png" id="2_g1dw6"]
 [ext_resource type="Script" uid="uid://bd3qyvjnay3cr" path="res://util/2d/lerp_follower_2d.gd" id="3_g6k8r"]
 [ext_resource type="Script" uid="uid://cnksq2oeepu0y" path="res://util/2d/trail_2d.gd" id="3_qjkh3"]
-[ext_resource type="Texture2D" uid="uid://cw3vre4x0mjwl" path="res://bullet/texture/texture_player_option.png" id="4_qjkh3"]
+[ext_resource type="Texture2D" uid="uid://cw3vre4x0mjwl" path="res://player/texture/texture_player_option.png" id="4_qjkh3"]
 [ext_resource type="Script" uid="uid://daly1svuqwggy" path="res://player/player_weapon.gd" id="4_yw30f"]
-[ext_resource type="Texture2D" uid="uid://pbvi3x36nsw6" path="res://bullet/texture/texture_player_muzzle_flash.png" id="7_boad6"]
+[ext_resource type="Shader" uid="uid://bx6v6qu8uop7f" path="res://player/player.gdshader" id="5_hg6s5"]
+[ext_resource type="Texture2D" uid="uid://pbvi3x36nsw6" path="res://player/texture/texture_player_muzzle_flash.png" id="7_boad6"]
 
 [sub_resource type="Curve" id="Curve_3b7yk"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8t03j"]
+shader = ExtResource("5_hg6s5")
+shader_parameter/cull_backface = true
+shader_parameter/fov = 90.0
+shader_parameter/rot_y_deg = 0.0
+shader_parameter/rot_x_deg = 0.0
+shader_parameter/inset = 0.0
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_boad6"]
 blend_mode = 1
@@ -18,7 +27,7 @@ blend_mode = 1
 [sub_resource type="CircleShape2D" id="CircleShape2D_3b7yk"]
 radius = 2.0
 
-[node name="Player" type="Area2D" unique_id=1584514943 node_paths=PackedStringArray("base_weapon", "focus_weapon", "options", "muzzle_flashes")]
+[node name="Player" type="Area2D" unique_id=1584514943 node_paths=PackedStringArray("base_weapon", "focus_weapon", "options", "sprite", "muzzle_flashes")]
 y_sort_enabled = true
 script = ExtResource("1_rkbax")
 base_speed = 210.0
@@ -30,19 +39,16 @@ options_base_distance = 54.0
 options_focus_distance = 16.0
 options = [NodePath("Option1"), NodePath("Option2")]
 options_transition_duration = 0.3
+sprite = NodePath("Sprite2D")
 muzzle_flashes = [NodePath("Option1/MuzzleFlash"), NodePath("Option2/MuzzleFlash"), NodePath("MuzzleFlash")]
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1154157569]
-texture = ExtResource("2_g1dw6")
-offset = Vector2(0.5, -0.5)
-
-[node name="LerpFollower2D" type="Node2D" parent="Sprite2D" unique_id=2089604479]
+[node name="LerpFollower2D" type="Node2D" parent="." unique_id=2089604479]
 position = Vector2(0, 15)
 script = ExtResource("3_g6k8r")
 lerp_weight = 25.0
 metadata/_custom_type_script = "uid://bd3qyvjnay3cr"
 
-[node name="Trail2D" type="Line2D" parent="Sprite2D/LerpFollower2D" unique_id=1387270608]
+[node name="Trail2D" type="Line2D" parent="LerpFollower2D" unique_id=1387270608]
 show_behind_parent = true
 z_index = -1
 z_as_relative = false
@@ -53,6 +59,11 @@ default_color = Color(1, 0.73333335, 0.20392157, 1)
 script = ExtResource("3_qjkh3")
 length = 25
 metadata/_custom_type_script = "uid://cnksq2oeepu0y"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1154157569]
+material = SubResource("ShaderMaterial_8t03j")
+texture = ExtResource("2_g1dw6")
+offset = Vector2(0.5, -0.5)
 
 [node name="BaseWeapon" type="Node2D" parent="." unique_id=1696975318 node_paths=PackedStringArray("shot_origins")]
 script = ExtResource("4_yw30f")

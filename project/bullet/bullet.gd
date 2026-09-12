@@ -6,6 +6,8 @@ var speed: float = 0.0
 
 var behaviour: Callable = process_standard_bullet
 
+var skin: BulletSkin = null
+
 var is_active: bool = false
 
 # bookkeeping
