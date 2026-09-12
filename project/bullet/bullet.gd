@@ -8,6 +8,8 @@ var behaviour: Callable = process_standard_bullet
 
 var is_active: bool = false
 
+var multimesh_id: int = 0
+
 func update(delta: float) -> void:
 	position = process_standard_bullet(delta)
 

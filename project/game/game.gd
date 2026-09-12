@@ -5,7 +5,11 @@ class_name Game extends Node2D
 const BOARD_SIZE: Vector2 = Vector2(240.0, 320.0)
 const PLAYER_STARTING_POSITION: Vector2 = Vector2(54.0, 260.0)
 
+static var instance: Game = null
+
 func _ready() -> void:
+	instance = self
+
 	animate_player_intro()
 
 func animate_player_intro() -> void:
@@ -24,3 +28,10 @@ func _physics_process(delta: float) -> void:
 
 func _process(delta: float) -> void:
 	pass
+
+static func get_player() -> Player:
+	if is_instance_valid(instance) and is_instance_valid(instance.player):
+		return instance.player
+	else:
+		push_warning("Player not found! Proceed with caution...")
+		return null

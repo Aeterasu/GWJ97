@@ -6,7 +6,7 @@ class_name Player extends Node2D
 @export var fire_rate: float = 0.1
 var fire_time_left: float = 0.0
 
-@export var bullet: BulletManager = null
+@export var bullet: BulletEngine = null
 
 var enable_hitbox: bool = false
 

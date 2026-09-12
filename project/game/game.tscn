@@ -2,15 +2,31 @@
 
 [ext_resource type="PackedScene" uid="uid://bjvwqcehq80f5" path="res://player/player.tscn" id="1_l1rk1"]
 [ext_resource type="Script" uid="uid://dsn2rdoa26phn" path="res://game/game.gd" id="1_vasa2"]
-[ext_resource type="Script" uid="uid://dpcpbpske8jii" path="res://bullet/bullet_manager.gd" id="2_4fuuu"]
+[ext_resource type="Script" uid="uid://dpcpbpske8jii" path="res://bullet/bullet_engine.gd" id="2_4fuuu"]
+[ext_resource type="Script" uid="uid://dlc3jkre3x6x8" path="res://enemy/test_enemy.gd" id="4_dxrkv"]
+[ext_resource type="Texture2D" uid="uid://5lbu4jhq605g" path="res://icon.svg" id="5_dakft"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_dakft"]
-size = Vector2(24, 24)
+size = Vector2(12, 24)
 
 [sub_resource type="MultiMesh" id="MultiMesh_dxrkv"]
 mesh = SubResource("QuadMesh_dakft")
 
+[sub_resource type="Gradient" id="Gradient_dxrkv"]
+colors = PackedColorArray(1, 0.69411767, 0.4745098, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dakft"]
+gradient = SubResource("Gradient_dxrkv")
+fill_from = Vector2(1, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_u5opy"]
+size = Vector2(16, 16)
+
+[sub_resource type="MultiMesh" id="MultiMesh_y36n6"]
+mesh = SubResource("QuadMesh_u5opy")
+
 [sub_resource type="Gradient" id="Gradient_h7iqs"]
+interpolation_mode = 1
 offsets = PackedFloat32Array(0.62650603, 0.71686745, 0.9578313, 1)
 colors = PackedColorArray(1, 1, 0.8, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0)
 
@@ -25,6 +41,8 @@ script = ExtResource("1_vasa2")
 player = NodePath("Player")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1323206809]
+z_index = -4096
+z_as_relative = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -35,26 +53,32 @@ grow_vertical = 2
 color = Color(0.2552118, 0, 0.080417074, 1)
 
 [node name="Player" parent="." unique_id=151246520 node_paths=PackedStringArray("bullet") instance=ExtResource("1_l1rk1")]
-base_speed = 240.0
-focus_speed = 180.0
-bullet = NodePath("../PlayerBulletManager")
+bullet = NodePath("../PlayerBulletEngine")
 
-[node name="PlayerBulletManager" type="Node" parent="." unique_id=107471320 node_paths=PackedStringArray("bullet_visual")]
+[node name="PlayerBulletEngine" type="Node" parent="." unique_id=107471320 node_paths=PackedStringArray("bullet_visual")]
 script = ExtResource("2_4fuuu")
 max_bullet_count = 1024
-bullet_visual = NodePath("../EnemyBulletVisual")
+bullet_visual = NodePath("../PlayerBulletVisual")
 metadata/_custom_type_script = "uid://dpcpbpske8jii"
 
 [node name="PlayerBulletVisual" type="MultiMeshInstance2D" parent="." unique_id=1722292251]
 multimesh = SubResource("MultiMesh_dxrkv")
-texture = SubResource("GradientTexture2D_dxrkv")
+texture = SubResource("GradientTexture2D_dakft")
 
-[node name="EnemyBulletManager" type="Node" parent="." unique_id=186166208 node_paths=PackedStringArray("bullet_visual")]
+[node name="EnemyBulletEngine" type="Node" parent="." unique_id=186166208 node_paths=PackedStringArray("bullet_visual")]
 script = ExtResource("2_4fuuu")
 max_bullet_count = 4096
 bullet_visual = NodePath("../EnemyBulletVisual")
 metadata/_custom_type_script = "uid://dpcpbpske8jii"
 
 [node name="EnemyBulletVisual" type="MultiMeshInstance2D" parent="." unique_id=833129313]
-multimesh = SubResource("MultiMesh_dxrkv")
+multimesh = SubResource("MultiMesh_y36n6")
 texture = SubResource("GradientTexture2D_dxrkv")
+
+[node name="TestEnemy" type="Node2D" parent="." unique_id=578660568 node_paths=PackedStringArray("bullet_engine")]
+script = ExtResource("4_dxrkv")
+bullet_engine = NodePath("../EnemyBulletEngine")
+
+[node name="Sprite2D" type="Sprite2D" parent="TestEnemy" unique_id=637835628]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("5_dakft")

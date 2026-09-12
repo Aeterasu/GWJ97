@@ -2,10 +2,25 @@
 
 [ext_resource type="Script" uid="uid://bghv017mpdmfg" path="res://player/player.gd" id="1_rkbax"]
 [ext_resource type="Texture2D" uid="uid://5lbu4jhq605g" path="res://icon.svg" id="2_g1dw6"]
+[ext_resource type="Script" uid="uid://chy30x75gw6ih" path="res://util/2d/circle_2d.gd" id="3_g1dw6"]
 
 [node name="Player" type="Node2D" unique_id=151246520]
 script = ExtResource("1_rkbax")
+base_speed = 240.0
+focus_speed = 100.0
 
 [node name="AnimatedSprite2D" type="Sprite2D" parent="." unique_id=77417257]
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_g1dw6")
+
+[node name="Circle2D2" type="Node2D" parent="." unique_id=1089275576]
+modulate = Color(0, 0, 0, 1)
+script = ExtResource("3_g1dw6")
+radius = 6.0
+metadata/_custom_type_script = "uid://chy30x75gw6ih"
+
+[node name="Circle2D" type="Node2D" parent="." unique_id=1012028860]
+modulate = Color(0, 1, 0, 1)
+script = ExtResource("3_g1dw6")
+radius = 4.0
+metadata/_custom_type_script = "uid://chy30x75gw6ih"
