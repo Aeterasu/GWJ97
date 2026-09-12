@@ -8,6 +8,9 @@ var behaviour: Callable = process_standard_bullet
 
 var is_active: bool = false
 
+# bookkeeping
+
+var area_rid: RID = RID()
 var multimesh_id: int = 0
 
 func update(delta: float) -> void:

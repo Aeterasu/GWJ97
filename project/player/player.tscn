@@ -5,7 +5,10 @@
 [ext_resource type="Script" uid="uid://chy30x75gw6ih" path="res://util/2d/circle_2d.gd" id="3_g1dw6"]
 [ext_resource type="Script" uid="uid://daly1svuqwggy" path="res://player/player_weapon.gd" id="4_yw30f"]
 
-[node name="Player" type="Node2D" unique_id=151246520 node_paths=PackedStringArray("weapon")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_3b7yk"]
+radius = 2.0
+
+[node name="Player" type="Area2D" unique_id=1584514943 node_paths=PackedStringArray("weapon")]
 script = ExtResource("1_rkbax")
 base_speed = 240.0
 focus_speed = 100.0
@@ -33,3 +36,6 @@ fire_rate = 0.06
 damage = 1.0
 shot_speed = 512.0
 metadata/_custom_type_script = "uid://daly1svuqwggy"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=128030895]
+shape = SubResource("CircleShape2D_3b7yk")

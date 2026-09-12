@@ -50,6 +50,9 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.8, 0.1)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_3b7yk"]
+radius = 19.2
+
 [node name="Game" type="Node2D" unique_id=1170915870 node_paths=PackedStringArray("player")]
 script = ExtResource("1_vasa2")
 player = NodePath("Player")
@@ -107,6 +110,7 @@ bullet_engine = NodePath("../PlayerBulletEngine")
 script = ExtResource("2_4fuuu")
 max_bullet_count = 1024
 bullet_visual = NodePath("../PlayerBulletVisual")
+collision_mask = 4
 metadata/_custom_type_script = "uid://dpcpbpske8jii"
 
 [node name="PlayerBulletVisual" type="MultiMeshInstance2D" parent="." unique_id=1722292251]
@@ -117,16 +121,24 @@ texture = SubResource("GradientTexture2D_dakft")
 script = ExtResource("2_4fuuu")
 max_bullet_count = 4096
 bullet_visual = NodePath("../EnemyBulletVisual")
+collision_mask = 2
 metadata/_custom_type_script = "uid://dpcpbpske8jii"
 
 [node name="EnemyBulletVisual" type="MultiMeshInstance2D" parent="." unique_id=833129313]
 multimesh = SubResource("MultiMesh_y36n6")
 texture = SubResource("GradientTexture2D_dxrkv")
 
-[node name="TestEnemy" type="Node2D" parent="." unique_id=578660568 node_paths=PackedStringArray("bullet_engine")]
+[node name="TestEnemy" type="Area2D" parent="." unique_id=2115164083 node_paths=PackedStringArray("bullet_engine")]
+collision_layer = 4
+collision_mask = 0
 script = ExtResource("4_dxrkv")
 bullet_engine = NodePath("../EnemyBulletEngine")
+metadata/_custom_type_script = "uid://du4pk0oohw2cn"
 
 [node name="Sprite2D" type="Sprite2D" parent="TestEnemy" unique_id=637835628]
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("5_dakft")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestEnemy" unique_id=1898142468]
+shape = SubResource("CircleShape2D_3b7yk")
+debug_color = Color(1, 0, 0.69803923, 0.41960785)

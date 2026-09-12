@@ -1,4 +1,4 @@
-class_name Player extends Node2D
+class_name Player extends Area2D
 
 @export var base_speed: float = 0.0
 @export var focus_speed: float = 0.0
@@ -20,7 +20,10 @@ enum ControlState
 
 func _ready() -> void:
 	weapon.bullet_engine = self.bullet_engine
-	
+
+	collision_layer = 1 << BulletEngine.PLAYER_COLLISION_BIT
+	collision_mask = 1 << BulletEngine.ENEMY_COLLISION_BIT
+
 func _physics_process(delta: float) -> void:
 	if control_state == ControlState.NORMAL:
 		process_movement(delta)
@@ -40,8 +43,8 @@ func process_weapon(delta: float) -> void:
 	is_focused = Input.is_action_pressed("player_input_action_2")
 	weapon.is_firing = Input.is_action_pressed("player_input_action_1")
 
-func fire() -> void:
-	bullet_engine.fire_bullet(global_position, Vector2.UP.angle(), 512.0)	
+func hit() -> void:
+	pass
 
 func _process(delta: float) -> void:
 	pass

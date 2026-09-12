@@ -1,4 +1,4 @@
-extends Node2D
+extends Enemy
 
 @export var bullet_engine: BulletEngine = null
 
