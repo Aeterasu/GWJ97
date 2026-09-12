@@ -9,27 +9,7 @@ export_presets.cfg
 # Imported translations (automatically generated from CSV files)
 *.translation
 
-# Mono-specific ignores
-.mono/
-data_*/
-mono_crash.*.json
-
-# VS Code ignores
-
-.vscode
-.VSCodeCounter
-
 # do not include builds, that git can handle
 
 build/
-
-# stuff
-
-material/art/
-material/art-ref/
-material/soundbank/
-material/trace
-material/screenshots
-material/screenshotbank
-
-gdextension/godot-cpp/
+material/
