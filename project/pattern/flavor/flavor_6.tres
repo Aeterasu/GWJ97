@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PatternFlavor" format=3 uid="uid://tbkoqcc0igv0"]
+
+[ext_resource type="Script" uid="uid://c0dqn8ky0me73" path="res://pattern/flavor/pattern_flavor.gd" id="1_76a3i"]
+
+[resource]
+script = ExtResource("1_76a3i")
+pattern_names = "SNAKE EYES"
+pattern_subtext = "if you would know, your time has come //"
+metadata/_custom_type_script = "uid://c0dqn8ky0me73"

@@ -1,7 +1,5 @@
 extends Enemy
 
-@export var bullet_engine: BulletEngine = null
-
 var time: float = 0.0
 
 var fire_rate: float = 1.0
