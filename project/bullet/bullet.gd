@@ -14,10 +14,12 @@ var area_rid: RID = RID()
 var multimesh_id: int = 0
 
 func update(delta: float) -> void:
+	if not is_active:
+		return
+
 	position = process_standard_bullet(delta)
 
-	if position.x <= -32.0 or position.x >= Game.BOARD_SIZE.x + 32.0\
-		or position.y <= -32.0 or position.y >= Game.BOARD_SIZE.y + 32.0:
+	if position.y <= -32.0 or position.y >= Game.BOARD_SIZE.y + 32.0 or position.x <= -32.0 or position.x >= Game.BOARD_SIZE.x + 32.0: 
 		is_active = false
 
 func process_standard_bullet(delta: float) -> Vector2:

@@ -1,41 +1,148 @@
 [gd_scene format=3 uid="uid://bjvwqcehq80f5"]
 
 [ext_resource type="Script" uid="uid://bghv017mpdmfg" path="res://player/player.gd" id="1_rkbax"]
-[ext_resource type="Texture2D" uid="uid://5lbu4jhq605g" path="res://icon.svg" id="2_g1dw6"]
-[ext_resource type="Script" uid="uid://chy30x75gw6ih" path="res://util/2d/circle_2d.gd" id="3_g1dw6"]
+[ext_resource type="Texture2D" uid="uid://vc3iv2rrc83u" path="res://bullet/texture/texture_player.png" id="2_g1dw6"]
+[ext_resource type="Script" uid="uid://bd3qyvjnay3cr" path="res://util/2d/lerp_follower_2d.gd" id="3_g6k8r"]
+[ext_resource type="Script" uid="uid://cnksq2oeepu0y" path="res://util/2d/trail_2d.gd" id="3_qjkh3"]
+[ext_resource type="Texture2D" uid="uid://cw3vre4x0mjwl" path="res://bullet/texture/texture_player_option.png" id="4_qjkh3"]
 [ext_resource type="Script" uid="uid://daly1svuqwggy" path="res://player/player_weapon.gd" id="4_yw30f"]
+[ext_resource type="Texture2D" uid="uid://pbvi3x36nsw6" path="res://bullet/texture/texture_player_muzzle_flash.png" id="7_boad6"]
+
+[sub_resource type="Curve" id="Curve_3b7yk"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_boad6"]
+blend_mode = 1
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3b7yk"]
 radius = 2.0
 
-[node name="Player" type="Area2D" unique_id=1584514943 node_paths=PackedStringArray("weapon")]
+[node name="Player" type="Area2D" unique_id=1584514943 node_paths=PackedStringArray("base_weapon", "focus_weapon", "options", "muzzle_flashes")]
+y_sort_enabled = true
 script = ExtResource("1_rkbax")
-base_speed = 240.0
+base_speed = 210.0
 focus_speed = 100.0
-weapon = NodePath("BaseWeapon")
+base_weapon = NodePath("BaseWeapon")
+focus_weapon = NodePath("FocusWeapon")
+options_rotation_speed = 0.785
+options_base_distance = 54.0
+options_focus_distance = 16.0
+options = [NodePath("Option1"), NodePath("Option2")]
+options_transition_duration = 0.3
+muzzle_flashes = [NodePath("Option1/MuzzleFlash"), NodePath("Option2/MuzzleFlash"), NodePath("MuzzleFlash")]
 
-[node name="AnimatedSprite2D" type="Sprite2D" parent="." unique_id=77417257]
-scale = Vector2(0.2, 0.2)
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1154157569]
 texture = ExtResource("2_g1dw6")
+offset = Vector2(0.5, -0.5)
 
-[node name="Circle2D2" type="Node2D" parent="." unique_id=1089275576]
-modulate = Color(0, 0, 0, 1)
-script = ExtResource("3_g1dw6")
-radius = 4.0
-metadata/_custom_type_script = "uid://chy30x75gw6ih"
+[node name="LerpFollower2D" type="Node2D" parent="Sprite2D" unique_id=2089604479]
+position = Vector2(0, 15)
+script = ExtResource("3_g6k8r")
+lerp_weight = 25.0
+metadata/_custom_type_script = "uid://bd3qyvjnay3cr"
 
-[node name="Circle2D" type="Node2D" parent="." unique_id=1012028860]
-modulate = Color(0, 1, 0, 1)
-script = ExtResource("3_g1dw6")
-radius = 2.0
-metadata/_custom_type_script = "uid://chy30x75gw6ih"
+[node name="Trail2D" type="Line2D" parent="Sprite2D/LerpFollower2D" unique_id=1387270608]
+show_behind_parent = true
+z_index = -1
+z_as_relative = false
+position = Vector2(0, 15)
+width = 4.0
+width_curve = SubResource("Curve_3b7yk")
+default_color = Color(1, 0.73333335, 0.20392157, 1)
+script = ExtResource("3_qjkh3")
+length = 25
+metadata/_custom_type_script = "uid://cnksq2oeepu0y"
 
-[node name="BaseWeapon" type="Node2D" parent="." unique_id=1696975318]
+[node name="BaseWeapon" type="Node2D" parent="." unique_id=1696975318 node_paths=PackedStringArray("shot_origins")]
 script = ExtResource("4_yw30f")
-fire_rate = 0.06
+shot_origins = [NodePath("../ShotOrigin1"), NodePath("../ShotOrigin2"), NodePath("../Option1/ShotOrigin1"), NodePath("../Option2/ShotOrigin2")]
+origin_random_offset = Vector2(4, 0)
+fire_rate = 0.024
 damage = 1.0
-shot_speed = 512.0
+shot_speed = 1000.0
 metadata/_custom_type_script = "uid://daly1svuqwggy"
+
+[node name="FocusWeapon" type="Node2D" parent="." unique_id=1213521630 node_paths=PackedStringArray("shot_origins")]
+script = ExtResource("4_yw30f")
+shot_origins = [NodePath("../ShotOrigin1"), NodePath("../ShotOrigin2"), NodePath("../Option1/ShotOrigin1"), NodePath("../Option2/ShotOrigin2")]
+origin_random_offset = Vector2(1, 0)
+fire_rate = 0.024
+damage = 1.333
+shot_speed = 1500.0
+metadata/_custom_type_script = "uid://daly1svuqwggy"
+
+[node name="ShotOrigin1" type="Marker2D" parent="." unique_id=1864858623]
+position = Vector2(-5, -32)
+
+[node name="ShotOrigin2" type="Marker2D" parent="." unique_id=1002547425]
+position = Vector2(5, -32)
+
+[node name="Option1" type="Sprite2D" parent="." unique_id=703252772]
+position = Vector2(-32, 0)
+texture = ExtResource("4_qjkh3")
+
+[node name="ShotOrigin1" type="Marker2D" parent="Option1" unique_id=681034560]
+position = Vector2(0, -27)
+
+[node name="LerpFollower2D" type="Node2D" parent="Option1" unique_id=1059055063]
+script = ExtResource("3_g6k8r")
+lerp_weight = 25.0
+metadata/_custom_type_script = "uid://bd3qyvjnay3cr"
+
+[node name="Trail2D" type="Line2D" parent="Option1/LerpFollower2D" unique_id=1704746616]
+show_behind_parent = true
+z_index = -1
+z_as_relative = false
+position = Vector2(0, 15)
+width = 4.0
+width_curve = SubResource("Curve_3b7yk")
+default_color = Color(1, 0.73333335, 0.20392157, 1)
+script = ExtResource("3_qjkh3")
+length = 25
+metadata/_custom_type_script = "uid://cnksq2oeepu0y"
+
+[node name="MuzzleFlash" type="Sprite2D" parent="Option1" unique_id=1687499647]
+material = SubResource("CanvasItemMaterial_boad6")
+position = Vector2(0, -11)
+texture = ExtResource("7_boad6")
+offset = Vector2(0, -16)
+
+[node name="Option2" type="Sprite2D" parent="." unique_id=2098643966]
+position = Vector2(32, 0)
+texture = ExtResource("4_qjkh3")
+
+[node name="ShotOrigin2" type="Marker2D" parent="Option2" unique_id=600054007]
+position = Vector2(0, -27)
+
+[node name="LerpFollower2D" type="Node2D" parent="Option2" unique_id=1052546185]
+script = ExtResource("3_g6k8r")
+lerp_weight = 25.0
+metadata/_custom_type_script = "uid://bd3qyvjnay3cr"
+
+[node name="Trail2D" type="Line2D" parent="Option2/LerpFollower2D" unique_id=752314262]
+show_behind_parent = true
+z_index = -1
+z_as_relative = false
+position = Vector2(0, 15)
+width = 4.0
+width_curve = SubResource("Curve_3b7yk")
+default_color = Color(1, 0.73333335, 0.20392157, 1)
+script = ExtResource("3_qjkh3")
+length = 25
+metadata/_custom_type_script = "uid://cnksq2oeepu0y"
+
+[node name="MuzzleFlash" type="Sprite2D" parent="Option2" unique_id=1345448295]
+material = SubResource("CanvasItemMaterial_boad6")
+position = Vector2(0, -11)
+texture = ExtResource("7_boad6")
+offset = Vector2(0, -16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=128030895]
 shape = SubResource("CircleShape2D_3b7yk")
+
+[node name="MuzzleFlash" type="Sprite2D" parent="." unique_id=1549284357]
+material = SubResource("CanvasItemMaterial_boad6")
+position = Vector2(0, -20)
+texture = ExtResource("7_boad6")
+offset = Vector2(0, -16)

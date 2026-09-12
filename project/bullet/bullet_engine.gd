@@ -95,6 +95,7 @@ func fire_bullet(position: Vector2, angle: float, speed: float) -> void:
 	set_bullet_mesh_position(bullet.multimesh_id, position)
 	bullet_visual.multimesh.reset_instance_physics_interpolation(bullet.multimesh_id)
 
+	PhysicsServer2D.area_set_transform(bullet.area_rid, Transform2D.IDENTITY.translated(bullet.position))
 	PhysicsServer2D.area_set_shape_disabled(bullet.area_rid, 0, false)
 
 	active_bullet_count += 1
