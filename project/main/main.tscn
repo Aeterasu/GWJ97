@@ -1,12 +1,11 @@
 [gd_scene format=3 uid="uid://v8a2mtc8m2as"]
 
 [ext_resource type="Script" uid="uid://ccvhgevg7ggna" path="res://main/main.gd" id="1_53q0u"]
+[ext_resource type="PackedScene" uid="uid://cbfg4k62burec" path="res://game/game_container.tscn" id="2_0i4oc"]
 [ext_resource type="Script" uid="uid://upphqgb3vovy" path="res://audio/audio_manager.gd" id="2_3wy1v"]
-[ext_resource type="PackedScene" uid="uid://ctecfpecb846x" path="res://game/game.tscn" id="2_kfbq2"]
 [ext_resource type="Script" uid="uid://dtytuvraaohro" path="res://audio/bgm_manager.gd" id="3_kfbq2"]
 [ext_resource type="FontFile" uid="uid://cuavx05ndjw5g" path="res://font/m3x6.ttf" id="4_4dugh"]
 [ext_resource type="Script" uid="uid://cm7708ogl281p" path="res://bullet/bullet_skin_manager.gd" id="5_0i4oc"]
-[ext_resource type="Texture2D" uid="uid://jpl6sm2bxl0p" path="res://main/texture/texture_ui_border.png" id="5_4dugh"]
 [ext_resource type="Script" uid="uid://cmfa1d5fwckcb" path="res://util/ui/colored_fps_counter.gd" id="5_67ri8"]
 [ext_resource type="Script" uid="uid://cnhr5ggnp7gby" path="res://bullet/bullet_skin.gd" id="6_bsumw"]
 [ext_resource type="Resource" uid="uid://gfyg5kwmpnkp" path="res://bullet/skin/enemy_bullet_small.tres" id="7_fwcvl"]
@@ -25,13 +24,12 @@ font = ExtResource("4_4dugh")
 outline_size = 3
 outline_color = Color(0.047058824, 0.09803922, 0, 1)
 
-[node name="Main" type="Node" unique_id=1833842509 node_paths=PackedStringArray("viewport", "world", "fps_counter", "audio_manager", "bgm_manager")]
+[node name="Main" type="Node" unique_id=1833842509 node_paths=PackedStringArray("world", "fps_counter", "audio_manager", "bgm_manager")]
 script = ExtResource("1_53q0u")
-viewport = NodePath("GameLayer/SubViewportContainer/SubViewport")
 world = NodePath("WorldEnvironment")
 fps_counter = NodePath("TopLayer/FpsCounter")
 scenes = Dictionary[int, PackedScene]({
-1: ExtResource("2_kfbq2")
+1: ExtResource("2_0i4oc")
 })
 audio_manager = NodePath("AudioManager")
 bgm_manager = NodePath("BGMManager")
@@ -57,9 +55,8 @@ metadata/_custom_type_script = "uid://cm7708ogl281p"
 
 [node name="GameLayer" type="CanvasLayer" parent="." unique_id=796037030]
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="GameLayer" unique_id=185568765]
-texture_filter = 1
-anchors_preset = -1
+[node name="Control" type="Control" parent="GameLayer" unique_id=1806251826]
+layout_mode = 3
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
@@ -67,20 +64,6 @@ offset_left = -120.0
 offset_right = 120.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="SubViewport" type="SubViewport" parent="GameLayer/SubViewportContainer" unique_id=1270011132]
-handle_input_locally = false
-canvas_item_default_texture_filter = 0
-canvas_item_default_texture_repeat = 1
-oversampling = false
-size = Vector2i(240, 320)
-render_target_update_mode = 4
-
-[node name="TextureRect" type="TextureRect" parent="GameLayer/SubViewportContainer" unique_id=44325922]
-modulate = Color(1, 0.16078432, 0, 1)
-layout_mode = 2
-texture = ExtResource("5_4dugh")
-stretch_mode = 2
 
 [node name="TopLayer" type="CanvasLayer" parent="." unique_id=1550420199]
 layer = 4096
