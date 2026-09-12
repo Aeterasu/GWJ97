@@ -3,11 +3,13 @@
 [ext_resource type="Script" uid="uid://bghv017mpdmfg" path="res://player/player.gd" id="1_rkbax"]
 [ext_resource type="Texture2D" uid="uid://5lbu4jhq605g" path="res://icon.svg" id="2_g1dw6"]
 [ext_resource type="Script" uid="uid://chy30x75gw6ih" path="res://util/2d/circle_2d.gd" id="3_g1dw6"]
+[ext_resource type="Script" uid="uid://daly1svuqwggy" path="res://player/player_weapon.gd" id="4_yw30f"]
 
-[node name="Player" type="Node2D" unique_id=151246520]
+[node name="Player" type="Node2D" unique_id=151246520 node_paths=PackedStringArray("weapon")]
 script = ExtResource("1_rkbax")
 base_speed = 240.0
 focus_speed = 100.0
+weapon = NodePath("BaseWeapon")
 
 [node name="AnimatedSprite2D" type="Sprite2D" parent="." unique_id=77417257]
 scale = Vector2(0.2, 0.2)
@@ -16,11 +18,18 @@ texture = ExtResource("2_g1dw6")
 [node name="Circle2D2" type="Node2D" parent="." unique_id=1089275576]
 modulate = Color(0, 0, 0, 1)
 script = ExtResource("3_g1dw6")
-radius = 6.0
+radius = 4.0
 metadata/_custom_type_script = "uid://chy30x75gw6ih"
 
 [node name="Circle2D" type="Node2D" parent="." unique_id=1012028860]
 modulate = Color(0, 1, 0, 1)
 script = ExtResource("3_g1dw6")
-radius = 4.0
+radius = 2.0
 metadata/_custom_type_script = "uid://chy30x75gw6ih"
+
+[node name="BaseWeapon" type="Node2D" parent="." unique_id=1696975318]
+script = ExtResource("4_yw30f")
+fire_rate = 0.06
+damage = 1.0
+shot_speed = 512.0
+metadata/_custom_type_script = "uid://daly1svuqwggy"

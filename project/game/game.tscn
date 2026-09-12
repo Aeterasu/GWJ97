@@ -52,8 +52,8 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.2552118, 0, 0.080417074, 1)
 
-[node name="Player" parent="." unique_id=151246520 node_paths=PackedStringArray("bullet") instance=ExtResource("1_l1rk1")]
-bullet = NodePath("../PlayerBulletEngine")
+[node name="Player" parent="." unique_id=151246520 node_paths=PackedStringArray("bullet_engine") instance=ExtResource("1_l1rk1")]
+bullet_engine = NodePath("../PlayerBulletEngine")
 
 [node name="PlayerBulletEngine" type="Node" parent="." unique_id=107471320 node_paths=PackedStringArray("bullet_visual")]
 script = ExtResource("2_4fuuu")
