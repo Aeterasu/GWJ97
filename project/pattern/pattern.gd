@@ -6,6 +6,7 @@ var health: float = 0.0
 
 var bullet_engine: BulletEngine = null
 
+signal on_hit
 signal on_health_depleted
 
 func init_pattern() -> void:
@@ -16,4 +17,7 @@ func init_pattern() -> void:
 func on_entity_hit(entity: Enemy, damage: float) -> void:
 	health -= damage
 
-	on_health_depleted.emit(self)
+	on_hit.emit(self)
+
+	if health < 0.0:
+		on_health_depleted.emit(self)

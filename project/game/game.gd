@@ -15,7 +15,8 @@ func _ready() -> void:
 	animate_player_intro()
 
 	ui_root.boss_healthbar.generate_healthbar(game_sequencer.patterns_health)
-
+	
+	game_sequencer.propagate_pattern_hit.connect(update_boss_healthbar)
 	game_sequencer.init_pattern(0)
 
 func animate_player_intro() -> void:
@@ -32,8 +33,8 @@ func animate_player_intro() -> void:
 func _physics_process(delta: float) -> void:
 	pass
 
-func _process(delta: float) -> void:
-	ui_root.boss_healthbar.update_healthbar(game_sequencer.get_all_health_percentagees())
+func update_boss_healthbar(pattern: Pattern) -> void:
+	ui_root.boss_healthbar.update_healthbar(game_sequencer.get_all_health_percentagees(), game_sequencer.current_idx)
 
 static func get_player() -> Player:
 	if is_instance_valid(instance) and is_instance_valid(instance.player):

@@ -208,6 +208,8 @@ parent = NodePath("../BossHealthbarUnder")
 material = ExtResource("23_ino1g")
 offset = Vector2(7, 2)
 total_healthbar_length = Vector2(222, 10)
+trailing_damage_duration = 0.5
+trailing_damage_fade_speed = 2.0
 metadata/_custom_type_script = "uid://ltfm1x3wqb33"
 
 [node name="BossHealthbarUnder" type="TextureRect" parent="UI" unique_id=1817836087]
