@@ -3,8 +3,22 @@
 [ext_resource type="PackedScene" uid="uid://bjvwqcehq80f5" path="res://player/player.tscn" id="1_l1rk1"]
 [ext_resource type="Script" uid="uid://dsn2rdoa26phn" path="res://game/game.gd" id="1_vasa2"]
 [ext_resource type="Script" uid="uid://dpcpbpske8jii" path="res://bullet/bullet_engine.gd" id="2_4fuuu"]
+[ext_resource type="ArrayMesh" uid="uid://b3yur11e2x152" path="res://backdrop/mesh/backdrop_base.obj" id="2_dakft"]
+[ext_resource type="Script" uid="uid://llf5q5lfma04" path="res://backdrop/3d_backdrop.gd" id="2_u5opy"]
 [ext_resource type="Script" uid="uid://dlc3jkre3x6x8" path="res://enemy/test_enemy.gd" id="4_dxrkv"]
 [ext_resource type="Texture2D" uid="uid://5lbu4jhq605g" path="res://icon.svg" id="5_dakft"]
+
+[sub_resource type="Environment" id="Environment_y36n6"]
+background_mode = 1
+background_color = Color(0.16862746, 0.05490196, 0.007843138, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.16862746, 0.05490196, 0.007843138, 1)
+
+[sub_resource type="World3D" id="World3D_u5opy"]
+environment = SubResource("Environment_y36n6")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u5opy"]
+albedo_color = Color(0.36862746, 0.11372549, 0.05490196, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_dakft"]
 size = Vector2(12, 24)
@@ -50,7 +64,41 @@ offset_right = 240.0
 offset_bottom = 320.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.2552118, 0, 0.080417074, 1)
+color = Color(0.16862746, 0.05490196, 0.007843138, 1)
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="ColorRect" unique_id=792465269]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="3DSubViewport" type="SubViewport" parent="ColorRect/SubViewportContainer" unique_id=1089659155]
+own_world_3d = true
+world_3d = SubResource("World3D_u5opy")
+transparent_bg = true
+handle_input_locally = false
+oversampling = false
+size = Vector2i(240, 320)
+render_target_update_mode = 4
+
+[node name="Node3D" type="Node3D" parent="ColorRect/SubViewportContainer/3DSubViewport" unique_id=1273660936]
+script = ExtResource("2_u5opy")
+speed = 1.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ColorRect/SubViewportContainer/3DSubViewport/Node3D" unique_id=2082608771]
+mesh = ExtResource("2_dakft")
+surface_material_override/0 = SubResource("StandardMaterial3D_u5opy")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ColorRect/SubViewportContainer/3DSubViewport/Node3D" unique_id=1933813507]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -22)
+mesh = ExtResource("2_dakft")
+surface_material_override/0 = SubResource("StandardMaterial3D_u5opy")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="ColorRect/SubViewportContainer/3DSubViewport/Node3D" unique_id=19026392]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 4.038269, 0)
+
+[node name="Camera3D" type="Camera3D" parent="ColorRect/SubViewportContainer/3DSubViewport" unique_id=798010205]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 20.952, 6.406)
+fov = 21.0
 
 [node name="Player" parent="." unique_id=151246520 node_paths=PackedStringArray("bullet_engine") instance=ExtResource("1_l1rk1")]
 bullet_engine = NodePath("../PlayerBulletEngine")
