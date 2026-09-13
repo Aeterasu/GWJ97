@@ -6,7 +6,7 @@ static func get_angle_to_player(global_pos : Vector2) -> float:
 	if not player:
 		return 0.0
 
-	return -PI / 2 + -global_pos.angle_to_point(player.global_position)
+	return global_pos.angle_to_point(player.global_position)
 
 static func get_arc(angle : float, spread : float, count : int) -> Array[float]:
 	var ret: Array[float] = []
@@ -23,7 +23,7 @@ static func get_arc(angle : float, spread : float, count : int) -> Array[float]:
 
 	return ret
 
-static func fire_circle(angle : float, count : int) -> Array[float]:
+static func get_circle(angle : float, count : int) -> Array[float]:
 	var ret: Array[float] = []
 
 	if count <= 1:

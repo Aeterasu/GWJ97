@@ -1,0 +1,264 @@
+[gd_scene format=3 uid="uid://vugwune8fbhe"]
+
+[ext_resource type="Script" uid="uid://dpsgkb70urefo" path="res://pattern/omen.gd" id="1_va266"]
+[ext_resource type="Script" uid="uid://du4pk0oohw2cn" path="res://enemy/enemy.gd" id="2_va266"]
+[ext_resource type="Texture2D" uid="uid://cbf2r3ltoc2cw" path="res://enemy/texture/texture_enemy_placeholder.png" id="3_spfd6"]
+[ext_resource type="FontFile" uid="uid://dpddonpy8spcf" path="res://font/Silver.ttf" id="4_spfd6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3b7yk"]
+radius = 43.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_va266"]
+radius = 16.0
+
+[sub_resource type="Animation" id="Animation_4xvy2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Enemy:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(120, -88)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Label:visible_ratio")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:immune")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:sin_ratio")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_va266"]
+resource_name = "death"
+length = 2.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Enemy:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8000001, 1, 1.2, 1.4000001, 1.6000001, 1.8, 2),
+"transitions": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"update": 0,
+"values": [Vector2(120, 88), Vector2(140, 76), Vector2(80, 88), Vector2(140, 102), Vector2(80, 88), Vector2(140, 67), Vector2(80, 88), Vector2(134, 88), Vector2(80, 88), Vector2(140, 88), Vector2(80, 88)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:immune")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"kill_finish"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_lpg1t"]
+resource_name = "default"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:immune")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:sin_ratio")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_fnp6n"]
+resource_name = "start"
+length = 4.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Enemy:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 1.5, 2, 4.2),
+"transitions": PackedFloat32Array(0.5, -2, 1, 1, 1),
+"update": 0,
+"values": [Vector2(120, -88), Vector2(120, 95), Vector2(120, 85), Vector2(120, 88), Vector2(120, 88)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Label:visible_ratio")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2, 3, 4, 4.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 1.0, 1.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:immune")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 4.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t2vjh"]
+_data = {
+&"RESET": SubResource("Animation_4xvy2"),
+&"death": SubResource("Animation_va266"),
+&"default": SubResource("Animation_lpg1t"),
+&"start": SubResource("Animation_fnp6n")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_3b7yk"]
+font = ExtResource("4_spfd6")
+font_size = 19
+font_color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+outline_size = 2
+outline_color = Color(0.047058824, 0.09803922, 0, 1)
+
+[node name="Omen" type="Node2D" unique_id=1949596727 node_paths=PackedStringArray("animation_player", "bullet_origin_left", "bullet_origin_right", "entities")]
+script = ExtResource("1_va266")
+animation_player = NodePath("AnimationPlayer")
+bullet_origin_left = NodePath("Enemy/Marker2D")
+bullet_origin_right = NodePath("Enemy/Marker2D2")
+fire_rate = 0.5
+entities = [NodePath("Enemy")]
+
+[node name="Enemy" type="Area2D" parent="." unique_id=1699698573]
+position = Vector2(120, -88)
+script = ExtResource("2_va266")
+metadata/_custom_type_script = "uid://du4pk0oohw2cn"
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy" unique_id=1042999285]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_spfd6")
+
+[node name="Marker2D" type="Marker2D" parent="Enemy" unique_id=1540731741]
+position = Vector2(-68, 0)
+
+[node name="Marker2D2" type="Marker2D" parent="Enemy" unique_id=943217058]
+position = Vector2(66, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy" unique_id=2143023239]
+shape = SubResource("CircleShape2D_3b7yk")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Enemy" unique_id=1436754261]
+position = Vector2(-45, -8)
+shape = SubResource("CircleShape2D_va266")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Enemy" unique_id=999388907]
+position = Vector2(45, -8)
+shape = SubResource("CircleShape2D_va266")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1125337104]
+libraries/ = SubResource("AnimationLibrary_t2vjh")
+
+[node name="Label" type="Label" parent="." unique_id=1986772934]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 165.0
+offset_right = 240.0
+offset_bottom = 186.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Bitter medicine we delivering."
+label_settings = SubResource("LabelSettings_3b7yk")
+horizontal_alignment = 1
