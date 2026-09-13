@@ -12,12 +12,16 @@ class_name UIBossHealthbar extends Node
 var segments: Array[ColorRect] = []
 
 var trailing_damage_time_left: float = 0.0
-var trailing_damage_progress: float = 1.0
-var last_damaged_idx: int = 0
+var last_damaged_idx: int = -1
+
+var patterns_health: Array[float] = []
+var trailing_damage_progresses: Array[float] = []
 
 func generate_healthbar(health_data: Array[float]) -> void:
 	var total_health: float = 0.0
 	health_data.reverse()
+
+	trailing_damage_progresses.resize(health_data.size())
 
 	for health in health_data:
 		total_health += health
@@ -43,18 +47,22 @@ func generate_healthbar(health_data: Array[float]) -> void:
 func _process(delta: float) -> void:
 	trailing_damage_time_left -= delta
 
-	# TODO: fix this ugly uglyness of a hack
-	var progress = (segments[last_damaged_idx].material as ShaderMaterial).get_shader_parameter("progress")
+	if last_damaged_idx > -1:
+		# TODO: fix this ugly uglyness of a hack
+		for i in segments.size():	
+			var progress = (segments[i].material as ShaderMaterial).get_shader_parameter("progress")
 
-	if trailing_damage_time_left <= 0.0:
-		trailing_damage_progress = max(trailing_damage_progress - trailing_damage_fade_speed * delta, progress)		
+			if trailing_damage_time_left <= 0.0:
+				trailing_damage_progresses[i] = max(trailing_damage_progresses[i] - trailing_damage_fade_speed * delta, progress)	
 
-	(segments[last_damaged_idx].material as ShaderMaterial).set_shader_parameter("damage_progress", trailing_damage_progress)
+			(segments[i].material as ShaderMaterial).set_shader_parameter("damage_progress", trailing_damage_progresses[i])
 
 func update_healthbar(health_data: Array[float], current_idx: int) -> void:
 	trailing_damage_time_left = trailing_damage_duration
+	last_damaged_idx = current_idx
 
 	for i in health_data.size():
 		var data = clampf(health_data[i], 0.0, 1.0)
 		(segments[i].material as ShaderMaterial).set_shader_parameter("progress", data)
-	
+
+	patterns_health = health_data

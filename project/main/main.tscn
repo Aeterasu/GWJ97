@@ -18,7 +18,7 @@
 background_mode = 3
 background_canvas_max_layer = 1000
 glow_enabled = true
-glow_intensity = 0.5
+glow_intensity = 0.51
 glow_hdr_threshold = 0.4
 glow_hdr_scale = 1.3
 
@@ -50,14 +50,6 @@ metadata/_custom_type_script = "uid://upphqgb3vovy"
 [node name="BGMManager" type="Node" parent="." unique_id=630858695]
 script = ExtResource("3_kfbq2")
 metadata/_custom_type_script = "uid://dtytuvraaohro"
-
-[node name="BulletSkinManager" type="Node" parent="." unique_id=1739279889]
-script = ExtResource("5_0i4oc")
-skins = Dictionary[int, ExtResource("6_bsumw")]({
-100: ExtResource("7_fwcvl"),
-200: ExtResource("8_bsumw")
-})
-metadata/_custom_type_script = "uid://cm7708ogl281p"
 
 [node name="GameLayer" type="CanvasLayer" parent="." unique_id=796037030]
 

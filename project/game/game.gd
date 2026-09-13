@@ -17,7 +17,7 @@ func _ready() -> void:
 	ui_root.boss_healthbar.generate_healthbar(game_sequencer.patterns_health)
 	
 	game_sequencer.propagate_pattern_hit.connect(update_boss_healthbar)
-	game_sequencer.init_pattern(0)
+	game_sequencer.init_pattern(game_sequencer.starting_pattern)
 
 func animate_player_intro() -> void:
 	player.control_state = Player.ControlState.IN_CUTSCENE

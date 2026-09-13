@@ -1,0 +1,66 @@
+extends Pattern
+
+@export var shot_origins: Array[Marker2D] = []
+
+@export var fire_rate: float = 0.0
+var fire_time_left: float = 0.0
+
+@export var arc_fire_rate: float = 0.0
+var arc_time_left: float = 0.0
+
+func init_pattern() -> void:
+	super()
+
+	fire_time_left = fire_rate
+	arc_time_left = arc_fire_rate
+
+	is_started = true
+
+	shot_origins.sort_custom(func(a, b): return a.global_position.x < b.global_position.x)
+
+func update(delta: float) -> void:
+	fire_time_left -= delta
+
+	if fire_time_left <= 0.0:
+		fire_time_left = fire_rate
+
+		fire_primary()
+
+	arc_time_left -= delta
+
+	if arc_time_left <= 0.0:
+		arc_time_left = arc_fire_rate
+
+		fire_arc()
+
+func fire_primary() -> void:
+	var bullet_count: int = 5
+
+	for origin in shot_origins:
+		for i in bullet_count:
+			var pos = origin.global_position + Vector2(0.0, remap(i, 0, bullet_count, 0.0, 38.0))
+			var angle = Vector2.DOWN.angle()
+
+			var speed = 120.0
+
+			bullet_engine.fire_bullet(pos, angle, speed, BulletSkin.Type.ENEMY_BULLET_RED_LONG)
+
+func fire_arc() -> void:
+	var bullet_count: int = 48
+
+	var player: Player = Game.get_player()
+	var player_pos: Vector2 = player.global_position if player else Vector2(120.0, 320.0)
+
+	var target_pos: Vector2 = Vector2(remap(player_pos.x, 0.0, 240.0, 60.0, 180.0), entities[0].global_position.y - 100.0)
+
+	var arc = BulletPatternHelper.get_arc(entities[0].global_position.angle_to_point(target_pos), 0.2, bullet_count)
+	
+	var pos = entities[0].global_position
+
+	for i in arc:
+		var speed = randf_range(70.0, 180.0)
+		bullet_engine.fire_bullet(pos, i, speed, BulletSkin.Type.ENEMY_BULLET_ALT_SMALL, gravity_bullet)
+
+static func gravity_bullet(bullet: Bullet, delta: float) -> Vector2:
+	bullet.velocity += Vector2.DOWN * 98 * delta
+	return bullet.position + bullet.velocity * delta

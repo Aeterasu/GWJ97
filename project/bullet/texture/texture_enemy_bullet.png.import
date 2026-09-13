@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ca8qamvsoarpw"
-path.s3tc="res://.godot/imported/texture_enemy_bullet_small.png-d42873d1732a7ad5d590fb9b51fc7471.s3tc.ctex"
+path.s3tc="res://.godot/imported/texture_enemy_bullet.png-ab9a68e6f8b76a7540b7781b0bdfb9eb.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://bullet/texture/texture_enemy_bullet_small.png"
-dest_files=["res://.godot/imported/texture_enemy_bullet_small.png-d42873d1732a7ad5d590fb9b51fc7471.s3tc.ctex"]
+source_file="res://bullet/texture/texture_enemy_bullet.png"
+dest_files=["res://.godot/imported/texture_enemy_bullet.png-ab9a68e6f8b76a7540b7781b0bdfb9eb.s3tc.ctex"]
 
 [params]
 
