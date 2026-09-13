@@ -53,7 +53,11 @@ func on_pattern_death(pattern: Pattern) -> void:
 	pattern.is_started = false
 	pattern.is_dead = true
 
-	current_idx += 1
-	current_idx = mini(current_idx, patterns.size() - 1)
+	var next_idx = current_idx + 1
+
+	if next_idx >= patterns.size():
+		return
+
+	current_idx = next_idx
 
 	init_pattern(current_idx)

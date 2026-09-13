@@ -71,7 +71,7 @@ func fire_arc() -> void:
 
 	var target_pos: Vector2 = Vector2(remap(player_pos.x, 0.0, 240.0, 60.0, 180.0), entities[0].global_position.y - 100.0)
 
-	var arc = BulletPatternHelper.get_arc(entities[0].global_position.angle_to_point(target_pos), 0.2, bullet_count)
+	var arc = BulletPatternHelper.get_arc(entities[0].global_position.angle_to_point(target_pos), 0.14, bullet_count)
 	
 	var pos = entities[0].global_position
 
