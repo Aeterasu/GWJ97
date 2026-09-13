@@ -37,7 +37,6 @@ scenes = Dictionary[int, PackedScene]({
 3: ExtResource("4_fwcvl"),
 4: ExtResource("5_na0o7")
 })
-default_state = 2
 audio_manager = NodePath("AudioManager")
 bgm_manager = NodePath("BGMManager")
 
