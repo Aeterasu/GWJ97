@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_b5q0w")
-size = Vector2(1, 1)
+size = Vector2(9, 28)
 h_frames = 1
 metadata/_custom_type_script = "uid://cnhr5ggnp7gby"

@@ -43,8 +43,15 @@ environment = SubResource("Environment_y36n6")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u5opy"]
 albedo_color = Color(0.36862746, 0.11372549, 0.05490196, 1)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ijhnq"]
+shader = ExtResource("8_wkyfq")
+shader_parameter/atlas = ExtResource("6_m0o61")
+shader_parameter/hFrames = 1
+shader_parameter/vFrames = 1
+shader_parameter/speed = 8.0
+
 [sub_resource type="QuadMesh" id="QuadMesh_dakft"]
-size = Vector2(9, -28)
+size = Vector2(1, -1)
 
 [sub_resource type="MultiMesh" id="MultiMesh_dxrkv"]
 use_colors = true
@@ -179,9 +186,8 @@ collision_mask = 4
 metadata/_custom_type_script = "uid://dpcpbpske8jii"
 
 [node name="PlayerBulletVisual" type="MultiMeshInstance2D" parent="SubViewport/Game" unique_id=1867834694]
-texture_filter = 1
+material = SubResource("ShaderMaterial_ijhnq")
 multimesh = SubResource("MultiMesh_dxrkv")
-texture = ExtResource("6_m0o61")
 
 [node name="Player" parent="SubViewport/Game" unique_id=1584514943 node_paths=PackedStringArray("bullet_engine") instance=ExtResource("7_mp07y")]
 bullet_engine = NodePath("../PlayerBulletEngine")
