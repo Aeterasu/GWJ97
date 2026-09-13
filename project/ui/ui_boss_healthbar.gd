@@ -19,16 +19,18 @@ var trailing_damage_progresses: Array[float] = []
 
 func generate_healthbar(health_data: Array[float]) -> void:
 	var total_health: float = 0.0
-	health_data.reverse()
 
 	trailing_damage_progresses.resize(health_data.size())
 
 	for health in health_data:
 		total_health += health
 
+	var data = health_data.duplicate()
+	data.reverse()
+
 	var x_offset: float = 0.0
-	for i in range(health_data.size()):
-		var health: float = health_data[i]
+	for i in range(data.size()):
+		var health: float = data[i]
 		var segment_width: float = (health / total_health) * total_healthbar_length.x
 
 		var segment: ColorRect = ColorRect.new()
@@ -38,7 +40,7 @@ func generate_healthbar(health_data: Array[float]) -> void:
 		segment.material = material.duplicate()
 		(segment.material as ShaderMaterial).set_shader_parameter("node_size", segment.size)
 
-		segments.push_front(segment)
+		segments.push_back(segment)
 
 		parent.add_child(segment)
 		x_offset += segment_width
@@ -47,22 +49,25 @@ func generate_healthbar(health_data: Array[float]) -> void:
 func _process(delta: float) -> void:
 	trailing_damage_time_left -= delta
 
-	if last_damaged_idx > -1:
-		# TODO: fix this ugly uglyness of a hack
-		for i in segments.size():	
-			var progress = (segments[i].material as ShaderMaterial).get_shader_parameter("progress")
+	# TODO: fix this ugly uglyness of a hack
+	for i in segments.size():	
+		var progress = (segments[i].material as ShaderMaterial).get_shader_parameter("progress")
 
-			if trailing_damage_time_left <= 0.0:
-				trailing_damage_progresses[i] = max(trailing_damage_progresses[i] - trailing_damage_fade_speed * delta, progress)	
+		if trailing_damage_time_left <= 0.0:
+			trailing_damage_progresses[i] = max(trailing_damage_progresses[i] - trailing_damage_fade_speed * delta, progress)	
 
-			(segments[i].material as ShaderMaterial).set_shader_parameter("damage_progress", trailing_damage_progresses[i])
+		(segments[i].material as ShaderMaterial).set_shader_parameter("damage_progress", trailing_damage_progresses[i])
 
 func update_healthbar(health_data: Array[float], current_idx: int) -> void:
-	trailing_damage_time_left = trailing_damage_duration
 	last_damaged_idx = current_idx
 
-	for i in health_data.size():
-		var data = clampf(health_data[i], 0.0, 1.0)
-		(segments[i].material as ShaderMaterial).set_shader_parameter("progress", data)
+	var data = health_data.duplicate()
+	data.reverse()
+
+	for i in data.size():
+		var p = clampf(data[i], 0.0, 1.0)
+		(segments[i].material as ShaderMaterial).set_shader_parameter("progress", p)
 
 	patterns_health = health_data
+	#trailing_damage_time_left = trailing_damage_duration
+

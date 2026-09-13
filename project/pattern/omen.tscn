@@ -219,6 +219,7 @@ animation_player = NodePath("AnimationPlayer")
 bullet_origin_left = NodePath("Enemy/Marker2D")
 bullet_origin_right = NodePath("Enemy/Marker2D2")
 fire_rate = 0.5
+aimed_attack_fire_rate = 2.0
 entities = [NodePath("Enemy")]
 metadata/_custom_type_script = "uid://dpsgkb70urefo"
 
@@ -259,6 +260,6 @@ offset_top = 165.0
 offset_bottom = -134.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Bitter medicine we delivering."
+text = "Bitter, the medicine we're delivering."
 label_settings = SubResource("LabelSettings_3b7yk")
 horizontal_alignment = 1

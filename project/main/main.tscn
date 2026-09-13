@@ -8,6 +8,7 @@
 [ext_resource type="FontFile" uid="uid://cuavx05ndjw5g" path="res://font/m3x6.ttf" id="4_4dugh"]
 [ext_resource type="PackedScene" uid="uid://bww2lmp0lakyf" path="res://settings/settings_menu.tscn" id="4_fwcvl"]
 [ext_resource type="Script" uid="uid://cm7708ogl281p" path="res://bullet/bullet_skin_manager.gd" id="5_0i4oc"]
+[ext_resource type="Texture2D" uid="uid://jpl6sm2bxl0p" path="res://main/texture/texture_ui_border.png" id="5_4dugh"]
 [ext_resource type="Script" uid="uid://cmfa1d5fwckcb" path="res://util/ui/colored_fps_counter.gd" id="5_67ri8"]
 [ext_resource type="PackedScene" uid="uid://gfkkvgh8m84c" path="res://ranking/ranking_menu.tscn" id="5_na0o7"]
 [ext_resource type="Script" uid="uid://cnhr5ggnp7gby" path="res://bullet/bullet_skin.gd" id="6_bsumw"]
@@ -66,6 +67,16 @@ grow_vertical = 2
 
 [node name="TopLayer" type="CanvasLayer" parent="." unique_id=1550420199]
 layer = 4096
+
+[node name="TextureRect" type="TextureRect" parent="TopLayer" unique_id=706904870]
+modulate = Color(1, 0.16078432, 0, 0.5019608)
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -120.0
+offset_right = -80.0
+offset_bottom = 40.0
+texture = ExtResource("5_4dugh")
 
 [node name="FpsCounter" type="Label" parent="TopLayer" unique_id=1083675519]
 offset_left = 3.0

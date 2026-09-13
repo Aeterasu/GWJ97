@@ -26,6 +26,8 @@ func update(delta: float) -> void:
 
 	if position.y <= -OOB_THRESHOLD or position.y >= Game.BOARD_SIZE.y + OOB_THRESHOLD or position.x <= -OOB_THRESHOLD or position.x >= Game.BOARD_SIZE.x + OOB_THRESHOLD: 
 		is_active = false
+		PhysicsServer2D.area_set_shape_disabled.call_deferred(area_rid, 0, true)
+
 
 static func process_standard_bullet(bullet: Bullet, delta: float) -> Vector2:
 	return bullet.position + bullet.velocity * delta

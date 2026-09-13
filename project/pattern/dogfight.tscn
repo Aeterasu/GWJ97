@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://b2hnbptqpl1ea"]
+
+[ext_resource type="Script" uid="uid://b8d47jehovp1y" path="res://pattern/dogfight.gd" id="1_6bsjc"]
+[ext_resource type="Script" uid="uid://du4pk0oohw2cn" path="res://enemy/enemy.gd" id="2_1j440"]
+[ext_resource type="Texture2D" uid="uid://der8j8mn8cywb" path="res://enemy/texture/texture_enemy_plane_placeholder.png" id="3_sc6r3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c0ape"]
+radius = 16.0
+
+[node name="Dogfight" type="Node" unique_id=285190987 node_paths=PackedStringArray("entities")]
+script = ExtResource("1_6bsjc")
+fire_rates = Array[float]([0.21, 3.0, 1.2])
+entities = [NodePath("Enemy")]
+metadata/_custom_type_script = "uid://16mvw7i2q77s"
+
+[node name="Enemy" type="Area2D" parent="." unique_id=1112101402]
+position = Vector2(120, 88)
+script = ExtResource("2_1j440")
+metadata/_custom_type_script = "uid://du4pk0oohw2cn"
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy" unique_id=741438333]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_sc6r3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy" unique_id=2088825118]
+shape = SubResource("CircleShape2D_c0ape")

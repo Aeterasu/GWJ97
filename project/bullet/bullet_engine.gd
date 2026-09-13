@@ -71,6 +71,9 @@ func _physics_process(delta: float) -> void:
 		set_bullet_mesh_position(bullet, bullet.position)
 		i += 1
 
+func _process(delta: float) -> void:
+	(bullet_visual.material as ShaderMaterial).set_shader_parameter("game_time", fmod(Time.get_ticks_msec() / 1000.0, 1800.0))
+
 func on_area_entered(status: int, area_rid: RID, instance_id: int, area_shape_idx: int, self_shape_idx: int, bullet: Bullet) -> void:
 	if status == PhysicsServer2D.AREA_BODY_ADDED:
 		var body := instance_from_id(instance_id)
@@ -98,7 +101,7 @@ func fire_bullet(position: Vector2, angle: float, speed: float, skin: BulletSkin
 	set_bullet_mesh_position(bullet, position)
 	bullet_visual.multimesh.reset_instance_physics_interpolation(bullet.multimesh_id)
 	bullet_visual.multimesh.set_instance_custom_data(bullet.multimesh_id, Color(bullet.skin.atlas_offset.x, bullet.skin.atlas_offset.y, bullet.skin.size.x, bullet.skin.size.y))
-	bullet_visual.multimesh.set_instance_color(bullet.multimesh_id, Color((Time.get_ticks_msec() / 100.0) * 3600.0, 0.0, 0.0, 0.0))
+	bullet_visual.multimesh.set_instance_color(bullet.multimesh_id, Color(fmod(Time.get_ticks_msec() + 100000.0, 1800.0), 0.0, 0.0, 0.0))
 
 	PhysicsServer2D.area_set_transform(bullet.area_rid, Transform2D.IDENTITY.translated(bullet.position))
 	PhysicsServer2D.area_set_shape_disabled(bullet.area_rid, 0, false)
@@ -112,4 +115,9 @@ func set_bullet_mesh_position(bullet: Bullet, position: Vector2) -> void:
 		rot = bullet.angle + PI / 2
 
 	bullet_visual.multimesh.set_instance_transform_2d(bullet.multimesh_id, Transform2D.IDENTITY.translated(position).rotated_local(rot).scaled_local(bullet.skin.size))	
+
+func bullet_cancel() -> void:
+	for i in active_bullet_count:
+		bullets[i].is_active = false
+		PhysicsServer2D.area_set_shape_disabled.call_deferred(bullets[i].area_rid, 0, true)
 
