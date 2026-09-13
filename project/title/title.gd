@@ -1,6 +1,7 @@
 class_name Title extends Control
 
 @export_group("Buttons")
+@export var press_button : Control = null
 @export var start : TitleButton = null
 @export var ranking : TitleButton = null
 @export var settings : TitleButton = null
@@ -8,6 +9,11 @@ class_name Title extends Control
 
 func _ready() -> void:
 	self.grab_focus.call_deferred()
+
+	start.hide()
+	ranking.hide()
+	settings.hide()
+	exit.hide()
 
 	start.pressed.connect(on_start)
 	ranking.pressed.connect(on_ranking)
@@ -21,6 +27,14 @@ func _ready() -> void:
 		exit.pressed.connect(on_exit)
 
 	# Main.instance.bgm_manager.update_bgm(BGMManager.BGMType.MENU)
+
+func _input(event: InputEvent) -> void:
+	if event.is_pressed():
+		start.show()
+		ranking.show()
+		settings.show()
+		exit.show()
+		press_button.hide()
 
 func _physics_process(delta: float) -> void:
 	if not get_viewport().gui_get_focus_owner():

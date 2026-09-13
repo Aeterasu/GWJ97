@@ -2,6 +2,11 @@
 
 [ext_resource type="Script" uid="uid://dbws68fonv2ul" path="res://title/title.gd" id="1_crako"]
 [ext_resource type="PackedScene" uid="uid://cryasop3kuabf" path="res://title/title_button.tscn" id="1_yx5l7"]
+[ext_resource type="FontFile" uid="uid://dekxaqxocvhf7" path="res://font/m6x11.ttf" id="2_nx56k"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_6s8lb"]
+font = ExtResource("2_nx56k")
+font_color = Color(1, 0.94509804, 0.9098039, 1)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_crako"]
 load_path = "res://.godot/imported/texture_ranking.png-ac36895df87dd9253636bed31983cbaa.ctex"
@@ -36,7 +41,7 @@ region = Rect2(0, 0, 0, 17)
 atlas = SubResource("CompressedTexture2D_6s8lb")
 region = Rect2(0, 17, 0, 17)
 
-[node name="Title" type="Control" unique_id=1832839802 node_paths=PackedStringArray("start", "ranking", "settings", "exit")]
+[node name="Title" type="Control" unique_id=1832839802 node_paths=PackedStringArray("press_button", "start", "ranking", "settings", "exit")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,6 +53,7 @@ focus_neighbor_bottom = NodePath("CanvasLayer/VBoxContainer/Start")
 focus_mode = 2
 focus_behavior_recursive = 2
 script = ExtResource("1_crako")
+press_button = NodePath("CanvasLayer/PressAnyButton")
 start = NodePath("CanvasLayer/VBoxContainer/Start")
 ranking = NodePath("CanvasLayer/VBoxContainer/Ranking")
 settings = NodePath("CanvasLayer/VBoxContainer/Settings")
@@ -56,6 +62,29 @@ exit = NodePath("CanvasLayer/VBoxContainer/Exit")
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=474294353]
 layer = 2049
 follow_viewport_enabled = true
+
+[node name="PressAnyButton" type="Control" parent="CanvasLayer" unique_id=1343932424]
+z_index = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RankLabel" type="Label" parent="CanvasLayer/PressAnyButton" unique_id=355334427]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 286.0
+grow_horizontal = 2
+grow_vertical = 2
+layout_direction = 2
+text = "Press any button"
+label_settings = SubResource("LabelSettings_6s8lb")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1663414612]
 anchors_preset = 15
@@ -70,7 +99,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 57.0
-offset_bottom = 93.0
+offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 9

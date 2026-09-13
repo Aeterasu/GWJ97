@@ -58,6 +58,7 @@ focus_neighbor_top = NodePath("../LeaderboardEntry4")
 focus_neighbor_bottom = NodePath("../../SettingsButton8")
 
 [node name="SettingsButton8" parent="." unique_id=1366331335 instance=ExtResource("7_51y11")]
+visible = false
 layout_mode = 0
 offset_top = 248.0
 offset_bottom = 268.0
