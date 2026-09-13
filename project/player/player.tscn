@@ -15,10 +15,10 @@ point_count = 2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8t03j"]
 shader = ExtResource("5_hg6s5")
-shader_parameter/cull_backface = true
+shader_parameter/cull_backface = false
 shader_parameter/fov = 90.0
 shader_parameter/rot_y_deg = 0.0
-shader_parameter/rot_x_deg = 0.0
+shader_parameter/rot_x_deg = 360.0
 shader_parameter/inset = 0.0
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_boad6"]
@@ -63,7 +63,7 @@ metadata/_custom_type_script = "uid://cnksq2oeepu0y"
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1154157569]
 material = SubResource("ShaderMaterial_8t03j")
 texture = ExtResource("2_g1dw6")
-offset = Vector2(0.5, -0.5)
+offset = Vector2(-0.5, -0.5)
 
 [node name="BaseWeapon" type="Node2D" parent="." unique_id=1696975318 node_paths=PackedStringArray("shot_origins")]
 script = ExtResource("4_yw30f")

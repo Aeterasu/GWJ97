@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PatternFlavor" format=3 uid="uid://cg3iiieqxuqqs"]
+
+[ext_resource type="Script" uid="uid://c0dqn8ky0me73" path="res://pattern/flavor/pattern_flavor.gd" id="1_lnlbb"]
+
+[resource]
+script = ExtResource("1_lnlbb")
+pattern_names = "ENRAPTURE"
+pattern_subtext = "A flash of colour // A shock to the system // A spotlight over your injustice // A flash of colour // A shock to the system // Blindsided by your own destruction //"
+metadata/_custom_type_script = "uid://c0dqn8ky0me73"

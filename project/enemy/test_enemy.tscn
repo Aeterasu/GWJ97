@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://y1hwpxlshe5p"]
+
+[ext_resource type="Script" uid="uid://dlc3jkre3x6x8" path="res://enemy/test_enemy.gd" id="1_xhk1j"]
+[ext_resource type="Texture2D" uid="uid://5lbu4jhq605g" path="res://icon.svg" id="2_hdm1v"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3b7yk"]
+radius = 24.0
+
+[node name="TestEnemy" type="Area2D" unique_id=50986876 node_paths=PackedStringArray("bullet_engine")]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_xhk1j")
+bullet_engine = NodePath("")
+metadata/_custom_type_script = "uid://du4pk0oohw2cn"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=636567743]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_hdm1v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=904494025]
+shape = SubResource("CircleShape2D_3b7yk")
+debug_color = Color(1, 0, 0.69803923, 0.41960785)

@@ -3,15 +3,28 @@
 [ext_resource type="Script" uid="uid://dsn2rdoa26phn" path="res://game/game.gd" id="1_q4ejq"]
 [ext_resource type="Script" uid="uid://dbaxnfdbt6cyt" path="res://game/game_sequencer.gd" id="2_oryes"]
 [ext_resource type="Script" uid="uid://llf5q5lfma04" path="res://backdrop/3d_backdrop.gd" id="3_lw3qe"]
+[ext_resource type="Script" uid="uid://c0dqn8ky0me73" path="res://pattern/flavor/pattern_flavor.gd" id="3_ysh17"]
+[ext_resource type="Resource" uid="uid://c4wk0a2wym7o5" path="res://pattern/flavor/flavor_1.tres" id="4_to2kc"]
 [ext_resource type="ArrayMesh" uid="uid://b3yur11e2x152" path="res://backdrop/mesh/backdrop_base.obj" id="4_ysh17"]
+[ext_resource type="Resource" uid="uid://ca0xsbul6o6q7" path="res://pattern/flavor/flavor_2.tres" id="5_ino1g"]
 [ext_resource type="Script" uid="uid://dpcpbpske8jii" path="res://bullet/bullet_engine.gd" id="5_wurgr"]
+[ext_resource type="Resource" uid="uid://qoa7yb5l2iud" path="res://pattern/flavor/flavor_3.tres" id="6_gts4h"]
 [ext_resource type="Texture2D" uid="uid://cag6n42kgn62k" path="res://bullet/texture/texture_player_bullet.png" id="6_m0o61"]
+[ext_resource type="Resource" uid="uid://u77hjgf5b1xn" path="res://pattern/flavor/flavor_4.tres" id="7_j7fm5"]
 [ext_resource type="PackedScene" uid="uid://bjvwqcehq80f5" path="res://player/player.tscn" id="7_mp07y"]
+[ext_resource type="Resource" uid="uid://0kwc7tjajnl" path="res://pattern/flavor/flavor_5.tres" id="8_1vxhs"]
 [ext_resource type="Shader" uid="uid://brnm1dduy7bpo" path="res://bullet/bullet_shader.gdshader" id="8_wkyfq"]
 [ext_resource type="Texture2D" uid="uid://ca8qamvsoarpw" path="res://bullet/texture/texture_enemy_bullet_small.png" id="9_ag8gt"]
-[ext_resource type="Script" uid="uid://dlc3jkre3x6x8" path="res://enemy/test_enemy.gd" id="10_nc8sr"]
-[ext_resource type="Texture2D" uid="uid://5lbu4jhq605g" path="res://icon.svg" id="11_to2kc"]
-[ext_resource type="Texture2D" uid="uid://jpl6sm2bxl0p" path="res://main/texture/texture_ui_border.png" id="12_ino1g"]
+[ext_resource type="Resource" uid="uid://tbkoqcc0igv0" path="res://pattern/flavor/flavor_6.tres" id="9_bybv3"]
+[ext_resource type="Resource" uid="uid://cg3iiieqxuqqs" path="res://pattern/flavor/flavor_7.tres" id="10_y7kwi"]
+[ext_resource type="Script" uid="uid://16mvw7i2q77s" path="res://pattern/pattern.gd" id="11_j7fm5"]
+[ext_resource type="PackedScene" uid="uid://y1hwpxlshe5p" path="res://enemy/test_enemy.tscn" id="12_1vxhs"]
+[ext_resource type="Texture2D" uid="uid://87vn2h1jbhv2" path="res://ui/texture/texture_ui_boss_healthbar_under.png" id="12_q4ejq"]
+[ext_resource type="Shader" uid="uid://cer0tvbjg2xqt" path="res://ui/boss_healthbar_decorative_stripe.gdshader" id="13_lw3qe"]
+[ext_resource type="Texture2D" uid="uid://2n03m4k3vmdc" path="res://ui/texture/texture_ui_boss_healthbar_vertical_stripe.png" id="14_ysh17"]
+[ext_resource type="Script" uid="uid://debx0k47w1p5p" path="res://ui/ui.gd" id="20_gts4h"]
+[ext_resource type="Script" uid="uid://ltfm1x3wqb33" path="res://ui/ui_boss_healthbar.gd" id="21_j7fm5"]
+[ext_resource type="Material" uid="uid://c1v46fadxlwp4" path="res://ui/boss_healthbar_material.tres" id="23_ino1g"]
 
 [sub_resource type="Environment" id="Environment_y36n6"]
 background_mode = 1
@@ -46,8 +59,11 @@ size = Vector2(1, -1)
 use_custom_data = true
 mesh = SubResource("QuadMesh_u5opy")
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_3b7yk"]
-radius = 24.0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wurgr"]
+shader = ExtResource("13_lw3qe")
+shader_parameter/stripe_texture = ExtResource("14_ysh17")
+shader_parameter/scroll_speed = 1.0
+shader_parameter/tiling = Vector2(1, 2)
 
 [node name="GameContainer" type="SubViewportContainer" unique_id=1996078482]
 texture_filter = 1
@@ -68,17 +84,29 @@ oversampling = false
 size = Vector2i(240, 320)
 render_target_update_mode = 4
 
-[node name="Game" type="Node2D" parent="SubViewport" unique_id=1321649675 node_paths=PackedStringArray("player")]
+[node name="Game" type="Node2D" parent="SubViewport" unique_id=1321649675 node_paths=PackedStringArray("game_sequencer", "player", "ui_root")]
 script = ExtResource("1_q4ejq")
+game_sequencer = NodePath("GameSequencer")
 player = NodePath("Player")
+ui_root = NodePath("../../UI")
 
-[node name="GameSequencer" type="Node" parent="SubViewport/Game" unique_id=1424656608 node_paths=PackedStringArray("animation_player")]
+[node name="GameSequencer" type="Node" parent="SubViewport/Game" unique_id=1424656608 node_paths=PackedStringArray("animation_player", "patterns", "enemy_bullet_engine")]
 script = ExtResource("2_oryes")
 animation_player = NodePath("AnimationPlayer")
+patterns = [NodePath("TestPattern")]
 patterns_health = Array[float]([400.0, 400.0, 250.0, 450.0, 600.0, 700.0, 900.0])
+patterns_flavor = Array[ExtResource("3_ysh17")]([ExtResource("4_to2kc"), ExtResource("5_ino1g"), ExtResource("6_gts4h"), ExtResource("7_j7fm5"), ExtResource("8_1vxhs"), ExtResource("9_bybv3"), ExtResource("10_y7kwi")])
+enemy_bullet_engine = NodePath("../EnemyBulletEngine")
 metadata/_custom_type_script = "uid://dbaxnfdbt6cyt"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="SubViewport/Game/GameSequencer" unique_id=450444269]
+
+[node name="TestPattern" type="Node" parent="SubViewport/Game/GameSequencer" unique_id=961206150 node_paths=PackedStringArray("entities")]
+script = ExtResource("11_j7fm5")
+entities = [NodePath("TestEnemy")]
+metadata/_custom_type_script = "uid://16mvw7i2q77s"
+
+[node name="TestEnemy" parent="SubViewport/Game/GameSequencer/TestPattern" unique_id=50986876 instance=ExtResource("12_1vxhs")]
 
 [node name="ColorRect" type="ColorRect" parent="SubViewport/Game" unique_id=931863613]
 z_index = -4096
@@ -152,23 +180,59 @@ metadata/_custom_type_script = "uid://dpcpbpske8jii"
 material = SubResource("ShaderMaterial_3vho3")
 multimesh = SubResource("MultiMesh_y36n6")
 
-[node name="TestEnemy" type="Area2D" parent="SubViewport/Game" unique_id=661721806 node_paths=PackedStringArray("bullet_engine")]
-collision_layer = 4
-collision_mask = 0
-script = ExtResource("10_nc8sr")
-bullet_engine = NodePath("../EnemyBulletEngine")
-metadata/_custom_type_script = "uid://du4pk0oohw2cn"
-
-[node name="Sprite2D" type="Sprite2D" parent="SubViewport/Game/TestEnemy" unique_id=392408336]
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("11_to2kc")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewport/Game/TestEnemy" unique_id=70278863]
-shape = SubResource("CircleShape2D_3b7yk")
-debug_color = Color(1, 0, 0.69803923, 0.41960785)
-
-[node name="TextureRect" type="TextureRect" parent="." unique_id=993829646]
-modulate = Color(1, 0.16078432, 0, 1)
+[node name="UI" type="Control" parent="." unique_id=339268598 node_paths=PackedStringArray("boss_healthbar")]
+custom_minimum_size = Vector2(240, 320)
 layout_mode = 2
-texture = ExtResource("12_ino1g")
+script = ExtResource("20_gts4h")
+boss_healthbar = NodePath("UIBossHealthbar")
+
+[node name="Padding" type="Control" parent="UI" unique_id=1228953614]
+modulate = Color(1, 1, 1, 0.5019608)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="UI/Padding" unique_id=1680944969]
+layout_mode = 0
+offset_top = 11.0
+offset_right = 240.0
+offset_bottom = 25.0
+color = Color(0.047058824, 0.09803922, 0, 1)
+
+[node name="UIBossHealthbar" type="Node" parent="UI" unique_id=104798359 node_paths=PackedStringArray("parent")]
+script = ExtResource("21_j7fm5")
+parent = NodePath("../BossHealthbarUnder")
+material = ExtResource("23_ino1g")
+offset = Vector2(7, 2)
+total_healthbar_length = Vector2(222, 10)
+trailing_damage_duration = 0.5
+trailing_damage_fade_speed = 2.0
+metadata/_custom_type_script = "uid://ltfm1x3wqb33"
+
+[node name="BossHealthbarUnder" type="TextureRect" parent="UI" unique_id=1817836087]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 11.0
+offset_right = 240.0
+offset_bottom = 25.0
+texture = ExtResource("12_q4ejq")
 stretch_mode = 2
+
+[node name="VerticalStripe1" type="ColorRect" parent="UI/BossHealthbarUnder" unique_id=1700223487]
+material = SubResource("ShaderMaterial_wurgr")
+layout_mode = 0
+offset_left = 4.0
+offset_top = 2.0
+offset_right = 6.0
+offset_bottom = 12.0
+
+[node name="VerticalStripe2" type="ColorRect" parent="UI/BossHealthbarUnder" unique_id=1032287011]
+material = SubResource("ShaderMaterial_wurgr")
+layout_mode = 0
+offset_left = 230.0
+offset_top = 2.0
+offset_right = 232.0
+offset_bottom = 12.0
