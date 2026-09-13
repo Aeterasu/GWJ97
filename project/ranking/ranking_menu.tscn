@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://gfkkvgh8m84c"]
+
+[ext_resource type="Script" uid="uid://cb807fucvfpne" path="res://ranking/ranking_menu.gd" id="1_ha8qe"]
+[ext_resource type="PackedScene" uid="uid://fxxbq0v4g8yu" path="res://ranking/leaderboard_entry.tscn" id="2_g716i"]
+[ext_resource type="Texture2D" uid="uid://co2gkxd2uevd4" path="res://settings/texture/texture_ui_settings.png" id="2_u7tx0"]
+[ext_resource type="PackedScene" uid="uid://cbs4khmpt8a5g" path="res://settings/settings_button.tscn" id="7_51y11"]
+
+[node name="RankingMenu" type="Control" unique_id=744125116 node_paths=PackedStringArray("back_to_menu", "top_entries", "entries_box")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+script = ExtResource("1_ha8qe")
+back_to_menu = NodePath("SettingsButton8")
+top_entries = [NodePath("VBoxContainer/LeaderboardEntry1"), NodePath("VBoxContainer/LeaderboardEntry2"), NodePath("VBoxContainer/LeaderboardEntry3"), NodePath("VBoxContainer/LeaderboardEntry4"), NodePath("VBoxContainer/LeaderboardEntry5")]
+entries_box = NodePath("VBoxContainer")
+
+[node name="Ranking" type="TextureRect" parent="." unique_id=1612532071]
+layout_mode = 0
+offset_top = 5.0
+offset_right = 129.0
+offset_bottom = 28.0
+texture = ExtResource("2_u7tx0")
+stretch_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1853948364]
+layout_mode = 0
+offset_top = 66.0
+offset_right = 270.0
+offset_bottom = 239.0
+
+[node name="LeaderboardEntry1" parent="VBoxContainer" unique_id=888631316 instance=ExtResource("2_g716i")]
+layout_mode = 2
+focus_neighbor_top = NodePath("../../SettingsButton8")
+focus_neighbor_bottom = NodePath("../LeaderboardEntry2")
+
+[node name="LeaderboardEntry2" parent="VBoxContainer" unique_id=1552011200 instance=ExtResource("2_g716i")]
+layout_mode = 2
+focus_neighbor_top = NodePath("../LeaderboardEntry1")
+focus_neighbor_bottom = NodePath("../LeaderboardEntry3")
+
+[node name="LeaderboardEntry3" parent="VBoxContainer" unique_id=1051331230 instance=ExtResource("2_g716i")]
+layout_mode = 2
+focus_neighbor_top = NodePath("../LeaderboardEntry2")
+focus_neighbor_bottom = NodePath("../LeaderboardEntry4")
+
+[node name="LeaderboardEntry4" parent="VBoxContainer" unique_id=562295363 instance=ExtResource("2_g716i")]
+layout_mode = 2
+focus_neighbor_top = NodePath("../LeaderboardEntry3")
+focus_neighbor_bottom = NodePath("../LeaderboardEntry5")
+
+[node name="LeaderboardEntry5" parent="VBoxContainer" unique_id=758191279 instance=ExtResource("2_g716i")]
+layout_mode = 2
+focus_neighbor_top = NodePath("../LeaderboardEntry4")
+focus_neighbor_bottom = NodePath("../../SettingsButton8")
+
+[node name="SettingsButton8" parent="." unique_id=1366331335 instance=ExtResource("7_51y11")]
+layout_mode = 0
+offset_top = 248.0
+offset_bottom = 268.0
+focus_neighbor_top = NodePath("../VBoxContainer/LeaderboardEntry5")
+focus_neighbor_bottom = NodePath("../VBoxContainer/LeaderboardEntry1")
+label_text = "Back to menu"

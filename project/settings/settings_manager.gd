@@ -6,9 +6,9 @@ const CONFIG_SECTION : String = "config"
 const CONFIG_KEY_FULLSCREEN : String = "fullscreen"
 const CONFIG_KEY_SCREEN_SHAKE : String = "screen_shake"
 const CONFIG_KEY_DISABLE_FX : String = "disable_fx"
-const CONFIG_KEY_MASTER_VOLUME : String = "master_volume"
-const CONFIG_KEY_MUSIC_VOLUME : String = "music_volume"
-const CONFIG_KEY_SFX_VOLUME : String = "sfx_volume"
+# const CONFIG_KEY_MASTER_VOLUME : String = "master_volume"
+# const CONFIG_KEY_MUSIC_VOLUME : String = "music_volume"
+# const CONFIG_KEY_SFX_VOLUME : String = "sfx_volume"
 
 const DEFAULT_VALUE_FULLSCREEN : bool = false
 const DEFAULT_VALUE_SCREEN_SHAKE : bool = true
@@ -42,21 +42,21 @@ var master_volume : float = 0.5:
         value = clampf(value, 0.0, 1.0)
         master_volume = value
 
-        AudioManager.set_master_volume(value)
+        # AudioManager.set_master_volume(value)
 
 var music_volume : float = 0.5:
     set(value):
         value = clampf(value, 0.0, 1.0)
         music_volume = value
 
-        AudioManager.set_bgm_volume(value)
+        # AudioManager.set_bgm_volume(value)
 
 var sfx_volume : float = 0.5:
     set(value):
         value = clampf(value, 0.0, 1.0)
         sfx_volume = value
 
-        AudioManager.set_sfx_volume(value)
+        # AudioManager.set_sfx_volume(value)
 
 func load() -> void:
     var config = ConfigFile.new()
@@ -76,9 +76,9 @@ func load() -> void:
         fullscreen = config.get_value(section, CONFIG_KEY_FULLSCREEN, DEFAULT_VALUE_FULLSCREEN)
         screen_shake = config.get_value(section, CONFIG_KEY_SCREEN_SHAKE, DEFAULT_VALUE_SCREEN_SHAKE)
         disable_fx = config.get_value(section, CONFIG_KEY_DISABLE_FX, DEFAULT_VALUE_DISABLE_FX)
-        master_volume = config.get_value(section, CONFIG_KEY_MASTER_VOLUME, DEFAULT_VALUE_MASTER_VOLUME)
-        music_volume = config.get_value(section, CONFIG_KEY_MUSIC_VOLUME, DEFAULT_VALUE_MUSIC_VOLUME)
-        sfx_volume = config.get_value(section, CONFIG_KEY_SFX_VOLUME, DEFAULT_VALUE_SFX_VOLUME)
+        # master_volume = config.get_value(section, CONFIG_KEY_MASTER_VOLUME, DEFAULT_VALUE_MASTER_VOLUME)
+        # music_volume = config.get_value(section, CONFIG_KEY_MUSIC_VOLUME, DEFAULT_VALUE_MUSIC_VOLUME)
+        # sfx_volume = config.get_value(section, CONFIG_KEY_SFX_VOLUME, DEFAULT_VALUE_SFX_VOLUME)
 
 func save() -> void:
     var config = ConfigFile.new()
@@ -86,9 +86,9 @@ func save() -> void:
     config.set_value(CONFIG_SECTION, CONFIG_KEY_FULLSCREEN, fullscreen)
     config.set_value(CONFIG_SECTION, CONFIG_KEY_SCREEN_SHAKE, screen_shake)
     config.set_value(CONFIG_SECTION, CONFIG_KEY_DISABLE_FX, disable_fx)
-    config.set_value(CONFIG_SECTION, CONFIG_KEY_MASTER_VOLUME, master_volume)
-    config.set_value(CONFIG_SECTION, CONFIG_KEY_MUSIC_VOLUME, music_volume)
-    config.set_value(CONFIG_SECTION, CONFIG_KEY_SFX_VOLUME, sfx_volume)
+    # config.set_value(CONFIG_SECTION, CONFIG_KEY_MASTER_VOLUME, master_volume)
+    # config.set_value(CONFIG_SECTION, CONFIG_KEY_MUSIC_VOLUME, music_volume)
+    # config.set_value(CONFIG_SECTION, CONFIG_KEY_SFX_VOLUME, sfx_volume)
 
     config.save(CONFIG_PATH)
 
@@ -106,6 +106,7 @@ static func enable_fx() -> bool:
         return false
 
 func refresh_volume_config() -> void:
-    master_volume = AudioManager.get_master_volume()
-    sfx_volume = AudioManager.get_sfx_volume()
-    music_volume = AudioManager.get_bgm_volume()
+    pass
+    # master_volume = AudioManager.get_master_volume()
+    # sfx_volume = AudioManager.get_sfx_volume()
+    # music_volume = AudioManager.get_bgm_volume()

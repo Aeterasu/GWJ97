@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://fxxbq0v4g8yu"]
+
+[ext_resource type="Script" uid="uid://f0e7ewulvqxc" path="res://ranking/leaderboard_entry.gd" id="1_uyui2"]
+[ext_resource type="FontFile" uid="uid://cuavx05ndjw5g" path="res://font/m3x6.ttf" id="3_6683y"]
+[ext_resource type="FontFile" uid="uid://dekxaqxocvhf7" path="res://font/m6x11.ttf" id="4_anb7d"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_oumw0"]
+font = ExtResource("4_anb7d")
+font_color = Color(1, 0.94509804, 0.9098039, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_jtwpp"]
+line_spacing = 0.0
+font = ExtResource("4_anb7d")
+font_color = Color(1, 0.94509804, 0.9098039, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_anb7d"]
+font = ExtResource("3_6683y")
+font_color = Color(1, 0.94509804, 0.9098039, 1)
+
+[node name="LeaderboardEntry" type="Control" unique_id=1746999508 node_paths=PackedStringArray("pb_label", "score_label", "rank_label")]
+custom_minimum_size = Vector2(270, 26)
+layout_mode = 3
+anchor_right = 1.0
+anchor_bottom = 0.096
+offset_right = -270.0
+offset_bottom = -25.92
+script = ExtResource("1_uyui2")
+pb_label = NodePath("RankLabel/PbLabel")
+score_label = NodePath("RankLabel/ScoreLabel")
+rank_label = NodePath("RankLabel")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1261795182]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 2
+
+[node name="RankLabel" type="Label" parent="." unique_id=532868052]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.1
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_right = 14.0
+grow_vertical = 2
+layout_direction = 2
+text = "0."
+label_settings = SubResource("LabelSettings_oumw0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PbLabel" type="Label" parent="RankLabel" unique_id=1696477607]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1.0
+offset_top = 3.0
+offset_right = 91.0
+offset_bottom = 26.0
+grow_horizontal = 0
+text = "Score:"
+label_settings = SubResource("LabelSettings_jtwpp")
+
+[node name="ScoreLabel" type="Label" parent="RankLabel" unique_id=2121662124]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1.0
+offset_top = 11.0
+offset_right = 124.0
+offset_bottom = 26.0
+text = "0 pts"
+label_settings = SubResource("LabelSettings_anb7d")
+
+[node name="RankLabel2" type="Label" parent="." unique_id=987725304]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.1
+anchor_bottom = 1.0
+offset_left = 97.0
+offset_right = 101.0
+grow_vertical = 2
+layout_direction = 2
+text = "Rank:"
+label_settings = SubResource("LabelSettings_oumw0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="RankLabel2" unique_id=756920099]
+layout_mode = 0
+offset_left = 37.0
+offset_top = 2.0
+offset_right = 58.0
+offset_bottom = 23.0
