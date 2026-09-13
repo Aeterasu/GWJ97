@@ -279,17 +279,19 @@ color_ramp = SubResource("Gradient_3b7yk")
 
 [node name="PlayerBulletEngine" type="Node" parent="SubViewport/Game" unique_id=297898871 node_paths=PackedStringArray("bullet_visual")]
 script = ExtResource("5_wurgr")
-max_bullet_count = 1024
-shape_radius = 8.0
+max_bullet_count = 512
+use_tunneling_fix = true
 bullet_visual = NodePath("../PlayerBulletVisual")
 collision_mask = 4
 metadata/_custom_type_script = "uid://dpcpbpske8jii"
 
 [node name="PlayerBulletVisual" type="MultiMeshInstance2D" parent="SubViewport/Game" unique_id=1867834694]
+z_index = 16
 material = SubResource("ShaderMaterial_ijhnq")
 multimesh = SubResource("MultiMesh_dxrkv")
 
 [node name="Player" parent="SubViewport/Game" unique_id=1584514943 node_paths=PackedStringArray("bullet_engine") instance=ExtResource("7_mp07y")]
+z_index = 64
 bullet_engine = NodePath("../PlayerBulletEngine")
 
 [node name="EnemyBulletEngine" type="Node" parent="SubViewport/Game" unique_id=1260966031 node_paths=PackedStringArray("bullet_visual")]
