@@ -12,6 +12,8 @@ class_name GameSequencer extends Node
 
 var current_idx: int = 0
 
+signal on_pattern_init
+
 signal propagate_pattern_hit
 
 func fix() -> void:
@@ -29,6 +31,8 @@ func init_pattern(idx: int) -> void:
 		patterns[idx].on_death.connect(on_pattern_death)
 
 		current_idx = idx
+
+		on_pattern_init.emit(idx)
 
 func get_all_health_percentagees() -> Array[float]:
 	var result: Array[float] = []

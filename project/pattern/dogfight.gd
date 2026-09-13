@@ -1,35 +1,41 @@
 extends Pattern
 
-@export var fire_rates: Array[float] = [0.0, 0.0, 0.0]
-var timers: Array[float] = [0.0, 0.0, 0.0]
+@export var fire_rate: float = 0.5
+@export var attack_2_interval: int = 8
+@export var attack_3_interval: int = 16
+
+var timer: float = 0.0
+var fire_count: int = 0
 
 var time: float = 0.0
 var v_x: float = 0.0
 var prev_x: float = 0.0
 
+func _ready() -> void:
+	super()
+
 func init_pattern() -> void:
 	super()
 
-	timers.resize(fire_rates.size())
-
-	for i in fire_rates.size():
-		timers[i] = fire_rates[i]
+	timer = fire_rate + 3.0
+	fire_count = 0
 
 	is_started = true
 
 func update(delta: float) -> void:
-	for i in fire_rates.size():
-		timers[i] -= delta
+	timer -= delta
 
-		if timers[i] <= 0.0:
-			timers[i] = fire_rates[i]
+	if timer <= 0.0:
+		timer = fire_rate
+		fire_count += 1
 
-			if i == 0:
-				fire_1()
-			elif i == 1:
-				fire_2()
-			elif i == 2:
-				fire_3()
+		fire_1()
+
+		if fire_count % attack_2_interval == 0:
+			fire_2()
+
+		if fire_count % attack_3_interval == 0:
+			fire_3()
 
 	var player = Game.get_player()
 	var target_pos = player.global_position if player else Vector2(120.0, 320.0)

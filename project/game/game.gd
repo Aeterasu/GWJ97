@@ -4,6 +4,8 @@ class_name Game extends Node2D
 @export var player: Player = null
 @export var ui_root: UI = null
 
+@export var debug_hp_label: Label = null
+
 const BOARD_SIZE: Vector2 = Vector2(240.0, 320.0)
 const PLAYER_STARTING_POSITION: Vector2 = Vector2(54.0, 260.0)
 
@@ -19,6 +21,7 @@ func _ready() -> void:
 	ui_root.boss_healthbar.generate_healthbar(game_sequencer.patterns_health)
 	
 	game_sequencer.propagate_pattern_hit.connect(update_boss_healthbar)
+	game_sequencer.on_pattern_init.connect(on_pattern_init)
 	game_sequencer.init_pattern(game_sequencer.starting_pattern)
 
 func animate_player_intro() -> void:
@@ -33,7 +36,12 @@ func animate_player_intro() -> void:
 	tween.tween_callback(func(): player.control_state = Player.ControlState.NORMAL)
 
 func _physics_process(delta: float) -> void:
-	pass
+	debug_hp_label.text = "HP: " + str(player.lives)
+
+func on_pattern_init(pattern_idx: int) -> void:
+	var str = game_sequencer.patterns_flavor[pattern_idx].pattern_names
+	ui_root.boss_pattern_name.text = '"' + str.to_upper() + '"'
+	#ui_root.boss_pattern_name.reset_size()
 
 func update_boss_healthbar(pattern: Pattern) -> void:
 	ui_root.boss_healthbar.update_healthbar(game_sequencer.get_all_health_percentagees(), game_sequencer.current_idx)

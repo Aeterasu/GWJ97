@@ -113,3 +113,6 @@ func set_bullet_mesh_position(bullet: Bullet, position: Vector2) -> void:
 
 	bullet_visual.multimesh.set_instance_transform_2d(bullet.multimesh_id, Transform2D.IDENTITY.translated(position).rotated_local(rot).scaled_local(bullet.skin.size))	
 
+func bullet_cancel() -> void:
+	for i in active_bullet_count:
+		bullets[i].is_active = false

@@ -260,6 +260,6 @@ offset_top = 165.0
 offset_bottom = -134.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Bitter medicine we delivering."
+text = "Bitter, the medicine we delivering."
 label_settings = SubResource("LabelSettings_3b7yk")
 horizontal_alignment = 1

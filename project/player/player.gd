@@ -25,7 +25,7 @@ var sprite_yaw: float = 0.0
 @export var muzzle_flashes: Array[Node2D] = []
 
 var lives: int = 0
-const STARTING_LIVES: int = 3
+const STARTING_LIVES: int = 2
 const INVINCIBILITY_ON_HIT: float = 6.0
 const INVINCIBILITY_ON_BOMB: float = 3.0
 
@@ -47,6 +47,8 @@ enum ControlState
 }
 
 func _ready() -> void:
+	lives = STARTING_LIVES
+
 	base_weapon.bullet_engine = self.bullet_engine
 	focus_weapon.bullet_engine = self.bullet_engine
 
@@ -68,6 +70,8 @@ func _physics_process(delta: float) -> void:
 
 		process_movement(delta)
 		process_weapon(delta)
+
+	invincibility_timer = max(invincibility_timer - delta, 0.0)
 
 	# options
 
@@ -134,6 +138,8 @@ func hit() -> void:
 		return
 
 	lives -= 1;
+
+	invincibility_timer = INVINCIBILITY_ON_HIT
 	
 	on_hit.emit()
 

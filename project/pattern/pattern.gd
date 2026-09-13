@@ -52,6 +52,8 @@ func on_entity_hit(entity: Enemy, damage: float) -> void:
 func kill_start() -> void:
 	is_dead = true
 
+	bullet_engine.bullet_cancel()
+
 func kill_finish() -> void:
 	on_death.emit(self)
 

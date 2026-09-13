@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://upphqgb3vovy" path="res://audio/audio_manager.gd" id="2_3wy1v"]
 [ext_resource type="Script" uid="uid://dtytuvraaohro" path="res://audio/bgm_manager.gd" id="3_kfbq2"]
 [ext_resource type="FontFile" uid="uid://cuavx05ndjw5g" path="res://font/m3x6.ttf" id="4_4dugh"]
+[ext_resource type="Texture2D" uid="uid://jpl6sm2bxl0p" path="res://main/texture/texture_ui_border.png" id="5_4dugh"]
 [ext_resource type="Script" uid="uid://cmfa1d5fwckcb" path="res://util/ui/colored_fps_counter.gd" id="5_67ri8"]
 
 [sub_resource type="Environment" id="Environment_3b7yk"]
@@ -56,6 +57,12 @@ grow_vertical = 2
 
 [node name="TopLayer" type="CanvasLayer" parent="." unique_id=1550420199]
 layer = 4096
+
+[node name="TextureRect" type="TextureRect" parent="TopLayer" unique_id=706904870]
+modulate = Color(1, 0.16078432, 0, 0.5019608)
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("5_4dugh")
 
 [node name="FpsCounter" type="Label" parent="TopLayer" unique_id=1083675519]
 offset_left = 3.0
