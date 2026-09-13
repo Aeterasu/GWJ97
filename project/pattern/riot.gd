@@ -64,3 +64,7 @@ func fire_arc() -> void:
 static func gravity_bullet(bullet: Bullet, delta: float) -> Vector2:
 	bullet.velocity += Vector2.DOWN * 98 * delta
 	return bullet.position + bullet.velocity * delta
+
+func kill_start() -> void:
+	super()
+	kill_finish()

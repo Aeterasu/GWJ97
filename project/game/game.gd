@@ -12,6 +12,8 @@ static var instance: Game = null
 func _ready() -> void:
 	instance = self
 
+	game_sequencer.fix()
+
 	animate_player_intro()
 
 	ui_root.boss_healthbar.generate_healthbar(game_sequencer.patterns_health)
@@ -35,6 +37,7 @@ func _physics_process(delta: float) -> void:
 
 func update_boss_healthbar(pattern: Pattern) -> void:
 	ui_root.boss_healthbar.update_healthbar(game_sequencer.get_all_health_percentagees(), game_sequencer.current_idx)
+	ui_root.boss_healthbar.trailing_damage_time_left = ui_root.boss_healthbar.trailing_damage_duration
 
 static func get_player() -> Player:
 	if is_instance_valid(instance) and is_instance_valid(instance.player):

@@ -15,25 +15,27 @@
 [ext_resource type="Resource" uid="uid://qoa7yb5l2iud" path="res://pattern/flavor/flavor_3.tres" id="6_gts4h"]
 [ext_resource type="Resource" uid="uid://6f1bl52o4lso" path="res://bullet/skin/enemy_bullet_green_small.tres" id="6_jllto"]
 [ext_resource type="Texture2D" uid="uid://cag6n42kgn62k" path="res://bullet/texture/texture_player_bullet.png" id="6_m0o61"]
-[ext_resource type="Resource" uid="uid://u77hjgf5b1xn" path="res://pattern/flavor/flavor_4.tres" id="7_j7fm5"]
+[ext_resource type="Resource" uid="uid://dy7oul3joskoo" path="res://pattern/flavor/flavor_4.tres" id="7_j7fm5"]
 [ext_resource type="PackedScene" uid="uid://bjvwqcehq80f5" path="res://player/player.tscn" id="7_mp07y"]
 [ext_resource type="Resource" uid="uid://cgq2oklratmja" path="res://bullet/skin/enemy_bullet_green_long.tres" id="7_y37xm"]
-[ext_resource type="Resource" uid="uid://0kwc7tjajnl" path="res://pattern/flavor/flavor_5.tres" id="8_1vxhs"]
+[ext_resource type="Resource" uid="uid://0kwc7tjajnl" path="res://pattern/flavor/flavor_6.tres" id="8_1vxhs"]
 [ext_resource type="Resource" uid="uid://dca7kp5a3c0ng" path="res://bullet/skin/player_bullet_default.tres" id="8_qiqgi"]
 [ext_resource type="Shader" uid="uid://brnm1dduy7bpo" path="res://bullet/bullet_shader.gdshader" id="8_wkyfq"]
 [ext_resource type="Texture2D" uid="uid://ca8qamvsoarpw" path="res://bullet/texture/texture_enemy_bullet.png" id="9_ag8gt"]
-[ext_resource type="Resource" uid="uid://tbkoqcc0igv0" path="res://pattern/flavor/flavor_6.tres" id="9_bybv3"]
-[ext_resource type="Resource" uid="uid://cg3iiieqxuqqs" path="res://pattern/flavor/flavor_7.tres" id="10_y7kwi"]
+[ext_resource type="Resource" uid="uid://tbkoqcc0igv0" path="res://pattern/flavor/flavor_7.tres" id="9_bybv3"]
+[ext_resource type="Resource" uid="uid://cg3iiieqxuqqs" path="res://pattern/flavor/flavor_8.tres" id="10_y7kwi"]
 [ext_resource type="Script" uid="uid://16mvw7i2q77s" path="res://pattern/pattern.gd" id="11_j7fm5"]
 [ext_resource type="Texture2D" uid="uid://87vn2h1jbhv2" path="res://ui/texture/texture_ui_boss_healthbar_under.png" id="12_q4ejq"]
 [ext_resource type="Shader" uid="uid://cer0tvbjg2xqt" path="res://ui/boss_healthbar_decorative_stripe.gdshader" id="13_lw3qe"]
 [ext_resource type="Texture2D" uid="uid://2n03m4k3vmdc" path="res://ui/texture/texture_ui_boss_healthbar_vertical_stripe.png" id="14_ysh17"]
+[ext_resource type="Resource" uid="uid://u77hjgf5b1xn" path="res://pattern/flavor/flavor_5.tres" id="15_y37xm"]
 [ext_resource type="PackedScene" uid="uid://vugwune8fbhe" path="res://pattern/omen.tscn" id="17_ijhnq"]
-[ext_resource type="Resource" uid="uid://ca0xsbul6o6q7" path="res://pattern/flavor/flavor_8.tres" id="18_kjv07"]
+[ext_resource type="Resource" uid="uid://ca0xsbul6o6q7" path="res://pattern/flavor/flavor_9.tres" id="18_kjv07"]
 [ext_resource type="Script" uid="uid://debx0k47w1p5p" path="res://ui/ui.gd" id="20_gts4h"]
 [ext_resource type="Script" uid="uid://ltfm1x3wqb33" path="res://ui/ui_boss_healthbar.gd" id="21_j7fm5"]
 [ext_resource type="PackedScene" uid="uid://jc8mhtpdtcvy" path="res://pattern/riot.tscn" id="21_jllto"]
 [ext_resource type="Material" uid="uid://c1v46fadxlwp4" path="res://ui/boss_healthbar_material.tres" id="23_ino1g"]
+[ext_resource type="PackedScene" uid="uid://b2hnbptqpl1ea" path="res://pattern/dogfight.tscn" id="23_qiqgi"]
 
 [sub_resource type="Environment" id="Environment_y36n6"]
 background_mode = 1
@@ -85,7 +87,7 @@ shader_parameter/tiling = Vector2(1, 2)
 
 [node name="GameContainer" type="SubViewportContainer" unique_id=1996078482]
 texture_filter = 1
-anchors_preset = -1
+anchors_preset = 13
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
@@ -121,11 +123,10 @@ metadata/_custom_type_script = "uid://cm7708ogl281p"
 
 [node name="GameSequencer" type="Node" parent="SubViewport/Game" unique_id=1424656608 node_paths=PackedStringArray("animation_player", "patterns", "enemy_bullet_engine")]
 script = ExtResource("2_oryes")
-starting_pattern = 1
 animation_player = NodePath("AnimationPlayer")
-patterns = [NodePath("Omen"), NodePath("Riot")]
-patterns_health = Array[float]([1000.0, 800.0, 600.0, 900.0, 1200.0, 1400.0, 1800.0, 500.0])
-patterns_flavor = Array[ExtResource("3_ysh17")]([ExtResource("4_to2kc"), ExtResource("5_ino1g"), ExtResource("6_gts4h"), ExtResource("7_j7fm5"), ExtResource("8_1vxhs"), ExtResource("9_bybv3"), ExtResource("10_y7kwi"), ExtResource("18_kjv07")])
+patterns = [NodePath("Omen"), NodePath("Riot"), NodePath("Dogfight")]
+patterns_health = Array[float]([1500.0, 1400.0, 700.0, 1400.0, 1400.0, 1500.0, 1500.0, 1500.0, 800.0])
+patterns_flavor = Array[ExtResource("3_ysh17")]([ExtResource("4_to2kc"), ExtResource("5_ino1g"), ExtResource("6_gts4h"), ExtResource("7_j7fm5"), ExtResource("15_y37xm"), ExtResource("8_1vxhs"), ExtResource("9_bybv3"), ExtResource("10_y7kwi"), ExtResource("18_kjv07")])
 enemy_bullet_engine = NodePath("../EnemyBulletEngine")
 metadata/_custom_type_script = "uid://dbaxnfdbt6cyt"
 
@@ -137,9 +138,10 @@ entities = [null]
 metadata/_custom_type_script = "uid://16mvw7i2q77s"
 
 [node name="Omen" parent="SubViewport/Game/GameSequencer" unique_id=1949596727 instance=ExtResource("17_ijhnq")]
-aimed_attack_fire_rate = 2.0
 
 [node name="Riot" parent="SubViewport/Game/GameSequencer" unique_id=2000619167 instance=ExtResource("21_jllto")]
+
+[node name="Dogfight" parent="SubViewport/Game/GameSequencer" unique_id=285190987 instance=ExtResource("23_qiqgi")]
 
 [node name="ColorRect" type="ColorRect" parent="SubViewport/Game" unique_id=931863613]
 z_index = -4096

@@ -219,6 +219,7 @@ animation_player = NodePath("AnimationPlayer")
 bullet_origin_left = NodePath("Enemy/Marker2D")
 bullet_origin_right = NodePath("Enemy/Marker2D2")
 fire_rate = 0.5
+aimed_attack_fire_rate = 2.0
 entities = [NodePath("Enemy")]
 metadata/_custom_type_script = "uid://dpsgkb70urefo"
 

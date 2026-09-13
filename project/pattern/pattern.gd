@@ -24,7 +24,7 @@ func _ready() -> void:
 
 func init_pattern() -> void:	
 	for node in freeze:
-		add_child(node)
+		add_child.call_deferred(node)
 
 	for entity in entities:
 		entity.on_hit.connect(on_entity_hit)
@@ -56,4 +56,4 @@ func kill_finish() -> void:
 	on_death.emit(self)
 
 	for entity in entities:
-		remove_child(entity)
+		remove_child.call_deferred(entity)
