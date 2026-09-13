@@ -3,12 +3,15 @@
 [ext_resource type="Shader" uid="uid://2m3ome1lravg" path="res://ui/boss_healthbar.gdshader" id="1_rhlkh"]
 [ext_resource type="Texture2D" uid="uid://tf2kwlk0w7vi" path="res://ui/texture/texture_ui_boss_healthbar_progress_white.png" id="2_g6ln7"]
 [ext_resource type="Texture2D" uid="uid://bq3svsq80kp1u" path="res://ui/texture/texture_ui_boss_healthbar_progress_green.png" id="3_id4li"]
+[ext_resource type="Texture2D" uid="uid://brymy08kj1ngq" path="res://ui/texture/texture_ui_boss_healthbar_progress_top.png" id="4_g6ln7"]
 
 [resource]
 shader = ExtResource("1_rhlkh")
 shader_parameter/bar_texture = ExtResource("2_g6ln7")
 shader_parameter/damage_texture = ExtResource("3_id4li")
+shader_parameter/overlay_texture = ExtResource("4_g6ln7")
 shader_parameter/node_size = Vector2(222, 10)
-shader_parameter/tex_size = Vector2(10, 10)
 shader_parameter/progress = 1.0
 shader_parameter/damage_progress = 1.0
+shader_parameter/damage_scroll_speed = Vector2(-1, 0)
+shader_parameter/damage_tile_size = Vector2(8, 10)

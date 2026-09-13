@@ -2,6 +2,7 @@ class_name Game extends Node2D
 
 @export var game_sequencer: GameSequencer = null
 @export var player: Player = null
+@export var scoring: Scoring = null
 @export var ui_root: UI = null
 
 @export var debug_hp_label: Label = null

@@ -64,7 +64,7 @@ func fire_primary() -> void:
 	burst_timer = 0.0
 
 func fire_arc() -> void:
-	var bullet_count: int = 48
+	var bullet_count: int = 36
 
 	var player: Player = Game.get_player()
 	var player_pos: Vector2 = player.global_position if player else Vector2(120.0, 320.0)
@@ -76,7 +76,7 @@ func fire_arc() -> void:
 	var pos = entities[0].global_position
 
 	for i in arc:
-		var speed = randf_range(70.0, 180.0)
+		var speed = randf_range(90.0, 180.0)
 		bullet_engine.fire_bullet(pos, i, speed, BulletSkin.Type.ENEMY_BULLET_ALT_SMALL, gravity_bullet)
 
 static func gravity_bullet(bullet: Bullet, delta: float) -> Vector2:

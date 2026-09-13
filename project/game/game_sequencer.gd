@@ -8,6 +8,8 @@ class_name GameSequencer extends Node
 @export var patterns_health: Array[float] = []
 @export var patterns_flavor: Array[PatternFlavor] = []
 
+@export var scoring: Scoring = null
+
 @export var enemy_bullet_engine: BulletEngine = null
 
 var current_idx: int = 0
@@ -52,6 +54,8 @@ func on_pattern_hit(pattern: Pattern) -> void:
 func on_pattern_death(pattern: Pattern) -> void:
 	pattern.is_started = false
 	pattern.is_dead = true
+
+	scoring.on_pattern_completed(current_idx)
 
 	var next_idx = current_idx + 1
 

@@ -1,5 +1,7 @@
 class_name Bullet extends RefCounted
 
+var damage: float = 1.0
+
 var position: Vector2 = Vector2.ZERO
 var angle: float = 0.0
 var velocity: Vector2 = Vector2.ZERO

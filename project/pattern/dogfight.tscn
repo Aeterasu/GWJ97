@@ -9,7 +9,7 @@ radius = 16.0
 
 [node name="Dogfight" type="Node" unique_id=285190987 node_paths=PackedStringArray("entities")]
 script = ExtResource("1_6bsjc")
-fire_rates = Array[float]([0.21, 3.0, 1.2])
+fire_rate = 0.25
 entities = [NodePath("Enemy")]
 metadata/_custom_type_script = "uid://16mvw7i2q77s"
 

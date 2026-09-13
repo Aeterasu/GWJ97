@@ -79,14 +79,14 @@ func on_area_entered(status: int, area_rid: RID, instance_id: int, area_shape_id
 		var body := instance_from_id(instance_id)
 
 		if body is Enemy:
-			(body as Enemy).hit(1.0)
+			(body as Enemy).hit(bullet.damage)
 		if body is Player:
 			(body as Player).hit()
 
 		bullet.is_active = false
 		PhysicsServer2D.area_set_shape_disabled.call_deferred(bullet.area_rid, 0, true)
 
-func fire_bullet(position: Vector2, angle: float, speed: float, skin: BulletSkin.Type, behaviour: Callable = Bullet.process_standard_bullet) -> void:
+func fire_bullet(position: Vector2, angle: float, speed: float, skin: BulletSkin.Type, behaviour: Callable = Bullet.process_standard_bullet) -> Bullet:
 	if active_bullet_count >= max_bullet_count:
 		return
 	
@@ -107,6 +107,8 @@ func fire_bullet(position: Vector2, angle: float, speed: float, skin: BulletSkin
 	PhysicsServer2D.area_set_shape_disabled(bullet.area_rid, 0, false)
 
 	active_bullet_count += 1
+
+	return bullet
 
 func set_bullet_mesh_position(bullet: Bullet, position: Vector2) -> void:
 	var rot: float = 0.0
