@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="PatternFlavor" format=3 uid="uid://ca0xsbul6o6q7"]
+[gd_resource type="Resource" script_class="PatternFlavor" format=3 uid="uid://driobq5dwtwhv"]
 
 [ext_resource type="Script" uid="uid://c0dqn8ky0me73" path="res://pattern/flavor/pattern_flavor.gd" id="1_bjvde"]
 
 [resource]
 script = ExtResource("1_bjvde")
-pattern_names = "BLEEDING STAR"
-pattern_subtext = "hang like sanguine swords above the earth // with burning chrome, the bleeding star writhes in pain // and with that the western star is falling down //"
+pattern_names = "RIOT"
+pattern_subtext = "You will get a rise out of me //"
 metadata/_custom_type_script = "uid://c0dqn8ky0me73"

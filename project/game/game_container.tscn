@@ -9,7 +9,7 @@
 [ext_resource type="Resource" uid="uid://gfyg5kwmpnkp" path="res://bullet/skin/enemy_bullet_red_small.tres" id="4_1cebb"]
 [ext_resource type="Resource" uid="uid://c4wk0a2wym7o5" path="res://pattern/flavor/flavor_1.tres" id="4_to2kc"]
 [ext_resource type="ArrayMesh" uid="uid://b3yur11e2x152" path="res://backdrop/mesh/backdrop_base.obj" id="4_ysh17"]
-[ext_resource type="Resource" uid="uid://ca0xsbul6o6q7" path="res://pattern/flavor/flavor_2.tres" id="5_ino1g"]
+[ext_resource type="Resource" uid="uid://driobq5dwtwhv" path="res://pattern/flavor/flavor_2.tres" id="5_ino1g"]
 [ext_resource type="Resource" uid="uid://cu1imy27jfa6v" path="res://bullet/skin/enemy_bullet_red_long.tres" id="5_kjv07"]
 [ext_resource type="Script" uid="uid://dpcpbpske8jii" path="res://bullet/bullet_engine.gd" id="5_wurgr"]
 [ext_resource type="Resource" uid="uid://qoa7yb5l2iud" path="res://pattern/flavor/flavor_3.tres" id="6_gts4h"]
@@ -29,8 +29,10 @@
 [ext_resource type="Shader" uid="uid://cer0tvbjg2xqt" path="res://ui/boss_healthbar_decorative_stripe.gdshader" id="13_lw3qe"]
 [ext_resource type="Texture2D" uid="uid://2n03m4k3vmdc" path="res://ui/texture/texture_ui_boss_healthbar_vertical_stripe.png" id="14_ysh17"]
 [ext_resource type="PackedScene" uid="uid://vugwune8fbhe" path="res://pattern/omen.tscn" id="17_ijhnq"]
+[ext_resource type="Resource" uid="uid://ca0xsbul6o6q7" path="res://pattern/flavor/flavor_8.tres" id="18_kjv07"]
 [ext_resource type="Script" uid="uid://debx0k47w1p5p" path="res://ui/ui.gd" id="20_gts4h"]
 [ext_resource type="Script" uid="uid://ltfm1x3wqb33" path="res://ui/ui_boss_healthbar.gd" id="21_j7fm5"]
+[ext_resource type="PackedScene" uid="uid://jc8mhtpdtcvy" path="res://pattern/riot.tscn" id="21_jllto"]
 [ext_resource type="Material" uid="uid://c1v46fadxlwp4" path="res://ui/boss_healthbar_material.tres" id="23_ino1g"]
 
 [sub_resource type="Environment" id="Environment_y36n6"]
@@ -119,10 +121,11 @@ metadata/_custom_type_script = "uid://cm7708ogl281p"
 
 [node name="GameSequencer" type="Node" parent="SubViewport/Game" unique_id=1424656608 node_paths=PackedStringArray("animation_player", "patterns", "enemy_bullet_engine")]
 script = ExtResource("2_oryes")
+starting_pattern = 1
 animation_player = NodePath("AnimationPlayer")
-patterns = [NodePath("Omen")]
-patterns_health = Array[float]([1000.0, 800.0, 600.0, 900.0, 1200.0, 1400.0, 1800.0])
-patterns_flavor = Array[ExtResource("3_ysh17")]([ExtResource("4_to2kc"), ExtResource("5_ino1g"), ExtResource("6_gts4h"), ExtResource("7_j7fm5"), ExtResource("8_1vxhs"), ExtResource("9_bybv3"), ExtResource("10_y7kwi")])
+patterns = [NodePath("Omen"), NodePath("Riot")]
+patterns_health = Array[float]([1000.0, 800.0, 600.0, 900.0, 1200.0, 1400.0, 1800.0, 500.0])
+patterns_flavor = Array[ExtResource("3_ysh17")]([ExtResource("4_to2kc"), ExtResource("5_ino1g"), ExtResource("6_gts4h"), ExtResource("7_j7fm5"), ExtResource("8_1vxhs"), ExtResource("9_bybv3"), ExtResource("10_y7kwi"), ExtResource("18_kjv07")])
 enemy_bullet_engine = NodePath("../EnemyBulletEngine")
 metadata/_custom_type_script = "uid://dbaxnfdbt6cyt"
 
@@ -135,6 +138,8 @@ metadata/_custom_type_script = "uid://16mvw7i2q77s"
 
 [node name="Omen" parent="SubViewport/Game/GameSequencer" unique_id=1949596727 instance=ExtResource("17_ijhnq")]
 aimed_attack_fire_rate = 2.0
+
+[node name="Riot" parent="SubViewport/Game/GameSequencer" unique_id=2000619167 instance=ExtResource("21_jllto")]
 
 [node name="ColorRect" type="ColorRect" parent="SubViewport/Game" unique_id=931863613]
 z_index = -4096
@@ -227,9 +232,9 @@ grow_vertical = 2
 
 [node name="ColorRect" type="ColorRect" parent="UI/Padding" unique_id=1680944969]
 layout_mode = 0
-offset_top = 11.0
+offset_top = 13.0
 offset_right = 240.0
-offset_bottom = 25.0
+offset_bottom = 27.0
 color = Color(0.047058824, 0.09803922, 0, 1)
 
 [node name="UIBossHealthbar" type="Node" parent="UI" unique_id=104798359 node_paths=PackedStringArray("parent")]
@@ -245,9 +250,9 @@ metadata/_custom_type_script = "uid://ltfm1x3wqb33"
 [node name="BossHealthbarUnder" type="TextureRect" parent="UI" unique_id=1817836087]
 layout_mode = 0
 offset_left = 2.0
-offset_top = 11.0
+offset_top = 13.0
 offset_right = 240.0
-offset_bottom = 25.0
+offset_bottom = 27.0
 texture = ExtResource("12_q4ejq")
 stretch_mode = 2
 

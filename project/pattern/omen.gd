@@ -53,7 +53,7 @@ func fire_aimed() -> void:
 		var speed: float = randf_range(96.0, 200.0)
 		var angle = BulletPatternHelper.get_angle_to_player(entities[0].global_position) + randf_range(-PI / 4, PI / 4)
 
-		bullet_engine.fire_bullet(pos, angle, speed, BulletSkin.Type.ENEMY_BULLET_RED_LONG)
+		bullet_engine.fire_bullet(pos, angle, speed, BulletSkin.Type.ENEMY_BULLET_ALT_LONG)
 
 func update(delta: float) -> void:
 	var entity = entities[0]

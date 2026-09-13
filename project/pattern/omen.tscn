@@ -213,13 +213,14 @@ font_color = Color(0.98039216, 0.91764706, 0.7882353, 1)
 outline_size = 2
 outline_color = Color(0.047058824, 0.09803922, 0, 1)
 
-[node name="Omen" type="Node2D" unique_id=1949596727 node_paths=PackedStringArray("animation_player", "bullet_origin_left", "bullet_origin_right", "entities")]
+[node name="Omen" type="Node" unique_id=425168190 node_paths=PackedStringArray("animation_player", "bullet_origin_left", "bullet_origin_right", "entities")]
 script = ExtResource("1_va266")
 animation_player = NodePath("AnimationPlayer")
 bullet_origin_left = NodePath("Enemy/Marker2D")
 bullet_origin_right = NodePath("Enemy/Marker2D2")
 fire_rate = 0.5
 entities = [NodePath("Enemy")]
+metadata/_custom_type_script = "uid://dpsgkb70urefo"
 
 [node name="Enemy" type="Area2D" parent="." unique_id=1699698573]
 position = Vector2(120, -88)
@@ -255,8 +256,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 165.0
-offset_right = 240.0
-offset_bottom = 186.0
+offset_bottom = -134.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Bitter medicine we delivering."

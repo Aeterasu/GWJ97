@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://jc8mhtpdtcvy"]
+
+[ext_resource type="Script" uid="uid://bca4q0k37dxxk" path="res://pattern/riot.gd" id="1_jpa7l"]
+[ext_resource type="Script" uid="uid://du4pk0oohw2cn" path="res://enemy/enemy.gd" id="2_jpa7l"]
+[ext_resource type="Texture2D" uid="uid://cbf2r3ltoc2cw" path="res://enemy/texture/texture_enemy_placeholder.png" id="3_2bcf6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lcg72"]
+radius = 43.0
+
+[sub_resource type="Animation" id="Animation_jpa7l"]
+resource_name = "default"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2bcf6"]
+_data = {
+&"default": SubResource("Animation_jpa7l")
+}
+
+[node name="Riot" type="Node" unique_id=2000619167 node_paths=PackedStringArray("shot_origins", "entities")]
+script = ExtResource("1_jpa7l")
+shot_origins = [NodePath("Marker2D1"), NodePath("Marker2D2"), NodePath("Marker2D5"), NodePath("Marker2D3"), NodePath("Marker2D4"), NodePath("Marker2D6"), NodePath("Marker2D7")]
+fire_rate = 0.7
+arc_fire_rate = 1.8
+entities = [NodePath("Enemy")]
+metadata/_custom_type_script = "uid://16mvw7i2q77s"
+
+[node name="Enemy" type="Area2D" parent="." unique_id=1988950251]
+position = Vector2(120, 88)
+script = ExtResource("2_jpa7l")
+metadata/_custom_type_script = "uid://du4pk0oohw2cn"
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy" unique_id=905712511]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_2bcf6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy" unique_id=763111959]
+shape = SubResource("CircleShape2D_lcg72")
+
+[node name="Marker2D1" type="Marker2D" parent="." unique_id=652182968]
+position = Vector2(40, 46)
+
+[node name="Marker2D2" type="Marker2D" parent="." unique_id=386430106]
+position = Vector2(80, 46)
+
+[node name="Marker2D5" type="Marker2D" parent="." unique_id=797221278]
+position = Vector2(120, 46)
+
+[node name="Marker2D3" type="Marker2D" parent="." unique_id=1216344372]
+position = Vector2(160, 46)
+
+[node name="Marker2D4" type="Marker2D" parent="." unique_id=1793028055]
+position = Vector2(200, 46)
+
+[node name="Marker2D6" type="Marker2D" parent="." unique_id=1870676719]
+position = Vector2(230, 46)
+
+[node name="Marker2D7" type="Marker2D" parent="." unique_id=1374938790]
+position = Vector2(10, 46)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=69702977]
+libraries/ = SubResource("AnimationLibrary_2bcf6")

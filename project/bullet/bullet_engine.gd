@@ -83,7 +83,7 @@ func on_area_entered(status: int, area_rid: RID, instance_id: int, area_shape_id
 		bullet.is_active = false
 		PhysicsServer2D.area_set_shape_disabled.call_deferred(bullet.area_rid, 0, true)
 
-func fire_bullet(position: Vector2, angle: float, speed: float, skin: BulletSkin.Type) -> void:
+func fire_bullet(position: Vector2, angle: float, speed: float, skin: BulletSkin.Type, behaviour: Callable = Bullet.process_standard_bullet) -> void:
 	if active_bullet_count >= max_bullet_count:
 		return
 	
@@ -91,13 +91,14 @@ func fire_bullet(position: Vector2, angle: float, speed: float, skin: BulletSkin
 	bullet.is_active = true
 	bullet.position = position
 	bullet.angle = angle
-	bullet.speed = speed
+	bullet.velocity = Vector2.from_angle(angle) * speed
 	bullet.skin = BulletSkinManager.get_skin_by_type(skin)
+	bullet.behaviour = behaviour
 
 	set_bullet_mesh_position(bullet, position)
 	bullet_visual.multimesh.reset_instance_physics_interpolation(bullet.multimesh_id)
 	bullet_visual.multimesh.set_instance_custom_data(bullet.multimesh_id, Color(bullet.skin.atlas_offset.x, bullet.skin.atlas_offset.y, bullet.skin.size.x, bullet.skin.size.y))
-	bullet_visual.multimesh.set_instance_color(bullet.multimesh_id, Color(fmod(Time.get_ticks_msec() / 1000.0, 3600.0), 0.0, 0.0, 0.0))
+	bullet_visual.multimesh.set_instance_color(bullet.multimesh_id, Color((Time.get_ticks_msec() / 100.0) * 3600.0, 0.0, 0.0, 0.0))
 
 	PhysicsServer2D.area_set_transform(bullet.area_rid, Transform2D.IDENTITY.translated(bullet.position))
 	PhysicsServer2D.area_set_shape_disabled(bullet.area_rid, 0, false)

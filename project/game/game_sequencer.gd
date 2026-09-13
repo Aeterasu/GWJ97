@@ -1,5 +1,7 @@
 class_name GameSequencer extends Node
 
+@export var starting_pattern: int = 0
+
 @export var animation_player: AnimationPlayer = null
 
 @export var patterns: Array[Pattern] = []
