@@ -1,0 +1,142 @@
+[gd_scene format=3 uid="uid://cdd8sekbe2omv"]
+
+[ext_resource type="Script" uid="uid://dbws68fonv2ul" path="res://title/title.gd" id="1_crako"]
+[ext_resource type="PackedScene" uid="uid://cryasop3kuabf" path="res://title/title_button.tscn" id="1_yx5l7"]
+[ext_resource type="FontFile" uid="uid://dekxaqxocvhf7" path="res://font/m6x11.ttf" id="2_nx56k"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_6s8lb"]
+font = ExtResource("2_nx56k")
+font_color = Color(1, 0.94509804, 0.9098039, 1)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_crako"]
+load_path = "res://.godot/imported/texture_ranking.png-ac36895df87dd9253636bed31983cbaa.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_64gp6"]
+atlas = SubResource("CompressedTexture2D_crako")
+region = Rect2(0, 0, 0, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4bwyn"]
+atlas = SubResource("CompressedTexture2D_crako")
+region = Rect2(0, 17, 0, 17)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_nx56k"]
+load_path = "res://.godot/imported/texture_settings.png-49e313c05bed83b88c2ad6084044b029.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grl6k"]
+atlas = SubResource("CompressedTexture2D_nx56k")
+region = Rect2(0, 0, 0, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cvhyk"]
+atlas = SubResource("CompressedTexture2D_nx56k")
+region = Rect2(0, 17, 0, 17)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6s8lb"]
+load_path = "res://.godot/imported/texture_exit.png-3fa2ef5729032d6f18dd881dda801f8a.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vxeqy"]
+atlas = SubResource("CompressedTexture2D_6s8lb")
+region = Rect2(0, 0, 0, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3l5ow"]
+atlas = SubResource("CompressedTexture2D_6s8lb")
+region = Rect2(0, 17, 0, 17)
+
+[node name="Title" type="Control" unique_id=1832839802 node_paths=PackedStringArray("press_button", "start", "ranking", "settings", "exit")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_neighbor_top = NodePath("CanvasLayer/VBoxContainer/Start")
+focus_neighbor_bottom = NodePath("CanvasLayer/VBoxContainer/Start")
+focus_mode = 2
+focus_behavior_recursive = 2
+script = ExtResource("1_crako")
+press_button = NodePath("CanvasLayer/PressAnyButton")
+start = NodePath("CanvasLayer/VBoxContainer/Start")
+ranking = NodePath("CanvasLayer/VBoxContainer/Ranking")
+settings = NodePath("CanvasLayer/VBoxContainer/Settings")
+exit = NodePath("CanvasLayer/VBoxContainer/Exit")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=474294353]
+layer = 2049
+follow_viewport_enabled = true
+
+[node name="PressAnyButton" type="Control" parent="CanvasLayer" unique_id=1343932424]
+z_index = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RankLabel" type="Label" parent="CanvasLayer/PressAnyButton" unique_id=355334427]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 286.0
+grow_horizontal = 2
+grow_vertical = 2
+layout_direction = 2
+text = "Press any button"
+label_settings = SubResource("LabelSettings_6s8lb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1663414612]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.078431375, 0.078431375, 0.078431375, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=695264901]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 57.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 9
+
+[node name="Start" parent="CanvasLayer/VBoxContainer" unique_id=1767420163 instance=ExtResource("1_yx5l7")]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Exit")
+
+[node name="Ranking" parent="CanvasLayer/VBoxContainer" unique_id=1056751008 instance=ExtResource("1_yx5l7")]
+layout_mode = 2
+
+[node name="LabelDark" parent="CanvasLayer/VBoxContainer/Ranking" index="1" unique_id=1875355800]
+texture = SubResource("AtlasTexture_64gp6")
+
+[node name="LabelLight" parent="CanvasLayer/VBoxContainer/Ranking" index="3" unique_id=606087133]
+texture = SubResource("AtlasTexture_4bwyn")
+
+[node name="Settings" parent="CanvasLayer/VBoxContainer" unique_id=9106877 instance=ExtResource("1_yx5l7")]
+layout_mode = 2
+
+[node name="LabelDark" parent="CanvasLayer/VBoxContainer/Settings" index="1" unique_id=1875355800]
+texture = SubResource("AtlasTexture_grl6k")
+
+[node name="LabelLight" parent="CanvasLayer/VBoxContainer/Settings" index="3" unique_id=606087133]
+texture = SubResource("AtlasTexture_cvhyk")
+
+[node name="Exit" parent="CanvasLayer/VBoxContainer" unique_id=1417940898 instance=ExtResource("1_yx5l7")]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../Start")
+
+[node name="LabelDark" parent="CanvasLayer/VBoxContainer/Exit" index="1" unique_id=1875355800]
+texture = SubResource("AtlasTexture_vxeqy")
+
+[node name="LabelLight" parent="CanvasLayer/VBoxContainer/Exit" index="3" unique_id=606087133]
+texture = SubResource("AtlasTexture_3l5ow")
+
+[editable path="CanvasLayer/VBoxContainer/Start"]
+[editable path="CanvasLayer/VBoxContainer/Ranking"]
+[editable path="CanvasLayer/VBoxContainer/Settings"]
+[editable path="CanvasLayer/VBoxContainer/Exit"]

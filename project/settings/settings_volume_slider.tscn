@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://bteijr2tpanh2"]
+
+[ext_resource type="Script" uid="uid://dge8ahr6ve7gl" path="res://settings/volume_slider.gd" id="1_i3gkh"]
+[ext_resource type="FontFile" uid="uid://cn1h41d4rq4n8" path="res://font/m5x7.ttf" id="3_pra80"]
+[ext_resource type="Texture2D" uid="uid://daulxvg8virw1" path="res://settings/texture/texture_settings_slider_grabber.png" id="4_408sb"]
+[ext_resource type="Texture2D" uid="uid://cvm08vojojgku" path="res://settings/texture/texture_settings_slider.png" id="5_uced5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_81uap"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_wyoa8"]
+font = ExtResource("3_pra80")
+outline_size = 2
+outline_color = Color(0.078431375, 0.078431375, 0.078431375, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dt0go"]
+texture = ExtResource("5_uced5")
+expand_margin_top = 11.0
+region_rect = Rect2(0, 0, 116, 11)
+
+[node name="VolumeSlider1" type="Button" unique_id=339430017 node_paths=PackedStringArray("slider", "label", "percent_label", "highlight")]
+custom_minimum_size = Vector2(240.44, 20)
+focus_neighbor_top = NodePath("../SettingsButton8")
+theme_override_styles/focus = SubResource("StyleBoxFlat_81uap")
+flat = true
+script = ExtResource("1_i3gkh")
+slider = NodePath("HSlider")
+label = NodePath("Label")
+percent_label = NodePath("Label2")
+highlight = NodePath("Highlight")
+metadata/_custom_type_script = "uid://snsho66g43pl"
+
+[node name="Backdrop" type="TextureRect" parent="." unique_id=2147281930]
+show_behind_parent = true
+layout_mode = 0
+offset_right = 270.0
+offset_bottom = 13.0
+stretch_mode = 2
+
+[node name="Highlight" type="TextureRect" parent="." unique_id=709977151]
+layout_mode = 0
+offset_right = 270.0
+offset_bottom = 13.0
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="." unique_id=1582014787]
+layout_mode = 0
+offset_left = 8.0
+offset_top = -1.0
+offset_right = 86.0
+offset_bottom = 12.0
+text = "SETTING_LABEL"
+label_settings = SubResource("LabelSettings_wyoa8")
+
+[node name="HSlider" type="HSlider" parent="." unique_id=43452369]
+z_index = 1
+layout_mode = 0
+offset_left = 95.0
+offset_top = 3.0
+offset_right = 211.0
+offset_bottom = 22.0
+mouse_filter = 1
+theme_override_constants/grabber_offset = -6
+theme_override_icons/grabber = ExtResource("4_408sb")
+theme_override_icons/grabber_highlight = ExtResource("4_408sb")
+theme_override_icons/grabber_disabled = ExtResource("4_408sb")
+theme_override_styles/slider = SubResource("StyleBoxTexture_dt0go")
+max_value = 1.0
+step = 0.0
+value = 0.5
+
+[node name="Label2" type="Label" parent="." unique_id=264348999]
+layout_mode = 0
+offset_left = 216.0
+offset_top = -1.0
+offset_right = 294.0
+offset_bottom = 12.0
+text = "100%"
+label_settings = SubResource("LabelSettings_wyoa8")
