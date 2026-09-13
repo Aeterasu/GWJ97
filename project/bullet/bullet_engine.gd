@@ -1,6 +1,7 @@
 class_name BulletEngine extends Node
 
 @export var max_bullet_count: int = 0
+@export var shape_radius: float = 2.0
 @export var bullet_visual: MultiMeshInstance2D = null
 @export_flags("Default", "Player", "Enemy") var collision_mask: int = 0
 
@@ -20,7 +21,7 @@ func _ready() -> void:
 	# physics
 	
 	shape_rid = PhysicsServer2D.circle_shape_create()
-	PhysicsServer2D.shape_set_data(shape_rid, 2.0)
+	PhysicsServer2D.shape_set_data(shape_rid, shape_radius)
 
 	# visual
 
@@ -95,7 +96,8 @@ func fire_bullet(position: Vector2, angle: float, speed: float, skin: BulletSkin
 
 	set_bullet_mesh_position(bullet, position)
 	bullet_visual.multimesh.reset_instance_physics_interpolation(bullet.multimesh_id)
-	bullet_visual.multimesh.set_instance_custom_data(bullet.multimesh_id, Color(fmod(Time.get_ticks_msec() / 1000.0, 3600.0), 0.0, 0.0, 0.0))
+	bullet_visual.multimesh.set_instance_custom_data(bullet.multimesh_id, Color(bullet.skin.atlas_offset.x, bullet.skin.atlas_offset.y, bullet.skin.size.x, bullet.skin.size.y))
+	bullet_visual.multimesh.set_instance_color(bullet.multimesh_id, Color(fmod(Time.get_ticks_msec() / 1000.0, 3600.0), 0.0, 0.0, 0.0))
 
 	PhysicsServer2D.area_set_transform(bullet.area_rid, Transform2D.IDENTITY.translated(bullet.position))
 	PhysicsServer2D.area_set_shape_disabled(bullet.area_rid, 0, false)
@@ -103,5 +105,10 @@ func fire_bullet(position: Vector2, angle: float, speed: float, skin: BulletSkin
 	active_bullet_count += 1
 
 func set_bullet_mesh_position(bullet: Bullet, position: Vector2) -> void:
-	bullet_visual.multimesh.set_instance_transform_2d(bullet.multimesh_id, Transform2D.IDENTITY.translated(position).scaled_local(bullet.skin.size))
+	var rot: float = 0.0
+
+	if bullet.skin.align_angle:
+		rot = bullet.angle + PI / 2
+
+	bullet_visual.multimesh.set_instance_transform_2d(bullet.multimesh_id, Transform2D.IDENTITY.translated(position).rotated_local(rot).scaled_local(bullet.skin.size))	
 

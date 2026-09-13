@@ -1,20 +1,25 @@
 [gd_scene format=3 uid="uid://cbfg4k62burec"]
 
 [ext_resource type="Script" uid="uid://dsn2rdoa26phn" path="res://game/game.gd" id="1_q4ejq"]
+[ext_resource type="Script" uid="uid://cm7708ogl281p" path="res://bullet/bullet_skin_manager.gd" id="2_ijhnq"]
 [ext_resource type="Script" uid="uid://dbaxnfdbt6cyt" path="res://game/game_sequencer.gd" id="2_oryes"]
 [ext_resource type="Script" uid="uid://llf5q5lfma04" path="res://backdrop/3d_backdrop.gd" id="3_lw3qe"]
+[ext_resource type="Script" uid="uid://cnhr5ggnp7gby" path="res://bullet/bullet_skin.gd" id="3_yke4u"]
 [ext_resource type="Script" uid="uid://c0dqn8ky0me73" path="res://pattern/flavor/pattern_flavor.gd" id="3_ysh17"]
+[ext_resource type="Resource" uid="uid://gfyg5kwmpnkp" path="res://bullet/skin/enemy_bullet_small.tres" id="4_07ulu"]
 [ext_resource type="Resource" uid="uid://c4wk0a2wym7o5" path="res://pattern/flavor/flavor_1.tres" id="4_to2kc"]
 [ext_resource type="ArrayMesh" uid="uid://b3yur11e2x152" path="res://backdrop/mesh/backdrop_base.obj" id="4_ysh17"]
+[ext_resource type="Resource" uid="uid://dca7kp5a3c0ng" path="res://bullet/skin/player_bullet_default.tres" id="5_1cebb"]
 [ext_resource type="Resource" uid="uid://ca0xsbul6o6q7" path="res://pattern/flavor/flavor_2.tres" id="5_ino1g"]
 [ext_resource type="Script" uid="uid://dpcpbpske8jii" path="res://bullet/bullet_engine.gd" id="5_wurgr"]
 [ext_resource type="Resource" uid="uid://qoa7yb5l2iud" path="res://pattern/flavor/flavor_3.tres" id="6_gts4h"]
+[ext_resource type="Resource" uid="uid://cu1imy27jfa6v" path="res://bullet/skin/enemy_bullet_long.tres" id="6_kjv07"]
 [ext_resource type="Texture2D" uid="uid://cag6n42kgn62k" path="res://bullet/texture/texture_player_bullet.png" id="6_m0o61"]
 [ext_resource type="Resource" uid="uid://u77hjgf5b1xn" path="res://pattern/flavor/flavor_4.tres" id="7_j7fm5"]
 [ext_resource type="PackedScene" uid="uid://bjvwqcehq80f5" path="res://player/player.tscn" id="7_mp07y"]
 [ext_resource type="Resource" uid="uid://0kwc7tjajnl" path="res://pattern/flavor/flavor_5.tres" id="8_1vxhs"]
 [ext_resource type="Shader" uid="uid://brnm1dduy7bpo" path="res://bullet/bullet_shader.gdshader" id="8_wkyfq"]
-[ext_resource type="Texture2D" uid="uid://ca8qamvsoarpw" path="res://bullet/texture/texture_enemy_bullet_small.png" id="9_ag8gt"]
+[ext_resource type="Texture2D" uid="uid://ca8qamvsoarpw" path="res://bullet/texture/texture_enemy_bullet.png" id="9_ag8gt"]
 [ext_resource type="Resource" uid="uid://tbkoqcc0igv0" path="res://pattern/flavor/flavor_6.tres" id="9_bybv3"]
 [ext_resource type="Resource" uid="uid://cg3iiieqxuqqs" path="res://pattern/flavor/flavor_7.tres" id="10_y7kwi"]
 [ext_resource type="Script" uid="uid://16mvw7i2q77s" path="res://pattern/pattern.gd" id="11_j7fm5"]
@@ -42,6 +47,7 @@ albedo_color = Color(0.36862746, 0.11372549, 0.05490196, 1)
 size = Vector2(9, -28)
 
 [sub_resource type="MultiMesh" id="MultiMesh_dxrkv"]
+use_colors = true
 use_custom_data = true
 mesh = SubResource("QuadMesh_dakft")
 
@@ -56,6 +62,7 @@ shader_parameter/speed = 8.0
 size = Vector2(1, -1)
 
 [sub_resource type="MultiMesh" id="MultiMesh_y36n6"]
+use_colors = true
 use_custom_data = true
 mesh = SubResource("QuadMesh_u5opy")
 
@@ -89,6 +96,15 @@ script = ExtResource("1_q4ejq")
 game_sequencer = NodePath("GameSequencer")
 player = NodePath("Player")
 ui_root = NodePath("../../UI")
+
+[node name="BulletSkinManager" type="Node" parent="SubViewport/Game" unique_id=1300980304]
+script = ExtResource("2_ijhnq")
+skins = Dictionary[int, ExtResource("3_yke4u")]({
+100: ExtResource("4_07ulu"),
+102: ExtResource("6_kjv07"),
+200: ExtResource("5_1cebb")
+})
+metadata/_custom_type_script = "uid://cm7708ogl281p"
 
 [node name="GameSequencer" type="Node" parent="SubViewport/Game" unique_id=1424656608 node_paths=PackedStringArray("animation_player", "patterns", "enemy_bullet_engine")]
 script = ExtResource("2_oryes")
@@ -157,6 +173,7 @@ fov = 21.0
 [node name="PlayerBulletEngine" type="Node" parent="SubViewport/Game" unique_id=297898871 node_paths=PackedStringArray("bullet_visual")]
 script = ExtResource("5_wurgr")
 max_bullet_count = 1024
+shape_radius = 8.0
 bullet_visual = NodePath("../PlayerBulletVisual")
 collision_mask = 4
 metadata/_custom_type_script = "uid://dpcpbpske8jii"
