@@ -34,9 +34,14 @@ var collect_timer: float = 0.0
 
 var fx_alpha: float = 0.0
 
+var current_collection_radius: float = 0.0
+
 const GRAVITY: float = 9.8 / 5.0
 const OOB_THRESHOLD: float = 32.0
-const COLLECT_RADIUS: float = 54.0 * 54.0
+
+const ITEM_COLLECT_RADIUS: float = 96.0 * 96.0
+const SUN_COLLECT_RADIUS: float = 54.0 * 54.0
+
 const COLLECT_DURATION: float = 0.8
 
 static var player: Player = null
@@ -66,7 +71,7 @@ static func process_normal_score_item(item: ScoreItem, delta: float) -> void:
 	if item.position.y <= -OOB_THRESHOLD or item.position.y >= Game.BOARD_SIZE.y + OOB_THRESHOLD or item.position.x <= -OOB_THRESHOLD or item.position.x >= Game.BOARD_SIZE.x + OOB_THRESHOLD:
 		item.state = State.DISABLED
 
-	if item.position.distance_squared_to(get_player_global_position()) <= COLLECT_RADIUS:
+	if item.position.distance_squared_to(get_player_global_position()) <= item.current_collection_radius:
 		item.state = State.VACUUM
 
 static func process_vacuum_score_item(item: ScoreItem, delta: float) -> void:

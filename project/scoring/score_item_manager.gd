@@ -63,6 +63,7 @@ func spawn_score_item(type: ScoreItem.Type, position: Vector2) -> ScoreItem:
 	item.fx_alpha = 3.0
 	item.scale = Vector2.ONE * 2.5
 	item.collect_timer = 0.0
+	item.current_collection_radius = ScoreItem.ITEM_COLLECT_RADIUS
 
 	if not ScoreItem.player:
 		ScoreItem.player = Game.get_player()

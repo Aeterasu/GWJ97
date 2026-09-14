@@ -53,10 +53,11 @@ func spawn_sun(position: Vector2, velocity: Vector2 = Vector2.ZERO) -> ScoreItem
 
 	var sun = suns[active_sun_count]
 	sun.position = position
-	sun.use_gravity = false
+	sun.current_collection_radius = ScoreItem.SUN_COLLECT_RADIUS
 
 	if velocity.is_equal_approx(Vector2.ZERO):
 		sun.velocity = Vector2.UP * 64.0
+		sun.use_gravity = true
 	else:
 		sun.velocity = velocity
 	
