@@ -24,6 +24,11 @@ func init_pattern() -> void:
 
 	start_origin = randi() % shot_origins.size()
 
+func kill_start() -> void:
+	super()
+
+	animation_player.play("death")
+
 func update(delta: float) -> void:
 	fire_time_left -= delta
 

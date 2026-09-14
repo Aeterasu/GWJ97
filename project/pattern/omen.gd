@@ -48,7 +48,7 @@ func fire() -> void:
 
 	var arc = BulletPatternHelper.get_arc(PI / 2 + deg_to_rad(current_offset), deg_to_rad(arc_spread), arc_count)
 
-	var speed: float = 220.0
+	var speed: float = 200.0
 
 	for angle in arc:
 		bullet_engine.fire_bullet(entities[0].global_position, angle, speed, BulletSkin.Type.ENEMY_BULLET_RED_SMALL)	
@@ -66,7 +66,7 @@ func fire() -> void:
 
 	# aimed bullets
 
-	var speed_2 := 170.0
+	var speed_2 := 130.0
 
 	for i in 6:
 		bullet_engine.fire_bullet(entities[0].global_position + Vector2.from_angle(TAU * randf()) * randf() * 8.0, BulletPatternHelper.get_angle_to_player(entities[0].global_position) + randf_range(-0.8, 0.8), speed_2, BulletSkin.Type.ENEMY_BULLET_ALT_LONG)

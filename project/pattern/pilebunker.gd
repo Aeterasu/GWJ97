@@ -16,8 +16,6 @@ func kill_start() -> void:
 	super()
 	animation_player.play("death")
 
-	animation_player.stop()
-
 func update(delta: float) -> void:
 	var player = Game.get_player()
 	var target_pos = player.global_position if player else Vector2(120.0, 320.0)

@@ -275,10 +275,9 @@ color_ramp = SubResource("Gradient_3b7yk")
 
 [node name="GameSequencer" type="Node" parent="SubViewport/Game" unique_id=1424656608 node_paths=PackedStringArray("animation_player", "patterns", "scoring", "enemy_bullet_engine", "sun_spawner")]
 script = ExtResource("2_oryes")
-starting_pattern = 1
 animation_player = NodePath("AnimationPlayer")
 patterns = [NodePath("Omen"), NodePath("Breakout"), NodePath("Riot"), NodePath("Dogfight"), NodePath("Pilebunker"), NodePath("HighRoller")]
-patterns_health = Array[float]([2000.0, 1500.0, 1600.0, 800.0, 800.0, 2800.0, 2250.0, 2250.0, 2250.0, 1200.0])
+patterns_health = Array[float]([2000.0, 1500.0, 1600.0, 600.0, 600.0, 2800.0, 2250.0, 2250.0, 2250.0, 1200.0])
 patterns_flavor = Array[ExtResource("3_ysh17")]([ExtResource("4_to2kc"), ExtResource("5_ino1g"), ExtResource("8_v7aj6"), ExtResource("6_gts4h"), ExtResource("7_j7fm5"), ExtResource("15_y37xm"), ExtResource("8_1vxhs"), ExtResource("9_bybv3"), ExtResource("10_y7kwi"), ExtResource("18_kjv07")])
 scoring = NodePath("../Scoring")
 enemy_bullet_engine = NodePath("../EnemyBulletEngine")
