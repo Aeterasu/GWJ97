@@ -32,6 +32,5 @@ func update(delta: float) -> void:
 		is_active = false
 		PhysicsServer2D.area_set_shape_disabled.call_deferred(area_rid, 0, true)
 
-
 static func process_standard_bullet(bullet: Bullet, delta: float) -> Vector2:
 	return bullet.position + bullet.velocity * delta

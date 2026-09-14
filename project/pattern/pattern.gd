@@ -13,8 +13,11 @@ var is_started: bool = false
 var is_dead: bool = false
 
 signal on_hit
-signal on_health_depleted
 
+# the obvious difference here:
+# on_health_depleted fires when the health reaches 0
+# on_death fires when the pattern goes out of scope - for example after death animation finishes
+signal on_health_depleted
 signal on_death
 
 func _ready() -> void:

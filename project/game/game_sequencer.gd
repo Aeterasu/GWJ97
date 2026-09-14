@@ -30,6 +30,7 @@ func init_pattern(idx: int) -> void:
 		
 		# TODO: don't forget to unsubscribe when the pattern is disposed!
 		patterns[idx].on_hit.connect(on_pattern_hit)
+		patterns[idx].on_health_depleted.connect(on_pattern_health_depleted)
 		patterns[idx].on_death.connect(on_pattern_death)
 
 		current_idx = idx
@@ -51,12 +52,14 @@ func get_all_health_percentagees() -> Array[float]:
 func on_pattern_hit(pattern: Pattern) -> void:
 	propagate_pattern_hit.emit(pattern)
 
+func on_pattern_health_depleted(pattern: Pattern) -> void:
+	scoring.on_pattern_completed(current_idx)
+	enemy_bullet_engine.bullet_cancel()
+
 func on_pattern_death(pattern: Pattern) -> void:
 	pattern.is_started = false
 	pattern.is_dead = true
-
-	scoring.on_pattern_completed(current_idx)
-
+	
 	var next_idx = current_idx + 1
 
 	if next_idx >= patterns.size():
