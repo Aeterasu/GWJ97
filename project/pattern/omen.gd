@@ -10,16 +10,12 @@ var time: float = 0.0
 
 @export var fire_rate: float = 0.0
 var fire_time_left: float = 0.0
-var toggle_side: bool = false
+@export var current_offset: float = 0.0
+@export var arc_spread: float = 15.0
+@export var max_offset: float = 45.0
+var direction: float = 1.0
 
-@export var aimed_attack_fire_rate: float = 0.0
-var aimed_attack_time_left: float = 0.0
-
-enum Side
-{
-	LEFT,
-	RIGHT,
-}
+var count: int = 0
 
 func _ready() -> void:
 	super()
@@ -30,36 +26,8 @@ func init_pattern() -> void:
 	super()
 
 	fire_time_left = fire_rate
-	aimed_attack_time_left = aimed_attack_fire_rate
 
 	animation_player.play("start")
-
-func fire(side: Omen.Side) -> void:
-	var bullet_count: int = 24
-
-	var circle = BulletPatternHelper.get_circle(0.0, bullet_count)
-
-	var pos = bullet_origin_left.global_position if side == Side.LEFT else bullet_origin_right.global_position
-
-	for i in circle.size():
-		var angle = circle[i]
-		var speed = 150.0	
-		if sun_counter > 0 and sun_counter % 3 == 0 and i == 6:
-			sun_spawner.spawn_sun(pos, Vector2.from_angle(circle[i]) * 110.0)
-		else:
-			bullet_engine.fire_bullet(pos, angle, speed, BulletSkin.Type.ENEMY_BULLET_RED_SMALL)
-
-	sun_counter += 1
-
-func fire_aimed() -> void:
-	var bullet_count: int = 16
-
-	for i in bullet_count:
-		var pos = entities[0].global_position + Vector2.from_angle(randf() * TAU) * randf_range(8.0, 16.0)
-		var speed: float = randf_range(96.0, 200.0)
-		var angle = BulletPatternHelper.get_angle_to_player(entities[0].global_position) + randf_range(-PI / 4, PI / 4)
-
-		bullet_engine.fire_bullet(pos, angle, speed, BulletSkin.Type.ENEMY_BULLET_ALT_LONG)
 
 func update(delta: float) -> void:
 	var entity = entities[0]
@@ -73,14 +41,35 @@ func update(delta: float) -> void:
 
 	if fire_time_left <= 0.0:
 		fire_time_left = fire_rate
-		fire(Side.RIGHT if toggle_side else Side.LEFT)
-		toggle_side = not toggle_side
+		fire()
 
-	aimed_attack_time_left -= delta
+func fire() -> void:
+	var arc_count: int = 6
 
-	if aimed_attack_time_left <= 0.0:
-		aimed_attack_time_left = aimed_attack_fire_rate
-		fire_aimed()
+	var arc = BulletPatternHelper.get_arc(PI / 2 + deg_to_rad(current_offset), deg_to_rad(arc_spread), arc_count)
+
+	var speed: float = 220.0
+
+	for angle in arc:
+		bullet_engine.fire_bullet(entities[0].global_position, angle, speed, BulletSkin.Type.ENEMY_BULLET_RED_SMALL)	
+
+	current_offset += arc_spread * direction
+
+	if current_offset >= max_offset or current_offset <= -max_offset:
+		direction *= -1.0
+		
+		count += 1
+
+		if count > 3:
+			sun_spawner.spawn_sun(entities[0].global_position)
+			count = 0
+
+	# aimed bullets
+
+	var speed_2 := 170.0
+
+	for i in 6:
+		bullet_engine.fire_bullet(entities[0].global_position + Vector2.from_angle(TAU * randf()) * randf() * 8.0, BulletPatternHelper.get_angle_to_player(entities[0].global_position) + randf_range(-0.8, 0.8), speed_2, BulletSkin.Type.ENEMY_BULLET_ALT_LONG)
 
 func kill_start() -> void:
 	super()

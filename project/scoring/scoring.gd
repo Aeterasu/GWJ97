@@ -1,6 +1,7 @@
 class_name Scoring extends Node
 
 @export var score_awards_per_pattern: Array[int] = []
+
 @export var label: Label = null
 
 @export var score_item_manager: ScoreItemManager = null
@@ -15,13 +16,15 @@ var score: int = 0:
 
 		score = value
 		
-		label.text = Utils.format_thousands(score)
+		update_label()
 
 # this is the multiplier awarded for rescuing little suns
 # it is not related to no-miss-no-bombs bonuses
 var current_rescue_multiplier: float = 1.0:
 	set(value):
 		current_rescue_multiplier = clampf(value, 1.0, MAX_RESCUE_MULTIPLIER)
+		
+		update_label()
 
 const MAX_RESCUE_MULTIPLIER: float = 20.0
 const SCORE_ITEM_BASE_VALUE: int = 100
@@ -29,6 +32,11 @@ const SCORE_ITEM_BASE_VALUE: int = 100
 func _ready() -> void:
 	score_item_manager.on_item_collection.connect(on_score_item_picked_up)
 	score_sun_manager.on_sun_collection.connect(on_sun_collection)
+
+	update_label()
+
+func update_label() -> void:
+	label.text = Utils.format_thousands(score) + " (x" + str(current_rescue_multiplier) + ")"
 
 # is is important - if anything awards score, it can NEVER directly call award_score!
 # everything must be routed through functions here so that we do not lose track of the multipliers
@@ -57,7 +65,10 @@ func on_pattern_completed(pattern_idx: int) -> void:
 	positions.resize(count)
 
 	for i in count:
-		score_item_manager.spawn_score_item(ScoreItem.Type.MEDIUM, engine.bullets[i].position)
+		var type = get_item_type_from_multiplier(current_rescue_multiplier) 
+
+		var item = score_item_manager.spawn_score_item(type, engine.bullets[i].position)
+		item.reward = roundi(SCORE_ITEM_BASE_VALUE * current_rescue_multiplier)
 		positions[i] = engine.bullets[i].position
 
 	score_item_particles.amount = count
@@ -65,8 +76,26 @@ func on_pattern_completed(pattern_idx: int) -> void:
 	score_item_particles.emission_points = positions
 	score_item_particles.set_deferred("emitting", true)
 
+	# sun
+
+	var sun = score_sun_manager.spawn_sun(Vector2(120.0, 88.0))
+	if sun:
+		sun.use_gravity = true
+
+func get_item_type_from_multiplier(multiplier: float = 1.0) -> ScoreItem.Type:
+	if multiplier <= 1.0:
+		return ScoreItem.Type.VERY_SMALL
+	elif multiplier > 1.0 and multiplier <= 10.0:
+		return ScoreItem.Type.SMALL
+	elif multiplier > 10.0 and multiplier < MAX_RESCUE_MULTIPLIER:
+		return ScoreItem.Type.MEDIUM
+	elif multiplier >= MAX_RESCUE_MULTIPLIER:
+		return ScoreItem.Type.LARGE
+
+	return ScoreItem.Type.VERY_SMALL
+
 func on_score_item_picked_up(item: ScoreItem) -> void:
-	award_score(SCORE_ITEM_BASE_VALUE)
+	award_score(item.reward)
 
 func on_sun_collection(item: ScoreItem) -> void:
 	award_rescue_multiplier()

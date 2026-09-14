@@ -47,10 +47,10 @@ func _physics_process(delta: float) -> void:
 
 		i += 1
 
-		visual.multimesh.set_instance_transform_2d(item.multimesh_id, Transform2D.IDENTITY.scaled_local((atlas_offsets[item.type])[0] * item.scale).translated(item.position))
+		visual.multimesh.set_instance_transform_2d(item.multimesh_id, Transform2D.IDENTITY.scaled_local((atlas_offsets[item.type])[1] * item.scale).translated(item.position))
 		visual.multimesh.set_instance_color(item.multimesh_id, Color(clampf(item.fx_alpha, 0.0, 1.0), 0.0, 0.0, 0.0))
 
-func spawn_score_item(type: ScoreItem.Type, position: Vector2) -> void:
+func spawn_score_item(type: ScoreItem.Type, position: Vector2) -> ScoreItem:
 	if active_item_count >= max_item_count:
 		return
 	
@@ -63,6 +63,7 @@ func spawn_score_item(type: ScoreItem.Type, position: Vector2) -> void:
 	item.fx_alpha = 3.0
 	item.scale = Vector2.ONE * 2.5
 	item.collect_timer = 0.0
+	item.current_collection_radius = ScoreItem.ITEM_COLLECT_RADIUS
 
 	if not ScoreItem.player:
 		ScoreItem.player = Game.get_player()
@@ -71,6 +72,8 @@ func spawn_score_item(type: ScoreItem.Type, position: Vector2) -> void:
 	visual.multimesh.reset_instance_physics_interpolation(item.multimesh_id)
 
 	var custom = atlas_offsets[type]
-	visual.multimesh.set_instance_custom_data(item.multimesh_id, Color(custom[1].x, custom[1].y, custom[0].x, custom[0].y))
+	visual.multimesh.set_instance_custom_data(item.multimesh_id, Color(custom[0].x, custom[0].y, custom[1].x, custom[1].y))
 
 	active_item_count += 1
+
+	return item
