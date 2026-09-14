@@ -2,10 +2,12 @@ class_name ScoreItem extends RefCounted
 
 enum Type
 {
-	VERY_SMALL,
-	SMALL,
-	MEDIUM,
-	LARGE,
+	VERY_SMALL = 0,
+	SMALL = 1,
+	MEDIUM = 2,
+	LARGE = 3,
+	
+	SUN = 100,
 }
 
 enum State
@@ -19,6 +21,7 @@ var multimesh_id: int = 0
 
 var position: Vector2 = Vector2.ZERO
 var velocity: Vector2 = Vector2.ZERO
+var use_gravity: bool = true
 
 var scale: Vector2 = Vector2.ONE
 
@@ -51,8 +54,10 @@ func update(delta: float) -> void:
 
 static func process_normal_score_item(item: ScoreItem, delta: float) -> void:
 	item.position += item.velocity * delta;
-	item.velocity.x = lerp(item.velocity.x, 0.0, 4.0 * delta)
-	item.velocity.y += GRAVITY;
+
+	if item.use_gravity:
+		item.velocity.x = lerp(item.velocity.x, 0.0, 4.0 * delta)
+		item.velocity.y += GRAVITY;
 
 	item.scale = item.scale.lerp(Vector2.ONE, 1.0 - exp(-10.0 * delta))
 

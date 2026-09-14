@@ -5,6 +5,7 @@ class_name Scoring extends Node
 
 @export var score_item_manager: ScoreItemManager = null
 @export var score_item_particles: CPUParticles2D = null
+@export var score_sun_manager: ScoreSunManager = null
 @export var game_sequencer: GameSequencer = null
 
 var score: int = 0:
@@ -27,11 +28,18 @@ const SCORE_ITEM_BASE_VALUE: int = 100
 
 func _ready() -> void:
 	score_item_manager.on_item_collection.connect(on_score_item_picked_up)
+	score_sun_manager.on_sun_collection.connect(on_sun_collection)
 
 # is is important - if anything awards score, it can NEVER directly call award_score!
 # everything must be routed through functions here so that we do not lose track of the multipliers
 func award_score(amount: int) -> void:
 	score += amount
+
+func award_rescue_multiplier() -> void:
+	current_rescue_multiplier += 1.0
+
+func reset_rescue_multiplier() -> void:
+	current_rescue_multiplier = 1.0
 
 func on_pattern_completed(pattern_idx: int) -> void:
 	award_score(roundi(score_awards_per_pattern[pattern_idx] * current_rescue_multiplier))
@@ -41,6 +49,10 @@ func on_pattern_completed(pattern_idx: int) -> void:
 	var engine = game_sequencer.enemy_bullet_engine
 
 	var count: int = min(score_item_manager.max_item_count, engine.active_bullet_count)
+
+	if count <= 0:
+		return
+
 	var positions: PackedVector2Array = []
 	positions.resize(count)
 
@@ -55,3 +67,6 @@ func on_pattern_completed(pattern_idx: int) -> void:
 
 func on_score_item_picked_up(item: ScoreItem) -> void:
 	award_score(SCORE_ITEM_BASE_VALUE)
+
+func on_sun_collection(item: ScoreItem) -> void:
+	award_rescue_multiplier()

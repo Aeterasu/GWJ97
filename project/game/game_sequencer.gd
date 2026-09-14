@@ -11,6 +11,7 @@ class_name GameSequencer extends Node
 @export var scoring: Scoring = null
 
 @export var enemy_bullet_engine: BulletEngine = null
+@export var sun_spawner: ScoreSunManager = null
 
 var current_idx: int = 0
 
@@ -25,6 +26,7 @@ func fix() -> void:
 func init_pattern(idx: int) -> void:
 	if idx >= 0 and idx < patterns.size():
 		patterns[idx].bullet_engine = self.enemy_bullet_engine
+		patterns[idx].sun_spawner = self.sun_spawner
 		patterns[idx].health = patterns_health[idx]
 		patterns[idx].init_pattern()
 		

@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://dpcpbpske8jii" path="res://bullet/bullet_engine.gd" id="5_wurgr"]
 [ext_resource type="Resource" uid="uid://qoa7yb5l2iud" path="res://pattern/flavor/flavor_3.tres" id="6_gts4h"]
 [ext_resource type="Resource" uid="uid://6f1bl52o4lso" path="res://bullet/skin/enemy_bullet_green_small.tres" id="6_jllto"]
+[ext_resource type="Script" uid="uid://dlyqg8mvfu0e1" path="res://scoring/score_sun_manager.gd" id="6_ko3mt"]
 [ext_resource type="Texture2D" uid="uid://cag6n42kgn62k" path="res://bullet/texture/texture_player_bullet.png" id="6_m0o61"]
 [ext_resource type="Shader" uid="uid://bfj1jcktui8j1" path="res://scoring/score_item_shader.gdshader" id="6_tuiuk"]
 [ext_resource type="Texture2D" uid="uid://ursdi4nmx618" path="res://scoring/texture/texture_score_item.png" id="7_36bdl"]
@@ -41,6 +42,7 @@
 [ext_resource type="Material" uid="uid://c1v46fadxlwp4" path="res://ui/boss_healthbar_material.tres" id="23_ino1g"]
 [ext_resource type="PackedScene" uid="uid://b2hnbptqpl1ea" path="res://pattern/dogfight.tscn" id="23_qiqgi"]
 [ext_resource type="Texture2D" uid="uid://bhml1rev88qon" path="res://scoring/texture/texture_score_spark.png" id="35_ousyn"]
+[ext_resource type="PackedScene" uid="uid://cgan3ookja2lx" path="res://scoring/score_sun.tscn" id="36_fp80n"]
 [ext_resource type="Texture2D" uid="uid://d3q2yxbbn2oba" path="res://ui/texture/texture_ui_boss_healthbar_horizontal_stripe.png" id="37_qiqgi"]
 [ext_resource type="Texture2D" uid="uid://bbgmlb3pvevtj" path="res://ui/texture/texture_ui_stripe_diagonal.png" id="38_jseim"]
 [ext_resource type="FontFile" uid="uid://cn1h41d4rq4n8" path="res://font/m5x7.ttf" id="38_ms3xe"]
@@ -71,6 +73,18 @@ fill_to = Vector2(0, 1)
 offsets = PackedFloat32Array(0, 0.18439716, 0.5177305, 1)
 colors = PackedColorArray(0.16862746, 0.05490196, 0.007843138, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0.16862746, 0.05490196, 0.007843138, 0)
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_s68re"]
+light_mode = 1
+
+[sub_resource type="Curve" id="Curve_3b7yk"]
+_limits = [0.99, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 0.99), 0.0, 0.0, 0, 0, Vector2(1, 2), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_ixbki"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_36bdl"]
 shader = ExtResource("6_tuiuk")
 shader_parameter/atlas = ExtResource("7_36bdl")
@@ -83,18 +97,6 @@ size = Vector2(1, -1)
 use_colors = true
 use_custom_data = true
 mesh = SubResource("QuadMesh_ixbki")
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_s68re"]
-light_mode = 1
-
-[sub_resource type="Curve" id="Curve_3b7yk"]
-_limits = [0.99, 2.0, 0.0, 1.0]
-_data = [Vector2(0, 0.99), 0.0, 0.0, 0, 0, Vector2(1, 2), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="Curve" id="Curve_ixbki"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ijhnq"]
 shader = ExtResource("8_wkyfq")
@@ -267,12 +269,36 @@ tangential_accel_max = 0.1
 color = Color(0.9411765, 0.45882353, 0.1254902, 1)
 color_ramp = SubResource("Gradient_3b7yk")
 
-[node name="Scoring" type="Node" parent="SubViewport/Game" unique_id=269865828 node_paths=PackedStringArray("label", "score_item_manager", "score_item_particles", "game_sequencer")]
+[node name="GameSequencer" type="Node" parent="SubViewport/Game" unique_id=1424656608 node_paths=PackedStringArray("animation_player", "patterns", "scoring", "enemy_bullet_engine", "sun_spawner")]
+script = ExtResource("2_oryes")
+animation_player = NodePath("AnimationPlayer")
+patterns = [NodePath("Omen"), NodePath("Riot"), NodePath("Dogfight")]
+patterns_health = Array[float]([2000.0, 1700.0, 1050.0, 2100.0, 2100.0, 2250.0, 2250.0, 2250.0, 1200.0])
+patterns_flavor = Array[ExtResource("3_ysh17")]([ExtResource("4_to2kc"), ExtResource("5_ino1g"), ExtResource("6_gts4h"), ExtResource("7_j7fm5"), ExtResource("15_y37xm"), ExtResource("8_1vxhs"), ExtResource("9_bybv3"), ExtResource("10_y7kwi"), ExtResource("18_kjv07")])
+scoring = NodePath("../Scoring")
+enemy_bullet_engine = NodePath("../EnemyBulletEngine")
+sun_spawner = NodePath("../Scoring/ScoreSunManager")
+metadata/_custom_type_script = "uid://dbaxnfdbt6cyt"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SubViewport/Game/GameSequencer" unique_id=450444269]
+
+[node name="TestPattern" type="Node" parent="SubViewport/Game/GameSequencer" unique_id=961206150]
+script = ExtResource("11_j7fm5")
+metadata/_custom_type_script = "uid://16mvw7i2q77s"
+
+[node name="Omen" parent="SubViewport/Game/GameSequencer" unique_id=1949596727 instance=ExtResource("17_ijhnq")]
+
+[node name="Riot" parent="SubViewport/Game/GameSequencer" unique_id=2000619167 instance=ExtResource("21_jllto")]
+
+[node name="Dogfight" parent="SubViewport/Game/GameSequencer" unique_id=285190987 instance=ExtResource("23_qiqgi")]
+
+[node name="Scoring" type="Node" parent="SubViewport/Game" unique_id=269865828 node_paths=PackedStringArray("label", "score_item_manager", "score_item_particles", "score_sun_manager", "game_sequencer")]
 script = ExtResource("2_jld1g")
 score_awards_per_pattern = Array[int]([100000, 150000, 200000, 200000, 300000, 300000, 500000, 500000, 1000000])
 label = NodePath("../../../UI/ScoreLabel")
 score_item_manager = NodePath("ScoreItemManager")
 score_item_particles = NodePath("../ScoreItemParticles")
+score_sun_manager = NodePath("ScoreSunManager")
 game_sequencer = NodePath("../GameSequencer")
 metadata/_custom_type_script = "uid://ccit5a7gc55fv"
 
@@ -287,12 +313,14 @@ atlas_offsets = Dictionary[int, PackedVector2Array]({
 })
 metadata/_custom_type_script = "uid://c3gpckl5lcjkm"
 
-[node name="ScoreItemManager" type="MultiMeshInstance2D" parent="SubViewport/Game" unique_id=1095753451]
-z_index = -1
-material = SubResource("ShaderMaterial_36bdl")
-multimesh = SubResource("MultiMesh_3b7yk")
+[node name="ScoreSunManager" type="Node" parent="SubViewport/Game/Scoring" unique_id=100102920 node_paths=PackedStringArray("visual_parent")]
+script = ExtResource("6_ko3mt")
+visual_scene = ExtResource("36_fp80n")
+visual_parent = NodePath("../../ScoreSuns")
+metadata/_custom_type_script = "uid://dlyqg8mvfu0e1"
 
 [node name="ScoreItemParticles" type="CPUParticles2D" parent="SubViewport/Game" unique_id=1613836782]
+z_index = 1
 material = SubResource("CanvasItemMaterial_s68re")
 emitting = false
 texture = ExtResource("35_ousyn")
@@ -307,6 +335,13 @@ split_scale = true
 scale_curve_x = SubResource("Curve_3b7yk")
 scale_curve_y = SubResource("Curve_ixbki")
 
+[node name="ScoreItemManager" type="MultiMeshInstance2D" parent="SubViewport/Game" unique_id=1095753451]
+z_index = 2
+material = SubResource("ShaderMaterial_36bdl")
+multimesh = SubResource("MultiMesh_3b7yk")
+
+[node name="ScoreSuns" type="Node2D" parent="SubViewport/Game" unique_id=1228894650]
+
 [node name="BulletSkinManager" type="Node" parent="SubViewport/Game" unique_id=1300980304]
 script = ExtResource("2_ijhnq")
 skins = Dictionary[int, ExtResource("3_07ulu")]({
@@ -317,28 +352,6 @@ skins = Dictionary[int, ExtResource("3_07ulu")]({
 300: ExtResource("8_qiqgi")
 })
 metadata/_custom_type_script = "uid://cm7708ogl281p"
-
-[node name="GameSequencer" type="Node" parent="SubViewport/Game" unique_id=1424656608 node_paths=PackedStringArray("animation_player", "patterns", "scoring", "enemy_bullet_engine")]
-script = ExtResource("2_oryes")
-animation_player = NodePath("AnimationPlayer")
-patterns = [NodePath("Omen"), NodePath("Riot"), NodePath("Dogfight")]
-patterns_health = Array[float]([2000.0, 1700.0, 1050.0, 2100.0, 2100.0, 2250.0, 2250.0, 2250.0, 1200.0])
-patterns_flavor = Array[ExtResource("3_ysh17")]([ExtResource("4_to2kc"), ExtResource("5_ino1g"), ExtResource("6_gts4h"), ExtResource("7_j7fm5"), ExtResource("15_y37xm"), ExtResource("8_1vxhs"), ExtResource("9_bybv3"), ExtResource("10_y7kwi"), ExtResource("18_kjv07")])
-scoring = NodePath("../Scoring")
-enemy_bullet_engine = NodePath("../EnemyBulletEngine")
-metadata/_custom_type_script = "uid://dbaxnfdbt6cyt"
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="SubViewport/Game/GameSequencer" unique_id=450444269]
-
-[node name="TestPattern" type="Node" parent="SubViewport/Game/GameSequencer" unique_id=961206150]
-script = ExtResource("11_j7fm5")
-metadata/_custom_type_script = "uid://16mvw7i2q77s"
-
-[node name="Omen" parent="SubViewport/Game/GameSequencer" unique_id=1949596727 instance=ExtResource("17_ijhnq")]
-
-[node name="Riot" parent="SubViewport/Game/GameSequencer" unique_id=2000619167 instance=ExtResource("21_jllto")]
-
-[node name="Dogfight" parent="SubViewport/Game/GameSequencer" unique_id=285190987 instance=ExtResource("23_qiqgi")]
 
 [node name="PlayerBulletEngine" type="Node" parent="SubViewport/Game" unique_id=297898871 node_paths=PackedStringArray("bullet_visual")]
 script = ExtResource("5_wurgr")

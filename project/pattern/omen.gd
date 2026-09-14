@@ -41,9 +41,15 @@ func fire(side: Omen.Side) -> void:
 
 	var pos = bullet_origin_left.global_position if side == Side.LEFT else bullet_origin_right.global_position
 
-	for a in circle:
-		var speed = 150.0
-		bullet_engine.fire_bullet(pos, a, speed, BulletSkin.Type.ENEMY_BULLET_RED_SMALL)
+	for i in circle.size():
+		var angle = circle[i]
+		var speed = 150.0	
+		if sun_counter > 0 and sun_counter % 3 == 0 and i == 6:
+			sun_spawner.spawn_sun(pos, Vector2.from_angle(circle[i]) * 110.0)
+		else:
+			bullet_engine.fire_bullet(pos, angle, speed, BulletSkin.Type.ENEMY_BULLET_RED_SMALL)
+
+	sun_counter += 1
 
 func fire_aimed() -> void:
 	var bullet_count: int = 16

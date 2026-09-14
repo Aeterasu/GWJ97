@@ -5,6 +5,9 @@ class_name Pattern extends Node
 
 var health: float = 0.0
 
+var sun_counter: int = 0
+
+var sun_spawner: ScoreSunManager = null
 var bullet_engine: BulletEngine = null
 
 var freeze: Array[Node] = []

@@ -1,7 +1,6 @@
 class_name ScoreItemManager extends Node
 
 @export var max_item_count: int = 256
-@export var collection_radius: float = 0.0
 @export var visual: MultiMeshInstance2D = null
 
 # array layout
