@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="PatternFlavor" format=3 uid="uid://0kwc7tjajnl"]
+[gd_resource type="Resource" script_class="PatternFlavor" format=3 uid="uid://u77hjgf5b1xn"]
 
-[ext_resource type="Script" uid="uid://c0dqn8ky0me73" path="res://pattern/flavor/pattern_flavor.gd" id="1_xjtp5"]
+[ext_resource type="Script" uid="uid://c0dqn8ky0me73" path="res://pattern/flavor/pattern_flavor.gd" id="1_7cstv"]
 
 [resource]
-script = ExtResource("1_xjtp5")
-pattern_names = "NAYSAYER"
-pattern_subtext = "a dead road, a dark sun // naysayer, hammer the nail! // do we fight for nothing, if not our lives? //"
+script = ExtResource("1_7cstv")
+pattern_names = "HIGH ROLLER"
+pattern_subtext = "you're so special, why aren't you dead? // wild card, wild card //"
 metadata/_custom_type_script = "uid://c0dqn8ky0me73"

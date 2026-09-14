@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://v2yky2ict4cp"]
+
+[ext_resource type="Script" uid="uid://cxtlivobxmk6c" path="res://pattern/breakout.gd" id="1_24cxn"]
+[ext_resource type="Script" uid="uid://du4pk0oohw2cn" path="res://enemy/enemy.gd" id="2_uyx1u"]
+[ext_resource type="Texture2D" uid="uid://cbf2r3ltoc2cw" path="res://enemy/texture/texture_enemy_placeholder.png" id="3_8bsyu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lcg72"]
+radius = 43.0
+
+[sub_resource type="Animation" id="Animation_24cxn"]
+resource_name = "death"
+step = 0.1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"kill_finish"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uyx1u"]
+_data = {
+&"death": SubResource("Animation_24cxn")
+}
+
+[node name="Breakout" type="Node" unique_id=2000619167 node_paths=PackedStringArray("animation_player", "shot_origins", "entities")]
+script = ExtResource("1_24cxn")
+animation_player = NodePath("AnimationPlayer")
+shot_origins = [NodePath("Marker2D"), NodePath("Marker2D5"), NodePath("Marker2D2"), NodePath("Marker2D3"), NodePath("Marker2D4"), NodePath("Marker2D6"), NodePath("Marker2D7")]
+fire_rate = 1.0
+entities = [NodePath("Enemy")]
+metadata/_custom_type_script = "uid://16mvw7i2q77s"
+
+[node name="Enemy" type="Area2D" parent="." unique_id=1988950251]
+position = Vector2(120, 88)
+script = ExtResource("2_uyx1u")
+metadata/_custom_type_script = "uid://du4pk0oohw2cn"
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy" unique_id=905712511]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_8bsyu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy" unique_id=763111959]
+shape = SubResource("CircleShape2D_lcg72")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1347378341]
+libraries/ = SubResource("AnimationLibrary_uyx1u")
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1755830307]
+position = Vector2(100, 54)
+
+[node name="Marker2D5" type="Marker2D" parent="." unique_id=1192562935]
+position = Vector2(120, 64)
+
+[node name="Marker2D2" type="Marker2D" parent="." unique_id=542404678]
+position = Vector2(70, 34)
+
+[node name="Marker2D3" type="Marker2D" parent="." unique_id=2039801430]
+position = Vector2(140, 54)
+
+[node name="Marker2D4" type="Marker2D" parent="." unique_id=1492653716]
+position = Vector2(170, 34)
+
+[node name="Marker2D6" type="Marker2D" parent="." unique_id=308021961]
+position = Vector2(210, 34)
+
+[node name="Marker2D7" type="Marker2D" parent="." unique_id=2053562732]
+position = Vector2(30, 34)
