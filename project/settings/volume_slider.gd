@@ -56,7 +56,7 @@ func on_slider_value_change(value : float) -> void:
 		Type.BGM:
 			AudioManager.set_bgm_volume(value)
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	is_highlighted = self.has_focus() or slider.has_focus()
 
 	var input_left = Input.is_action_just_pressed("ui_left")

@@ -34,7 +34,7 @@ func _physics_process(delta: float) -> void:
 	if is_started and (not is_dead):
 		update(delta)
 
-func update(delta: float) -> void:
+func update(_delta: float) -> void:
 	pass
 
 func on_entity_hit(entity: Enemy, damage: float) -> void:

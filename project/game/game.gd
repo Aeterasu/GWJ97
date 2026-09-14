@@ -36,12 +36,12 @@ func animate_player_intro() -> void:
 		.set_trans(Tween.TRANS_BACK)
 	tween.tween_callback(func(): player.control_state = Player.ControlState.NORMAL)
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	debug_hp_label.text = "HP: " + str(player.lives)
 
 func on_pattern_init(pattern_idx: int) -> void:
-	var str = game_sequencer.patterns_flavor[pattern_idx].pattern_names
-	ui_root.boss_pattern_name.text = '"' + str.to_upper() + '"'
+	var pattern_str = game_sequencer.patterns_flavor[pattern_idx].pattern_names
+	ui_root.boss_pattern_name.text = '"' + pattern_str.to_upper() + '"'
 	#ui_root.boss_pattern_name.reset_size()
 
 func update_boss_healthbar(pattern: Pattern) -> void:

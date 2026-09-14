@@ -45,7 +45,7 @@ func press_any_button() -> void:
 		settings.hide()
 		exit.hide()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if not get_viewport().gui_get_focus_owner():
 		self.grab_focus.call_deferred()
 

@@ -29,7 +29,7 @@ func _ready() -> void:
 
 	update_label()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if has_focus() and Input.is_action_just_pressed("ui_left"):
 		change_left()
 	elif has_focus() and Input.is_action_just_pressed("ui_right"):
