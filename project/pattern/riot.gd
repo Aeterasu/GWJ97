@@ -1,5 +1,7 @@
 extends Pattern
 
+@export var animation_player: AnimationPlayer = null
+
 @export var shot_origins: Array[Marker2D] = []
 
 @export var fire_rate: float = 0.0
@@ -99,4 +101,5 @@ static func gravity_bullet(bullet: Bullet, delta: float) -> Vector2:
 
 func kill_start() -> void:
 	super()
-	kill_finish()
+
+	animation_player.play("death")

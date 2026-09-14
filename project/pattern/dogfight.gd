@@ -19,8 +19,8 @@ func init_pattern() -> void:
 
 func kill_start() -> void:
 	super()
-
-	animation_player.stop()
+	
+	animation_player.play("death")
 
 func update(delta: float) -> void:
 	if is_firing:

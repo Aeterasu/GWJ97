@@ -36,6 +36,7 @@
 [ext_resource type="Resource" uid="uid://u77hjgf5b1xn" path="res://pattern/flavor/flavor_5.tres" id="15_y37xm"]
 [ext_resource type="PackedScene" uid="uid://vugwune8fbhe" path="res://pattern/omen.tscn" id="17_ijhnq"]
 [ext_resource type="Resource" uid="uid://ca0xsbul6o6q7" path="res://pattern/flavor/flavor_9.tres" id="18_kjv07"]
+[ext_resource type="PackedScene" uid="uid://dhp3eywon6pi6" path="res://pattern/pilebunker.tscn" id="19_xfsju"]
 [ext_resource type="Script" uid="uid://debx0k47w1p5p" path="res://ui/ui.gd" id="20_gts4h"]
 [ext_resource type="Script" uid="uid://ltfm1x3wqb33" path="res://ui/ui_boss_healthbar.gd" id="21_j7fm5"]
 [ext_resource type="PackedScene" uid="uid://jc8mhtpdtcvy" path="res://pattern/riot.tscn" id="21_jllto"]
@@ -271,10 +272,9 @@ color_ramp = SubResource("Gradient_3b7yk")
 
 [node name="GameSequencer" type="Node" parent="SubViewport/Game" unique_id=1424656608 node_paths=PackedStringArray("animation_player", "patterns", "scoring", "enemy_bullet_engine", "sun_spawner")]
 script = ExtResource("2_oryes")
-starting_pattern = 2
 animation_player = NodePath("AnimationPlayer")
-patterns = [NodePath("Omen"), NodePath("Riot"), NodePath("Dogfight")]
-patterns_health = Array[float]([2000.0, 1700.0, 1050.0, 2100.0, 2100.0, 2250.0, 2250.0, 2250.0, 1200.0])
+patterns = [NodePath("Omen"), NodePath("Riot"), NodePath("Dogfight"), NodePath("Pilebunker")]
+patterns_health = Array[float]([2000.0, 1600.0, 800.0, 700.0, 2100.0, 2250.0, 2250.0, 2250.0, 1200.0])
 patterns_flavor = Array[ExtResource("3_ysh17")]([ExtResource("4_to2kc"), ExtResource("5_ino1g"), ExtResource("6_gts4h"), ExtResource("7_j7fm5"), ExtResource("15_y37xm"), ExtResource("8_1vxhs"), ExtResource("9_bybv3"), ExtResource("10_y7kwi"), ExtResource("18_kjv07")])
 scoring = NodePath("../Scoring")
 enemy_bullet_engine = NodePath("../EnemyBulletEngine")
@@ -293,6 +293,8 @@ metadata/_custom_type_script = "uid://16mvw7i2q77s"
 
 [node name="Dogfight" parent="SubViewport/Game/GameSequencer" unique_id=285190987 instance=ExtResource("23_qiqgi")]
 
+[node name="Pilebunker" parent="SubViewport/Game/GameSequencer" unique_id=1439410849 instance=ExtResource("19_xfsju")]
+
 [node name="Scoring" type="Node" parent="SubViewport/Game" unique_id=269865828 node_paths=PackedStringArray("label", "score_item_manager", "score_item_particles", "score_sun_manager", "game_sequencer")]
 script = ExtResource("2_jld1g")
 score_awards_per_pattern = Array[int]([100000, 150000, 200000, 200000, 300000, 300000, 500000, 500000, 1000000])
@@ -309,7 +311,7 @@ visual = NodePath("../../ScoreItemManager")
 atlas_offsets = Dictionary[int, PackedVector2Array]({
 0: PackedVector2Array(0, 25, 13, 12),
 1: PackedVector2Array(12, 18, 18, 18),
-2: PackedVector2Array(24, 23, 29, 13),
+2: PackedVector2Array(29, 13, 24, 23),
 3: PackedVector2Array(54, 0, 42, 36)
 })
 metadata/_custom_type_script = "uid://c3gpckl5lcjkm"

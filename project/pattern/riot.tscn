@@ -7,16 +7,35 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_lcg72"]
 radius = 43.0
 
+[sub_resource type="Animation" id="Animation_2bcf6"]
+resource_name = "death"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"kill_finish"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_jpa7l"]
 resource_name = "default"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2bcf6"]
 _data = {
+&"death": SubResource("Animation_2bcf6"),
 &"default": SubResource("Animation_jpa7l")
 }
 
-[node name="Riot" type="Node" unique_id=2000619167 node_paths=PackedStringArray("shot_origins", "entities")]
+[node name="Riot" type="Node" unique_id=2000619167 node_paths=PackedStringArray("animation_player", "shot_origins", "entities")]
 script = ExtResource("1_jpa7l")
+animation_player = NodePath("AnimationPlayer")
 shot_origins = [NodePath("Marker2D1"), NodePath("Marker2D2"), NodePath("Marker2D5"), NodePath("Marker2D3"), NodePath("Marker2D4"), NodePath("Marker2D6"), NodePath("Marker2D7")]
 fire_rate = 0.8
 burst_count = 6
