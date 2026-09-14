@@ -306,10 +306,10 @@ metadata/_custom_type_script = "uid://ccit5a7gc55fv"
 script = ExtResource("3_s5735")
 visual = NodePath("../../ScoreItemManager")
 atlas_offsets = Dictionary[int, PackedVector2Array]({
-0: PackedVector2Array(13, 12, 0, 25),
-1: PackedVector2Array(18, 18, 12, 18),
+0: PackedVector2Array(0, 25, 13, 12),
+1: PackedVector2Array(12, 18, 18, 18),
 2: PackedVector2Array(24, 23, 29, 13),
-3: PackedVector2Array(42, 36, 53, 0)
+3: PackedVector2Array(54, 0, 42, 36)
 })
 metadata/_custom_type_script = "uid://c3gpckl5lcjkm"
 

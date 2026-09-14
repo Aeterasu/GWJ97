@@ -23,6 +23,8 @@ var position: Vector2 = Vector2.ZERO
 var velocity: Vector2 = Vector2.ZERO
 var use_gravity: bool = true
 
+var reward: int = 0
+
 var scale: Vector2 = Vector2.ONE
 
 var type: Type = Type.VERY_SMALL
@@ -34,7 +36,7 @@ var fx_alpha: float = 0.0
 
 const GRAVITY: float = 9.8 / 5.0
 const OOB_THRESHOLD: float = 32.0
-const COLLECT_RADIUS: float = 96.0 * 96.0
+const COLLECT_RADIUS: float = 54.0 * 54.0
 const COLLECT_DURATION: float = 0.8
 
 static var player: Player = null
