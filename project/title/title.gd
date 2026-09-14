@@ -7,13 +7,14 @@ class_name Title extends Control
 @export var settings : TitleButton = null
 @export var exit : TitleButton = null
 
+static var skip_press_any_button : bool = false
+
+
+
 func _ready() -> void:
 	self.grab_focus.call_deferred()
 
-	start.hide()
-	ranking.hide()
-	settings.hide()
-	exit.hide()
+	press_any_button()
 
 	start.pressed.connect(on_start)
 	ranking.pressed.connect(on_ranking)
@@ -30,13 +31,23 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_pressed():
+		skip_press_any_button = true
+		press_any_button()
+
+func press_any_button() -> void:
+	if skip_press_any_button:
 		start.show()
 		ranking.show()
 		settings.show()
 		exit.show()
 		press_button.hide()
+	else:
+		start.hide()
+		ranking.hide()
+		settings.hide()
+		exit.hide()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if not get_viewport().gui_get_focus_owner():
 		self.grab_focus.call_deferred()
 

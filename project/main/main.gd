@@ -65,13 +65,13 @@ func _ready() -> void:
 	input_device_detector = InputDeviceDetector.new()
 	add_child(input_device_detector)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("debug_1"):
 		show_fps = not show_fps
 		fps_counter.visible = show_fps
 		fps_counter.set_process(true)
 
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	if (not currently_loaded)\
 		or (not is_instance_valid(currently_loaded)):
 			return

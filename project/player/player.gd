@@ -117,7 +117,7 @@ func process_movement(delta: float) -> void:
 	sprite_shader.set_shader_parameter("rot_y_deg", sprite_tilt)
 	sprite_shader.set_shader_parameter("rot_x_deg", sprite_yaw)
 
-func process_weapon(delta: float) -> void:
+func process_weapon(_delta: float) -> void:
 	is_focused = Input.is_action_pressed("player_input_action_2")
 
 	var fire_input = Input.is_action_pressed("player_input_action_1")

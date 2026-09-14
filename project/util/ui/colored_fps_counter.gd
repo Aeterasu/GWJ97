@@ -4,7 +4,7 @@ extends Label
 @export var ok_color : Color
 @export var bad_color : Color
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var fps = int(Engine.get_frames_per_second())
 	set_text(str(fps) + " FPS")
 

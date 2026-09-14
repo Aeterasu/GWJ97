@@ -10,6 +10,9 @@ class_name Game extends Node2D
 const BOARD_SIZE: Vector2 = Vector2(240.0, 320.0)
 const PLAYER_STARTING_POSITION: Vector2 = Vector2(54.0, 260.0)
 
+var restart_timer : float = 0.0
+var restart_target_time : float = 3.0
+
 static var instance: Game = null
 
 func _ready() -> void:
@@ -38,10 +41,18 @@ func animate_player_intro() -> void:
 
 func _physics_process(delta: float) -> void:
 	debug_hp_label.text = "HP: " + str(player.lives)
+	
+	if Input.is_action_pressed("restart"):
+		restart_timer += delta
+
+		if restart_timer > restart_target_time:
+			Main.instance.load_state(Main.State.GAME)
+	else:
+		restart_timer = 0.0
 
 func on_pattern_init(pattern_idx: int) -> void:
-	var str = game_sequencer.patterns_flavor[pattern_idx].pattern_names
-	ui_root.boss_pattern_name.text = '"' + str.to_upper() + '"'
+	var pattern_str = game_sequencer.patterns_flavor[pattern_idx].pattern_names
+	ui_root.boss_pattern_name.text = '"' + pattern_str.to_upper() + '"'
 	#ui_root.boss_pattern_name.reset_size()
 
 func update_boss_healthbar(pattern: Pattern) -> void:
