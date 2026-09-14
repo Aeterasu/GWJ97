@@ -14,6 +14,9 @@ var burst_timer: float = 0.0
 @export var arc_fire_rate: float = 0.0
 var arc_time_left: float = 0.0
 
+var sun_max: int = 10
+var exclude_origin: int = 0
+
 func init_pattern() -> void:
 	super()
 
@@ -31,24 +34,35 @@ func update(delta: float) -> void:
 		fire_time_left = fire_rate
 
 		fire_primary()
+		sun_counter += 1
+		exclude_origin = randi_range(1, shot_origins.size() - 2)
 
 	if is_bursting:
 		burst_timer -= delta
 
 	if is_bursting and burst_timer <= 0.0:
-		for origin in shot_origins:
+		for i in shot_origins.size():
+			var origin = shot_origins[i]
+
+			if i == exclude_origin and sun_counter >= sun_max:
+				if burst_current == burst_count / 2:
+					sun_spawner.spawn_sun(origin.global_position, Vector2.DOWN * 120.0) 	
+				continue
+			
 			var pos = origin.global_position
 			var angle = Vector2.DOWN.angle()
-
 			var speed = 120.0
 
 			bullet_engine.fire_bullet(pos, angle, speed, BulletSkin.Type.ENEMY_BULLET_RED_LONG)
-			
+
 		burst_timer = burst_rate
 		burst_current += 1
 
 		if burst_current >= burst_count:
 			is_bursting = false
+			
+			if sun_counter >= sun_max:
+				sun_counter = 0
 
 	arc_time_left -= delta
 
@@ -64,7 +78,7 @@ func fire_primary() -> void:
 	burst_timer = 0.0
 
 func fire_arc() -> void:
-	var bullet_count: int = 36
+	var bullet_count: int = 24
 
 	var player: Player = Game.get_player()
 	var player_pos: Vector2 = player.global_position if player else Vector2(120.0, 320.0)

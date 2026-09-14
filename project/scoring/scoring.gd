@@ -68,7 +68,10 @@ func on_pattern_completed(pattern_idx: int) -> void:
 		var type = get_item_type_from_multiplier(current_rescue_multiplier) 
 
 		var item = score_item_manager.spawn_score_item(type, engine.bullets[i].position)
-		item.reward = roundi(SCORE_ITEM_BASE_VALUE * current_rescue_multiplier)
+		
+		if item:
+			item.reward = roundi(SCORE_ITEM_BASE_VALUE * current_rescue_multiplier)
+
 		positions[i] = engine.bullets[i].position
 
 	score_item_particles.amount = count

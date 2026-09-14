@@ -271,6 +271,7 @@ color_ramp = SubResource("Gradient_3b7yk")
 
 [node name="GameSequencer" type="Node" parent="SubViewport/Game" unique_id=1424656608 node_paths=PackedStringArray("animation_player", "patterns", "scoring", "enemy_bullet_engine", "sun_spawner")]
 script = ExtResource("2_oryes")
+starting_pattern = 2
 animation_player = NodePath("AnimationPlayer")
 patterns = [NodePath("Omen"), NodePath("Riot"), NodePath("Dogfight")]
 patterns_health = Array[float]([2000.0, 1700.0, 1050.0, 2100.0, 2100.0, 2250.0, 2250.0, 2250.0, 1200.0])
@@ -369,6 +370,8 @@ multimesh = SubResource("MultiMesh_dxrkv")
 
 [node name="Player" parent="SubViewport/Game" unique_id=1584514943 node_paths=PackedStringArray("bullet_engine") instance=ExtResource("7_mp07y")]
 z_index = 64
+base_speed = 240.0
+focus_speed = 120.0
 bullet_engine = NodePath("../PlayerBulletEngine")
 
 [node name="EnemyBulletEngine" type="Node" parent="SubViewport/Game" unique_id=1260966031 node_paths=PackedStringArray("bullet_visual")]

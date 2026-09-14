@@ -18,8 +18,10 @@ _data = {
 [node name="Riot" type="Node" unique_id=2000619167 node_paths=PackedStringArray("shot_origins", "entities")]
 script = ExtResource("1_jpa7l")
 shot_origins = [NodePath("Marker2D1"), NodePath("Marker2D2"), NodePath("Marker2D5"), NodePath("Marker2D3"), NodePath("Marker2D4"), NodePath("Marker2D6"), NodePath("Marker2D7")]
-fire_rate = 0.7
-arc_fire_rate = 1.8
+fire_rate = 0.8
+burst_count = 6
+burst_rate = 0.06
+arc_fire_rate = 2.0
 entities = [NodePath("Enemy")]
 metadata/_custom_type_script = "uid://16mvw7i2q77s"
 
@@ -36,25 +38,25 @@ texture = ExtResource("3_2bcf6")
 shape = SubResource("CircleShape2D_lcg72")
 
 [node name="Marker2D1" type="Marker2D" parent="." unique_id=652182968]
-position = Vector2(40, 46)
+position = Vector2(40, 71)
 
 [node name="Marker2D2" type="Marker2D" parent="." unique_id=386430106]
-position = Vector2(80, 46)
+position = Vector2(80, 71)
 
 [node name="Marker2D5" type="Marker2D" parent="." unique_id=797221278]
-position = Vector2(120, 46)
+position = Vector2(120, 71)
 
 [node name="Marker2D3" type="Marker2D" parent="." unique_id=1216344372]
-position = Vector2(160, 46)
+position = Vector2(160, 71)
 
 [node name="Marker2D4" type="Marker2D" parent="." unique_id=1793028055]
-position = Vector2(200, 46)
+position = Vector2(200, 71)
 
 [node name="Marker2D6" type="Marker2D" parent="." unique_id=1870676719]
-position = Vector2(230, 46)
+position = Vector2(230, 71)
 
 [node name="Marker2D7" type="Marker2D" parent="." unique_id=1374938790]
-position = Vector2(10, 46)
+position = Vector2(10, 71)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=69702977]
 libraries/ = SubResource("AnimationLibrary_2bcf6")

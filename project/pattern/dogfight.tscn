@@ -5,11 +5,113 @@
 [ext_resource type="Texture2D" uid="uid://der8j8mn8cywb" path="res://enemy/texture/texture_enemy_plane_placeholder.png" id="3_sc6r3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_c0ape"]
-radius = 24.0
+radius = 18.0
 
-[node name="Dogfight" type="Node" unique_id=285190987 node_paths=PackedStringArray("entities")]
+[sub_resource type="Animation" id="Animation_sc6r3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Enemy:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(120, 88)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:is_firing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_1j440"]
+resource_name = "default"
+length = 6.5
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Enemy:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1.5, 3, 4, 5.5, 6.5),
+"transitions": PackedFloat32Array(1, -2, -2, -2, 1, -2, 1),
+"update": 0,
+"values": [Vector2(120, 88), Vector2(120, 88), Vector2(36, 54), Vector2(36, 54), Vector2(204, 54), Vector2(204, 54), Vector2(120, 88)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5, 2, 2.1, 2.2, 3, 4.5, 4.6, 4.7, 5.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"spawn_sun"
+}, {
+"args": [0],
+"method": &"fire_circle"
+}, {
+"args": [1],
+"method": &"fire_circle"
+}, {
+"args": [2],
+"method": &"fire_circle"
+}, {
+"args": [],
+"method": &"spawn_sun"
+}, {
+"args": [0],
+"method": &"fire_circle"
+}, {
+"args": [1],
+"method": &"fire_circle"
+}, {
+"args": [2],
+"method": &"fire_circle"
+}, {
+"args": [],
+"method": &"spawn_sun"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:is_firing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5, 1.5, 3, 4, 5.5, 6.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sc6r3"]
+_data = {
+&"RESET": SubResource("Animation_sc6r3"),
+&"default": SubResource("Animation_1j440")
+}
+
+[node name="Dogfight" type="Node" unique_id=285190987 node_paths=PackedStringArray("animation_player", "entities")]
 script = ExtResource("1_6bsjc")
-fire_rate = 0.25
+fire_rate = 0.1
+animation_player = NodePath("AnimationPlayer")
 entities = [NodePath("Enemy")]
 metadata/_custom_type_script = "uid://16mvw7i2q77s"
 
@@ -24,3 +126,6 @@ texture = ExtResource("3_sc6r3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy" unique_id=2088825118]
 shape = SubResource("CircleShape2D_c0ape")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=148943428]
+libraries/ = SubResource("AnimationLibrary_sc6r3")
