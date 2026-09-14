@@ -47,9 +47,9 @@ func _physics_process(delta: float) -> void:
 
 		visual_nodes[sun.multimesh_id].position = sun.position
 
-func spawn_sun(position: Vector2, velocity: Vector2 = Vector2.ZERO) -> void:
+func spawn_sun(position: Vector2, velocity: Vector2 = Vector2.ZERO) -> ScoreItem:
 	if active_sun_count >= max_sun_count:
-		return
+		return null
 
 	var sun = suns[active_sun_count]
 	sun.position = position
@@ -73,3 +73,5 @@ func spawn_sun(position: Vector2, velocity: Vector2 = Vector2.ZERO) -> void:
 	visual_nodes[sun.multimesh_id].animate_spawn()
 
 	active_sun_count += 1
+
+	return sun

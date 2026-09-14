@@ -341,6 +341,7 @@ material = SubResource("ShaderMaterial_36bdl")
 multimesh = SubResource("MultiMesh_3b7yk")
 
 [node name="ScoreSuns" type="Node2D" parent="SubViewport/Game" unique_id=1228894650]
+z_index = 2
 
 [node name="BulletSkinManager" type="Node" parent="SubViewport/Game" unique_id=1300980304]
 script = ExtResource("2_ijhnq")
