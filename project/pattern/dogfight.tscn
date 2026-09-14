@@ -5,11 +5,11 @@
 [ext_resource type="Texture2D" uid="uid://der8j8mn8cywb" path="res://enemy/texture/texture_enemy_plane_placeholder.png" id="3_sc6r3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_c0ape"]
-radius = 16.0
+radius = 24.0
 
 [node name="Dogfight" type="Node" unique_id=285190987 node_paths=PackedStringArray("entities")]
 script = ExtResource("1_6bsjc")
-fire_rates = Array[float]([0.21, 3.0, 1.2])
+fire_rate = 0.25
 entities = [NodePath("Enemy")]
 metadata/_custom_type_script = "uid://16mvw7i2q77s"
 

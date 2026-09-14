@@ -1,5 +1,8 @@
 class_name Bullet extends RefCounted
 
+var damage: float = 1.0
+
+var previous_position: Vector2 = Vector2.ZERO
 var position: Vector2 = Vector2.ZERO
 var angle: float = 0.0
 var velocity: Vector2 = Vector2.ZERO
@@ -21,6 +24,7 @@ func update(delta: float) -> void:
 	if not is_active:
 		return
 
+	previous_position = position
 	position = behaviour.call(self, delta)
 	angle = velocity.angle()
 

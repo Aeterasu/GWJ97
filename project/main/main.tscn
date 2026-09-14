@@ -7,13 +7,9 @@
 [ext_resource type="Script" uid="uid://dtytuvraaohro" path="res://audio/bgm_manager.gd" id="3_kfbq2"]
 [ext_resource type="FontFile" uid="uid://cuavx05ndjw5g" path="res://font/m3x6.ttf" id="4_4dugh"]
 [ext_resource type="PackedScene" uid="uid://bww2lmp0lakyf" path="res://settings/settings_menu.tscn" id="4_fwcvl"]
-[ext_resource type="Script" uid="uid://cm7708ogl281p" path="res://bullet/bullet_skin_manager.gd" id="5_0i4oc"]
 [ext_resource type="Texture2D" uid="uid://jpl6sm2bxl0p" path="res://main/texture/texture_ui_border.png" id="5_4dugh"]
 [ext_resource type="Script" uid="uid://cmfa1d5fwckcb" path="res://util/ui/colored_fps_counter.gd" id="5_67ri8"]
 [ext_resource type="PackedScene" uid="uid://gfkkvgh8m84c" path="res://ranking/ranking_menu.tscn" id="5_na0o7"]
-[ext_resource type="Script" uid="uid://cnhr5ggnp7gby" path="res://bullet/bullet_skin.gd" id="6_bsumw"]
-[ext_resource type="Resource" uid="uid://gfyg5kwmpnkp" path="res://bullet/skin/enemy_bullet_small.tres" id="7_fwcvl"]
-[ext_resource type="Resource" uid="uid://dca7kp5a3c0ng" path="res://bullet/skin/player_bullet_default.tres" id="8_bsumw"]
 
 [sub_resource type="Environment" id="Environment_3b7yk"]
 background_mode = 3

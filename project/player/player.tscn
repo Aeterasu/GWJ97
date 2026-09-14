@@ -79,7 +79,7 @@ script = ExtResource("4_yw30f")
 shot_origins = [NodePath("../ShotOrigin1"), NodePath("../ShotOrigin2"), NodePath("../Option1/ShotOrigin1"), NodePath("../Option2/ShotOrigin2")]
 origin_random_offset = Vector2(1, 0)
 fire_rate = 0.024
-damage = 1.333
+damage = 1.5
 shot_speed = 1500.0
 metadata/_custom_type_script = "uid://daly1svuqwggy"
 

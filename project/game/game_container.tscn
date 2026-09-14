@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dsn2rdoa26phn" path="res://game/game.gd" id="1_q4ejq"]
 [ext_resource type="Script" uid="uid://cm7708ogl281p" path="res://bullet/bullet_skin_manager.gd" id="2_ijhnq"]
+[ext_resource type="Script" uid="uid://ccit5a7gc55fv" path="res://scoring/scoring.gd" id="2_jld1g"]
 [ext_resource type="Script" uid="uid://dbaxnfdbt6cyt" path="res://game/game_sequencer.gd" id="2_oryes"]
 [ext_resource type="Script" uid="uid://cnhr5ggnp7gby" path="res://bullet/bullet_skin.gd" id="3_07ulu"]
 [ext_resource type="Script" uid="uid://llf5q5lfma04" path="res://backdrop/3d_backdrop.gd" id="3_lw3qe"]
@@ -153,12 +154,19 @@ oversampling = false
 size = Vector2i(240, 320)
 render_target_update_mode = 4
 
-[node name="Game" type="Node2D" parent="SubViewport" unique_id=1321649675 node_paths=PackedStringArray("game_sequencer", "player", "ui_root", "debug_hp_label")]
+[node name="Game" type="Node2D" parent="SubViewport" unique_id=1321649675 node_paths=PackedStringArray("game_sequencer", "player", "scoring", "ui_root", "debug_hp_label")]
 script = ExtResource("1_q4ejq")
 game_sequencer = NodePath("GameSequencer")
 player = NodePath("Player")
+scoring = NodePath("Scoring")
 ui_root = NodePath("../../UI")
-debug_hp_label = NodePath("../../UI/Label")
+debug_hp_label = NodePath("../../UI/DebugHPLabel")
+
+[node name="Scoring" type="Node" parent="SubViewport/Game" unique_id=269865828 node_paths=PackedStringArray("label")]
+script = ExtResource("2_jld1g")
+score_awards_per_pattern = Array[int]([100000, 150000, 200000, 200000, 300000, 300000, 500000, 500000, 1000000])
+label = NodePath("../../../UI/ScoreLabel")
+metadata/_custom_type_script = "uid://ccit5a7gc55fv"
 
 [node name="BulletSkinManager" type="Node" parent="SubViewport/Game" unique_id=1300980304]
 script = ExtResource("2_ijhnq")
@@ -171,12 +179,13 @@ skins = Dictionary[int, ExtResource("3_07ulu")]({
 })
 metadata/_custom_type_script = "uid://cm7708ogl281p"
 
-[node name="GameSequencer" type="Node" parent="SubViewport/Game" unique_id=1424656608 node_paths=PackedStringArray("animation_player", "patterns", "enemy_bullet_engine")]
+[node name="GameSequencer" type="Node" parent="SubViewport/Game" unique_id=1424656608 node_paths=PackedStringArray("animation_player", "patterns", "scoring", "enemy_bullet_engine")]
 script = ExtResource("2_oryes")
 animation_player = NodePath("AnimationPlayer")
 patterns = [NodePath("Omen"), NodePath("Riot"), NodePath("Dogfight")]
 patterns_health = Array[float]([1500.0, 1400.0, 700.0, 1400.0, 1400.0, 1500.0, 1500.0, 1500.0, 800.0])
 patterns_flavor = Array[ExtResource("3_ysh17")]([ExtResource("4_to2kc"), ExtResource("5_ino1g"), ExtResource("6_gts4h"), ExtResource("7_j7fm5"), ExtResource("15_y37xm"), ExtResource("8_1vxhs"), ExtResource("9_bybv3"), ExtResource("10_y7kwi"), ExtResource("18_kjv07")])
+scoring = NodePath("../Scoring")
 enemy_bullet_engine = NodePath("../EnemyBulletEngine")
 metadata/_custom_type_script = "uid://dbaxnfdbt6cyt"
 
@@ -191,7 +200,6 @@ metadata/_custom_type_script = "uid://16mvw7i2q77s"
 [node name="Riot" parent="SubViewport/Game/GameSequencer" unique_id=2000619167 instance=ExtResource("21_jllto")]
 
 [node name="Dogfight" parent="SubViewport/Game/GameSequencer" unique_id=285190987 instance=ExtResource("23_qiqgi")]
-fire_rate = 0.18
 
 [node name="ColorRect" type="ColorRect" parent="SubViewport/Game" unique_id=931863613]
 z_index = -4096
@@ -271,17 +279,19 @@ color_ramp = SubResource("Gradient_3b7yk")
 
 [node name="PlayerBulletEngine" type="Node" parent="SubViewport/Game" unique_id=297898871 node_paths=PackedStringArray("bullet_visual")]
 script = ExtResource("5_wurgr")
-max_bullet_count = 1024
-shape_radius = 8.0
+max_bullet_count = 512
+use_tunneling_fix = true
 bullet_visual = NodePath("../PlayerBulletVisual")
 collision_mask = 4
 metadata/_custom_type_script = "uid://dpcpbpske8jii"
 
 [node name="PlayerBulletVisual" type="MultiMeshInstance2D" parent="SubViewport/Game" unique_id=1867834694]
+z_index = 16
 material = SubResource("ShaderMaterial_ijhnq")
 multimesh = SubResource("MultiMesh_dxrkv")
 
 [node name="Player" parent="SubViewport/Game" unique_id=1584514943 node_paths=PackedStringArray("bullet_engine") instance=ExtResource("7_mp07y")]
+z_index = 64
 bullet_engine = NodePath("../PlayerBulletEngine")
 
 [node name="EnemyBulletEngine" type="Node" parent="SubViewport/Game" unique_id=1260966031 node_paths=PackedStringArray("bullet_visual")]
@@ -297,12 +307,13 @@ z_as_relative = false
 material = SubResource("ShaderMaterial_3vho3")
 multimesh = SubResource("MultiMesh_y36n6")
 
-[node name="UI" type="Control" parent="." unique_id=339268598 node_paths=PackedStringArray("boss_healthbar", "boss_pattern_name")]
+[node name="UI" type="Control" parent="." unique_id=339268598 node_paths=PackedStringArray("boss_healthbar", "boss_pattern_name", "score_label")]
 custom_minimum_size = Vector2(240, 320)
 layout_mode = 2
 script = ExtResource("20_gts4h")
 boss_healthbar = NodePath("UIBossHealthbar")
 boss_pattern_name = NodePath("BossHealthbarUnder/PatternNameBlock/Label")
+score_label = NodePath("ScoreLabel")
 
 [node name="Padding" type="Control" parent="UI" unique_id=1228953614]
 modulate = Color(1, 1, 1, 0.5019608)
@@ -310,6 +321,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 2.0
+offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -333,9 +346,9 @@ metadata/_custom_type_script = "uid://ltfm1x3wqb33"
 [node name="BossHealthbarUnder" type="TextureRect" parent="UI" unique_id=1817836087]
 layout_mode = 0
 offset_left = 2.0
-offset_top = 13.0
+offset_top = 15.0
 offset_right = 240.0
-offset_bottom = 27.0
+offset_bottom = 29.0
 texture = ExtResource("12_q4ejq")
 stretch_mode = 2
 
@@ -422,7 +435,7 @@ offset_right = 12.0
 offset_bottom = 12.0
 color = Color(0.047058824, 0.09803922, 0, 0.5019608)
 
-[node name="Label" type="Label" parent="UI" unique_id=1419924041]
+[node name="DebugHPLabel" type="Label" parent="UI" unique_id=1419924041]
 layout_mode = 0
 offset_left = 3.0
 offset_top = 304.0
@@ -431,3 +444,14 @@ offset_bottom = 317.0
 text = "HP: 0"
 label_settings = SubResource("LabelSettings_ixbki")
 vertical_alignment = 2
+
+[node name="ScoreLabel" type="Label" parent="UI" unique_id=920208319]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -2.0
+offset_bottom = 11.0
+grow_horizontal = 2
+text = "0"
+label_settings = SubResource("LabelSettings_ixbki")
+horizontal_alignment = 1
