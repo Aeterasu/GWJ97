@@ -9,6 +9,8 @@ class_name Title extends Control
 
 static var skip_press_any_button : bool = false
 
+
+
 func _ready() -> void:
 	self.grab_focus.call_deferred()
 
