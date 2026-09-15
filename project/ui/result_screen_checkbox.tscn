@@ -1,0 +1,121 @@
+[gd_scene format=3 uid="uid://cdkh4caga30ay"]
+
+[ext_resource type="Texture2D" uid="uid://d036aemahe1jk" path="res://ui/texture/texture_ui_result_box.png" id="1_mr1p1"]
+[ext_resource type="Script" uid="uid://bh3jlfjf0d3x3" path="res://ui/result_screen_checkbox.gd" id="2_8pbo1"]
+[ext_resource type="Texture2D" uid="uid://8088ty1jyg28" path="res://ui/texture/texture_ui_result_symbol.png" id="3_aq07s"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3b7yk"]
+atlas = ExtResource("1_mr1p1")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8pbo1"]
+atlas = ExtResource("3_aq07s")
+region = Rect2(0, 0, 16, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aq07s"]
+atlas = ExtResource("3_aq07s")
+region = Rect2(16, 0, 16, 0)
+
+[sub_resource type="Animation" id="Animation_xpcvx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(8, 8)]
+}
+
+[sub_resource type="Animation" id="Animation_rgxgp"]
+resource_name = "animate"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.19999999),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [Vector2(8, 8), Vector2(8, -4), Vector2(8, 8)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(-2, -2, -2, -2, -2, -2),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(3, 3), Vector2(0.9, 0.9), Vector2(1.1, 1.1), Vector2(0.95, 0.95), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uv578"]
+_data = {
+&"RESET": SubResource("Animation_xpcvx"),
+&"animate": SubResource("Animation_rgxgp")
+}
+
+[node name="Checkbox1" type="TextureRect" unique_id=1107499871 node_paths=PackedStringArray("animation_player", "sprite")]
+offset_right = 16.0
+offset_bottom = 16.0
+texture = SubResource("AtlasTexture_3b7yk")
+stretch_mode = 2
+script = ExtResource("2_8pbo1")
+animation_player = NodePath("AnimationPlayer")
+sprite = NodePath("Sprite2D")
+check_texture = SubResource("AtlasTexture_8pbo1")
+cross_texture = SubResource("AtlasTexture_aq07s")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1622557575]
+visible = false
+position = Vector2(8, 8)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=731851742]
+libraries/ = SubResource("AnimationLibrary_uv578")

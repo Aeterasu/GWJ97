@@ -16,6 +16,7 @@ var active_item_count: int = 0
 static var default_transform: Transform2D = Transform2D.IDENTITY.scaled(Vector2.ZERO)
 
 signal on_item_collection
+signal all_items_cleared
 
 func _ready() -> void:
 	items.resize(max_item_count)
@@ -31,6 +32,14 @@ func _ready() -> void:
 
 		visual.multimesh.set_instance_transform_2d(i, default_transform)	
 
+func has_active_items() -> bool:
+	return active_item_count > 0
+
+func await_all_items_cleared() -> void:
+	if active_item_count == 0:
+		return
+	await all_items_cleared
+
 func _physics_process(delta: float) -> void:
 	var i: int = 0
 	while i < active_item_count:
@@ -43,12 +52,14 @@ func _physics_process(delta: float) -> void:
 			items[active_item_count] = item
 			visual.multimesh.set_instance_transform_2d(item.multimesh_id, default_transform)
 			visual.multimesh.reset_instance_physics_interpolation(item.multimesh_id)
+			if active_item_count == 0:
+				all_items_cleared.emit()
 			continue
 
 		i += 1
 
 		visual.multimesh.set_instance_transform_2d(item.multimesh_id, Transform2D.IDENTITY.scaled_local((atlas_offsets[item.type])[1] * item.scale).translated(item.position))
-		visual.multimesh.set_instance_color(item.multimesh_id, Color(clampf(item.fx_alpha, 0.0, 1.0), 0.0, 0.0, 0.0))
+		visual.multimesh.set_instance_color(item.multimesh_id, Color(clampf(item.fx_alpha, 1.0, 1.0), 0.0, 0.0, 0.0))
 
 func spawn_score_item(type: ScoreItem.Type, position: Vector2) -> ScoreItem:
 	if active_item_count >= max_item_count:

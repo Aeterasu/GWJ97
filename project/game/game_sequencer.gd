@@ -19,14 +19,20 @@ class_name GameSequencer extends Node
 @export var sun_spawner: ScoreSunManager = null
 @export var life_spawner: LifePickup = null
 
+@export var results: ResultScreen = null
+
 var current_idx: int = 0
 
-signal on_pattern_init
+var no_miss: bool = true
+var no_bomb: bool = true
 
+signal on_pattern_init
 signal propagate_pattern_hit
 
 func start_game() -> void:
 	life_spawner.on_life_collected.connect(on_life_collected)
+
+	player.on_hit.connect(func(): no_miss = false)
 
 	if not show_boss_warning:
 		init_pattern(starting_pattern)
@@ -83,6 +89,16 @@ func on_pattern_health_depleted(pattern: Pattern) -> void:
 	enemy_bullet_engine.bullet_cancel()
 
 func on_pattern_death(pattern: Pattern) -> void:
+	await scoring.score_item_manager.await_all_items_cleared()
+
+	results.show_results(scoring, no_miss, no_bomb)
+
+	await results.on_results_confirmed
+
+	results.hide_results()
+
+	await get_tree().create_timer(1.0).timeout
+
 	pattern.is_started = false
 	pattern.is_dead = true
 	
@@ -92,5 +108,8 @@ func on_pattern_death(pattern: Pattern) -> void:
 		return
 
 	current_idx = next_idx
-
+	
+	scoring.reset_results()
 	init_pattern(current_idx)
+	no_miss = true
+	no_bomb = true

@@ -50,6 +50,9 @@ func on_entity_hit(entity: Enemy, damage: float) -> void:
 	if immune:
 		return
 
+	if is_dead:
+		return
+
 	health -= damage
 
 	on_hit.emit(self)
@@ -59,10 +62,12 @@ func on_entity_hit(entity: Enemy, damage: float) -> void:
 		on_health_depleted.emit(self)
 
 func kill_start() -> void:
+	if is_dead:
+		return
+
 	is_dead = true
 
-	bullet_engine.bullet_cancel()
-	
+	bullet_engine.bullet_cancel()	
 	
 	var sun_pos: Vector2 = Vector2(120.0, 88.0)
 
@@ -73,7 +78,6 @@ func kill_start() -> void:
 	var sun = sun_spawner.spawn_sun(sun_pos)
 	if sun:
 		sun.use_gravity = true
-
 	
 func kill_finish() -> void:
 	on_death.emit(self)

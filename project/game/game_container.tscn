@@ -57,6 +57,12 @@
 [ext_resource type="Shader" uid="uid://cj4sdfqxylu30" path="res://ui/broken_tv.gdshader" id="51_5vun2"]
 [ext_resource type="Script" uid="uid://c8n4ohg53ujhd" path="res://ui/ui_boss_warning.gd" id="51_n823w"]
 [ext_resource type="Script" uid="uid://dvqiup2un5h7j" path="res://util/2d/shaky_node_2d.gd" id="53_l8p4d"]
+[ext_resource type="Script" uid="uid://b0ma26hvq32jr" path="res://ui/result_screen.gd" id="58_1xbv1"]
+[ext_resource type="Texture2D" uid="uid://cw4r4plf2mk2i" path="res://ui/texture/texture_ui_results.png" id="58_ee0yl"]
+[ext_resource type="FontFile" uid="uid://cuavx05ndjw5g" path="res://font/m3x6.ttf" id="59_5coac"]
+[ext_resource type="FontFile" uid="uid://dekxaqxocvhf7" path="res://font/m6x11.ttf" id="60_78uyn"]
+[ext_resource type="PackedScene" uid="uid://cdkh4caga30ay" path="res://ui/result_screen_checkbox.tscn" id="61_1xbv1"]
+[ext_resource type="Texture2D" uid="uid://bl0je63ccfsau" path="res://ui/texture/texture_ui_results_decorative_line.png" id="61_phvc2"]
 
 [sub_resource type="Environment" id="Environment_y36n6"]
 background_mode = 1
@@ -206,7 +212,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect2:modulate")
+tracks/0/path = NodePath("BossWarningFlash:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -235,7 +241,7 @@ step = 0.025
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect2:modulate")
+tracks/0/path = NodePath("BossWarningFlash:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -255,6 +261,23 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../SubViewport/Game")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1.2, 5),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"darken_screen"
+}, {
+"args": [],
+"method": &"lighten_scree"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ssl0w"]
@@ -299,6 +322,219 @@ metadata/_snap_enabled = true
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ixbki"]
 gradient = SubResource("Gradient_wuin1")
 metadata/_snap_enabled = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_s68re"]
+font = ExtResource("60_78uyn")
+font_color = Color(0.047058824, 0.09803922, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1xbv1"]
+shader = ExtResource("13_lw3qe")
+shader_parameter/stripe_texture = ExtResource("61_phvc2")
+shader_parameter/scroll_speed = Vector2(2, 0)
+shader_parameter/tiling = Vector2(18, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p2ewd"]
+shader = ExtResource("13_lw3qe")
+shader_parameter/stripe_texture = ExtResource("61_phvc2")
+shader_parameter/scroll_speed = Vector2(1, 0)
+shader_parameter/tiling = Vector2(2, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_wvij3"]
+font = ExtResource("38_ms3xe")
+font_color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_78uyn"]
+font = ExtResource("59_5coac")
+font_color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_htow4"]
+font = ExtResource("60_78uyn")
+font_color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+outline_size = 4
+outline_color = Color(0.047058824, 0.09803922, 0, 1)
+
+[sub_resource type="Animation" id="Animation_1xbv1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ResultScreen/TextureRect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(30, 71)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ResultScreen/ColorRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ResultScreen/TextureRect:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ResultScreen/CPUParticles2D:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_h86jf"]
+resource_name = "hide_results"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ResultScreen/TextureRect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(-2),
+"update": 0,
+"values": [Vector2(30, 71)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ResultScreen/ColorRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.15, 0.54999995),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ResultScreen/TextureRect:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../SubViewport/Game")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.15),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"lighten_scree"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_p2ewd"]
+resource_name = "show_results"
+length = 2.0
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ResultScreen/TextureRect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.6, 0.9, 1.2, 1.6, 2),
+"transitions": PackedFloat32Array(-2, -2, -2, -2, -2),
+"update": 0,
+"values": [Vector2(30, 32), Vector2(30, 80), Vector2(30, 65), Vector2(30, 73), Vector2(30, 71)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ResultScreen/ColorRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.6, 0.65, 0.95),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ResultScreen/TextureRect:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ResultScreen/CPUParticles2D:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.65),
+"transitions": PackedFloat32Array(1, 0.933033),
+"update": 1,
+"values": [false, true]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../SubViewport/Game")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"darken_screen"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h86jf"]
+_data = {
+&"RESET": SubResource("Animation_1xbv1"),
+&"hide_results": SubResource("Animation_h86jf"),
+&"show_results": SubResource("Animation_p2ewd")
+}
+
+[sub_resource type="Curve" id="Curve_2675o"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.038961045, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [node name="GameContainer" type="SubViewportContainer" unique_id=1996078482]
 texture_filter = 1
@@ -404,18 +640,19 @@ tangential_accel_max = 0.1
 color = Color(0.9411765, 0.45882353, 0.1254902, 1)
 color_ramp = SubResource("Gradient_3b7yk")
 
-[node name="GameSequencer" type="Node" parent="SubViewport/Game" unique_id=1424656608 node_paths=PackedStringArray("player", "boss_warning", "animation_player", "patterns", "scoring", "enemy_bullet_engine", "sun_spawner", "life_spawner")]
+[node name="GameSequencer" type="Node" parent="SubViewport/Game" unique_id=1424656608 node_paths=PackedStringArray("player", "boss_warning", "animation_player", "patterns", "scoring", "enemy_bullet_engine", "sun_spawner", "life_spawner", "results")]
 script = ExtResource("2_oryes")
 player = NodePath("../Player")
 boss_warning = NodePath("../../../Overlay/BossWarning")
 animation_player = NodePath("AnimationPlayer")
 patterns = [NodePath("Omen"), NodePath("Breakout"), NodePath("Riot"), NodePath("Dogfight"), NodePath("Pilebunker"), NodePath("HighRoller")]
-patterns_health = Array[float]([2000.0, 1500.0, 1600.0, 600.0, 600.0, 2800.0, 2250.0, 2250.0, 2250.0, 1200.0])
+patterns_health = Array[float]([190.0, 1500.0, 1600.0, 600.0, 600.0, 2800.0, 2250.0, 2250.0, 2250.0, 1200.0])
 patterns_flavor = Array[ExtResource("3_ysh17")]([ExtResource("4_to2kc"), ExtResource("5_ino1g"), ExtResource("8_v7aj6"), ExtResource("6_gts4h"), ExtResource("7_j7fm5"), ExtResource("15_y37xm"), ExtResource("8_1vxhs"), ExtResource("9_bybv3"), ExtResource("10_y7kwi"), ExtResource("18_kjv07")])
 scoring = NodePath("../Scoring")
 enemy_bullet_engine = NodePath("../EnemyBulletEngine")
 sun_spawner = NodePath("../Scoring/ScoreSunManager")
 life_spawner = NodePath("../LifePickup")
+results = NodePath("../../../Overlay/ResultScreen")
 metadata/_custom_type_script = "uid://dbaxnfdbt6cyt"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="SubViewport/Game/GameSequencer" unique_id=450444269]
@@ -424,18 +661,19 @@ metadata/_custom_type_script = "uid://dbaxnfdbt6cyt"
 script = ExtResource("11_j7fm5")
 metadata/_custom_type_script = "uid://16mvw7i2q77s"
 
+[node name="Omen" parent="SubViewport/Game/GameSequencer" unique_id=1949596727 instance=ExtResource("17_ijhnq")]
+
 [node name="Breakout" parent="SubViewport/Game/GameSequencer" unique_id=2000619167 instance=ExtResource("17_g7uki")]
 
-[node name="Omen" parent="SubViewport/Game/GameSequencer" unique_id=1949596727 instance=ExtResource("17_ijhnq")]
-spawn_life = true
-
 [node name="Riot" parent="SubViewport/Game/GameSequencer" unique_id=902379666 instance=ExtResource("21_jllto")]
+spawn_life = true
 
 [node name="Dogfight" parent="SubViewport/Game/GameSequencer" unique_id=285190987 instance=ExtResource("23_qiqgi")]
 
 [node name="Pilebunker" parent="SubViewport/Game/GameSequencer" unique_id=1439410849 instance=ExtResource("19_xfsju")]
 
 [node name="HighRoller" parent="SubViewport/Game/GameSequencer" unique_id=95005314 instance=ExtResource("20_o7b2k")]
+spawn_life = true
 
 [node name="Scoring" type="Node" parent="SubViewport/Game" unique_id=269865828 node_paths=PackedStringArray("label", "score_item_manager", "score_item_particles", "score_sun_manager", "game_sequencer")]
 script = ExtResource("2_jld1g")
@@ -704,11 +942,7 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(240, 320)
 layout_mode = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Overlay" unique_id=320257418]
-libraries/ = SubResource("AnimationLibrary_ssl0w")
-
 [node name="Darken" type="ColorRect" parent="Overlay" unique_id=101622553]
-visible = false
 self_modulate = Color(1, 1, 1, 0.627451)
 layout_mode = 1
 anchors_preset = 15
@@ -716,7 +950,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.047058824, 0.09803922, 0, 1)
+color = Color(0.16862746, 0.05490196, 0.007843138, 1)
+metadata/_edit_lock_ = true
 
 [node name="BossWarning" type="Control" parent="Overlay" unique_id=2041718326 node_paths=PackedStringArray("animation")]
 visible = false
@@ -727,7 +962,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("51_n823w")
-animation = NodePath("../AnimationPlayer")
+animation = NodePath("AnimationPlayer")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Overlay/BossWarning" unique_id=320257418]
+root_node = NodePath("../..")
+libraries/ = SubResource("AnimationLibrary_ssl0w")
 
 [node name="TV" type="ColorRect" parent="Overlay/BossWarning" unique_id=221150562]
 material = SubResource("ShaderMaterial_l8p4d")
@@ -817,7 +1056,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(0.8089823, 0.9851326)
+position = Vector2(0.73100245, 0.4995533)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -829,14 +1068,14 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(0.24688143, 0.25428495)
+position = Vector2(-6.3829455, -5.330316)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
 force = 8.0
 decay_rate = 0.0
 
-[node name="ColorRect2" type="ColorRect" parent="Overlay" unique_id=1176801634]
+[node name="BossWarningFlash" type="ColorRect" parent="Overlay" unique_id=1176801634]
 modulate = Color(1, 1, 1, 0)
 z_index = 2095
 layout_mode = 1
@@ -846,3 +1085,328 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 0.16078432, 0, 1)
+metadata/_edit_lock_ = true
+
+[node name="ResultScreen" type="Control" parent="Overlay" unique_id=287103774 node_paths=PackedStringArray("animation_player", "pattern_reward_label", "score_multiplier_label", "score_item_label", "score_suns_label", "total_label", "no_miss_checkmark", "no_bomb_checkmark")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("58_1xbv1")
+animation_player = NodePath("AnimationPlayer")
+pattern_reward_label = NodePath("TextureRect/PatternReward2")
+score_multiplier_label = NodePath("TextureRect/ScoreMultiplier2")
+score_item_label = NodePath("TextureRect/ScoreItem2")
+score_suns_label = NodePath("TextureRect/ScoreItem4")
+total_label = NodePath("TextureRect/Total2")
+no_miss_checkmark = NodePath("TextureRect/Checkbox1")
+no_bomb_checkmark = NodePath("TextureRect/Checkbox2")
+metadata/_edit_lock_ = true
+
+[node name="TextureRect" type="NinePatchRect" parent="Overlay/ResultScreen" unique_id=234158589]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = 71.0
+offset_right = -30.0
+offset_bottom = -49.00003
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("58_ee0yl")
+region_rect = Rect2(0, 0, 9, 9)
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 1
+metadata/_edit_lock_ = true
+
+[node name="ColorRect" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=1431732780]
+clip_children = 2
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -17.0
+offset_bottom = 1.0
+grow_horizontal = 2
+color = Color(1, 0.16078432, 0, 1)
+
+[node name="Label" type="Label" parent="Overlay/ResultScreen/TextureRect/ColorRect" unique_id=1134339926]
+layout_mode = 0
+offset_top = 3.0
+offset_right = 192.0
+offset_bottom = 17.0
+text = "OMEN // OMEN // OMEN // OMEN"
+label_settings = SubResource("LabelSettings_s68re")
+vertical_alignment = 1
+
+[node name="TextureRect" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=2090735832]
+material = SubResource("ShaderMaterial_1xbv1")
+layout_mode = 0
+offset_left = 3.0
+offset_top = 194.0
+offset_right = 177.0
+offset_bottom = 197.0
+
+[node name="TextureRect3" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=2059789168]
+material = SubResource("ShaderMaterial_p2ewd")
+layout_mode = 0
+offset_left = 9.0
+offset_top = 47.0
+offset_right = 25.0
+offset_bottom = 50.0
+
+[node name="TextureRect4" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=1234452527]
+material = SubResource("ShaderMaterial_p2ewd")
+layout_mode = 0
+offset_left = 9.0
+offset_top = 74.0
+offset_right = 25.0
+offset_bottom = 77.0
+
+[node name="TextureRect2" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=166993355]
+material = SubResource("ShaderMaterial_1xbv1")
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 177.0
+offset_bottom = 6.0
+
+[node name="Checkbox1" parent="Overlay/ResultScreen/TextureRect" unique_id=1107499871 instance=ExtResource("61_1xbv1")]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 29.0
+offset_right = 25.0
+offset_bottom = 45.0
+
+[node name="Checkbox1NoMiss" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=819919018]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 34.0
+offset_right = 179.0
+offset_bottom = 47.0
+text = "NO MISS"
+label_settings = SubResource("LabelSettings_wvij3")
+
+[node name="Checkbox2" parent="Overlay/ResultScreen/TextureRect" unique_id=886465222 instance=ExtResource("61_1xbv1")]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 56.0
+offset_right = 25.0
+offset_bottom = 72.0
+
+[node name="Checkbox2NoBomb" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=257270458]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 61.0
+offset_right = 179.0
+offset_bottom = 74.0
+text = "NO BOMB"
+label_settings = SubResource("LabelSettings_wvij3")
+
+[node name="PatternReward1" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=550176540]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 8.0
+offset_right = 101.0
+offset_bottom = 21.0
+text = "PATTERN REWARD:"
+label_settings = SubResource("LabelSettings_78uyn")
+
+[node name="PatternReward2" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=367187383]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 8.0
+offset_right = 171.0
+offset_bottom = 21.0
+text = "999,999,999,999"
+label_settings = SubResource("LabelSettings_wvij3")
+horizontal_alignment = 2
+
+[node name="ScoreMultiplier1" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=302004814]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 77.0
+offset_right = 101.0
+offset_bottom = 90.0
+text = "PATTERN MULTIPLIER:"
+label_settings = SubResource("LabelSettings_78uyn")
+
+[node name="ScoreMultiplier2" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=384959182]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 77.0
+offset_right = 171.0
+offset_bottom = 90.0
+text = "2.0x"
+label_settings = SubResource("LabelSettings_wvij3")
+horizontal_alignment = 2
+
+[node name="ScoreItem1" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=1140889526]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 95.0
+offset_right = 108.0
+offset_bottom = 108.0
+text = "GOLD COLLECTED:"
+label_settings = SubResource("LabelSettings_78uyn")
+
+[node name="ScoreItem2" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=1013543451]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 95.0
+offset_right = 171.0
+offset_bottom = 108.0
+text = "999,999,999,999"
+label_settings = SubResource("LabelSettings_wvij3")
+horizontal_alignment = 2
+
+[node name="ScoreItem3" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=2119602602]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 112.0
+offset_right = 108.0
+offset_bottom = 125.0
+text = "SUNS COLLECTED:"
+label_settings = SubResource("LabelSettings_78uyn")
+
+[node name="ScoreItem4" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=808437591]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 112.0
+offset_right = 171.0
+offset_bottom = 125.0
+text = "999,999,999,999"
+label_settings = SubResource("LabelSettings_wvij3")
+horizontal_alignment = 2
+
+[node name="Total1" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=1001860862]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 176.0
+offset_right = 108.0
+offset_bottom = 189.0
+text = "TOTAL:"
+label_settings = SubResource("LabelSettings_78uyn")
+
+[node name="Total2" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=1725918783]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 176.0
+offset_right = 171.0
+offset_bottom = 189.0
+text = "999,999,999,999"
+label_settings = SubResource("LabelSettings_wvij3")
+horizontal_alignment = 2
+
+[node name="ColorRect2" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=260542151]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 47.0
+offset_right = 170.0
+offset_bottom = 48.0
+color = Color(1, 0.16078432, 0, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=509196919]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 74.0
+offset_right = 170.0
+offset_bottom = 75.0
+color = Color(1, 0.16078432, 0, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=2043297196]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 21.0
+offset_right = 170.0
+offset_bottom = 22.0
+color = Color(1, 0.16078432, 0, 1)
+
+[node name="ColorRect5" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=1877824517]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 90.0
+offset_right = 170.0
+offset_bottom = 91.0
+color = Color(1, 0.16078432, 0, 1)
+
+[node name="ColorRect6" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=2033967910]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 108.0
+offset_right = 170.0
+offset_bottom = 109.0
+color = Color(1, 0.16078432, 0, 1)
+
+[node name="ColorRect10" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=287090658]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 125.0
+offset_right = 170.0
+offset_bottom = 126.0
+color = Color(1, 0.16078432, 0, 1)
+
+[node name="ColorRect7" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=1092770982]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 189.0
+offset_right = 170.0
+offset_bottom = 190.0
+color = Color(1, 0.16078432, 0, 1)
+
+[node name="Label" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=990171608]
+layout_mode = 0
+offset_top = -40.0
+offset_right = 68.0
+offset_bottom = -17.0
+text = "CLEAR!"
+label_settings = SubResource("LabelSettings_htow4")
+vertical_alignment = 2
+
+[node name="ColorRect8" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=1394448795]
+layout_mode = 0
+offset_top = -17.0
+offset_right = 2.0
+offset_bottom = 1.0
+color = Color(1, 0.16078432, 0, 1)
+
+[node name="ColorRect9" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=2300241]
+layout_mode = 0
+offset_left = 178.0
+offset_top = -17.0
+offset_right = 180.0
+offset_bottom = 1.0
+color = Color(1, 0.16078432, 0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Overlay/ResultScreen" unique_id=2120560650]
+root_node = NodePath("../..")
+libraries/ = SubResource("AnimationLibrary_h86jf")
+
+[node name="ColorRect" type="ColorRect" parent="Overlay/ResultScreen" unique_id=1725852684]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Overlay/ResultScreen" unique_id=2020001430]
+position = Vector2(120, 160)
+emitting = false
+amount = 256
+one_shot = true
+explosiveness = 1.0
+emission_shape = 3
+emission_rect_extents = Vector2(120, 160)
+spread = 180.0
+initial_velocity_min = 93.03
+initial_velocity_max = 232.56
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_2675o")
+color = Color(0.98039216, 0.91764706, 0.7882353, 1)

@@ -32,6 +32,12 @@ func _ready() -> void:
 
 	game_sequencer.start_game()
 
+func darken_screen() -> void:
+	is_dark_screen = true
+
+func lighten_scree() -> void:
+	is_dark_screen = false
+
 func animate_player_intro() -> void:
 	player.control_state = Player.ControlState.IN_CUTSCENE
 	player.global_position = PLAYER_STARTING_POSITION + Vector2.DOWN * 150.0
