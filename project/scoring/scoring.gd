@@ -77,13 +77,7 @@ func on_pattern_completed(pattern_idx: int) -> void:
 	score_item_particles.amount = count
 	score_item_particles.emission_shape = CPUParticles2D.EMISSION_SHAPE_POINTS
 	score_item_particles.emission_points = positions
-	score_item_particles.set_deferred("emitting", true)
-
-	# sun
-
-	var sun = score_sun_manager.spawn_sun(Vector2(120.0, 88.0))
-	if sun:
-		sun.use_gravity = true
+	score_item_particles.set_deferred("emitting", true)	
 
 func get_item_type_from_multiplier(multiplier: float = 1.0) -> ScoreItem.Type:
 	if multiplier <= 1.0:

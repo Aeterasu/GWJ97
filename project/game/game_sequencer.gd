@@ -1,5 +1,7 @@
 class_name GameSequencer extends Node
 
+@export var player: Player = null
+
 @export var show_boss_warning: bool = true
 @export var boss_warning: Control = null
 
@@ -15,6 +17,7 @@ class_name GameSequencer extends Node
 
 @export var enemy_bullet_engine: BulletEngine = null
 @export var sun_spawner: ScoreSunManager = null
+@export var life_spawner: LifePickup = null
 
 var current_idx: int = 0
 
@@ -23,6 +26,8 @@ signal on_pattern_init
 signal propagate_pattern_hit
 
 func start_game() -> void:
+	life_spawner.on_life_collected.connect(on_life_collected)
+
 	if not show_boss_warning:
 		init_pattern(starting_pattern)
 	else:
@@ -30,6 +35,9 @@ func start_game() -> void:
 
 		boss_warning.on_finished.connect(on_boss_warning_finished)
 		boss_warning.animate()
+
+func on_life_collected() -> void:
+	player.award_life()
 
 func on_boss_warning_finished() -> void:
 	init_pattern(starting_pattern)
@@ -42,6 +50,7 @@ func init_pattern(idx: int) -> void:
 	if idx >= 0 and idx < patterns.size():
 		patterns[idx].bullet_engine = self.enemy_bullet_engine
 		patterns[idx].sun_spawner = self.sun_spawner
+		patterns[idx].life_spawner = self.life_spawner
 		patterns[idx].health = patterns_health[idx]
 		patterns[idx].init_pattern()
 		
