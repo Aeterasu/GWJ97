@@ -1,6 +1,7 @@
 class_name Omen extends Pattern
 
 @export var animation_player: AnimationPlayer = null
+@export var text: AnimatedText = null
 
 @export var bullet_origin_left: Marker2D = null
 @export var bullet_origin_right: Marker2D = null

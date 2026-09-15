@@ -24,8 +24,9 @@ font = ExtResource("4_4dugh")
 outline_size = 3
 outline_color = Color(0.047058824, 0.09803922, 0, 1)
 
-[node name="Main" type="Node" unique_id=1833842509 node_paths=PackedStringArray("world", "fps_counter", "audio_manager", "bgm_manager")]
+[node name="Main" type="Node" unique_id=1833842509 node_paths=PackedStringArray("test_text", "world", "fps_counter", "audio_manager", "bgm_manager")]
 script = ExtResource("1_53q0u")
+test_text = NodePath("")
 world = NodePath("WorldEnvironment")
 fps_counter = NodePath("TopLayer/FpsCounter")
 scenes = Dictionary[int, PackedScene]({
