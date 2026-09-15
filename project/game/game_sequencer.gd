@@ -1,5 +1,8 @@
 class_name GameSequencer extends Node
 
+@export var show_boss_warning: bool = true
+@export var boss_warning: Control = null
+
 @export var starting_pattern: int = 0
 
 @export var animation_player: AnimationPlayer = null
@@ -18,6 +21,18 @@ var current_idx: int = 0
 signal on_pattern_init
 
 signal propagate_pattern_hit
+
+func start_game() -> void:
+	if not show_boss_warning:
+		init_pattern(starting_pattern)
+	else:
+		await get_tree().create_timer(1.0).timeout
+
+		boss_warning.on_finished.connect(on_boss_warning_finished)
+		boss_warning.animate()
+
+func on_boss_warning_finished() -> void:
+	init_pattern(starting_pattern)
 
 func fix() -> void:
 	for i in patterns.size():

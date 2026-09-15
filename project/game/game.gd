@@ -5,6 +5,9 @@ class_name Game extends Node2D
 @export var scoring: Scoring = null
 @export var ui_root: UI = null
 
+@export var dark_screen: Control = null
+var is_dark_screen: bool = false
+
 @export var debug_hp_label: Label = null
 
 const BOARD_SIZE: Vector2 = Vector2(240.0, 320.0)
@@ -26,17 +29,19 @@ func _ready() -> void:
 	
 	game_sequencer.propagate_pattern_hit.connect(update_boss_healthbar)
 	game_sequencer.on_pattern_init.connect(on_pattern_init)
-	game_sequencer.init_pattern(game_sequencer.starting_pattern)
+
+	game_sequencer.start_game()
 
 func animate_player_intro() -> void:
 	player.control_state = Player.ControlState.IN_CUTSCENE
-	player.global_position = PLAYER_STARTING_POSITION + Vector2.DOWN * 96.0
+	player.global_position = PLAYER_STARTING_POSITION + Vector2.DOWN * 150.0
 	player.reset_physics_interpolation()
 
 	var tween: Tween = create_tween()
 	tween.tween_property(player, "global_position", PLAYER_STARTING_POSITION, 1.0)\
 		.set_ease(Tween.EASE_OUT)\
-		.set_trans(Tween.TRANS_BACK)
+		.set_trans(Tween.TRANS_BACK)\
+		.set_delay(0.4)
 	tween.tween_callback(func(): player.control_state = Player.ControlState.NORMAL)
 
 func _physics_process(delta: float) -> void:
@@ -49,6 +54,11 @@ func _physics_process(delta: float) -> void:
 			Main.instance.load_state(Main.State.GAME)
 	else:
 		restart_timer = 0.0
+
+func _process(delta: float) -> void:
+	var lerp_weight: float = 1.0 - exp(-10.0 * delta)
+
+	dark_screen.modulate.a = lerp(dark_screen.modulate.a, 1.0 if is_dark_screen else 0.0, lerp_weight)
 
 func on_pattern_init(pattern_idx: int) -> void:
 	var pattern_str = game_sequencer.patterns_flavor[pattern_idx].pattern_names
