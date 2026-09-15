@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="PatternFlavor" format=3 uid="uid://driobq5dwtwhv"]
+[gd_resource type="Resource" script_class="PatternFlavor" format=3 uid="uid://o0ecupb4u38w"]
 
 [ext_resource type="Script" uid="uid://c0dqn8ky0me73" path="res://pattern/flavor/pattern_flavor.gd" id="1_bjvde"]
 
 [resource]
 script = ExtResource("1_bjvde")
-pattern_names = "RIOT"
-pattern_subtext = "You will get a rise out of me //"
+pattern_names = "BREAKOUT"
+pattern_subtext = "Break out! break out! // Turn the key to a world untold! //"
 metadata/_custom_type_script = "uid://c0dqn8ky0me73"

@@ -60,7 +60,8 @@ func spawn_sun(position: Vector2, velocity: Vector2 = Vector2.ZERO) -> ScoreItem
 		sun.use_gravity = true
 	else:
 		sun.velocity = velocity
-	
+		sun.use_gravity = false
+
 	sun.collect_timer = 0.0
 
 	sun.state = ScoreItem.State.NORMAL

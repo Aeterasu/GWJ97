@@ -8,6 +8,8 @@ enum Type
 	LARGE = 3,
 	
 	SUN = 100,
+
+	LIFE = 200,
 }
 
 enum State
@@ -36,13 +38,13 @@ var fx_alpha: float = 0.0
 
 var current_collection_radius: float = 0.0
 
-const GRAVITY: float = 9.8 / 5.0
+const GRAVITY: float = 9.8 / 6.0
 const OOB_THRESHOLD: float = 32.0
 
 const ITEM_COLLECT_RADIUS: float = 96.0 * 96.0
-const SUN_COLLECT_RADIUS: float = 54.0 * 54.0
+const SUN_COLLECT_RADIUS: float = 36.0 * 36.0
 
-const COLLECT_DURATION: float = 0.8
+const COLLECT_DURATION: float = 0.4
 
 static var player: Player = null
 

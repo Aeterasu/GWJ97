@@ -26,6 +26,7 @@ var sprite_yaw: float = 0.0
 
 var lives: int = 0
 const STARTING_LIVES: int = 2
+const MAX_LIVES: int = 5
 const INVINCIBILITY_ON_HIT: float = 6.0
 const INVINCIBILITY_ON_BOMB: float = 3.0
 
@@ -39,6 +40,7 @@ var is_dead: bool = false
 
 signal on_hit
 signal on_death
+signal on_heal
 
 enum ControlState
 {
@@ -160,3 +162,10 @@ func on_fire() -> void:
 		
 		flash.position.x = randf_range(-2.0, 2.0)
 		flash.visible = not flash.visible
+
+func award_life() -> void:
+	if (lives + 1 > MAX_LIVES):
+		return
+
+	lives += 1
+	on_heal.emit()

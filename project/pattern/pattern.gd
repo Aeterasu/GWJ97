@@ -1,5 +1,7 @@
 class_name Pattern extends Node
 
+@export var spawn_life: bool = false
+
 @export var entities: Array[Enemy] = []
 @export var immune: bool = false
 
@@ -7,6 +9,7 @@ var health: float = 0.0
 
 var sun_counter: int = 0
 
+var life_spawner: LifePickup = null
 var sun_spawner: ScoreSunManager = null
 var bullet_engine: BulletEngine = null
 
@@ -47,6 +50,9 @@ func on_entity_hit(entity: Enemy, damage: float) -> void:
 	if immune:
 		return
 
+	if is_dead:
+		return
+
 	health -= damage
 
 	on_hit.emit(self)
@@ -56,10 +62,23 @@ func on_entity_hit(entity: Enemy, damage: float) -> void:
 		on_health_depleted.emit(self)
 
 func kill_start() -> void:
+	if is_dead:
+		return
+
 	is_dead = true
 
-	bullet_engine.bullet_cancel()
+	bullet_engine.bullet_cancel()	
+	
+	var sun_pos: Vector2 = Vector2(120.0, 88.0)
 
+	if spawn_life:
+		sun_pos = Vector2(80.0, 88.0)
+		life_spawner.spawn_life_pickup(Vector2(160.0, 88.0))
+
+	var sun = sun_spawner.spawn_sun(sun_pos)
+	if sun:
+		sun.use_gravity = true
+	
 func kill_finish() -> void:
 	on_death.emit(self)
 

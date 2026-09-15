@@ -1,0 +1,141 @@
+[gd_scene format=3 uid="uid://dhp3eywon6pi6"]
+
+[ext_resource type="Script" uid="uid://bl7qk0283xh4e" path="res://pattern/pilebunker.gd" id="1_oetio"]
+[ext_resource type="Script" uid="uid://du4pk0oohw2cn" path="res://enemy/enemy.gd" id="2_xyyh3"]
+[ext_resource type="Texture2D" uid="uid://der8j8mn8cywb" path="res://enemy/texture/texture_enemy_plane_placeholder.png" id="3_33kw3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pp47w"]
+radius = 18.0
+
+[sub_resource type="Animation" id="Animation_xyyh3"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Enemy:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Enemy:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_pp47w"]
+resource_name = "death"
+step = 0.25
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"kill_finish"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_33kw3"]
+resource_name = "default"
+length = 8.0
+loop_mode = 1
+step = 0.25
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Enemy:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(120, -0.25, 0, 0.25, 0, 120, -0.25, 0, 0.25, 0, 80, -0.25, 0, 0.25, 0, 80, -0.25, 0, 0.25, 0, 40, -0.25, 0, 0.25, 0, 40, -0.25, 0, 0.25, 0, 80, -0.25, 0, 0.25, 0, 80, -0.25, 0, 0.25, 0, 120, -0.25, 0, 0.25, 0, 120, -0.25, 0, 0.25, 0, 160, -0.25, 0, 0.25, 0, 160, -0.25, 0, 0.25, 0, 200, -0.25, 0, 0.25, 0, 200, -0.25, 0, 0.25, 0, 160, -0.25, 0, 0.25, 0, 160, -0.25, 0, 0.25, 0, 120, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Enemy:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(88, 0, 0, 0, 0, 88, 0, 0, 0, 0, 69.5, -0.041666668, 0, 0.041666668, 0, 88, 0, 0, 0, 0, 88, 0, 0, 0, 0, 69.5, -0.041666668, 0, 0.041666668, 0, 88, 0, 0, 0, 0, 88, 0, 0, 0, 0, 106.5, -0.041666668, 0, 0.041666668, 0, 88, 0, 0, 0, 0, 88, 0, 0, 0, 0, 106.5, -0.041666668, 0, 0.041666668, 0, 88, 0, 0, 0, 0, 88, 0, 0, 0, 0, 106.5, -0.041666668, 0, 0.041666668, 0, 88, 0, 0, 0, 0, 88, 0, 0, 0, 0, 106.5, -0.041666668, 0, 0.041666668, 0, 88, 0, 0, 0, 0, 88, 0, 0, 0, 0, 69.5, -0.041666668, 0, 0.041666668, 0, 88, 0, 0, 0, 0, 88, 0, 0, 0, 0, 69.5, -0.041666668, 0, 0.041666668, 0, 88, 0, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.5, 0.75, 1, 1.5, 1.75, 2, 2.5, 2.75, 3, 3.5, 3.75, 4, 4.5, 4.75, 5, 5.5, 5.75, 6, 6.5, 6.75, 7, 7.5, 7.75, 8)
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.25, 1.25, 2.25, 3.25, 4.25, 5.25, 6.25, 7.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"fire"
+}, {
+"args": [],
+"method": &"fire"
+}, {
+"args": [],
+"method": &"fire"
+}, {
+"args": [],
+"method": &"fire"
+}, {
+"args": [true],
+"method": &"fire"
+}, {
+"args": [],
+"method": &"fire"
+}, {
+"args": [],
+"method": &"fire"
+}, {
+"args": [],
+"method": &"fire"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pp47w"]
+_data = {
+&"RESET": SubResource("Animation_xyyh3"),
+&"death": SubResource("Animation_pp47w"),
+&"default": SubResource("Animation_33kw3")
+}
+
+[node name="Pilebunker" type="Node" unique_id=1439410849 node_paths=PackedStringArray("animation_player", "entities")]
+script = ExtResource("1_oetio")
+animation_player = NodePath("AnimationPlayer")
+entities = [NodePath("Enemy")]
+metadata/_custom_type_script = "uid://16mvw7i2q77s"
+
+[node name="Enemy" type="Area2D" parent="." unique_id=440282612]
+script = ExtResource("2_xyyh3")
+metadata/_custom_type_script = "uid://du4pk0oohw2cn"
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy" unique_id=680617765]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_33kw3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy" unique_id=1028229126]
+shape = SubResource("CircleShape2D_pp47w")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=738189791]
+libraries/ = SubResource("AnimationLibrary_pp47w")

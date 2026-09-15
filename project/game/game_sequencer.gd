@@ -1,5 +1,10 @@
 class_name GameSequencer extends Node
 
+@export var player: Player = null
+
+@export var show_boss_warning: bool = true
+@export var boss_warning: Control = null
+
 @export var starting_pattern: int = 0
 
 @export var animation_player: AnimationPlayer = null
@@ -12,12 +17,36 @@ class_name GameSequencer extends Node
 
 @export var enemy_bullet_engine: BulletEngine = null
 @export var sun_spawner: ScoreSunManager = null
+@export var life_spawner: LifePickup = null
+
+@export var results: ResultScreen = null
 
 var current_idx: int = 0
 
-signal on_pattern_init
+var no_miss: bool = true
+var no_bomb: bool = true
 
+signal on_pattern_init
 signal propagate_pattern_hit
+
+func start_game() -> void:
+	life_spawner.on_life_collected.connect(on_life_collected)
+
+	player.on_hit.connect(func(): no_miss = false)
+
+	if not show_boss_warning:
+		init_pattern(starting_pattern)
+	else:
+		await get_tree().create_timer(1.0).timeout
+
+		boss_warning.on_finished.connect(on_boss_warning_finished)
+		boss_warning.animate()
+
+func on_life_collected() -> void:
+	player.award_life()
+
+func on_boss_warning_finished() -> void:
+	init_pattern(starting_pattern)
 
 func fix() -> void:
 	for i in patterns.size():
@@ -27,6 +56,7 @@ func init_pattern(idx: int) -> void:
 	if idx >= 0 and idx < patterns.size():
 		patterns[idx].bullet_engine = self.enemy_bullet_engine
 		patterns[idx].sun_spawner = self.sun_spawner
+		patterns[idx].life_spawner = self.life_spawner
 		patterns[idx].health = patterns_health[idx]
 		patterns[idx].init_pattern()
 		
@@ -59,6 +89,17 @@ func on_pattern_health_depleted(pattern: Pattern) -> void:
 	enemy_bullet_engine.bullet_cancel()
 
 func on_pattern_death(pattern: Pattern) -> void:
+	await scoring.score_item_manager.await_all_items_cleared()
+
+	results.ticker_label.text = (patterns_flavor[current_idx].pattern_names + " // ").repeat(10)
+	results.show_results(scoring, no_miss, no_bomb)
+
+	await results.on_results_confirmed
+
+	results.hide_results()
+
+	await get_tree().create_timer(1.0).timeout
+
 	pattern.is_started = false
 	pattern.is_dead = true
 	
@@ -68,5 +109,8 @@ func on_pattern_death(pattern: Pattern) -> void:
 		return
 
 	current_idx = next_idx
-
+	
+	scoring.reset_results()
 	init_pattern(current_idx)
+	no_miss = true
+	no_bomb = true

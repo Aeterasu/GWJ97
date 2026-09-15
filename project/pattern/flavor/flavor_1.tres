@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_vmyq3")
 pattern_names = "OMEN"
-pattern_subtext = "it's every day and every night // my own war to take it head on"
+pattern_subtext = "it's every day and every night // my own war to take it head on //"
 metadata/_custom_type_script = "uid://c0dqn8ky0me73"

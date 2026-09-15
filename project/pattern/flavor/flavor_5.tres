@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="PatternFlavor" format=3 uid="uid://u77hjgf5b1xn"]
+[gd_resource type="Resource" script_class="PatternFlavor" format=3 uid="uid://dy7oul3joskoo"]
 
 [ext_resource type="Script" uid="uid://c0dqn8ky0me73" path="res://pattern/flavor/pattern_flavor.gd" id="1_7cstv"]
 
 [resource]
 script = ExtResource("1_7cstv")
-pattern_names = "HIGH ROLLER"
-pattern_subtext = "you're so special, why aren't you dead? // wild card, wild card //"
+pattern_names = "PILE BUNKER"
+pattern_subtext = "a gunshot to the head of trepidation // my heart turns into stone //"
 metadata/_custom_type_script = "uid://c0dqn8ky0me73"

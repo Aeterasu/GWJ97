@@ -9,8 +9,6 @@ class_name Title extends Control
 
 static var skip_press_any_button : bool = false
 
-
-
 func _ready() -> void:
 	self.grab_focus.call_deferred()
 
@@ -31,8 +29,9 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_pressed():
-		skip_press_any_button = true
-		press_any_button()
+		if event is InputEventKey or event is InputEventJoypadButton:
+			skip_press_any_button = true
+			press_any_button()
 
 func press_any_button() -> void:
 	if skip_press_any_button:
@@ -59,7 +58,6 @@ func on_ranking() -> void:
 
 func on_settings() -> void:
 	await Main.instance.load_state(Main.instance.State.SETTINGS_MENU)
-
 
 func on_exit() -> void:
 	Main.instance.exit()

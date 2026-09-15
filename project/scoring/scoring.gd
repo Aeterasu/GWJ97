@@ -18,6 +18,13 @@ var score: int = 0:
 		
 		update_label()
 
+var results_pattern_reward: int = 0
+var results_multiplier: float = 1.0
+var results_items_sum: int = 0
+var results_suns_collected: int = 0
+var results_starting_score: int = 0
+var results_total: int = 0
+
 # this is the multiplier awarded for rescuing little suns
 # it is not related to no-miss-no-bombs bonuses
 var current_rescue_multiplier: float = 1.0:
@@ -35,6 +42,14 @@ func _ready() -> void:
 
 	update_label()
 
+func reset_results() -> void:
+	results_pattern_reward = 0
+	results_multiplier = 1.0
+	results_items_sum = 0
+	results_suns_collected = 0
+	results_starting_score = score
+	results_total = score
+
 func update_label() -> void:
 	label.text = Utils.format_thousands(score) + " (x" + str(current_rescue_multiplier) + ")"
 
@@ -42,6 +57,7 @@ func update_label() -> void:
 # everything must be routed through functions here so that we do not lose track of the multipliers
 func award_score(amount: int) -> void:
 	score += amount
+	results_total += amount
 
 func award_rescue_multiplier() -> void:
 	current_rescue_multiplier += 1.0
@@ -50,7 +66,21 @@ func reset_rescue_multiplier() -> void:
 	current_rescue_multiplier = 1.0
 
 func on_pattern_completed(pattern_idx: int) -> void:
-	award_score(roundi(score_awards_per_pattern[pattern_idx] * current_rescue_multiplier))
+	#var award = roundi(score_awards_per_pattern[pattern_idx] * current_rescue_multiplier) 
+	var multiplier = 1.0
+	if game_sequencer.no_miss and game_sequencer.no_bomb:
+		multiplier = 2.0
+	elif game_sequencer.no_miss or game_sequencer.no_bomb:
+		multiplier = 1.5
+	else:
+		multiplier = 1.0
+
+	results_multiplier = multiplier
+	results_pattern_reward = score_awards_per_pattern[pattern_idx]
+
+	var award = roundi(results_pattern_reward * multiplier)
+
+	award_score(award)
 
 	# turn bullets into yummy score!
 
@@ -68,19 +98,16 @@ func on_pattern_completed(pattern_idx: int) -> void:
 		var type = get_item_type_from_multiplier(current_rescue_multiplier) 
 
 		var item = score_item_manager.spawn_score_item(type, engine.bullets[i].position)
-		item.reward = roundi(SCORE_ITEM_BASE_VALUE * current_rescue_multiplier)
+		
+		if item:
+			item.reward = roundi(SCORE_ITEM_BASE_VALUE * current_rescue_multiplier)
+
 		positions[i] = engine.bullets[i].position
 
 	score_item_particles.amount = count
 	score_item_particles.emission_shape = CPUParticles2D.EMISSION_SHAPE_POINTS
 	score_item_particles.emission_points = positions
 	score_item_particles.set_deferred("emitting", true)
-
-	# sun
-
-	var sun = score_sun_manager.spawn_sun(Vector2(120.0, 88.0))
-	if sun:
-		sun.use_gravity = true
 
 func get_item_type_from_multiplier(multiplier: float = 1.0) -> ScoreItem.Type:
 	if multiplier <= 1.0:
@@ -97,5 +124,9 @@ func get_item_type_from_multiplier(multiplier: float = 1.0) -> ScoreItem.Type:
 func on_score_item_picked_up(item: ScoreItem) -> void:
 	award_score(item.reward)
 
+	results_items_sum += item.reward
+
 func on_sun_collection(item: ScoreItem) -> void:
 	award_rescue_multiplier()
+
+	results_suns_collected += 1

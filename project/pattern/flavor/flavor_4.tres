@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="PatternFlavor" format=3 uid="uid://dy7oul3joskoo"]
+[gd_resource type="Resource" script_class="PatternFlavor" format=3 uid="uid://qoa7yb5l2iud"]
 
-[ext_resource type="Script" uid="uid://c0dqn8ky0me73" path="res://pattern/flavor/pattern_flavor.gd" id="1_7cstv"]
+[ext_resource type="Script" uid="uid://c0dqn8ky0me73" path="res://pattern/flavor/pattern_flavor.gd" id="1_kmr6q"]
 
 [resource]
-script = ExtResource("1_7cstv")
-pattern_names = "PILE BUNKER"
-pattern_subtext = "a gunshot to the head of trepidation // my heart turns into stone //"
+script = ExtResource("1_kmr6q")
+pattern_names = "DOGFIGHT"
+pattern_subtext = "wake yourself up, are you ready for the war? // dogs are fighting, so exciting, now it's on //"
 metadata/_custom_type_script = "uid://c0dqn8ky0me73"

@@ -1,15 +1,11 @@
 extends Pattern
 
 @export var fire_rate: float = 0.5
-@export var attack_2_interval: int = 8
-@export var attack_3_interval: int = 16
+var fire_timer: float = 0.0
 
-var timer: float = 0.0
-var fire_count: int = 0
+@export var is_firing: bool = false
 
-var time: float = 0.0
-var v_x: float = 0.0
-var prev_x: float = 0.0
+@export var animation_player: AnimationPlayer = null
 
 func _ready() -> void:
 	super()
@@ -17,25 +13,24 @@ func _ready() -> void:
 func init_pattern() -> void:
 	super()
 
-	timer = fire_rate + 3.0
-	fire_count = 0
-
 	is_started = true
 
+	animation_player.play("default")
+
+func kill_start() -> void:
+	super()
+	
+	animation_player.play("death")
+
 func update(delta: float) -> void:
-	timer -= delta
+	if is_firing:
+		fire_timer -= delta
 
-	if timer <= 0.0:
-		timer = fire_rate
-		fire_count += 1
-
-		fire_1()
-
-		if fire_count % attack_2_interval == 0:
-			fire_2()
-
-		if fire_count % attack_3_interval == 0:
-			fire_3()
+		if fire_timer <= 0.0:
+			fire_timer = fire_rate
+			fire_rapid()
+	else:
+		fire_timer = 0.0
 
 	var player = Game.get_player()
 	var target_pos = player.global_position if player else Vector2(120.0, 320.0)
@@ -44,41 +39,45 @@ func update(delta: float) -> void:
 
 	entities[0].rotation = rotate_toward(entities[0].rotation, target_angle, 2.0 * delta)
 
-	prev_x = entities[0].position.x
-
-	time += delta * 2.0
-
-	entities[0].position.x = remap(sin(time), -1.0, 1.0, 44.0, 240.0 - 44.0)
-	entities[0].position.y = 118.0
-
-	v_x = (entities[0].position.x - prev_x)
-
-func fire_1() -> void:
+func fire_rapid() -> void:
 	var angle = entities[0].rotation + PI / 2
 
-	var bullet_count: int = 3
+	var bullet_count_1: int = 4
+	var bullet_count_2: int = 2
 
-	for i in bullet_count:
+	for i in bullet_count_1:
 		var pos = entities[0].position + Vector2(randf_range(-12.0, 12.0), randf_range(-4.0, 4.0))
-		bullet_engine.fire_bullet(pos, angle + randf_range(-0.2, 0.2), randf_range(100.0, 260.0), BulletSkin.Type.ENEMY_BULLET_ALT_LONG)
+		bullet_engine.fire_bullet(pos, angle + randf_range(-0.1, 0.1), randf_range(150.0, 250.0), BulletSkin.Type.ENEMY_BULLET_RED_LONG)
 
-func fire_2() -> void:
-	var bullet_counts: Array = [12, 7, 5]
-	var speeds: Array = [200.0, 150.0, 80.0]
-	
-	for i in bullet_counts.size():
-		var a = BulletPatternHelper.get_arc(entities[0].rotation + PI / 2, 0.4, bullet_counts[i])
+	for j in bullet_count_2:
+		var pos = entities[0].position + Vector2(randf_range(-12.0, 12.0), randf_range(-4.0, 4.0))
+		bullet_engine.fire_bullet(pos, TAU * randf(), randf_range(90.0, 150.0), BulletSkin.Type.ENEMY_BULLET_RED_SMALL)
 
-		for angle in a:
-			bullet_engine.fire_bullet(entities[0].global_position + Vector2(v_x, 0.0), angle, speeds[i] * randf_range(0.9, 1.1), BulletSkin.Type.ENEMY_BULLET_RED_SMALL, gravity_bullet)
+func fire_circle(idx: int = 0) -> void:
+	var bullet_count = 0
+	var speed = 0.0
 
-func fire_3() -> void:
-	var bullet_count: int = 8
+	if idx == 0:
+		bullet_count = 16
+		speed = 105.0
+	elif idx == 1:
+		bullet_count = 14
+		speed = 90.0
+	elif idx == 2:
+		bullet_count = 12
+		speed = 75.0
 
-	var c = BulletPatternHelper.get_circle(randf() * TAU, bullet_count)
+	var circle = BulletPatternHelper.get_circle(0.0, bullet_count)
 
-	for a in c:
-		bullet_engine.fire_bullet(entities[0].global_position + Vector2(v_x, 0.0), a, 90.0, BulletSkin.Type.ENEMY_BULLET_RED_SMALL)
+	for angle in circle:
+		bullet_engine.fire_bullet(entities[0].global_position, angle, speed, BulletSkin.Type.ENEMY_BULLET_ALT_SMALL)
+
+func spawn_sun() -> void:
+	sun_counter += 1
+
+	if sun_counter >= 4:
+		var sun = sun_spawner.spawn_sun(entities[0].position)
+		sun_counter = 0
 
 static func gravity_bullet(bullet: Bullet, delta: float) -> Vector2:
 	bullet.velocity += Vector2.DOWN * 98 * delta
