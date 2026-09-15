@@ -91,6 +91,7 @@ func on_pattern_health_depleted(pattern: Pattern) -> void:
 func on_pattern_death(pattern: Pattern) -> void:
 	await scoring.score_item_manager.await_all_items_cleared()
 
+	results.ticker_label.text = (patterns_flavor[current_idx].pattern_names + " // ").repeat(10)
 	results.show_results(scoring, no_miss, no_bomb)
 
 	await results.on_results_confirmed

@@ -11,6 +11,8 @@ class_name ResultScreen extends Control
 @export var no_miss_checkmark: ResultScreenCheckbox = null
 @export var no_bomb_checkmark: ResultScreenCheckbox = null
 
+@export var ticker_label: TickerLabel = null
+
 var pattern_reward: int = 0
 var score_multiplier: float = 1.0
 var score_items: int = 0

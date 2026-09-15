@@ -56,6 +56,7 @@
 [ext_resource type="Texture2D" uid="uid://dwfao3ssrku40" path="res://ui/texture/texture_ui_boss_warning.png" id="43_wuin1"]
 [ext_resource type="Shader" uid="uid://cj4sdfqxylu30" path="res://ui/broken_tv.gdshader" id="51_5vun2"]
 [ext_resource type="Script" uid="uid://c8n4ohg53ujhd" path="res://ui/ui_boss_warning.gd" id="51_n823w"]
+[ext_resource type="Script" uid="uid://dfm4leymaw5n2" path="res://ui/ticker.gd" id="52_p2ewd"]
 [ext_resource type="Script" uid="uid://dvqiup2un5h7j" path="res://util/2d/shaky_node_2d.gd" id="53_l8p4d"]
 [ext_resource type="Script" uid="uid://b0ma26hvq32jr" path="res://ui/result_screen.gd" id="58_1xbv1"]
 [ext_resource type="Texture2D" uid="uid://cw4r4plf2mk2i" path="res://ui/texture/texture_ui_results.png" id="58_ee0yl"]
@@ -322,10 +323,6 @@ metadata/_snap_enabled = true
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ixbki"]
 gradient = SubResource("Gradient_wuin1")
 metadata/_snap_enabled = true
-
-[sub_resource type="LabelSettings" id="LabelSettings_s68re"]
-font = ExtResource("60_78uyn")
-font_color = Color(0.047058824, 0.09803922, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1xbv1"]
 shader = ExtResource("13_lw3qe")
@@ -798,12 +795,14 @@ z_as_relative = false
 material = SubResource("ShaderMaterial_3vho3")
 multimesh = SubResource("MultiMesh_y36n6")
 
-[node name="UI" type="Control" parent="." unique_id=339268598 node_paths=PackedStringArray("boss_healthbar", "boss_pattern_name", "score_label")]
+[node name="UI" type="Control" parent="." unique_id=339268598 node_paths=PackedStringArray("boss_healthbar", "boss_pattern_name_block", "boss_pattern_name", "boss_ticker_text", "score_label")]
 custom_minimum_size = Vector2(240, 320)
 layout_mode = 2
 script = ExtResource("20_gts4h")
 boss_healthbar = NodePath("UIBossHealthbar")
+boss_pattern_name_block = NodePath("BossHealthbarUnder/PatternNameBlock")
 boss_pattern_name = NodePath("BossHealthbarUnder/PatternNameBlock/Label")
+boss_ticker_text = NodePath("BossHealthbarUnder/PatternNameBlock/TickerLabel")
 score_label = NodePath("ScoreLabel")
 
 [node name="UIBossHealthbar" type="Node" parent="UI" unique_id=104798359 node_paths=PackedStringArray("parent")]
@@ -858,23 +857,52 @@ offset_right = 236.0
 offset_bottom = -1.0
 
 [node name="PatternNameBlock" type="Control" parent="UI/BossHealthbarUnder" unique_id=1682122609]
+clip_contents = true
 layout_mode = 1
 anchor_top = 1.0
 anchor_right = 0.99200004
 anchor_bottom = 1.7860001
-offset_right = -0.0960083
-offset_bottom = -0.0040016174
+offset_left = -1.0
+offset_right = -1.0960083
+offset_bottom = 1.9959984
+
+[node name="TickerLabel" type="Control" parent="UI/BossHealthbarUnder/PatternNameBlock" unique_id=1882556423]
+clip_contents = true
+layout_mode = 1
+anchor_top = 0.07700001
+anchor_bottom = 0.07700001
+offset_left = 3.0
+offset_top = -1.001
+offset_right = 218.0
+offset_bottom = 11.999
+grow_vertical = 0
+script = ExtResource("52_p2ewd")
+speed = 30.0
+gap = 4.0
+font = ExtResource("59_5coac")
+color = Color(1, 0.16078432, 0, 1)
+metadata/_custom_type_script = "uid://dfm4leymaw5n2"
+
+[node name="ColorRect" type="ColorRect" parent="UI/BossHealthbarUnder/PatternNameBlock/TickerLabel" unique_id=1770065548]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.047058824, 0.09803922, 0, 0.5019608)
 
 [node name="Label" type="Label" parent="UI/BossHealthbarUnder/PatternNameBlock" unique_id=1307598084]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -2.0
+anchor_bottom = 1.0910001
 offset_top = -1.0
-offset_right = -1.0
-offset_bottom = 1.0
+offset_right = 1.0
+offset_bottom = -2.1830006
 grow_horizontal = 0
 grow_vertical = 2
 pivot_offset_ratio = Vector2(1, 0)
@@ -1056,7 +1084,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(0.73100245, 0.4995533)
+position = Vector2(0.6655758, -0.04729273)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -1068,7 +1096,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(-6.3829455, -5.330316)
+position = Vector2(-7.1632957, 7.6438365)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -1087,7 +1115,7 @@ grow_vertical = 2
 color = Color(1, 0.16078432, 0, 1)
 metadata/_edit_lock_ = true
 
-[node name="ResultScreen" type="Control" parent="Overlay" unique_id=287103774 node_paths=PackedStringArray("animation_player", "pattern_reward_label", "score_multiplier_label", "score_item_label", "score_suns_label", "total_label", "no_miss_checkmark", "no_bomb_checkmark")]
+[node name="ResultScreen" type="Control" parent="Overlay" unique_id=287103774 node_paths=PackedStringArray("animation_player", "pattern_reward_label", "score_multiplier_label", "score_item_label", "score_suns_label", "total_label", "no_miss_checkmark", "no_bomb_checkmark", "ticker_label")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1103,6 +1131,7 @@ score_suns_label = NodePath("TextureRect/ScoreItem4")
 total_label = NodePath("TextureRect/Total2")
 no_miss_checkmark = NodePath("TextureRect/Checkbox1")
 no_bomb_checkmark = NodePath("TextureRect/Checkbox2")
+ticker_label = NodePath("TextureRect/ColorRect/Label")
 metadata/_edit_lock_ = true
 
 [node name="TextureRect" type="NinePatchRect" parent="Overlay/ResultScreen" unique_id=234158589]
@@ -1135,14 +1164,18 @@ offset_bottom = 1.0
 grow_horizontal = 2
 color = Color(1, 0.16078432, 0, 1)
 
-[node name="Label" type="Label" parent="Overlay/ResultScreen/TextureRect/ColorRect" unique_id=1134339926]
-layout_mode = 0
+[node name="Label" type="Control" parent="Overlay/ResultScreen/TextureRect/ColorRect" unique_id=1584154939]
+anchors_preset = 0
+offset_left = 2.0
 offset_top = 3.0
-offset_right = 192.0
-offset_bottom = 17.0
-text = "OMEN // OMEN // OMEN // OMEN"
-label_settings = SubResource("LabelSettings_s68re")
-vertical_alignment = 1
+offset_right = 178.0
+offset_bottom = 19.0
+script = ExtResource("52_p2ewd")
+speed = 30.0
+gap = 4.0
+font = ExtResource("60_78uyn")
+color = Color(0.047058824, 0.09803922, 0, 1)
+metadata/_custom_type_script = "uid://dfm4leymaw5n2"
 
 [node name="TextureRect" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=2090735832]
 material = SubResource("ShaderMaterial_1xbv1")
@@ -1392,6 +1425,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.98039216, 0.91764706, 0.7882353, 1)
