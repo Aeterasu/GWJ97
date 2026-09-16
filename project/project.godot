@@ -212,3 +212,14 @@ textures/canvas_textures/default_texture_repeat=1
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+
+[shader_globals]
+
+HITFLASH_STRENGTH={
+"type": "float",
+"value": 0.7
+}
+HITFLASH_SPEED={
+"type": "float",
+"value": 75.0
+}

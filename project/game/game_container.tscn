@@ -37,7 +37,7 @@
 [ext_resource type="Resource" uid="uid://u77hjgf5b1xn" path="res://pattern/flavor/flavor_6.tres" id="15_y37xm"]
 [ext_resource type="PackedScene" uid="uid://v2yky2ict4cp" path="res://pattern/breakout.tscn" id="17_g7uki"]
 [ext_resource type="PackedScene" uid="uid://vugwune8fbhe" path="res://pattern/omen.tscn" id="17_ijhnq"]
-[ext_resource type="Resource" uid="uid://d1ck7qmgmck54" path="res://pattern/flavor/flavor_10.tres" id="18_kjv07"]
+[ext_resource type="Resource" uid="uid://ca0xsbul6o6q7" path="res://pattern/flavor/flavor_10.tres" id="18_kjv07"]
 [ext_resource type="PackedScene" uid="uid://dhp3eywon6pi6" path="res://pattern/pilebunker.tscn" id="19_xfsju"]
 [ext_resource type="Script" uid="uid://debx0k47w1p5p" path="res://ui/ui.gd" id="20_gts4h"]
 [ext_resource type="PackedScene" uid="uid://iw61jl5rfh8k" path="res://pattern/high_roller.tscn" id="20_o7b2k"]
@@ -997,12 +997,13 @@ color_ramp = SubResource("Gradient_3b7yk")
 [node name="GameSequencer" type="Node" parent="SubViewport/Game/Pausable" unique_id=1424656608 node_paths=PackedStringArray("player", "boss_warning", "timeout_warning", "animation_player", "patterns", "scoring", "enemy_bullet_engine", "sun_spawner", "life_spawner", "results")]
 script = ExtResource("2_oryes")
 player = NodePath("../Player")
+show_boss_warning = false
 boss_warning = NodePath("../../../../Overlay/BossWarning")
 timeout_warning = NodePath("../../../../Overlay/TimeoutWarning")
 animation_player = NodePath("AnimationPlayer")
 patterns = [NodePath("Omen"), NodePath("Breakout"), NodePath("Riot"), NodePath("Dogfight"), NodePath("Pilebunker"), NodePath("HighRoller"), NodePath("Naysayer"), NodePath("SnakeEyes"), NodePath("Meltdown"), NodePath("BleedingStar")]
 patterns_health = Array[float]([3200.0, 3000.0, 3000.0, 960.0, 450.0, 4480.0, 1500.0, 2500.0, 5000.0, 5000.0])
-patterns_timer = Array[float]([5.0, 90.0, 90.0, 90.0, 90.0, 120.0, 120.0, 120.0, 180.0, 180.0])
+patterns_timer = Array[float]([60.0, 90.0, 90.0, 90.0, 90.0, 120.0, 120.0, 120.0, 180.0, 180.0])
 patterns_flavor = Array[ExtResource("3_ysh17")]([ExtResource("4_to2kc"), ExtResource("5_ino1g"), ExtResource("8_v7aj6"), ExtResource("6_gts4h"), ExtResource("7_j7fm5"), ExtResource("15_y37xm"), ExtResource("8_1vxhs"), ExtResource("9_bybv3"), ExtResource("10_y7kwi"), ExtResource("18_kjv07")])
 scoring = NodePath("../Scoring")
 enemy_bullet_engine = NodePath("../EnemyBulletEngine")
@@ -1144,7 +1145,7 @@ z_index = 16
 material = SubResource("ShaderMaterial_ijhnq")
 multimesh = SubResource("MultiMesh_dxrkv")
 
-[node name="Player" parent="SubViewport/Game/Pausable" unique_id=1584514943 node_paths=PackedStringArray("bullet_engine") instance=ExtResource("7_mp07y")]
+[node name="Player" parent="SubViewport/Game/Pausable" unique_id=1584514943 node_paths=PackedStringArray("bullet_engine", "enemy_bullet_engine", "game_sequencer") instance=ExtResource("7_mp07y")]
 z_index = 64
 base_speed = 240.0
 focus_speed = 120.0
@@ -1668,7 +1669,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(-0.014657275, 0.1682648)
+position = Vector2(0.84527594, -0.64552945)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -1680,7 +1681,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(3.577191, -4.6727824)
+position = Vector2(-7.41265, 4.55113)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")

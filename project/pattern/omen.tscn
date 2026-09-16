@@ -2,15 +2,12 @@
 
 [ext_resource type="Script" uid="uid://dpsgkb70urefo" path="res://pattern/omen.gd" id="1_va266"]
 [ext_resource type="Script" uid="uid://du4pk0oohw2cn" path="res://enemy/enemy.gd" id="2_va266"]
-[ext_resource type="Texture2D" uid="uid://cbf2r3ltoc2cw" path="res://enemy/texture/texture_enemy_placeholder.png" id="3_spfd6"]
+[ext_resource type="PackedScene" uid="uid://xin8fxth4lin" path="res://enemy/large_ship_visual.tscn" id="3_spfd6"]
 [ext_resource type="FontFile" uid="uid://dpddonpy8spcf" path="res://font/Silver.ttf" id="4_spfd6"]
 [ext_resource type="Script" uid="uid://bxx60p474e34r" path="res://ui/animated_text.gd" id="5_spfd6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3b7yk"]
-radius = 43.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_va266"]
-radius = 16.0
+radius = 64.0
 
 [sub_resource type="Animation" id="Animation_4xvy2"]
 length = 0.001
@@ -110,7 +107,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_fnp6n"]
 resource_name = "start"
-length = 4.5
+length = 5.5
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -119,7 +116,7 @@ tracks/0/path = NodePath("Enemy:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1, 1.5, 2, 4.5),
+"times": PackedFloat32Array(0, 1, 1.5, 2, 5.5),
 "transitions": PackedFloat32Array(0.5, -2, 1, 1, 1),
 "update": 0,
 "values": [Vector2(120, -88), Vector2(120, 95), Vector2(120, 85), Vector2(120, 88), Vector2(120, 88)]
@@ -131,7 +128,7 @@ tracks/1/path = NodePath(".:immune")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 4.5),
+"times": PackedFloat32Array(0, 5.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, true]
@@ -211,14 +208,13 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.2, 0.90000004)
 metadata/_snap_enabled = true
 
-[node name="Omen" type="Node" unique_id=425168190 node_paths=PackedStringArray("text", "bullet_origin_left", "bullet_origin_right", "entities", "animation_player")]
+[node name="Omen" type="Node" unique_id=425168190 node_paths=PackedStringArray("text", "entities", "sprites", "animation_player")]
 script = ExtResource("1_va266")
 text = NodePath("AnimatedText")
-bullet_origin_left = NodePath("Enemy/Marker2D")
-bullet_origin_right = NodePath("Enemy/Marker2D2")
 fire_rate = 0.48
 arc_spread = 25.0
 entities = [NodePath("Enemy")]
+sprites = [NodePath("Enemy/LargeShipVisual")]
 animation_player = NodePath("AnimationPlayer")
 metadata/_custom_type_script = "uid://dpsgkb70urefo"
 
@@ -227,26 +223,10 @@ position = Vector2(120, -88)
 script = ExtResource("2_va266")
 metadata/_custom_type_script = "uid://du4pk0oohw2cn"
 
-[node name="Sprite2D" type="Sprite2D" parent="Enemy" unique_id=1042999285]
-scale = Vector2(0.8, 0.8)
-texture = ExtResource("3_spfd6")
-
-[node name="Marker2D" type="Marker2D" parent="Enemy" unique_id=1540731741]
-position = Vector2(-68, 0)
-
-[node name="Marker2D2" type="Marker2D" parent="Enemy" unique_id=943217058]
-position = Vector2(66, 0)
+[node name="LargeShipVisual" parent="Enemy" unique_id=1229315615 instance=ExtResource("3_spfd6")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy" unique_id=2143023239]
 shape = SubResource("CircleShape2D_3b7yk")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Enemy" unique_id=1436754261]
-position = Vector2(-45, -8)
-shape = SubResource("CircleShape2D_va266")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="Enemy" unique_id=999388907]
-position = Vector2(45, -8)
-shape = SubResource("CircleShape2D_va266")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1125337104]
 libraries/ = SubResource("AnimationLibrary_t2vjh")

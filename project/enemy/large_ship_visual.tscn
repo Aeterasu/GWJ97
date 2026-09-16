@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://xin8fxth4lin"]
+
+[ext_resource type="Shader" uid="uid://wckw45cj8va3" path="res://enemy/enemy_shader.gdshader" id="1_e0voa"]
+[ext_resource type="Texture2D" uid="uid://bejo8putty2ji" path="res://enemy/texture/texture_enemy_large_ship.png" id="2_me6us"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e0voa"]
+shader = ExtResource("1_e0voa")
+shader_parameter/atlas = ExtResource("2_me6us")
+shader_parameter/hitflash = 0.0
+
+[sub_resource type="Gradient" id="Gradient_me6us"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ixbki"]
+gradient = SubResource("Gradient_me6us")
+width = 184
+height = 171
+
+[node name="LargeShipVisual" type="Sprite2D" unique_id=1742974697]
+material = SubResource("ShaderMaterial_e0voa")
+texture = SubResource("GradientTexture2D_ixbki")
