@@ -42,6 +42,7 @@ func _ready() -> void:
 	player.on_hit.connect(scoring.on_player_hit)
 	player.on_hit.connect(func(): ui_root.player_health.on_player_hit(player.lives))
 	player.on_heal.connect(func(): ui_root.player_health.on_player_heal(player.lives))
+	player.on_bomb_ready.connect(ui_root.bomb_bar.show_bomb_ready_notif)
 
 	game_sequencer.start_game()
 
@@ -84,6 +85,15 @@ func _process(delta: float) -> void:
 	ui_root.immune_label.text = "IMMUNE: " + str(Utils.round_place(player.invincibility_timer, 1)) + "s"
 
 	ui_root.boss_timer.text = str(game_sequencer.get_current_timer())
+
+	ui_root.bomb_bar.max_value = 1.0
+	ui_root.bomb_bar.value = 1.0 - (player.bomb_restart_timer / player.bomb_restart_duration)
+
+	if ui_root.bomb_bar.value >= 1.0:
+		ui_root.bomb_bar.tint_progress = Color("#faeac9")
+	else:
+		ui_root.bomb_bar.tint_progress = Color("#927873")
+
 
 func on_pattern_init(pattern_idx: int) -> void:
 	var pattern_str = game_sequencer.patterns_flavor[pattern_idx].pattern_names

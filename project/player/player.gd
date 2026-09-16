@@ -41,16 +41,18 @@ var control_state: ControlState = ControlState.NORMAL
 
 var invincibility_timer: float = 0.0
 
-var bomb_restart_duration : float = 3.0
+var bomb_restart_duration : float = 30.0
 var bomb_restart_timer : float = 0.0
 var bomb_effect_duration : float = 0.5
 var bomb_effect_timer : float = 0.0
+var bomb_ready_toggle: bool = false
 
 var is_dead: bool = false
 
 signal on_hit
 signal on_death
 signal on_heal
+signal on_bomb_ready
 
 enum ControlState
 {
@@ -143,13 +145,19 @@ func process_weapon(delta: float) -> void:
 	if bomb_input and bomb_effect_timer <= 0.0 and bomb_restart_timer <= 0.0:
 		bomb_effect_timer = bomb_effect_duration
 		bomb_restart_timer = bomb_restart_duration
+		invincibility_timer = INVINCIBILITY_ON_BOMB
 		game_sequencer.no_bomb = false
-	
+		bomb_ready_toggle = true
+
 	if bomb_effect_timer > 0.0:
 		bomb_effect_timer -= delta
 		enemy_bullet_engine.bullet_cancel()
 	elif bomb_effect_timer <= 0.0:
 		bomb_restart_timer -= delta
+
+		if bomb_restart_timer <= 0.0 and bomb_ready_toggle:
+			on_bomb_ready.emit()
+			bomb_ready_toggle = false
 
 func hit() -> void:
 	if is_dead:

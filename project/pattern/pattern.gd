@@ -88,6 +88,8 @@ func on_entity_hit(entity: Enemy, damage: float) -> void:
 		on_health_depleted.emit(self)
 		start_death()
 
+	#Game.get_player().bomb_restart_timer -= 0.01
+
 func start_death() -> void:
 	if is_dead:
 		return
