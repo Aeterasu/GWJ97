@@ -1,10 +1,15 @@
 shader_type canvas_item;
 
+uniform sampler2D invulnerable_sprite: filter_nearest;
+uniform bool is_invul = false;
+
 uniform bool cull_backface = true;
-uniform float fov : hint_range(1, 179) = 90.0;
-uniform float rot_y_deg : hint_range(-360, 360) = 0.0;
-uniform float rot_x_deg : hint_range(-360, 360) = 0.0;
-uniform float inset : hint_range(0, 1) = 0.0;
+uniform float fov : hint_range(1.0, 179.0) = 90.0;
+uniform float rot_y_deg : hint_range(-360.0, 360.0) = 0.0;
+uniform float rot_x_deg : hint_range(-360.0, 360.0) = 0.0;
+uniform float inset : hint_range(0.0, 1.0) = 0.0;
+
+uniform float invul : hint_range(0.0, 1.0) = 0.0;
 
 varying vec2 offset;
 varying vec3 world_pos_3d;
@@ -49,5 +54,12 @@ void fragment()
 		discard;
 
 	// flip back face uv horizontally to keep texture orientation correct
-	COLOR = texture(TEXTURE, vec2(1.0 - projected_uv.x, projected_uv.y));
+	vec2 final_uv = vec2(1.0 - projected_uv.x, projected_uv.y);
+	vec4 tex = texture(TEXTURE, final_uv);
+	vec4 invul_tex = texture(invulnerable_sprite, final_uv);
+	
+	float blink = 0.5 - sin(TIME * 75.0) * 0.5;
+	float factor = blink * float(is_invul);
+	
+	COLOR = mix(tex, invul_tex, factor);
 }

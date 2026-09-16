@@ -147,6 +147,7 @@ func hit() -> void:
 
 	if lives < 0:
 		on_death.emit()
+		lives = 0
 
 func _process(delta: float) -> void:	
 	for flash in muzzle_flashes:
@@ -156,6 +157,11 @@ func _process(delta: float) -> void:
 		if (not base_weapon.is_firing) and (not focus_weapon.is_firing):
 			flash.visible = true
 	
+	sprite_shader.set_shader_parameter("is_invul", invincibility_timer > 0.0)
+
+	for o in options:
+		(o.material as ShaderMaterial).set_shader_parameter("is_invul", invincibility_timer > 0.0)
+
 func on_fire() -> void:
 	for flash in muzzle_flashes:
 		flash.scale = Vector2.ONE * randf_range(0.8, 1.5)

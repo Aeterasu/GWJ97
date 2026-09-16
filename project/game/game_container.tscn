@@ -58,9 +58,13 @@
 [ext_resource type="Script" uid="uid://c8n4ohg53ujhd" path="res://ui/ui_boss_warning.gd" id="51_n823w"]
 [ext_resource type="Script" uid="uid://dfm4leymaw5n2" path="res://ui/ticker.gd" id="52_p2ewd"]
 [ext_resource type="Script" uid="uid://dvqiup2un5h7j" path="res://util/2d/shaky_node_2d.gd" id="53_l8p4d"]
+[ext_resource type="Texture2D" uid="uid://boo0j806k0aa1" path="res://ui/texture/texture_ui_panel.png" id="56_h86jf"]
+[ext_resource type="Script" uid="uid://c6wbdfvk65clw" path="res://ui/ui_health.gd" id="57_brma6"]
+[ext_resource type="Texture2D" uid="uid://77pn8cy5f8va" path="res://ui/texture/texture_ui_heart.png" id="57_osdpc"]
 [ext_resource type="Script" uid="uid://b0ma26hvq32jr" path="res://ui/result_screen.gd" id="58_1xbv1"]
 [ext_resource type="Texture2D" uid="uid://cw4r4plf2mk2i" path="res://ui/texture/texture_ui_results.png" id="58_ee0yl"]
 [ext_resource type="FontFile" uid="uid://cuavx05ndjw5g" path="res://font/m3x6.ttf" id="59_5coac"]
+[ext_resource type="Texture2D" uid="uid://dmxfwf2jr8lvb" path="res://ui/texture/texture_ui_heart_break.png" id="59_afsd1"]
 [ext_resource type="FontFile" uid="uid://dekxaqxocvhf7" path="res://font/m6x11.ttf" id="60_78uyn"]
 [ext_resource type="PackedScene" uid="uid://cdkh4caga30ay" path="res://ui/result_screen_checkbox.tscn" id="61_1xbv1"]
 [ext_resource type="Texture2D" uid="uid://bl0je63ccfsau" path="res://ui/texture/texture_ui_results_decorative_line.png" id="61_phvc2"]
@@ -177,18 +181,21 @@ shader = ExtResource("13_lw3qe")
 shader_parameter/stripe_texture = ExtResource("14_ysh17")
 shader_parameter/scroll_speed = Vector2(0, 2)
 shader_parameter/tiling = Vector2(1, 2)
+shader_parameter/alpha = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jseim"]
 shader = ExtResource("13_lw3qe")
 shader_parameter/stripe_texture = ExtResource("14_ysh17")
 shader_parameter/scroll_speed = Vector2(0, -2)
 shader_parameter/tiling = Vector2(1, 2)
+shader_parameter/alpha = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ms3xe"]
 shader = ExtResource("13_lw3qe")
 shader_parameter/stripe_texture = ExtResource("37_qiqgi")
 shader_parameter/scroll_speed = Vector2(-2, 0)
 shader_parameter/tiling = Vector2(42, 1)
+shader_parameter/alpha = 1.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_3b7yk"]
 font = ExtResource("38_ms3xe")
@@ -201,12 +208,202 @@ shader = ExtResource("13_lw3qe")
 shader_parameter/stripe_texture = ExtResource("38_jseim")
 shader_parameter/scroll_speed = Vector2(-2, -2)
 shader_parameter/tiling = Vector2(3, 3)
+shader_parameter/alpha = 1.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_ixbki"]
 font = ExtResource("38_ms3xe")
 font_color = Color(0.98039216, 0.91764706, 0.7882353, 1)
 outline_size = 2
 outline_color = Color(0.047058824, 0.09803922, 0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ixbki"]
+atlas = ExtResource("57_osdpc")
+region = Rect2(10, 0, 10, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_osdpc"]
+atlas = ExtResource("57_osdpc")
+region = Rect2(0, 0, 10, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2675o"]
+atlas = ExtResource("57_osdpc")
+region = Rect2(20, 0, 10, 0)
+
+[sub_resource type="Animation" id="Animation_afsd1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0.2561771]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../CPUParticles2D:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../Sprite2D3:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_vss03"]
+resource_name = "heal"
+length = 5.0
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.275, 0.325, 0.375, 0.45, 0.52500004, 0.6, 1),
+"transitions": PackedFloat32Array(2, -2, -2, -2, -2, -2, -2, -2),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(2, 2), Vector2(3, 3), Vector2(1.5, 1.5), Vector2(2.2, 2.2), Vector2(1.9, 1.9), Vector2(2, 2), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6, 1, 1.05, 1.125, 1.225, 1.35),
+"transitions": PackedFloat32Array(-2, 5.6568513, -2, -2, -2, -2, -2),
+"update": 0,
+"values": [0.0, -16.0, 4.0, 6.0, 3.0, 5.0, 4.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../CPUParticles2D:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.025),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.275, 0.6, 0.85, 0.975, 1.075, 1.2, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.98039216, 0.91764706, 0.7882353, 1), Color(0.98039216, 0.91764706, 0.7882353, 1), Color(1, 0.16078432, 0, 1), Color(1, 0.1607843, 0, 1), Color(0.98039216, 0.91764706, 0.7882353, 1), Color(0.98039216, 0.91764706, 0.7882353, 1), Color(1, 0.1607843, 0, 1), Color(1, 0.1607843, 0, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../Sprite2D3:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(-0.099999964, 1, 1.05, 1.375),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../..")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1.025, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"show_oneup_notif"
+}, {
+"args": [],
+"method": &"reset_update"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ljlx8"]
+_data = {
+&"RESET": SubResource("Animation_afsd1"),
+&"heal": SubResource("Animation_vss03")
+}
+
+[sub_resource type="Curve" id="Curve_n33i2"]
+_data = [Vector2(0, 0.9915255), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_htow4"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_x3o37"]
+colors = PackedColorArray(1, 0.16078432, 0, 1, 1, 0.16078432, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_s68re"]
+gradient = SubResource("Gradient_x3o37")
+fill_from = Vector2(0.5, 1)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2675o"]
+font = ExtResource("59_5coac")
+font_color = Color(1, 0.16078432, 0, 0.5019608)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_osdpc"]
+shader = ExtResource("13_lw3qe")
+shader_parameter/stripe_texture = ExtResource("38_jseim")
+shader_parameter/scroll_speed = Vector2(1, 0)
+shader_parameter/tiling = Vector2(18, 0.75)
+shader_parameter/alpha = 0.50000002375
 
 [sub_resource type="Animation" id="Animation_n823w"]
 length = 0.001
@@ -329,12 +526,14 @@ shader = ExtResource("13_lw3qe")
 shader_parameter/stripe_texture = ExtResource("61_phvc2")
 shader_parameter/scroll_speed = Vector2(2, 0)
 shader_parameter/tiling = Vector2(18, 1)
+shader_parameter/alpha = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p2ewd"]
 shader = ExtResource("13_lw3qe")
 shader_parameter/stripe_texture = ExtResource("61_phvc2")
 shader_parameter/scroll_speed = Vector2(1, 0)
 shader_parameter/tiling = Vector2(2, 1)
+shader_parameter/alpha = 1.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_wvij3"]
 font = ExtResource("38_ms3xe")
@@ -643,7 +842,7 @@ player = NodePath("../Player")
 boss_warning = NodePath("../../../Overlay/BossWarning")
 animation_player = NodePath("AnimationPlayer")
 patterns = [NodePath("Omen"), NodePath("Breakout"), NodePath("Riot"), NodePath("Dogfight"), NodePath("Pilebunker"), NodePath("HighRoller")]
-patterns_health = Array[float]([190.0, 1500.0, 1600.0, 600.0, 600.0, 2800.0, 2250.0, 2250.0, 2250.0, 1200.0])
+patterns_health = Array[float]([3200.0, 3000.0, 3000.0, 960.0, 450.0, 4480.0, 3600.0, 3600.0, 3600.0, 1920.0])
 patterns_flavor = Array[ExtResource("3_ysh17")]([ExtResource("4_to2kc"), ExtResource("5_ino1g"), ExtResource("8_v7aj6"), ExtResource("6_gts4h"), ExtResource("7_j7fm5"), ExtResource("15_y37xm"), ExtResource("8_1vxhs"), ExtResource("9_bybv3"), ExtResource("10_y7kwi"), ExtResource("18_kjv07")])
 scoring = NodePath("../Scoring")
 enemy_bullet_engine = NodePath("../EnemyBulletEngine")
@@ -765,6 +964,7 @@ metadata/_custom_type_script = "uid://cm7708ogl281p"
 [node name="PlayerBulletEngine" type="Node" parent="SubViewport/Game" unique_id=297898871 node_paths=PackedStringArray("bullet_visual")]
 script = ExtResource("5_wurgr")
 max_bullet_count = 512
+shape_radius = 3.0
 use_tunneling_fix = true
 bullet_visual = NodePath("../PlayerBulletVisual")
 collision_mask = 4
@@ -784,7 +984,6 @@ bullet_engine = NodePath("../PlayerBulletEngine")
 [node name="EnemyBulletEngine" type="Node" parent="SubViewport/Game" unique_id=1260966031 node_paths=PackedStringArray("bullet_visual")]
 script = ExtResource("5_wurgr")
 max_bullet_count = 4096
-shape_radius = 1.0
 bullet_visual = NodePath("../EnemyBulletVisual")
 collision_mask = 2
 metadata/_custom_type_script = "uid://dpcpbpske8jii"
@@ -795,15 +994,15 @@ z_as_relative = false
 material = SubResource("ShaderMaterial_3vho3")
 multimesh = SubResource("MultiMesh_y36n6")
 
-[node name="UI" type="Control" parent="." unique_id=339268598 node_paths=PackedStringArray("boss_healthbar", "boss_pattern_name_block", "boss_pattern_name", "boss_ticker_text", "score_label")]
+[node name="UI" type="Control" parent="." unique_id=339268598 node_paths=PackedStringArray("player_health", "boss_healthbar", "boss_pattern_name_block", "boss_pattern_name", "boss_ticker_text")]
 custom_minimum_size = Vector2(240, 320)
 layout_mode = 2
 script = ExtResource("20_gts4h")
+player_health = NodePath("HPPanel")
 boss_healthbar = NodePath("UIBossHealthbar")
 boss_pattern_name_block = NodePath("BossHealthbarUnder/PatternNameBlock")
 boss_pattern_name = NodePath("BossHealthbarUnder/PatternNameBlock/Label")
 boss_ticker_text = NodePath("BossHealthbarUnder/PatternNameBlock/TickerLabel")
-score_label = NodePath("ScoreLabel")
 
 [node name="UIBossHealthbar" type="Node" parent="UI" unique_id=104798359 node_paths=PackedStringArray("parent")]
 script = ExtResource("21_j7fm5")
@@ -946,6 +1145,7 @@ offset_bottom = 12.0
 color = Color(0.047058824, 0.09803922, 0, 0.5019608)
 
 [node name="DebugHPLabel" type="Label" parent="UI" unique_id=1419924041]
+visible = false
 layout_mode = 0
 offset_left = 3.0
 offset_top = 304.0
@@ -955,18 +1155,192 @@ text = "HP: 0"
 label_settings = SubResource("LabelSettings_ixbki")
 vertical_alignment = 2
 
-[node name="ScoreLabel" type="Label" parent="UI" unique_id=920208319]
+[node name="ScoreLabel" type="RichTextLabel" parent="UI" unique_id=65658455]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = -2.0
-offset_bottom = 11.0
+offset_top = -1.0
+offset_bottom = 12.0
 grow_horizontal = 2
-text = "0"
-label_settings = SubResource("LabelSettings_ixbki")
+theme_override_colors/default_color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+theme_override_colors/font_outline_color = Color(0.047058824, 0.09803922, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("38_ms3xe")
+bbcode_enabled = true
+text = "0 ([img]res://ui/texture/texture_ui_little_sun.png[/img]x20)"
 horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="1UPNotification" type="ColorRect" parent="UI" unique_id=1647757656]
+layout_mode = 0
+offset_top = 310.0
+offset_right = 66.0
+offset_bottom = 321.0
+color = Color(1, 0.16078432, 0, 1)
+
+[node name="TickerLabel" type="Control" parent="UI/1UPNotification" unique_id=2056362370]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("52_p2ewd")
+text = "1-UP! // 1-UP! // 1-UP! // 1-UP! // 1-UP! // 1-UP! // 1-UP! // "
+speed = 30.0
+gap = 4.0
+font = ExtResource("38_ms3xe")
+color = Color(0.047058824, 0.09803922, 0, 1)
+metadata/_custom_type_script = "uid://dfm4leymaw5n2"
+
+[node name="HPPanel" type="TextureRect" parent="UI" unique_id=2030564919 node_paths=PackedStringArray("hearts", "damage_fx", "oneup_notification", "heal_animation", "animation_shit")]
+layout_mode = 0
+offset_top = 310.0
+offset_right = 66.0
+offset_bottom = 320.0
+texture = ExtResource("56_h86jf")
+stretch_mode = 2
+script = ExtResource("57_brma6")
+hearts = [NodePath("HBoxContainer/Heart1"), NodePath("HBoxContainer/Heart2"), NodePath("HBoxContainer/Heart3"), NodePath("HBoxContainer/Heart4"), NodePath("HBoxContainer/Heart5")]
+damage_fx = NodePath("HBoxContainer/Sprite2D")
+oneup_notification = NodePath("../1UPNotification")
+heal_animation = NodePath("HBoxContainer/Sprite2D2/AnimationPlayer")
+animation_shit = [NodePath("HBoxContainer/CPUParticles2D"), NodePath("HBoxContainer/Sprite2D2")]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/HPPanel" unique_id=1534563524]
+custom_maximum_size = Vector2(51, 8)
+layout_mode = 0
+offset_left = 8.0
+offset_top = 1.0
+offset_right = 60.0
+offset_bottom = 9.0
+theme_override_constants/separation = 0
+
+[node name="Heart1" type="TextureProgressBar" parent="UI/HPPanel/HBoxContainer" unique_id=2000301015]
+layout_mode = 2
+max_value = 1.0
+step = 0.0
+value = 1.0
+fill_mode = 3
+texture_under = SubResource("AtlasTexture_ixbki")
+texture_progress = SubResource("AtlasTexture_osdpc")
+
+[node name="Heart2" type="TextureProgressBar" parent="UI/HPPanel/HBoxContainer" unique_id=1292509788]
+layout_mode = 2
+max_value = 1.0
+step = 0.0
+value = 1.0
+fill_mode = 3
+texture_under = SubResource("AtlasTexture_ixbki")
+texture_progress = SubResource("AtlasTexture_osdpc")
+
+[node name="Heart3" type="TextureProgressBar" parent="UI/HPPanel/HBoxContainer" unique_id=1378299547]
+layout_mode = 2
+max_value = 1.0
+step = 0.0
+value = 1.0
+fill_mode = 3
+texture_under = SubResource("AtlasTexture_ixbki")
+texture_progress = SubResource("AtlasTexture_osdpc")
+
+[node name="Heart4" type="TextureProgressBar" parent="UI/HPPanel/HBoxContainer" unique_id=1543617909]
+layout_mode = 2
+max_value = 1.0
+step = 0.0
+value = 1.0
+fill_mode = 3
+texture_under = SubResource("AtlasTexture_ixbki")
+texture_progress = SubResource("AtlasTexture_osdpc")
+
+[node name="Heart5" type="TextureProgressBar" parent="UI/HPPanel/HBoxContainer" unique_id=531903607]
+layout_mode = 2
+max_value = 1.0
+step = 0.0
+fill_mode = 3
+texture_under = SubResource("AtlasTexture_ixbki")
+texture_progress = SubResource("AtlasTexture_osdpc")
+
+[node name="Sprite2D" type="Sprite2D" parent="UI/HPPanel/HBoxContainer" unique_id=1397898691]
+visible = false
+modulate = Color(0.98039216, 0.91764706, 0.7882353, 1)
+z_index = 1
+position = Vector2(45, 9)
+texture = ExtResource("59_afsd1")
+offset = Vector2(0, -20.5)
+
+[node name="Sprite2D2" type="Sprite2D" parent="UI/HPPanel/HBoxContainer" unique_id=1682528990]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(45, 0.2561771)
+scale = Vector2(1e-05, 1e-05)
+texture = SubResource("AtlasTexture_2675o")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/HPPanel/HBoxContainer/Sprite2D2" unique_id=1138722693]
+libraries/ = SubResource("AnimationLibrary_ljlx8")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="UI/HPPanel/HBoxContainer" unique_id=905039846]
+position = Vector2(45, 3)
+emitting = false
+amount = 16
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+direction = Vector2(0, -1)
+spread = 47.45
+gravity = Vector2(0, 98)
+initial_velocity_min = 25.66
+initial_velocity_max = 77.13
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_n33i2")
+color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+
+[node name="Sprite2D3" type="Sprite2D" parent="UI/HPPanel/HBoxContainer" unique_id=811713582]
+modulate = Color(1, 1, 1, 0)
+self_modulate = Color(1, 1, 1, 0.5019608)
+material = SubResource("CanvasItemMaterial_htow4")
+position = Vector2(25, -7.5)
+scale = Vector2(1.03125, 0.515625)
+texture = SubResource("GradientTexture2D_s68re")
+
+[node name="BombPanel" type="TextureRect" parent="UI" unique_id=159632046]
+layout_mode = 0
+offset_left = 174.0
+offset_top = 310.0
+offset_right = 240.0
+offset_bottom = 320.0
+texture = ExtResource("56_h86jf")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="UI" unique_id=1029436321]
+layout_mode = 0
+offset_left = 67.0
+offset_top = 307.0
+offset_right = 87.0
+offset_bottom = 320.0
+text = "LIVES"
+label_settings = SubResource("LabelSettings_2675o")
+
+[node name="Label2" type="Label" parent="UI" unique_id=741857214]
+layout_mode = 0
+offset_left = 156.0
+offset_top = 307.0
+offset_right = 176.0
+offset_bottom = 320.0
+text = "BOMB"
+label_settings = SubResource("LabelSettings_2675o")
+
+[node name="TextureRect" type="ColorRect" parent="UI" unique_id=194335312]
+modulate = Color(1, 1, 1, 0.2509804)
+material = SubResource("ShaderMaterial_osdpc")
+layout_mode = 0
+offset_left = 88.0
+offset_top = 315.0
+offset_right = 154.0
+offset_bottom = 318.0
 
 [node name="Overlay" type="Control" parent="." unique_id=1886945607]
+z_index = 4
 custom_minimum_size = Vector2(240, 320)
 layout_mode = 2
 
@@ -1084,7 +1458,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(0.6655758, -0.04729273)
+position = Vector2(-0.55211264, 0.26684678)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -1096,7 +1470,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(-7.1632957, 7.6438365)
+position = Vector2(0.65639794, 4.766219)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")

@@ -2,7 +2,7 @@ class_name Scoring extends Node
 
 @export var score_awards_per_pattern: Array[int] = []
 
-@export var label: Label = null
+@export var label: RichTextLabel = null
 
 @export var score_item_manager: ScoreItemManager = null
 @export var score_item_particles: CPUParticles2D = null
@@ -51,7 +51,7 @@ func reset_results() -> void:
 	results_total = score
 
 func update_label() -> void:
-	label.text = Utils.format_thousands(score) + " (x" + str(current_rescue_multiplier) + ")"
+	label.text = Utils.format_thousands(score) + " ([img]res://ui/texture/texture_ui_little_sun.png[/img]x" + str(Utils.round_place(current_rescue_multiplier, 1)) + ")"
 
 # is is important - if anything awards score, it can NEVER directly call award_score!
 # everything must be routed through functions here so that we do not lose track of the multipliers
@@ -130,3 +130,6 @@ func on_sun_collection(item: ScoreItem) -> void:
 	award_rescue_multiplier()
 
 	results_suns_collected += 1
+
+func on_player_hit() -> void:
+	current_rescue_multiplier = 1.0

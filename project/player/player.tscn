@@ -6,8 +6,11 @@
 [ext_resource type="Script" uid="uid://cnksq2oeepu0y" path="res://util/2d/trail_2d.gd" id="3_qjkh3"]
 [ext_resource type="Texture2D" uid="uid://cw3vre4x0mjwl" path="res://player/texture/texture_player_option.png" id="4_qjkh3"]
 [ext_resource type="Script" uid="uid://daly1svuqwggy" path="res://player/player_weapon.gd" id="4_yw30f"]
+[ext_resource type="Texture2D" uid="uid://iwi3yf7ray70" path="res://player/texture/texture_player_invul.png" id="5_8t03j"]
 [ext_resource type="Shader" uid="uid://bx6v6qu8uop7f" path="res://player/player.gdshader" id="5_hg6s5"]
 [ext_resource type="Texture2D" uid="uid://pbvi3x36nsw6" path="res://player/texture/texture_player_muzzle_flash.png" id="7_boad6"]
+[ext_resource type="Shader" uid="uid://dnjynoll1mra0" path="res://player/player_option.gdshader" id="8_2ieo8"]
+[ext_resource type="Texture2D" uid="uid://bvulcrcoefx3j" path="res://player/texture/texture_player_option_invul.png" id="9_ebec5"]
 
 [sub_resource type="Curve" id="Curve_3b7yk"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -15,14 +18,27 @@ point_count = 2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8t03j"]
 shader = ExtResource("5_hg6s5")
+shader_parameter/invulnerable_sprite = ExtResource("5_8t03j")
+shader_parameter/is_invul = false
 shader_parameter/cull_backface = false
 shader_parameter/fov = 90.0
 shader_parameter/rot_y_deg = 0.0
 shader_parameter/rot_x_deg = 360.0
 shader_parameter/inset = 0.0
+shader_parameter/invul = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yllr7"]
+shader = ExtResource("8_2ieo8")
+shader_parameter/invulnerable_sprite = ExtResource("9_ebec5")
+shader_parameter/is_invul = false
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_boad6"]
 blend_mode = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kb6p2"]
+shader = ExtResource("8_2ieo8")
+shader_parameter/invulnerable_sprite = ExtResource("9_ebec5")
+shader_parameter/is_invul = false
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3b7yk"]
 radius = 2.0
@@ -90,6 +106,7 @@ position = Vector2(-5, -32)
 position = Vector2(5, -32)
 
 [node name="Option1" type="Sprite2D" parent="." unique_id=703252772]
+material = SubResource("ShaderMaterial_yllr7")
 position = Vector2(-32, 0)
 texture = ExtResource("4_qjkh3")
 
@@ -120,6 +137,7 @@ texture = ExtResource("7_boad6")
 offset = Vector2(0, -16)
 
 [node name="Option2" type="Sprite2D" parent="." unique_id=2098643966]
+material = SubResource("ShaderMaterial_kb6p2")
 position = Vector2(32, 0)
 texture = ExtResource("4_qjkh3")
 
