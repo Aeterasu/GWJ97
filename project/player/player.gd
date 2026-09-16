@@ -204,3 +204,7 @@ func award_life() -> void:
 
 	lives += 1
 	on_heal.emit()
+
+func reset_position() -> void:
+	global_position = Game.PLAYER_STARTING_POSITION
+	reset_physics_interpolation()

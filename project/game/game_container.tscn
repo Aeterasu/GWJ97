@@ -833,6 +833,20 @@ tracks/3/keys = {
 "method": &"lighten_scree"
 }]
 }
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../SubViewport/Game/Pausable/Player")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"reset_position"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_p2ewd"]
 resource_name = "show_results"
@@ -1693,7 +1707,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(0.73776037, 0.18699005)
+position = Vector2(-0.5936723, 0.33103)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -1705,7 +1719,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(-1.2992437, 7.6092305)
+position = Vector2(2.7535393, -4.3545747)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -1843,7 +1857,6 @@ color = Color(0.98039216, 0.91764706, 0.7882353, 1)
 metadata/_edit_lock_ = true
 
 [node name="ResultScreen" type="Control" parent="Overlay" unique_id=287103774 node_paths=PackedStringArray("animation_player", "pattern_reward_label", "score_multiplier_label", "score_item_label", "score_suns_label", "total_label", "no_miss_checkmark", "no_bomb_checkmark", "ticker_label", "kill_category", "timeout_category")]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
