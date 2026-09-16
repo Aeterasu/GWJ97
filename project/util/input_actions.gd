@@ -1,9 +1,9 @@
 class_name InputAction extends Node
 
-const player_input_left = "player_input_left"
 const player_input_up = "player_input_up"
-const player_input_right = "player_input_right"
 const player_input_down = "player_input_down"
+const player_input_left = "player_input_left"
+const player_input_right = "player_input_right"
 const player_input_action_1 = "player_input_action_1"
 const player_input_action_2 = "player_input_action_2"
 const player_input_action_3 = "player_input_action_3"

@@ -104,7 +104,7 @@ func _physics_process(delta: float) -> void:
 func process_movement(delta: float) -> void:
 	var dir: Vector2 = Vector2.ZERO
 
-	dir = Input.get_vector(InputAction.player_input_left,InputAction.player_input_right,InputAction.player_input_up,InputAction.player_input_up)
+	dir = Input.get_vector(InputAction.player_input_left,InputAction.player_input_right,InputAction.player_input_up,InputAction.player_input_down)
 	var move_speed = focus_speed if is_focused else base_speed
 
 	global_position += dir.normalized() * move_speed * delta
