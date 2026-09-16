@@ -36,6 +36,9 @@ func _ready() -> void:
 	game_sequencer.propagate_pattern_hit.connect(update_boss_healthbar)
 	game_sequencer.on_pattern_init.connect(on_pattern_init)
 
+	if not game_sequencer.show_boss_warning:
+		ui_root.boss_healthbar.parent.show()
+
 	player.on_hit.connect(scoring.on_player_hit)
 	player.on_hit.connect(ui_root.player_health.on_player_hit.bind(player.lives))
 	player.on_heal.connect(ui_root.player_health.on_player_heal.bind(player.lives))

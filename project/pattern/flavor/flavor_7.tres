@@ -4,5 +4,6 @@
 
 [resource]
 script = ExtResource("1_xjtp5")
+pattern_names = "NAYSAYER"
 pattern_subtext = "a dead road, a dark sun // naysayer, hammer the nail! // do we fight for nothing, if not our lives? //"
 metadata/_custom_type_script = "uid://c0dqn8ky0me73"

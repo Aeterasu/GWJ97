@@ -33,7 +33,7 @@ var current_rescue_multiplier: float = 1.0:
 		
 		update_label()
 
-const MAX_RESCUE_MULTIPLIER: float = 20.0
+const MAX_RESCUE_MULTIPLIER: float = 9999.0
 const SCORE_ITEM_BASE_VALUE: int = 100
 
 func _ready() -> void:
@@ -114,9 +114,9 @@ func get_item_type_from_multiplier(multiplier: float = 1.0) -> ScoreItem.Type:
 		return ScoreItem.Type.VERY_SMALL
 	elif multiplier > 1.0 and multiplier <= 10.0:
 		return ScoreItem.Type.SMALL
-	elif multiplier > 10.0 and multiplier < MAX_RESCUE_MULTIPLIER:
+	elif multiplier > 10.0 and multiplier < 20.0:
 		return ScoreItem.Type.MEDIUM
-	elif multiplier >= MAX_RESCUE_MULTIPLIER:
+	elif multiplier >= 20.0:
 		return ScoreItem.Type.LARGE
 
 	return ScoreItem.Type.VERY_SMALL
