@@ -35,6 +35,30 @@ static func get_random_square_perimeter_pos(side_length: float) -> Vector2:
 		_:
 			return Vector2.ZERO
 
+static func get_random_rectangle_perimeter_pos(size: Vector2, center: Vector2 = Vector2.ZERO) -> Vector2:
+	var half_x = size.x / 2.0
+	var half_y = size.y / 2.0
+	
+	var perimeter = 2.0 * (size.x + size.y)
+	var r = randf() * perimeter
+	
+	var pos: Vector2
+	
+	if r < size.x:
+		# top
+		pos = Vector2(-half_x + r, -half_y)
+	elif r < size.x + size.y:
+		# right
+		pos = Vector2(half_x, -half_y + (r - size.x))
+	elif r < 2.0 * size.x + size.y:
+		# bottom
+		pos = Vector2(half_x - (r - size.x - size.y), half_y)
+	else:
+		# left
+		pos = Vector2(-half_x, half_y - (r - 2.0 * size.x - size.y))
+	
+	return center + pos
+
 static func format_thousands(value: int) -> String:
 	var s = str(value)
 	var res = ""
