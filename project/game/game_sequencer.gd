@@ -32,6 +32,11 @@ var no_bomb: bool = true
 signal on_pattern_init
 signal propagate_pattern_hit
 
+func _ready() -> void:
+	if not OS.is_debug_build():
+		show_boss_warning = true
+		starting_pattern = 0
+
 func start_game() -> void:
 	life_spawner.on_life_collected.connect(on_life_collected)
 

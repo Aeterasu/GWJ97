@@ -37,7 +37,7 @@
 [ext_resource type="Resource" uid="uid://u77hjgf5b1xn" path="res://pattern/flavor/flavor_6.tres" id="15_y37xm"]
 [ext_resource type="PackedScene" uid="uid://v2yky2ict4cp" path="res://pattern/breakout.tscn" id="17_g7uki"]
 [ext_resource type="PackedScene" uid="uid://vugwune8fbhe" path="res://pattern/omen.tscn" id="17_ijhnq"]
-[ext_resource type="Resource" uid="uid://ca0xsbul6o6q7" path="res://pattern/flavor/flavor_10.tres" id="18_kjv07"]
+[ext_resource type="Resource" uid="uid://d1ck7qmgmck54" path="res://pattern/flavor/flavor_10.tres" id="18_kjv07"]
 [ext_resource type="PackedScene" uid="uid://dhp3eywon6pi6" path="res://pattern/pilebunker.tscn" id="19_xfsju"]
 [ext_resource type="Script" uid="uid://debx0k47w1p5p" path="res://ui/ui.gd" id="20_gts4h"]
 [ext_resource type="PackedScene" uid="uid://iw61jl5rfh8k" path="res://pattern/high_roller.tscn" id="20_o7b2k"]
@@ -1149,6 +1149,8 @@ z_index = 64
 base_speed = 240.0
 focus_speed = 120.0
 bullet_engine = NodePath("../PlayerBulletEngine")
+enemy_bullet_engine = NodePath("../EnemyBulletEngine")
+game_sequencer = NodePath("../GameSequencer")
 
 [node name="EnemyBulletEngine" type="Node" parent="SubViewport/Game/Pausable" unique_id=1260966031 node_paths=PackedStringArray("bullet_visual")]
 script = ExtResource("5_wurgr")
