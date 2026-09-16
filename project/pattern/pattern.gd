@@ -29,6 +29,7 @@ var is_timeout: bool = false
 var timeout_pattern: TimeoutPattern = null
 
 signal on_hit
+signal on_timeout
 
 # the obvious difference here:
 # on_health_depleted fires when the health reaches 0
@@ -61,9 +62,9 @@ func _physics_process(delta: float) -> void:
 		time_left -= delta
 
 		if time_left <= 0.0:
-			is_timeout = true
-			#start_timeout()
-			#return
+			if not is_timeout:
+				is_timeout = true
+				on_timeout.emit(self)
 
 		update(delta)
 

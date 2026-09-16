@@ -5,6 +5,8 @@ class_name GameSequencer extends Node
 @export var show_boss_warning: bool = true
 @export var boss_warning: Control = null
 
+@export var timeout_warning: UITimeoutWarning = null
+
 @export var starting_pattern: int = 0
 
 @export var animation_player: AnimationPlayer = null
@@ -66,6 +68,7 @@ func init_pattern(idx: int) -> void:
 		patterns[idx].on_hit.connect(on_pattern_hit)
 		patterns[idx].on_health_depleted.connect(on_pattern_health_depleted)
 		patterns[idx].on_death.connect(on_pattern_death)
+		patterns[idx].on_timeout.connect(on_pattern_timeout)
 
 		current_idx = idx
 
@@ -85,6 +88,14 @@ func get_all_health_percentagees() -> Array[float]:
 
 func on_pattern_hit(pattern: Pattern) -> void:
 	propagate_pattern_hit.emit(pattern)
+
+func on_pattern_timeout(pattern: Pattern) -> void:
+	get_tree().paused = true
+
+	timeout_warning.animation_player.play("flash")
+	await timeout_warning.animation_player.animation_finished
+
+	get_tree().paused = false
 
 func on_pattern_health_depleted(pattern: Pattern) -> void:
 	scoring.on_pattern_completed(current_idx)

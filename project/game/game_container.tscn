@@ -72,6 +72,9 @@
 [ext_resource type="FontFile" uid="uid://dekxaqxocvhf7" path="res://font/m6x11.ttf" id="60_78uyn"]
 [ext_resource type="PackedScene" uid="uid://cdkh4caga30ay" path="res://ui/result_screen_checkbox.tscn" id="61_1xbv1"]
 [ext_resource type="Texture2D" uid="uid://bl0je63ccfsau" path="res://ui/texture/texture_ui_results_decorative_line.png" id="61_phvc2"]
+[ext_resource type="Shader" uid="uid://txjvwiejygxd" path="res://ui/scroll.gdshader" id="69_ipk4o"]
+[ext_resource type="Script" uid="uid://bnnfh6rwowuw3" path="res://ui/ui_timeout_warning.gd" id="69_qei43"]
+[ext_resource type="Texture2D" uid="uid://deey7m156ijks" path="res://ui/texture/texture_ui_time_is_up.png" id="69_vjk86"]
 
 [sub_resource type="Environment" id="Environment_y36n6"]
 background_mode = 1
@@ -553,6 +556,127 @@ metadata/_snap_enabled = true
 gradient = SubResource("Gradient_wuin1")
 metadata/_snap_enabled = true
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qei43"]
+shader = ExtResource("69_ipk4o")
+shader_parameter/scroll_speed = Vector2(0.1, 0)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_n33i2"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_ipk4o"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.98039216, 0.91764706, 0.7882353, 0, 0.98039216, 0.91764706, 0.7882353, 1, 0.98039216, 0.91764706, 0.7882353, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wvij3"]
+gradient = SubResource("Gradient_ipk4o")
+
+[sub_resource type="Animation" id="Animation_ipk4o"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../TimeoutFlash:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../CPUParticles2D:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_qei43"]
+resource_name = "flash"
+length = 3.0000000000000004
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../TimeoutFlash:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.8, 2.4, 2.6, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 2.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../../SubViewport/Game")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.2, 2.6),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"darken_screen"
+}, {
+"args": [],
+"method": &"lighten_scree"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../CPUParticles2D:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 2.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8nq8a"]
+_data = {
+&"RESET": SubResource("Animation_ipk4o"),
+&"flash": SubResource("Animation_qei43")
+}
+
+[sub_resource type="Curve" id="Curve_s68re"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0487013, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1xbv1"]
 shader = ExtResource("13_lw3qe")
 shader_parameter/stripe_texture = ExtResource("61_phvc2")
@@ -765,6 +889,7 @@ _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.038961045, 1), 0.0, 0.0, 0, 0,
 point_count = 3
 
 [node name="GameContainer" type="SubViewportContainer" unique_id=1996078482]
+process_mode = 3
 texture_filter = 1
 anchors_preset = 13
 anchor_left = 0.5
@@ -785,31 +910,32 @@ render_target_update_mode = 4
 
 [node name="Game" type="Node2D" parent="SubViewport" unique_id=1321649675 node_paths=PackedStringArray("game_sequencer", "player", "scoring", "ui_root", "dark_screen", "debug_hp_label")]
 script = ExtResource("1_q4ejq")
-game_sequencer = NodePath("GameSequencer")
-player = NodePath("Player")
-scoring = NodePath("Scoring")
+game_sequencer = NodePath("Pausable/GameSequencer")
+player = NodePath("Pausable/Player")
+scoring = NodePath("Pausable/Scoring")
 ui_root = NodePath("../../UI")
 dark_screen = NodePath("../../Overlay/Darken")
 debug_hp_label = NodePath("../../UI/DebugHPLabel")
 
-[node name="ColorRect" type="ColorRect" parent="SubViewport/Game" unique_id=931863613]
+[node name="Pausable" type="Node" parent="SubViewport/Game" unique_id=490273109]
+process_mode = 1
+
+[node name="ColorRect" type="ColorRect" parent="SubViewport/Game/Pausable" unique_id=931863613]
 z_index = -4096
 z_as_relative = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 240.0
-offset_bottom = 320.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.16862746, 0.05490196, 0.007843138, 1)
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="SubViewport/Game/ColorRect" unique_id=2063333912]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="SubViewport/Game/Pausable/ColorRect" unique_id=2063333912]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="3DSubViewport" type="SubViewport" parent="SubViewport/Game/ColorRect/SubViewportContainer" unique_id=234768842]
+[node name="3DSubViewport" type="SubViewport" parent="SubViewport/Game/Pausable/ColorRect/SubViewportContainer" unique_id=234768842]
 own_world_3d = true
 world_3d = SubResource("World3D_u5opy")
 transparent_bg = true
@@ -818,27 +944,27 @@ oversampling = false
 size = Vector2i(240, 320)
 render_target_update_mode = 4
 
-[node name="Node3D" type="Node3D" parent="SubViewport/Game/ColorRect/SubViewportContainer/3DSubViewport" unique_id=908136797]
+[node name="Node3D" type="Node3D" parent="SubViewport/Game/Pausable/ColorRect/SubViewportContainer/3DSubViewport" unique_id=908136797]
 script = ExtResource("3_lw3qe")
 speed = 1.0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport/Game/ColorRect/SubViewportContainer/3DSubViewport/Node3D" unique_id=1004624382]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport/Game/Pausable/ColorRect/SubViewportContainer/3DSubViewport/Node3D" unique_id=1004624382]
 mesh = ExtResource("4_ysh17")
 surface_material_override/0 = SubResource("StandardMaterial3D_u5opy")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="SubViewport/Game/ColorRect/SubViewportContainer/3DSubViewport/Node3D" unique_id=1784111236]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="SubViewport/Game/Pausable/ColorRect/SubViewportContainer/3DSubViewport/Node3D" unique_id=1784111236]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -22)
 mesh = ExtResource("4_ysh17")
 surface_material_override/0 = SubResource("StandardMaterial3D_u5opy")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport/Game/ColorRect/SubViewportContainer/3DSubViewport/Node3D" unique_id=1187236356]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport/Game/Pausable/ColorRect/SubViewportContainer/3DSubViewport/Node3D" unique_id=1187236356]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 4.038269, 0)
 
-[node name="Camera3D" type="Camera3D" parent="SubViewport/Game/ColorRect/SubViewportContainer/3DSubViewport" unique_id=605191865]
+[node name="Camera3D" type="Camera3D" parent="SubViewport/Game/Pausable/ColorRect/SubViewportContainer/3DSubViewport" unique_id=605191865]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 20.952, 6.406)
 fov = 21.0
 
-[node name="TextureRect" type="TextureRect" parent="SubViewport/Game/ColorRect" unique_id=474938826]
+[node name="TextureRect" type="TextureRect" parent="SubViewport/Game/Pausable/ColorRect" unique_id=474938826]
 modulate = Color(1, 1, 1, 0.42745098)
 layout_mode = 1
 anchors_preset = 15
@@ -848,7 +974,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_3b7yk")
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="SubViewport/Game/ColorRect" unique_id=361261354]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="SubViewport/Game/Pausable/ColorRect" unique_id=361261354]
 modulate = Color(1, 1, 1, 0.4745098)
 position = Vector2(120, 160)
 amount = 128
@@ -868,62 +994,63 @@ tangential_accel_max = 0.1
 color = Color(0.9411765, 0.45882353, 0.1254902, 1)
 color_ramp = SubResource("Gradient_3b7yk")
 
-[node name="GameSequencer" type="Node" parent="SubViewport/Game" unique_id=1424656608 node_paths=PackedStringArray("player", "boss_warning", "animation_player", "patterns", "scoring", "enemy_bullet_engine", "sun_spawner", "life_spawner", "results")]
+[node name="GameSequencer" type="Node" parent="SubViewport/Game/Pausable" unique_id=1424656608 node_paths=PackedStringArray("player", "boss_warning", "timeout_warning", "animation_player", "patterns", "scoring", "enemy_bullet_engine", "sun_spawner", "life_spawner", "results")]
 script = ExtResource("2_oryes")
 player = NodePath("../Player")
-boss_warning = NodePath("../../../Overlay/BossWarning")
+boss_warning = NodePath("../../../../Overlay/BossWarning")
+timeout_warning = NodePath("../../../../Overlay/TimeoutWarning")
 animation_player = NodePath("AnimationPlayer")
 patterns = [NodePath("Omen"), NodePath("Breakout"), NodePath("Riot"), NodePath("Dogfight"), NodePath("Pilebunker"), NodePath("HighRoller"), NodePath("Naysayer"), NodePath("SnakeEyes"), NodePath("Meltdown"), NodePath("BleedingStar")]
 patterns_health = Array[float]([3200.0, 3000.0, 3000.0, 960.0, 450.0, 4480.0, 1500.0, 2500.0, 5000.0, 5000.0])
-patterns_timer = Array[float]([60.0, 90.0, 90.0, 90.0, 90.0, 120.0, 120.0, 120.0, 180.0, 180.0])
+patterns_timer = Array[float]([5.0, 90.0, 90.0, 90.0, 90.0, 120.0, 120.0, 120.0, 180.0, 180.0])
 patterns_flavor = Array[ExtResource("3_ysh17")]([ExtResource("4_to2kc"), ExtResource("5_ino1g"), ExtResource("8_v7aj6"), ExtResource("6_gts4h"), ExtResource("7_j7fm5"), ExtResource("15_y37xm"), ExtResource("8_1vxhs"), ExtResource("9_bybv3"), ExtResource("10_y7kwi"), ExtResource("18_kjv07")])
 scoring = NodePath("../Scoring")
 enemy_bullet_engine = NodePath("../EnemyBulletEngine")
 sun_spawner = NodePath("../Scoring/ScoreSunManager")
 life_spawner = NodePath("../LifePickup")
-results = NodePath("../../../Overlay/ResultScreen")
+results = NodePath("../../../../Overlay/ResultScreen")
 metadata/_custom_type_script = "uid://dbaxnfdbt6cyt"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="SubViewport/Game/GameSequencer" unique_id=450444269]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SubViewport/Game/Pausable/GameSequencer" unique_id=450444269]
 
-[node name="TestPattern" type="Node" parent="SubViewport/Game/GameSequencer" unique_id=961206150]
+[node name="TestPattern" type="Node" parent="SubViewport/Game/Pausable/GameSequencer" unique_id=961206150]
 script = ExtResource("11_j7fm5")
 metadata/_custom_type_script = "uid://16mvw7i2q77s"
 
-[node name="Omen" parent="SubViewport/Game/GameSequencer" unique_id=1949596727 instance=ExtResource("17_ijhnq")]
+[node name="Omen" parent="SubViewport/Game/Pausable/GameSequencer" unique_id=1949596727 instance=ExtResource("17_ijhnq")]
 
-[node name="Breakout" parent="SubViewport/Game/GameSequencer" unique_id=2000619167 instance=ExtResource("17_g7uki")]
+[node name="Breakout" parent="SubViewport/Game/Pausable/GameSequencer" unique_id=2000619167 instance=ExtResource("17_g7uki")]
 
-[node name="Riot" parent="SubViewport/Game/GameSequencer" unique_id=902379666 instance=ExtResource("21_jllto")]
+[node name="Riot" parent="SubViewport/Game/Pausable/GameSequencer" unique_id=902379666 instance=ExtResource("21_jllto")]
 spawn_life = true
 
-[node name="Dogfight" parent="SubViewport/Game/GameSequencer" unique_id=285190987 instance=ExtResource("23_qiqgi")]
+[node name="Dogfight" parent="SubViewport/Game/Pausable/GameSequencer" unique_id=285190987 instance=ExtResource("23_qiqgi")]
 
-[node name="Pilebunker" parent="SubViewport/Game/GameSequencer" unique_id=1439410849 instance=ExtResource("19_xfsju")]
+[node name="Pilebunker" parent="SubViewport/Game/Pausable/GameSequencer" unique_id=1439410849 instance=ExtResource("19_xfsju")]
 
-[node name="HighRoller" parent="SubViewport/Game/GameSequencer" unique_id=95005314 instance=ExtResource("20_o7b2k")]
+[node name="HighRoller" parent="SubViewport/Game/Pausable/GameSequencer" unique_id=95005314 instance=ExtResource("20_o7b2k")]
 spawn_life = true
 
-[node name="Naysayer" parent="SubViewport/Game/GameSequencer" unique_id=669230555 instance=ExtResource("23_vss03")]
+[node name="Naysayer" parent="SubViewport/Game/Pausable/GameSequencer" unique_id=669230555 instance=ExtResource("23_vss03")]
 
-[node name="SnakeEyes" parent="SubViewport/Game/GameSequencer" unique_id=235174039 instance=ExtResource("24_ljlx8")]
+[node name="SnakeEyes" parent="SubViewport/Game/Pausable/GameSequencer" unique_id=235174039 instance=ExtResource("24_ljlx8")]
 
-[node name="Meltdown" parent="SubViewport/Game/GameSequencer" unique_id=376805303 instance=ExtResource("25_x3o37")]
+[node name="Meltdown" parent="SubViewport/Game/Pausable/GameSequencer" unique_id=376805303 instance=ExtResource("25_x3o37")]
 spawn_life = true
 
-[node name="BleedingStar" parent="SubViewport/Game/GameSequencer" unique_id=2113624139 instance=ExtResource("26_jfrga")]
+[node name="BleedingStar" parent="SubViewport/Game/Pausable/GameSequencer" unique_id=2113624139 instance=ExtResource("26_jfrga")]
 
-[node name="Scoring" type="Node" parent="SubViewport/Game" unique_id=269865828 node_paths=PackedStringArray("label", "score_item_manager", "score_item_particles", "score_sun_manager", "game_sequencer")]
+[node name="Scoring" type="Node" parent="SubViewport/Game/Pausable" unique_id=269865828 node_paths=PackedStringArray("label", "score_item_manager", "score_item_particles", "score_sun_manager", "game_sequencer")]
 script = ExtResource("2_jld1g")
 score_awards_per_pattern = Array[int]([100000, 150000, 200000, 200000, 300000, 300000, 500000, 500000, 1000000, 10000000])
-label = NodePath("../../../UI/ScoreLabel")
+label = NodePath("../../../../UI/ScoreLabel")
 score_item_manager = NodePath("ScoreItemManager")
 score_item_particles = NodePath("../ScoreItemParticles")
 score_sun_manager = NodePath("ScoreSunManager")
 game_sequencer = NodePath("../GameSequencer")
 metadata/_custom_type_script = "uid://ccit5a7gc55fv"
 
-[node name="ScoreItemManager" type="Node" parent="SubViewport/Game/Scoring" unique_id=483427480 node_paths=PackedStringArray("visual")]
+[node name="ScoreItemManager" type="Node" parent="SubViewport/Game/Pausable/Scoring" unique_id=483427480 node_paths=PackedStringArray("visual")]
 script = ExtResource("3_s5735")
 visual = NodePath("../../ScoreItemManager")
 atlas_offsets = Dictionary[int, PackedVector2Array]({
@@ -934,19 +1061,19 @@ atlas_offsets = Dictionary[int, PackedVector2Array]({
 })
 metadata/_custom_type_script = "uid://c3gpckl5lcjkm"
 
-[node name="ScoreSunManager" type="Node" parent="SubViewport/Game/Scoring" unique_id=100102920 node_paths=PackedStringArray("visual_parent")]
+[node name="ScoreSunManager" type="Node" parent="SubViewport/Game/Pausable/Scoring" unique_id=100102920 node_paths=PackedStringArray("visual_parent")]
 script = ExtResource("6_ko3mt")
 visual_scene = ExtResource("36_fp80n")
 visual_parent = NodePath("../../ScoreSuns")
 metadata/_custom_type_script = "uid://dlyqg8mvfu0e1"
 
-[node name="LifePickup" type="Node" parent="SubViewport/Game" unique_id=1772351592 node_paths=PackedStringArray("sprite", "particles")]
+[node name="LifePickup" type="Node" parent="SubViewport/Game/Pausable" unique_id=1772351592 node_paths=PackedStringArray("sprite", "particles")]
 script = ExtResource("27_m7tfy")
 sprite = NodePath("Sprite2D")
 particles = NodePath("CPUParticles2D")
 metadata/_custom_type_script = "uid://20jf6dpe647w"
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="SubViewport/Game/LifePickup" unique_id=1147016257]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="SubViewport/Game/Pausable/LifePickup" unique_id=1147016257]
 material = SubResource("CanvasItemMaterial_3b7yk")
 position = Vector2(62, 180)
 emitting = false
@@ -960,15 +1087,15 @@ gravity = Vector2(0, 0)
 scale_amount_curve = SubResource("Curve_ixbki")
 anim_offset_max = 1.0
 
-[node name="Sprite2D" type="Sprite2D" parent="SubViewport/Game/LifePickup" unique_id=425136079]
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/Game/Pausable/LifePickup" unique_id=425136079]
 texture = ExtResource("29_ee0yl")
 
-[node name="Sprite2D2" type="Sprite2D" parent="SubViewport/Game/LifePickup/Sprite2D" unique_id=665115910]
+[node name="Sprite2D2" type="Sprite2D" parent="SubViewport/Game/Pausable/LifePickup/Sprite2D" unique_id=665115910]
 modulate = Color(1, 1, 1, 0.5019608)
 material = SubResource("CanvasItemMaterial_wvij3")
 texture = SubResource("GradientTexture2D_2675o")
 
-[node name="ScoreItemParticles" type="CPUParticles2D" parent="SubViewport/Game" unique_id=1613836782]
+[node name="ScoreItemParticles" type="CPUParticles2D" parent="SubViewport/Game/Pausable" unique_id=1613836782]
 z_index = 1
 material = SubResource("CanvasItemMaterial_s68re")
 emitting = false
@@ -984,15 +1111,15 @@ split_scale = true
 scale_curve_x = SubResource("Curve_3b7yk")
 scale_curve_y = SubResource("Curve_78uyn")
 
-[node name="ScoreItemManager" type="MultiMeshInstance2D" parent="SubViewport/Game" unique_id=1095753451]
+[node name="ScoreItemManager" type="MultiMeshInstance2D" parent="SubViewport/Game/Pausable" unique_id=1095753451]
 z_index = 2
 material = SubResource("ShaderMaterial_36bdl")
 multimesh = SubResource("MultiMesh_3b7yk")
 
-[node name="ScoreSuns" type="Node2D" parent="SubViewport/Game" unique_id=1228894650]
+[node name="ScoreSuns" type="Node2D" parent="SubViewport/Game/Pausable" unique_id=1228894650]
 z_index = 2
 
-[node name="BulletSkinManager" type="Node" parent="SubViewport/Game" unique_id=1300980304]
+[node name="BulletSkinManager" type="Node" parent="SubViewport/Game/Pausable" unique_id=1300980304]
 script = ExtResource("2_ijhnq")
 skins = Dictionary[int, ExtResource("3_07ulu")]({
 100: ExtResource("4_1cebb"),
@@ -1003,7 +1130,7 @@ skins = Dictionary[int, ExtResource("3_07ulu")]({
 })
 metadata/_custom_type_script = "uid://cm7708ogl281p"
 
-[node name="PlayerBulletEngine" type="Node" parent="SubViewport/Game" unique_id=297898871 node_paths=PackedStringArray("bullet_visual")]
+[node name="PlayerBulletEngine" type="Node" parent="SubViewport/Game/Pausable" unique_id=297898871 node_paths=PackedStringArray("bullet_visual")]
 script = ExtResource("5_wurgr")
 max_bullet_count = 512
 shape_radius = 3.0
@@ -1012,25 +1139,25 @@ bullet_visual = NodePath("../PlayerBulletVisual")
 collision_mask = 4
 metadata/_custom_type_script = "uid://dpcpbpske8jii"
 
-[node name="PlayerBulletVisual" type="MultiMeshInstance2D" parent="SubViewport/Game" unique_id=1867834694]
+[node name="PlayerBulletVisual" type="MultiMeshInstance2D" parent="SubViewport/Game/Pausable" unique_id=1867834694]
 z_index = 16
 material = SubResource("ShaderMaterial_ijhnq")
 multimesh = SubResource("MultiMesh_dxrkv")
 
-[node name="Player" parent="SubViewport/Game" unique_id=1584514943 node_paths=PackedStringArray("bullet_engine") instance=ExtResource("7_mp07y")]
+[node name="Player" parent="SubViewport/Game/Pausable" unique_id=1584514943 node_paths=PackedStringArray("bullet_engine") instance=ExtResource("7_mp07y")]
 z_index = 64
 base_speed = 240.0
 focus_speed = 120.0
 bullet_engine = NodePath("../PlayerBulletEngine")
 
-[node name="EnemyBulletEngine" type="Node" parent="SubViewport/Game" unique_id=1260966031 node_paths=PackedStringArray("bullet_visual")]
+[node name="EnemyBulletEngine" type="Node" parent="SubViewport/Game/Pausable" unique_id=1260966031 node_paths=PackedStringArray("bullet_visual")]
 script = ExtResource("5_wurgr")
 max_bullet_count = 4096
 bullet_visual = NodePath("../EnemyBulletVisual")
 collision_mask = 2
 metadata/_custom_type_script = "uid://dpcpbpske8jii"
 
-[node name="EnemyBulletVisual" type="MultiMeshInstance2D" parent="SubViewport/Game" unique_id=1686160402]
+[node name="EnemyBulletVisual" type="MultiMeshInstance2D" parent="SubViewport/Game/Pausable" unique_id=1686160402]
 z_index = 4096
 z_as_relative = false
 material = SubResource("ShaderMaterial_3vho3")
@@ -1539,7 +1666,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(0.8328527, -0.18467255)
+position = Vector2(-0.014657275, 0.1682648)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -1551,7 +1678,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(0.018971821, -1.8162103)
+position = Vector2(3.577191, -4.6727824)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -1570,7 +1697,126 @@ grow_vertical = 2
 color = Color(1, 0.16078432, 0, 1)
 metadata/_edit_lock_ = true
 
+[node name="TimeoutWarning" type="Control" parent="Overlay" unique_id=1491439541 node_paths=PackedStringArray("animation_player")]
+process_mode = 3
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("69_qei43")
+animation_player = NodePath("AnimationPlayer")
+
+[node name="ColorRect" type="ColorRect" parent="Overlay/TimeoutWarning" unique_id=320905496]
+layout_mode = 0
+offset_top = 100.0
+offset_right = 240.0
+offset_bottom = 156.0
+color = Color(0, 0, 0, 1)
+
+[node name="TextureRect" type="TextureRect" parent="Overlay/TimeoutWarning/ColorRect" unique_id=482216882]
+material = SubResource("ShaderMaterial_qei43")
+layout_mode = 0
+offset_top = 19.0
+offset_right = 240.0
+offset_bottom = 36.0
+texture = ExtResource("69_vjk86")
+stretch_mode = 1
+
+[node name="Control" type="ColorRect" parent="Overlay/TimeoutWarning/ColorRect" unique_id=1059724046]
+layout_mode = 0
+offset_top = 40.0
+offset_right = 240.0
+offset_bottom = 42.0
+color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+
+[node name="Control2" type="ColorRect" parent="Overlay/TimeoutWarning/ColorRect" unique_id=2068221202]
+layout_mode = 0
+offset_top = 13.0
+offset_right = 240.0
+offset_bottom = 15.0
+color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+
+[node name="Control3" type="ColorRect" parent="Overlay/TimeoutWarning/ColorRect" unique_id=950926876]
+layout_mode = 0
+offset_right = 240.0
+offset_bottom = 1.0
+color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+
+[node name="Control4" type="ColorRect" parent="Overlay/TimeoutWarning/ColorRect" unique_id=1407282288]
+layout_mode = 0
+offset_top = 55.0
+offset_right = 240.0
+offset_bottom = 56.0
+color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+
+[node name="TickerLabel" type="Control" parent="Overlay/TimeoutWarning/ColorRect" unique_id=1296190054]
+anchors_preset = 0
+offset_top = 42.0
+offset_right = 240.0
+offset_bottom = 52.0
+script = ExtResource("52_p2ewd")
+text = "BORN JUST A LITTLE TOO SLOW // BORN JUST A LITTLE TOO SLOW // BORN JUST A LITTLE TOO SLOW // BORN JUST A LITTLE TOO SLOW // BORN JUST A LITTLE TOO SLOW // BORN JUST A LITTLE TOO SLOW // BORN JUST A LITTLE TOO SLOW // "
+font = ExtResource("59_5coac")
+color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+metadata/_custom_type_script = "uid://dfm4leymaw5n2"
+
+[node name="TickerLabel2" type="Control" parent="Overlay/TimeoutWarning/ColorRect" unique_id=1760609105]
+anchors_preset = 0
+offset_top = 1.0
+offset_right = 240.0
+offset_bottom = 11.0
+script = ExtResource("52_p2ewd")
+text = "BORN JUST A LITTLE TOO SLOW // BORN JUST A LITTLE TOO SLOW // BORN JUST A LITTLE TOO SLOW // BORN JUST A LITTLE TOO SLOW // BORN JUST A LITTLE TOO SLOW // BORN JUST A LITTLE TOO SLOW // BORN JUST A LITTLE TOO SLOW // "
+font = ExtResource("59_5coac")
+color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+metadata/_custom_type_script = "uid://dfm4leymaw5n2"
+
+[node name="TextureRect2" type="TextureRect" parent="Overlay/TimeoutWarning/ColorRect" unique_id=1942287232]
+self_modulate = Color(1, 1, 1, 0.2509804)
+material = SubResource("CanvasItemMaterial_n33i2")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_wvij3")
+expand_mode = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Overlay/TimeoutWarning" unique_id=1812818493]
+libraries/ = SubResource("AnimationLibrary_8nq8a")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Overlay" unique_id=561543664]
+position = Vector2(120, 160)
+emitting = false
+amount = 128
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+emission_shape = 3
+emission_rect_extents = Vector2(120, 160)
+spread = 180.0
+gravity = Vector2(0, 98)
+initial_velocity_min = 23.26
+initial_velocity_max = 67.13
+scale_amount_max = 3.0
+scale_amount_curve = SubResource("Curve_s68re")
+color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+
+[node name="TimeoutFlash" type="ColorRect" parent="Overlay" unique_id=2083144092]
+modulate = Color(1, 1, 1, 0)
+z_index = 2095
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+metadata/_edit_lock_ = true
+
 [node name="ResultScreen" type="Control" parent="Overlay" unique_id=287103774 node_paths=PackedStringArray("animation_player", "pattern_reward_label", "score_multiplier_label", "score_item_label", "score_suns_label", "total_label", "no_miss_checkmark", "no_bomb_checkmark", "ticker_label", "kill_category", "timeout_category")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
