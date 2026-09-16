@@ -45,6 +45,7 @@
 [ext_resource type="PackedScene" uid="uid://jc8mhtpdtcvy" path="res://pattern/riot.tscn" id="21_jllto"]
 [ext_resource type="Material" uid="uid://c1v46fadxlwp4" path="res://ui/boss_healthbar_material.tres" id="23_ino1g"]
 [ext_resource type="PackedScene" uid="uid://b2hnbptqpl1ea" path="res://pattern/dogfight.tscn" id="23_qiqgi"]
+[ext_resource type="PackedScene" uid="uid://b3dvevlqr8m6x" path="res://pattern/naysayer.tscn" id="23_vss03"]
 [ext_resource type="Script" uid="uid://20jf6dpe647w" path="res://player/life_pickup.gd" id="27_m7tfy"]
 [ext_resource type="Texture2D" uid="uid://chqoq6t2p6ksc" path="res://scoring/texture/texture_score_spark_small.png" id="28_uimrd"]
 [ext_resource type="Texture2D" uid="uid://5nliocm68sgr" path="res://player/texture/texture_life_pickup.png" id="29_ee0yl"]
@@ -867,10 +868,12 @@ color_ramp = SubResource("Gradient_3b7yk")
 [node name="GameSequencer" type="Node" parent="SubViewport/Game" unique_id=1424656608 node_paths=PackedStringArray("player", "boss_warning", "animation_player", "patterns", "scoring", "enemy_bullet_engine", "sun_spawner", "life_spawner", "results")]
 script = ExtResource("2_oryes")
 player = NodePath("../Player")
+show_boss_warning = false
 boss_warning = NodePath("../../../Overlay/BossWarning")
+starting_pattern = 6
 animation_player = NodePath("AnimationPlayer")
-patterns = [NodePath("Omen"), NodePath("Breakout"), NodePath("Riot"), NodePath("Dogfight"), NodePath("Pilebunker"), NodePath("HighRoller")]
-patterns_health = Array[float]([3200.0, 3000.0, 3000.0, 960.0, 450.0, 4480.0, 3600.0, 3600.0, 3600.0, 1920.0])
+patterns = [NodePath("Omen"), NodePath("Breakout"), NodePath("Riot"), NodePath("Dogfight"), NodePath("Pilebunker"), NodePath("HighRoller"), NodePath("Naysayer")]
+patterns_health = Array[float]([3200.0, 3000.0, 3000.0, 960.0, 450.0, 4480.0, 1500.0, 3600.0, 3600.0, 1920.0])
 patterns_timer = Array[float]([90.0, 90.0, 90.0, 90.0, 90.0, 120.0, 120.0, 120.0, 120.0, 120.0])
 patterns_flavor = Array[ExtResource("3_ysh17")]([ExtResource("4_to2kc"), ExtResource("5_ino1g"), ExtResource("8_v7aj6"), ExtResource("6_gts4h"), ExtResource("7_j7fm5"), ExtResource("15_y37xm"), ExtResource("8_1vxhs"), ExtResource("9_bybv3"), ExtResource("10_y7kwi"), ExtResource("18_kjv07")])
 scoring = NodePath("../Scoring")
@@ -899,6 +902,8 @@ spawn_life = true
 
 [node name="HighRoller" parent="SubViewport/Game/GameSequencer" unique_id=95005314 instance=ExtResource("20_o7b2k")]
 spawn_life = true
+
+[node name="Naysayer" parent="SubViewport/Game/GameSequencer" unique_id=669230555 instance=ExtResource("23_vss03")]
 
 [node name="Scoring" type="Node" parent="SubViewport/Game" unique_id=269865828 node_paths=PackedStringArray("label", "score_item_manager", "score_item_particles", "score_sun_manager", "game_sequencer")]
 script = ExtResource("2_jld1g")
@@ -1526,7 +1531,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(0.97430754, 0.124088615)
+position = Vector2(-0.68795204, 0.669537)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -1538,7 +1543,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(-7.972224, 3.4094183)
+position = Vector2(-2.6577034, -2.848885)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")

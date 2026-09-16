@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_76a3i")
-pattern_names = "SNAKE EYES"
+pattern_names = "NAYSAYER"
 pattern_subtext = "if you would know, your time has come //"
 metadata/_custom_type_script = "uid://c0dqn8ky0me73"
