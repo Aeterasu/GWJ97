@@ -37,7 +37,7 @@
 [ext_resource type="Resource" uid="uid://u77hjgf5b1xn" path="res://pattern/flavor/flavor_6.tres" id="15_y37xm"]
 [ext_resource type="PackedScene" uid="uid://v2yky2ict4cp" path="res://pattern/breakout.tscn" id="17_g7uki"]
 [ext_resource type="PackedScene" uid="uid://vugwune8fbhe" path="res://pattern/omen.tscn" id="17_ijhnq"]
-[ext_resource type="Resource" uid="uid://ca0xsbul6o6q7" path="res://pattern/flavor/flavor_10.tres" id="18_kjv07"]
+[ext_resource type="Resource" uid="uid://d1ck7qmgmck54" path="res://pattern/flavor/flavor_10.tres" id="18_kjv07"]
 [ext_resource type="PackedScene" uid="uid://dhp3eywon6pi6" path="res://pattern/pilebunker.tscn" id="19_xfsju"]
 [ext_resource type="Script" uid="uid://debx0k47w1p5p" path="res://ui/ui.gd" id="20_gts4h"]
 [ext_resource type="PackedScene" uid="uid://iw61jl5rfh8k" path="res://pattern/high_roller.tscn" id="20_o7b2k"]
@@ -640,6 +640,7 @@ color_ramp = SubResource("Gradient_3b7yk")
 [node name="GameSequencer" type="Node" parent="SubViewport/Game" unique_id=1424656608 node_paths=PackedStringArray("player", "boss_warning", "animation_player", "patterns", "scoring", "enemy_bullet_engine", "sun_spawner", "life_spawner", "results")]
 script = ExtResource("2_oryes")
 player = NodePath("../Player")
+show_boss_warning = false
 boss_warning = NodePath("../../../Overlay/BossWarning")
 animation_player = NodePath("AnimationPlayer")
 patterns = [NodePath("Omen"), NodePath("Breakout"), NodePath("Riot"), NodePath("Dogfight"), NodePath("Pilebunker"), NodePath("HighRoller")]
@@ -775,10 +776,12 @@ z_index = 16
 material = SubResource("ShaderMaterial_ijhnq")
 multimesh = SubResource("MultiMesh_dxrkv")
 
-[node name="Player" parent="SubViewport/Game" unique_id=1584514943 node_paths=PackedStringArray("bullet_engine") instance=ExtResource("7_mp07y")]
+[node name="Player" parent="SubViewport/Game" unique_id=1584514943 node_paths=PackedStringArray("game_sequencer", "enemy_bullet_engine", "bullet_engine") instance=ExtResource("7_mp07y")]
 z_index = 64
 base_speed = 240.0
 focus_speed = 120.0
+game_sequencer = NodePath("../GameSequencer")
+enemy_bullet_engine = NodePath("../EnemyBulletEngine")
 bullet_engine = NodePath("../PlayerBulletEngine")
 
 [node name="EnemyBulletEngine" type="Node" parent="SubViewport/Game" unique_id=1260966031 node_paths=PackedStringArray("bullet_visual")]
@@ -1084,7 +1087,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(0.6655758, -0.04729273)
+position = Vector2(0.9970067, -0.346785)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -1096,7 +1099,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(-7.1632957, 7.6438365)
+position = Vector2(-6.33225, -1.1004001)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")

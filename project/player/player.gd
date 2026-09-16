@@ -7,6 +7,9 @@ class_name Player extends Area2D
 @export var focus_weapon: PlayerWeapon = null
 var is_focused: bool = false
 
+@export var game_sequencer : GameSequencer = null
+@export var enemy_bullet_engine : BulletEngine = null
+
 @export var bullet_engine: BulletEngine = null
 
 @export var options_rotation_speed: float = 0.0
@@ -29,6 +32,9 @@ const STARTING_LIVES: int = 2
 const MAX_LIVES: int = 5
 const INVINCIBILITY_ON_HIT: float = 6.0
 const INVINCIBILITY_ON_BOMB: float = 3.0
+
+var bomb_timer : float = 0.5
+var bomb_reload_timer : float = 5.0
 
 var enable_hitbox: bool = false
 
@@ -53,6 +59,8 @@ func _ready() -> void:
 
 	base_weapon.bullet_engine = self.bullet_engine
 	focus_weapon.bullet_engine = self.bullet_engine
+	base_weapon.game_sequencer = game_sequencer
+	base_weapon.enemy_bullet_engine = enemy_bullet_engine
 
 	base_weapon.on_fire.connect(on_fire)
 	focus_weapon.on_fire.connect(on_fire)
@@ -124,6 +132,10 @@ func process_weapon(_delta: float) -> void:
 
 	var fire_input = Input.is_action_pressed("player_input_action_1")
 
+	if Input.is_action_just_pressed("player_input_action_3"):
+		base_weapon.employ_bomb(bomb_timer,bomb_reload_timer)
+		pass
+	
 	var focus_ready = options_transition_current_timer >= options_transition_duration
 
 	base_weapon.is_firing = fire_input and (not focus_ready)
