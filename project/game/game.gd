@@ -40,8 +40,8 @@ func _ready() -> void:
 		ui_root.boss_healthbar.parent.show()
 
 	player.on_hit.connect(scoring.on_player_hit)
-	player.on_hit.connect(ui_root.player_health.on_player_hit.bind(player.lives))
-	player.on_heal.connect(ui_root.player_health.on_player_heal.bind(player.lives))
+	player.on_hit.connect(func(): ui_root.player_health.on_player_hit(player.lives))
+	player.on_heal.connect(func(): ui_root.player_health.on_player_heal(player.lives))
 
 	game_sequencer.start_game()
 

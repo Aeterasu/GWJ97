@@ -297,11 +297,23 @@ tracks/4/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_vss03"]
 resource_name = "heal"
-length = 5.0
-step = 0.025
+length = 1.5
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -378,6 +390,18 @@ tracks/5/keys = {
 "args": [],
 "method": &"reset_update"
 }]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ljlx8"]
@@ -1444,6 +1468,7 @@ texture = ExtResource("59_afsd1")
 offset = Vector2(0, -20.5)
 
 [node name="Sprite2D2" type="Sprite2D" parent="UI/HPPanel/HBoxContainer" unique_id=1682528990]
+visible = false
 modulate = Color(1, 1, 1, 0)
 position = Vector2(45, 0.2561771)
 scale = Vector2(1e-05, 1e-05)
@@ -1668,7 +1693,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(-0.4601733, 0.14681904)
+position = Vector2(0.73776037, 0.18699005)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -1680,7 +1705,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(0.061432593, 7.673794)
+position = Vector2(-1.2992437, 7.6092305)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")

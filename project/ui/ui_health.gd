@@ -37,12 +37,6 @@ func on_player_hit(lives_: int) -> void:
 	tween.tween_property(damage_fx, "scale", Vector2(0.0, 2.0) * 2.0, 0.3)
 
 func on_player_heal(lives_: int) -> void:
-	#var tween: Tween = create_tween()
-	#hearts[lives_].texture_progress_offset = Vector2(0.0, -16.0)
-	#tween.tween_property(hearts[lives_], "texture_progress_offset", Vector2(0.0, 0.0), 0.5)\
-	#	.set_trans(Tween.TRANS_BACK)\
-	#	.set_ease(Tween.EASE_IN_OUT)
-	
 	skip_update = true
 
 	heal_animation.play("heal")
