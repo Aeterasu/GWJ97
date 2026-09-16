@@ -80,6 +80,8 @@ func _process(delta: float) -> void:
 	ui_root.immune_label.visible = player.invincibility_timer > 0.0
 	ui_root.immune_label.text = "IMMUNE: " + str(Utils.round_place(player.invincibility_timer, 1)) + "s"
 
+	ui_root.boss_timer.text = str(game_sequencer.get_current_timer())
+
 func on_pattern_init(pattern_idx: int) -> void:
 	var pattern_str = game_sequencer.patterns_flavor[pattern_idx].pattern_names
 	var current_text = ui_root.boss_pattern_name.text

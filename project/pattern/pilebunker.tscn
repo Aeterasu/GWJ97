@@ -35,20 +35,9 @@ tracks/1/keys = {
 [sub_resource type="Animation" id="Animation_pp47w"]
 resource_name = "death"
 step = 0.25
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"kill_finish"
-}]
-}
+
+[sub_resource type="Animation" id="Animation_timeout_pile"]
+resource_name = "timeout"
 
 [sub_resource type="Animation" id="Animation_33kw3"]
 resource_name = "default"
@@ -117,7 +106,8 @@ tracks/2/keys = {
 _data = {
 &"RESET": SubResource("Animation_xyyh3"),
 &"death": SubResource("Animation_pp47w"),
-&"default": SubResource("Animation_33kw3")
+&"default": SubResource("Animation_33kw3"),
+&"timeout": SubResource("Animation_timeout_pile")
 }
 
 [node name="Pilebunker" type="Node" unique_id=1439410849 node_paths=PackedStringArray("animation_player", "entities")]

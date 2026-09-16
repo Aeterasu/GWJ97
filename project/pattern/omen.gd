@@ -1,6 +1,5 @@
 class_name Omen extends Pattern
 
-@export var animation_player: AnimationPlayer = null
 @export var text: AnimatedText = null
 
 @export var bullet_origin_left: Marker2D = null
@@ -71,11 +70,6 @@ func fire() -> void:
 
 	for i in 6:
 		bullet_engine.fire_bullet(entities[0].global_position + Vector2.from_angle(TAU * randf()) * randf() * 8.0, BulletPatternHelper.get_angle_to_player(entities[0].global_position) + randf_range(-0.8, 0.8), speed_2, BulletSkin.Type.ENEMY_BULLET_ALT_LONG)
-
-func kill_start() -> void:
-	super()
-
-	animation_player.play("death")
 
 func on_anim_finished(anim_name: StringName) -> void:
 	if anim_name == "start":

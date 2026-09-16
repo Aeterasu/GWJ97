@@ -1,20 +1,11 @@
 extends Pattern
 
-@export var animation_player: AnimationPlayer = null
-
-func _ready() -> void:
-	super()
-
 func init_pattern() -> void:
 	super()
 
 	is_started = true
 
 	animation_player.play("default")
-
-func kill_start() -> void:
-	super()
-	animation_player.play("death")
 
 func update(delta: float) -> void:
 	var player = Game.get_player()

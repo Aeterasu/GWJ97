@@ -15,13 +15,8 @@ var current_angle: float = 0.0
 
 @export var is_firing: bool = false
 
-@export var animation_player: AnimationPlayer = null
-
 var circle_max: int = 32
 var circle_idx: int = 24
-
-func _ready() -> void:
-	super()
 
 func init_pattern() -> void:
 	super()
@@ -31,11 +26,6 @@ func init_pattern() -> void:
 	fire_timer_secondary = fire_rate_secondary
 
 	animation_player.play("default")
-
-func kill_start() -> void:
-	super()
-	
-	animation_player.play("death")
 
 func update(delta: float) -> void:
 	if is_firing:

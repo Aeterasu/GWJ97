@@ -1,7 +1,5 @@
 extends Pattern
 
-@export var animation_player: AnimationPlayer = null
-
 @export var shot_origins: Array[Marker2D] = []
 
 @export var fire_rate: float = 0.8
@@ -23,11 +21,6 @@ func init_pattern() -> void:
 	is_started = true
 
 	start_origin = randi() % shot_origins.size()
-
-func kill_start() -> void:
-	super()
-
-	animation_player.play("death")
 
 func update(delta: float) -> void:
 	fire_time_left -= delta

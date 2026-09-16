@@ -37,32 +37,21 @@ tracks/1/keys = {
 [sub_resource type="Animation" id="Animation_c0ape"]
 resource_name = "death"
 step = 0.1
-tracks/0/type = "method"
+tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".")
+tracks/0/path = NodePath(".:is_firing")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"kill_finish"
-}]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:is_firing")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
 }
+
+[sub_resource type="Animation" id="Animation_timeout_dog"]
+resource_name = "timeout"
 
 [sub_resource type="Animation" id="Animation_1j440"]
 resource_name = "default"
@@ -136,7 +125,8 @@ tracks/2/keys = {
 _data = {
 &"RESET": SubResource("Animation_sc6r3"),
 &"death": SubResource("Animation_c0ape"),
-&"default": SubResource("Animation_1j440")
+&"default": SubResource("Animation_1j440"),
+&"timeout": SubResource("Animation_timeout_dog")
 }
 
 [node name="Dogfight" type="Node" unique_id=285190987 node_paths=PackedStringArray("animation_player", "entities")]

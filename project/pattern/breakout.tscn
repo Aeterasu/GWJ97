@@ -10,24 +10,14 @@ radius = 43.0
 [sub_resource type="Animation" id="Animation_24cxn"]
 resource_name = "death"
 step = 0.1
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"kill_finish"
-}]
-}
+
+[sub_resource type="Animation" id="Animation_timeout_break"]
+resource_name = "timeout"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uyx1u"]
 _data = {
-&"death": SubResource("Animation_24cxn")
+&"death": SubResource("Animation_24cxn"),
+&"timeout": SubResource("Animation_timeout_break")
 }
 
 [node name="Breakout" type="Node" unique_id=2000619167 node_paths=PackedStringArray("animation_player", "shot_origins", "entities")]

@@ -13,6 +13,9 @@ class_name ResultScreen extends Control
 
 @export var ticker_label: TickerLabel = null
 
+@export var kill_category: Control = null
+@export var timeout_category: Control = null
+
 var pattern_reward: int = 0
 var score_multiplier: float = 1.0
 var score_items: int = 0
@@ -25,6 +28,9 @@ func _ready() -> void:
 	self.hide()
 
 func show_results(data: Scoring, no_miss: bool, no_bomb: bool) -> void:
+	kill_category.show()
+	timeout_category.hide()
+
 	pattern_reward = 0
 	score_multiplier = 1.0
 	score_items = 0
@@ -53,6 +59,24 @@ func show_results(data: Scoring, no_miss: bool, no_bomb: bool) -> void:
 	tween.tween_property(self, "score_suns_collected", data.results_suns_collected, d).set_delay(p)
 	tween.tween_property(self, "total", data.results_total, d).set_delay(p)
 	
+	tween.tween_callback(on_results_confirmed.emit).set_delay(9.0)
+
+func show_timeout_results(data: Scoring) -> void:
+	kill_category.hide()
+	timeout_category.show()
+
+	pattern_reward = 0
+	score_multiplier = 1.0
+	score_items = 0
+	score_suns_collected = 0
+	total = data.results_starting_score
+	no_miss_checkmark.reset()
+	no_bomb_checkmark.reset()
+
+	self.show()
+	animation_player.play("show_results")
+	
+	var tween: Tween = create_tween()
 	tween.tween_callback(on_results_confirmed.emit).set_delay(3.0)
 
 func hide_results() -> void:

@@ -5,22 +5,12 @@ var fire_timer: float = 0.0
 
 @export var is_firing: bool = false
 
-@export var animation_player: AnimationPlayer = null
-
-func _ready() -> void:
-	super()
-
 func init_pattern() -> void:
 	super()
 
 	is_started = true
 
 	animation_player.play("default")
-
-func kill_start() -> void:
-	super()
-	
-	animation_player.play("death")
 
 func update(delta: float) -> void:
 	if is_firing:

@@ -4,6 +4,7 @@ class_name Pattern extends Node
 
 @export var entities: Array[Enemy] = []
 @export var immune: bool = false
+@export var animation_player: AnimationPlayer = null
 
 var health: float = 0.0
 
@@ -19,6 +20,7 @@ var freeze: Array[Node] = []
 
 var is_started: bool = false
 var is_dead: bool = false
+var is_timeout: bool = false
 
 signal on_hit
 
@@ -28,12 +30,13 @@ signal on_hit
 signal on_health_depleted
 signal on_death
 
-signal on_timeout
-
 func _ready() -> void:
 	for node in get_children():
 		remove_child(node)
 		freeze.append(node)
+
+	if animation_player:
+		animation_player.animation_finished.connect(_on_animation_finished)
 
 func init_pattern() -> void:	
 	for node in freeze:
@@ -45,15 +48,16 @@ func init_pattern() -> void:
 
 func _physics_process(delta: float) -> void:
 	if is_started and (not is_dead):
+		time_left -= delta
+
+		if time_left <= 0.0:
+			start_timeout()
+			return
+
 		update(delta)
 
 func update(delta: float) -> void:
-	time_left -= delta
-
-	if time_left <= 0.0:
-		on_timeout.emit(self)
-		immune = true
-		is_dead = true
+	pass
 
 func on_entity_hit(entity: Enemy, damage: float) -> void:
 	if immune:
@@ -67,10 +71,10 @@ func on_entity_hit(entity: Enemy, damage: float) -> void:
 	on_hit.emit(self)
 
 	if health < 0.0:
-		kill_start()
 		on_health_depleted.emit(self)
+		start_death()
 
-func kill_start() -> void:
+func start_death() -> void:
 	if is_dead:
 		return
 
@@ -87,17 +91,23 @@ func kill_start() -> void:
 	var sun = sun_spawner.spawn_sun(sun_pos)
 	if sun:
 		sun.use_gravity = true
-	
-func kill_finish() -> void:
-	on_death.emit(self)
 
-	for entity in entities:
-		remove_child.call_deferred(entity)
+	animation_player.play("death")
 
-func timeout_finish() -> void:
-	on_death.emit(self)
+func start_timeout() -> void:
+	if is_dead:
+		return
 
-	for entity in entities:
-		remove_child.call_deferred(entity)
+	is_dead = true
+	is_timeout = true
 
+	bullet_engine.bullet_cancel()
 
+	animation_player.play("timeout")
+
+func _on_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "death" or anim_name == "timeout":
+		on_death.emit(self)
+
+		for entity in entities:
+			remove_child.call_deferred(entity)
