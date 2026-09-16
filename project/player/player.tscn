@@ -7,7 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://cw3vre4x0mjwl" path="res://player/texture/texture_player_option.png" id="4_qjkh3"]
 [ext_resource type="Script" uid="uid://daly1svuqwggy" path="res://player/player_weapon.gd" id="4_yw30f"]
 [ext_resource type="Shader" uid="uid://bx6v6qu8uop7f" path="res://player/player.gdshader" id="5_hg6s5"]
+[ext_resource type="Texture2D" uid="uid://crfc8fl4s2ydv" path="res://player/texture/texture_player_hitbox.png" id="6_8t03j"]
 [ext_resource type="Texture2D" uid="uid://pbvi3x36nsw6" path="res://player/texture/texture_player_muzzle_flash.png" id="7_boad6"]
+[ext_resource type="Shader" uid="uid://dnjynoll1mra0" path="res://player/player_option.gdshader" id="8_2ieo8"]
 
 [sub_resource type="Curve" id="Curve_3b7yk"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -15,11 +17,54 @@ point_count = 2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8t03j"]
 shader = ExtResource("5_hg6s5")
+shader_parameter/atlas = ExtResource("2_g1dw6")
+shader_parameter/is_invul = true
+shader_parameter/is_focused = 0.0
 shader_parameter/cull_backface = false
 shader_parameter/fov = 90.0
 shader_parameter/rot_y_deg = 0.0
 shader_parameter/rot_x_deg = 360.0
 shader_parameter/inset = 0.0
+
+[sub_resource type="Gradient" id="Gradient_hg6s5"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2ieo8"]
+gradient = SubResource("Gradient_hg6s5")
+width = 38
+height = 42
+fill_from = Vector2(0.018893387, 0.012820512)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2ieo8"]
+shader = ExtResource("8_2ieo8")
+shader_parameter/atlas = ExtResource("6_8t03j")
+shader_parameter/is_invul = false
+shader_parameter/is_focused = 0.0
+
+[sub_resource type="Gradient" id="Gradient_ebec5"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ebec5"]
+gradient = SubResource("Gradient_ebec5")
+width = 38
+height = 42
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yllr7"]
+shader = ExtResource("8_2ieo8")
+shader_parameter/atlas = ExtResource("4_qjkh3")
+shader_parameter/is_invul = true
+shader_parameter/is_focused = 0.0
+
+[sub_resource type="Gradient" id="Gradient_8t03j"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hg6s5"]
+gradient = SubResource("Gradient_8t03j")
+width = 19
+height = 24
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_boad6"]
 blend_mode = 1
@@ -27,7 +72,7 @@ blend_mode = 1
 [sub_resource type="CircleShape2D" id="CircleShape2D_3b7yk"]
 radius = 2.0
 
-[node name="Player" type="Area2D" unique_id=1584514943 node_paths=PackedStringArray("base_weapon", "focus_weapon", "options", "sprite", "muzzle_flashes")]
+[node name="Player" type="Area2D" unique_id=1584514943 node_paths=PackedStringArray("base_weapon", "focus_weapon", "options", "sprite", "hitbox_sprite", "muzzle_flashes")]
 y_sort_enabled = true
 script = ExtResource("1_rkbax")
 base_speed = 210.0
@@ -40,7 +85,8 @@ options_focus_distance = 16.0
 options = [NodePath("Option1"), NodePath("Option2")]
 options_transition_duration = 0.3
 sprite = NodePath("Sprite2D")
-muzzle_flashes = [NodePath("Option1/MuzzleFlash"), NodePath("Option2/MuzzleFlash"), NodePath("MuzzleFlash")]
+hitbox_sprite = NodePath("Hitbox")
+muzzle_flashes = [NodePath("MuzzleFlash"), NodePath("Option1/MuzzleFlash"), NodePath("Option2/MuzzleFlash")]
 
 [node name="LerpFollower2D" type="Node2D" parent="." unique_id=2089604479]
 position = Vector2(0, 15)
@@ -61,13 +107,22 @@ length = 25
 metadata/_custom_type_script = "uid://cnksq2oeepu0y"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1154157569]
+z_index = -1
 material = SubResource("ShaderMaterial_8t03j")
-texture = ExtResource("2_g1dw6")
+texture = SubResource("GradientTexture2D_2ieo8")
 offset = Vector2(-0.5, -0.5)
+
+[node name="Hitbox" type="Sprite2D" parent="." unique_id=551572882]
+z_index = 64
+z_as_relative = false
+material = SubResource("ShaderMaterial_2ieo8")
+position = Vector2(1, -1)
+texture = SubResource("GradientTexture2D_ebec5")
+offset = Vector2(-0.5, 0.5)
 
 [node name="BaseWeapon" type="Node2D" parent="." unique_id=1696975318 node_paths=PackedStringArray("shot_origins")]
 script = ExtResource("4_yw30f")
-shot_origins = [NodePath("../ShotOrigin1"), NodePath("../ShotOrigin2"), NodePath("../Option1/ShotOrigin1"), NodePath("../Option2/ShotOrigin2")]
+shot_origins = [NodePath("../ShotOrigin1"), NodePath("../ShotOrigin2"), NodePath("../Option1/ShotOrigin1"), NodePath("../Option2/ShotOrigin1")]
 origin_random_offset = Vector2(4, 0)
 fire_rate = 0.024
 damage = 1.0
@@ -76,7 +131,7 @@ metadata/_custom_type_script = "uid://daly1svuqwggy"
 
 [node name="FocusWeapon" type="Node2D" parent="." unique_id=1213521630 node_paths=PackedStringArray("shot_origins")]
 script = ExtResource("4_yw30f")
-shot_origins = [NodePath("../ShotOrigin1"), NodePath("../ShotOrigin2"), NodePath("../Option1/ShotOrigin1"), NodePath("../Option2/ShotOrigin2")]
+shot_origins = [NodePath("../ShotOrigin1"), NodePath("../ShotOrigin2"), NodePath("../Option1/ShotOrigin1"), NodePath("../Option2/ShotOrigin1")]
 origin_random_offset = Vector2(1, 0)
 fire_rate = 0.024
 damage = 1.5
@@ -90,8 +145,9 @@ position = Vector2(-5, -32)
 position = Vector2(5, -32)
 
 [node name="Option1" type="Sprite2D" parent="." unique_id=703252772]
+material = SubResource("ShaderMaterial_yllr7")
 position = Vector2(-32, 0)
-texture = ExtResource("4_qjkh3")
+texture = SubResource("GradientTexture2D_hg6s5")
 
 [node name="ShotOrigin1" type="Marker2D" parent="Option1" unique_id=681034560]
 position = Vector2(0, -27)
@@ -119,19 +175,20 @@ position = Vector2(0, -11)
 texture = ExtResource("7_boad6")
 offset = Vector2(0, -16)
 
-[node name="Option2" type="Sprite2D" parent="." unique_id=2098643966]
+[node name="Option2" type="Sprite2D" parent="." unique_id=1015326118]
+material = SubResource("ShaderMaterial_yllr7")
 position = Vector2(32, 0)
-texture = ExtResource("4_qjkh3")
+texture = SubResource("GradientTexture2D_hg6s5")
 
-[node name="ShotOrigin2" type="Marker2D" parent="Option2" unique_id=600054007]
+[node name="ShotOrigin1" type="Marker2D" parent="Option2" unique_id=1266983150]
 position = Vector2(0, -27)
 
-[node name="LerpFollower2D" type="Node2D" parent="Option2" unique_id=1052546185]
+[node name="LerpFollower2D" type="Node2D" parent="Option2" unique_id=506980988]
 script = ExtResource("3_g6k8r")
 lerp_weight = 25.0
 metadata/_custom_type_script = "uid://bd3qyvjnay3cr"
 
-[node name="Trail2D" type="Line2D" parent="Option2/LerpFollower2D" unique_id=752314262]
+[node name="Trail2D" type="Line2D" parent="Option2/LerpFollower2D" unique_id=878729094]
 show_behind_parent = true
 z_index = -1
 z_as_relative = false
@@ -143,7 +200,7 @@ script = ExtResource("3_qjkh3")
 length = 25
 metadata/_custom_type_script = "uid://cnksq2oeepu0y"
 
-[node name="MuzzleFlash" type="Sprite2D" parent="Option2" unique_id=1345448295]
+[node name="MuzzleFlash" type="Sprite2D" parent="Option2" unique_id=1787583620]
 material = SubResource("CanvasItemMaterial_boad6")
 position = Vector2(0, -11)
 texture = ExtResource("7_boad6")

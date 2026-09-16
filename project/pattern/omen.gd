@@ -1,6 +1,5 @@
 class_name Omen extends Pattern
 
-@export var animation_player: AnimationPlayer = null
 @export var text: AnimatedText = null
 
 @export var bullet_origin_left: Marker2D = null
@@ -26,11 +25,15 @@ func _ready() -> void:
 func init_pattern() -> void:
 	super()
 
-	fire_time_left = fire_rate
+	fire_time_left = fire_rate * fire_rate_multiplier
 
 	animation_player.play("start")
 
 func update(delta: float) -> void:
+	if is_timeout:
+		timeout_pattern.shot_origin_position = entities[0].global_position
+		timeout_pattern.update(delta)
+
 	var entity = entities[0]
 
 	time += delta * 1.3333
@@ -41,15 +44,18 @@ func update(delta: float) -> void:
 	fire_time_left -= delta
 
 	if fire_time_left <= 0.0:
-		fire_time_left = fire_rate
+		fire_time_left = fire_rate * fire_rate_multiplier
 		fire()
 
 func fire() -> void:
-	var arc_count: int = 6
+	if is_timeout:
+		return
+
+	var arc_count: int = int(6 * bullet_count_multiplier)
 
 	var arc = BulletPatternHelper.get_arc(PI / 2 + deg_to_rad(current_offset), deg_to_rad(arc_spread), arc_count)
 
-	var speed: float = 200.0
+	var speed: float = 200.0 * bullet_speed_multiplier
 
 	for angle in arc:
 		bullet_engine.fire_bullet(entities[0].global_position, angle, speed, BulletSkin.Type.ENEMY_BULLET_RED_SMALL)	
@@ -67,15 +73,10 @@ func fire() -> void:
 
 	# aimed bullets
 
-	var speed_2 := 130.0
+	var speed_2 := 130.0 * bullet_speed_multiplier
 
-	for i in 6:
+	for i in int(6 * bullet_count_multiplier):
 		bullet_engine.fire_bullet(entities[0].global_position + Vector2.from_angle(TAU * randf()) * randf() * 8.0, BulletPatternHelper.get_angle_to_player(entities[0].global_position) + randf_range(-0.8, 0.8), speed_2, BulletSkin.Type.ENEMY_BULLET_ALT_LONG)
-
-func kill_start() -> void:
-	super()
-
-	animation_player.play("death")
 
 func on_anim_finished(anim_name: StringName) -> void:
 	if anim_name == "start":

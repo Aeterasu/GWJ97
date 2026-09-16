@@ -2,7 +2,7 @@ class_name Scoring extends Node
 
 @export var score_awards_per_pattern: Array[int] = []
 
-@export var label: Label = null
+@export var label: RichTextLabel = null
 
 @export var score_item_manager: ScoreItemManager = null
 @export var score_item_particles: CPUParticles2D = null
@@ -33,7 +33,7 @@ var current_rescue_multiplier: float = 1.0:
 		
 		update_label()
 
-const MAX_RESCUE_MULTIPLIER: float = 20.0
+const MAX_RESCUE_MULTIPLIER: float = 9999.0
 const SCORE_ITEM_BASE_VALUE: int = 100
 
 func _ready() -> void:
@@ -51,7 +51,7 @@ func reset_results() -> void:
 	results_total = score
 
 func update_label() -> void:
-	label.text = Utils.format_thousands(score) + " (x" + str(current_rescue_multiplier) + ")"
+	label.text = Utils.format_thousands(score) + " ([img]res://ui/texture/texture_ui_little_sun.png[/img]x" + str(Utils.round_place(current_rescue_multiplier, 1)) + ")"
 
 # is is important - if anything awards score, it can NEVER directly call award_score!
 # everything must be routed through functions here so that we do not lose track of the multipliers
@@ -114,9 +114,9 @@ func get_item_type_from_multiplier(multiplier: float = 1.0) -> ScoreItem.Type:
 		return ScoreItem.Type.VERY_SMALL
 	elif multiplier > 1.0 and multiplier <= 10.0:
 		return ScoreItem.Type.SMALL
-	elif multiplier > 10.0 and multiplier < MAX_RESCUE_MULTIPLIER:
+	elif multiplier > 10.0 and multiplier < 20.0:
 		return ScoreItem.Type.MEDIUM
-	elif multiplier >= MAX_RESCUE_MULTIPLIER:
+	elif multiplier >= 20.0:
 		return ScoreItem.Type.LARGE
 
 	return ScoreItem.Type.VERY_SMALL
@@ -130,3 +130,6 @@ func on_sun_collection(item: ScoreItem) -> void:
 	award_rescue_multiplier()
 
 	results_suns_collected += 1
+
+func on_player_hit() -> void:
+	current_rescue_multiplier = 1.0

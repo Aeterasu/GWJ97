@@ -6,6 +6,7 @@ class_name Player extends Area2D
 @export var base_weapon: PlayerWeapon = null
 @export var focus_weapon: PlayerWeapon = null
 var is_focused: bool = false
+var focus_fx: float = 0.0
 
 @export var bullet_engine: BulletEngine = null
 @export var enemy_bullet_engine: BulletEngine = null
@@ -21,6 +22,7 @@ var options_transition_current_timer: float = 0.0
 var options_angle: float = 0.0
 
 @export var sprite: Sprite2D = null
+@export var hitbox_sprite: Sprite2D = null
 var sprite_shader: ShaderMaterial = null
 var sprite_tilt: float = 0.0
 var sprite_yaw: float = 0.0
@@ -168,6 +170,7 @@ func hit() -> void:
 
 	if lives < 0:
 		on_death.emit()
+		lives = 0
 
 func _process(delta: float) -> void:	
 	for flash in muzzle_flashes:
@@ -177,6 +180,18 @@ func _process(delta: float) -> void:
 		if (not base_weapon.is_firing) and (not focus_weapon.is_firing):
 			flash.visible = true
 	
+	focus_fx = lerp(focus_fx, 1.0 if is_focused else 0.0, 1.0 - exp(-10.0 * delta))
+
+	sprite_shader.set_shader_parameter("is_invul", invincibility_timer > 0.0)
+	sprite_shader.set_shader_parameter("is_focused", focus_fx)
+
+	for o in options:
+		(o.material as ShaderMaterial).set_shader_parameter("is_invul", invincibility_timer > 0.0)
+		(o.material as ShaderMaterial).set_shader_parameter("is_focused", focus_fx)
+
+	(hitbox_sprite.material as ShaderMaterial).set_shader_parameter("is_invul", invincibility_timer > 0.0)
+	(hitbox_sprite.material as ShaderMaterial).set_shader_parameter("is_focused", focus_fx)
+
 func on_fire() -> void:
 	for flash in muzzle_flashes:
 		flash.scale = Vector2.ONE * randf_range(0.8, 1.5)

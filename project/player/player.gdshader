@@ -1,10 +1,14 @@
 shader_type canvas_item;
 
+uniform sampler2D atlas: filter_nearest;
+uniform bool is_invul = false;
+uniform float is_focused : hint_range(0.0, 1.0) = 0.0;
+
 uniform bool cull_backface = true;
-uniform float fov : hint_range(1, 179) = 90.0;
-uniform float rot_y_deg : hint_range(-360, 360) = 0.0;
-uniform float rot_x_deg : hint_range(-360, 360) = 0.0;
-uniform float inset : hint_range(0, 1) = 0.0;
+uniform float fov : hint_range(1.0, 179.0) = 90.0;
+uniform float rot_y_deg : hint_range(-360.0, 360.0) = 0.0;
+uniform float rot_x_deg : hint_range(-360.0, 360.0) = 0.0;
+uniform float inset : hint_range(0.0, 1.0) = 0.0;
 
 varying vec2 offset;
 varying vec3 world_pos_3d;
@@ -38,16 +42,30 @@ void vertex()
 
 void fragment()
 {
-	// Discard back-facing fragments if culling is enabled
-	if (cull_backface && world_pos_3d.z <= 0.0) discard;
+	if (cull_backface && world_pos_3d.z <= 0.0)
+	{
+		discard;
+	}
 
-	// Perspective divide to get 2D UV coordinates
 	vec2 projected_uv = (world_pos_3d.xy / world_pos_3d.z) - offset + 0.5;
 
-	// Discard pixels outside of the rectangle
 	if (projected_uv.x < 0.0 || projected_uv.x > 1.0 || projected_uv.y < 0.0 || projected_uv.y > 1.0)
+	{
 		discard;
+	}
 
-	// flip back face uv horizontally to keep texture orientation correct
-	COLOR = texture(TEXTURE, vec2(1.0 - projected_uv.x, projected_uv.y));
+	vec2 final_uv = vec2(1.0 - projected_uv.x, projected_uv.y);
+
+	vec2 uv1 = vec2(final_uv.x / 3.0 + 0.0 / 3.0, final_uv.y);
+	vec2 uv2 = vec2(final_uv.x / 3.0 + 1.0 / 3.0, final_uv.y);
+	vec2 uv3 = vec2(final_uv.x / 3.0 + 2.0 / 3.0, final_uv.y);
+
+	vec4 tex1 = texture(atlas, uv1);
+	vec4 tex2 = texture(atlas, uv2);
+	vec4 tex3 = texture(atlas, uv3);
+	
+    float blink = 0.5 - sin(TIME * 35.0) * 0.5;
+    float factor = blink * float(is_invul);
+
+	COLOR = mix(mix(tex1, tex2, is_focused), tex3, factor);
 }

@@ -49,20 +49,6 @@ tracks/2/keys = {
 [sub_resource type="Animation" id="Animation_r0hix"]
 resource_name = "death"
 step = 0.1
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"kill_finish"
-}]
-}
 
 [sub_resource type="Animation" id="Animation_ee0li"]
 resource_name = "default"
@@ -105,17 +91,21 @@ tracks/2/keys = {
 "values": [4.0, 4.0, 0.4]
 }
 
+[sub_resource type="Animation" id="Animation_timeout_hr"]
+resource_name = "timeout"
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fjv3d"]
 _data = {
 &"RESET": SubResource("Animation_fjv3d"),
 &"death": SubResource("Animation_r0hix"),
-&"default": SubResource("Animation_ee0li")
+&"default": SubResource("Animation_ee0li"),
+&"timeout": SubResource("Animation_timeout_hr")
 }
 
-[node name="HighRoller" type="Node" unique_id=95005314 node_paths=PackedStringArray("animation_player", "entities")]
+[node name="HighRoller" type="Node" unique_id=95005314 node_paths=PackedStringArray("entities", "animation_player")]
 script = ExtResource("1_4o7cs")
-animation_player = NodePath("AnimationPlayer")
 entities = [NodePath("Enemy")]
+animation_player = NodePath("AnimationPlayer")
 metadata/_custom_type_script = "uid://16mvw7i2q77s"
 
 [node name="Enemy" type="Area2D" parent="." unique_id=1103872824]

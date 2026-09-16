@@ -28,11 +28,20 @@ func _ready() -> void:
 	ui_root.boss_pattern_name_block.hide()
 	ui_root.boss_healthbar.generate_healthbar(game_sequencer.patterns_health)
 
+	ui_root.boss_healthbar.parent.hide()
+
 	if ui_root.boss_pattern_name_block.has_signal("resized"):
 		ui_root.boss_pattern_name_block.resized.connect(update_boss_ticker_layout)
 	
 	game_sequencer.propagate_pattern_hit.connect(update_boss_healthbar)
 	game_sequencer.on_pattern_init.connect(on_pattern_init)
+
+	if not game_sequencer.show_boss_warning:
+		ui_root.boss_healthbar.parent.show()
+
+	player.on_hit.connect(scoring.on_player_hit)
+	player.on_hit.connect(ui_root.player_health.on_player_hit.bind(player.lives))
+	player.on_heal.connect(ui_root.player_health.on_player_heal.bind(player.lives))
 
 	game_sequencer.start_game()
 
@@ -54,9 +63,7 @@ func animate_player_intro() -> void:
 		.set_delay(0.4)
 	tween.tween_callback(func(): player.control_state = Player.ControlState.NORMAL)
 
-func _physics_process(delta: float) -> void:
-	debug_hp_label.text = "HP: " + str(player.lives)
-	
+func _physics_process(delta: float) -> void:	
 	if Input.is_action_pressed("restart"):
 		restart_timer += delta
 
@@ -71,6 +78,12 @@ func _process(delta: float) -> void:
 	dark_screen.modulate.a = lerp(dark_screen.modulate.a, 1.0 if is_dark_screen else 0.0, lerp_weight)
 
 	ui_root.boss_ticker_text.position.y = ui_root.boss_pattern_name.position.y
+	ui_root.player_health.lives = player.lives
+
+	ui_root.immune_label.visible = player.invincibility_timer > 0.0
+	ui_root.immune_label.text = "IMMUNE: " + str(Utils.round_place(player.invincibility_timer, 1)) + "s"
+
+	ui_root.boss_timer.text = str(game_sequencer.get_current_timer())
 
 func on_pattern_init(pattern_idx: int) -> void:
 	var pattern_str = game_sequencer.patterns_flavor[pattern_idx].pattern_names
@@ -110,6 +123,8 @@ func set_pattern_text(new_text: String) -> void:
 	var ticker := ui_root.boss_ticker_text
 	var block := ui_root.boss_pattern_name_block
 	label.text = new_text
+	# GODOT IS COMPLAINING ABOUT THIS LINE
+	# TOO BAD!
 	label.size = label.get_minimum_size()
 	var block_width := block.size.x
 	if block_width < 10.0:

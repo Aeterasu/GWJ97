@@ -5,12 +5,15 @@ class_name GameSequencer extends Node
 @export var show_boss_warning: bool = true
 @export var boss_warning: Control = null
 
+@export var timeout_warning: UITimeoutWarning = null
+
 @export var starting_pattern: int = 0
 
 @export var animation_player: AnimationPlayer = null
 
 @export var patterns: Array[Pattern] = []
 @export var patterns_health: Array[float] = []
+@export var patterns_timer: Array[float] = []
 @export var patterns_flavor: Array[PatternFlavor] = []
 
 @export var scoring: Scoring = null
@@ -63,12 +66,14 @@ func init_pattern(idx: int) -> void:
 		patterns[idx].sun_spawner = self.sun_spawner
 		patterns[idx].life_spawner = self.life_spawner
 		patterns[idx].health = patterns_health[idx]
+		patterns[idx].time_left = patterns_timer[idx]
 		patterns[idx].init_pattern()
 		
 		# TODO: don't forget to unsubscribe when the pattern is disposed!
 		patterns[idx].on_hit.connect(on_pattern_hit)
 		patterns[idx].on_health_depleted.connect(on_pattern_health_depleted)
 		patterns[idx].on_death.connect(on_pattern_death)
+		patterns[idx].on_timeout.connect(on_pattern_timeout)
 
 		current_idx = idx
 
@@ -89,11 +94,27 @@ func get_all_health_percentagees() -> Array[float]:
 func on_pattern_hit(pattern: Pattern) -> void:
 	propagate_pattern_hit.emit(pattern)
 
+func on_pattern_timeout(pattern: Pattern) -> void:
+	get_tree().paused = true
+
+	timeout_warning.animation_player.play("flash")
+	await timeout_warning.animation_player.animation_finished
+
+	get_tree().paused = false
+
 func on_pattern_health_depleted(pattern: Pattern) -> void:
 	scoring.on_pattern_completed(current_idx)
 	enemy_bullet_engine.bullet_cancel()
 
 func on_pattern_death(pattern: Pattern) -> void:
+	#if pattern.is_timeout:
+	#	results.ticker_label.text = ("TOO BAD! // ").repeat(10)
+	#	results.show_timeout_results(scoring)
+
+	#	await results.on_results_confirmed
+
+	#	results.hide_results()
+	#else:
 	await scoring.score_item_manager.await_all_items_cleared()
 
 	results.ticker_label.text = (patterns_flavor[current_idx].pattern_names + " // ").repeat(10)
@@ -110,7 +131,7 @@ func on_pattern_death(pattern: Pattern) -> void:
 	
 	var next_idx = current_idx + 1
 
-	if next_idx >= patterns.size():
+	if next_idx >= patterns.size() - 1:
 		return
 
 	current_idx = next_idx
@@ -119,3 +140,7 @@ func on_pattern_death(pattern: Pattern) -> void:
 	init_pattern(current_idx)
 	no_miss = true
 	no_bomb = true
+
+func get_current_timer() -> int:
+	return floori(patterns[current_idx].time_left)
+

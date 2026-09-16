@@ -1,7 +1,5 @@
 extends Pattern
 
-@export var animation_player: AnimationPlayer = null
-
 @export var shot_origins: Array[Marker2D] = []
 
 @export var fire_rate: float = 0.0
@@ -22,18 +20,23 @@ var exclude_origin: int = 0
 func init_pattern() -> void:
 	super()
 
-	fire_time_left = fire_rate
-	arc_time_left = arc_fire_rate
+	fire_time_left = fire_rate * fire_rate_multiplier
+	arc_time_left = arc_fire_rate * fire_rate_multiplier
 
 	is_started = true
 
 	shot_origins.sort_custom(func(a, b): return a.global_position.x < b.global_position.x)
 
 func update(delta: float) -> void:
+	if is_timeout:
+		timeout_pattern.shot_origin_position = entities[0].global_position
+		timeout_pattern.update(delta)
+		return
+
 	fire_time_left -= delta
 
 	if fire_time_left <= 0.0:
-		fire_time_left = fire_rate
+		fire_time_left = fire_rate * fire_rate_multiplier
 
 		fire_primary()
 		sun_counter += 1
@@ -53,11 +56,11 @@ func update(delta: float) -> void:
 			
 			var pos = origin.global_position
 			var angle = Vector2.DOWN.angle()
-			var speed = 120.0
+			var speed = 120.0 * bullet_speed_multiplier
 
 			bullet_engine.fire_bullet(pos, angle, speed, BulletSkin.Type.ENEMY_BULLET_RED_LONG)
 
-		burst_timer = burst_rate
+		burst_timer = burst_rate * fire_rate_multiplier
 		burst_current += 1
 
 		if burst_current >= burst_count:
@@ -69,7 +72,7 @@ func update(delta: float) -> void:
 	arc_time_left -= delta
 
 	if arc_time_left <= 0.0:
-		arc_time_left = arc_fire_rate
+		arc_time_left = arc_fire_rate * fire_rate_multiplier
 
 		fire_arc()
 
@@ -80,7 +83,7 @@ func fire_primary() -> void:
 	burst_timer = 0.0
 
 func fire_arc() -> void:
-	var bullet_count: int = 24
+	var bullet_count: int = int(24 * bullet_count_multiplier)
 
 	var player: Player = Game.get_player()
 	var player_pos: Vector2 = player.global_position if player else Vector2(120.0, 320.0)
@@ -92,14 +95,11 @@ func fire_arc() -> void:
 	var pos = entities[0].global_position
 
 	for i in arc:
-		var speed = randf_range(90.0, 180.0)
+		var speed = randf_range(90.0, 180.0) * bullet_speed_multiplier
 		bullet_engine.fire_bullet(pos, i, speed, BulletSkin.Type.ENEMY_BULLET_ALT_SMALL, gravity_bullet)
 
 static func gravity_bullet(bullet: Bullet, delta: float) -> Vector2:
 	bullet.velocity += Vector2.DOWN * 98 * delta
 	return bullet.position + bullet.velocity * delta
 
-func kill_start() -> void:
-	super()
 
-	animation_player.play("death")

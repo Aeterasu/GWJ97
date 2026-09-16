@@ -15,46 +15,41 @@ var current_angle: float = 0.0
 
 @export var is_firing: bool = false
 
-@export var animation_player: AnimationPlayer = null
-
 var circle_max: int = 32
 var circle_idx: int = 24
-
-func _ready() -> void:
-	super()
 
 func init_pattern() -> void:
 	super()
 
 	is_started = true
 
-	fire_timer_secondary = fire_rate_secondary
+	fire_timer_secondary = fire_rate_secondary * fire_rate_multiplier
 
 	animation_player.play("default")
 
-func kill_start() -> void:
-	super()
-	
-	animation_player.play("death")
-
 func update(delta: float) -> void:
+	if is_timeout:
+		timeout_pattern.shot_origin_position = entities[0].global_position
+		timeout_pattern.update(delta)
+		return	
+	
 	if is_firing:
 		fire_timer -= delta
 
 		if fire_timer <= 0.0:
-			fire_timer = fire_rate
+			fire_timer = fire_rate * fire_rate_multiplier
 			fire_rapid()
 
 		fire_timer_secondary -= delta
 
 		if fire_timer_secondary <= 0.0:
-			fire_timer_secondary = fire_rate_secondary
+			fire_timer_secondary = fire_rate_secondary * fire_rate_multiplier
 			fire_secondary()
 
 		fire_timer_sun -= delta 
 
 		if fire_timer_sun <= 0.0:
-			fire_timer_sun = fire_rate_sun
+			fire_timer_sun = fire_rate_sun * fire_rate_multiplier
 			fire_sun()
 	else:
 		fire_timer = 0.0
@@ -65,12 +60,12 @@ func update(delta: float) -> void:
 	entities[0].rotation = lerp_angle(entities[0].rotation, -TAU * (float(circle_idx) / float(circle_max)) - PI / 2, 1.0 - exp(-5.0 * delta))
 
 func fire_rapid() -> void:
-	var bullet_count: int = 8
+	var bullet_count: int = int(8 * bullet_count_multiplier)
 	
 	for i in bullet_count:
 		var pos = entities[0].position
 
-		var speed = remap(i, 0, bullet_count, 40.0, 250.0)
+		var speed = remap(i, 0, bullet_count, 40.0, 250.0) * bullet_speed_multiplier
 
 		bullet_engine.fire_bullet(pos, -TAU * (float(circle_idx) / float(circle_max)), speed, BulletSkin.Type.ENEMY_BULLET_RED_SMALL)
 		#bullet_engine.fire_bullet(pos, current_angle - PI / 2, speed, BulletSkin.Type.ENEMY_BULLET_RED_SMALL)
@@ -81,10 +76,10 @@ func fire_rapid() -> void:
 		circle_idx = 0
 
 func fire_secondary() -> void:
-	var count: int = 16
+	var count: int = int(16 * bullet_count_multiplier)
 
 	for i in count:
-		bullet_engine.fire_bullet(entities[0].position, TAU * randf(), 60.0, BulletSkin.Type.ENEMY_BULLET_ALT_SMALL)
+		bullet_engine.fire_bullet(entities[0].position, TAU * randf(), 60.0 * bullet_speed_multiplier, BulletSkin.Type.ENEMY_BULLET_ALT_SMALL)
 
 func fire_sun() -> void:
 	var dir = randi_range(22, 26)
