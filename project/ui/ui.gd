@@ -1,6 +1,7 @@
 class_name UI extends Control
 
 @export var player_health: UIHealth = null
+@export var immune_label: Label = null
 
 @export var boss_healthbar: UIBossHealthbar = null
 

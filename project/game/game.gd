@@ -75,6 +75,9 @@ func _process(delta: float) -> void:
 	ui_root.boss_ticker_text.position.y = ui_root.boss_pattern_name.position.y
 	ui_root.player_health.lives = player.lives
 
+	ui_root.immune_label.visible = player.invincibility_timer > 0.0
+	ui_root.immune_label.text = "IMMUNE: " + str(Utils.round_place(player.invincibility_timer, 1)) + "s"
+
 func on_pattern_init(pattern_idx: int) -> void:
 	var pattern_str = game_sequencer.patterns_flavor[pattern_idx].pattern_names
 	var current_text = ui_root.boss_pattern_name.text
