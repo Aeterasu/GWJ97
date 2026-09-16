@@ -48,6 +48,7 @@
 [ext_resource type="PackedScene" uid="uid://b3dvevlqr8m6x" path="res://pattern/naysayer.tscn" id="23_vss03"]
 [ext_resource type="PackedScene" uid="uid://bh46jwes5rum2" path="res://pattern/snake_eyes.tscn" id="24_ljlx8"]
 [ext_resource type="PackedScene" uid="uid://r8yfmsu8epob" path="res://pattern/meltdown.tscn" id="25_x3o37"]
+[ext_resource type="PackedScene" uid="uid://4ufa621gv1cu" path="res://pattern/bleeding_star.tscn" id="26_jfrga"]
 [ext_resource type="Script" uid="uid://20jf6dpe647w" path="res://player/life_pickup.gd" id="27_m7tfy"]
 [ext_resource type="Texture2D" uid="uid://chqoq6t2p6ksc" path="res://scoring/texture/texture_score_spark_small.png" id="28_uimrd"]
 [ext_resource type="Texture2D" uid="uid://5nliocm68sgr" path="res://player/texture/texture_life_pickup.png" id="29_ee0yl"]
@@ -872,9 +873,9 @@ script = ExtResource("2_oryes")
 player = NodePath("../Player")
 show_boss_warning = false
 boss_warning = NodePath("../../../Overlay/BossWarning")
-starting_pattern = 8
+starting_pattern = 6
 animation_player = NodePath("AnimationPlayer")
-patterns = [NodePath("Omen"), NodePath("Breakout"), NodePath("Riot"), NodePath("Dogfight"), NodePath("Pilebunker"), NodePath("HighRoller"), NodePath("Naysayer"), NodePath("SnakeEyes"), NodePath("Meltdown")]
+patterns = [NodePath("Omen"), NodePath("Breakout"), NodePath("Riot"), NodePath("Dogfight"), NodePath("Pilebunker"), NodePath("HighRoller"), NodePath("Naysayer"), NodePath("SnakeEyes"), NodePath("Meltdown"), NodePath("BleedingStar")]
 patterns_health = Array[float]([3200.0, 3000.0, 3000.0, 960.0, 450.0, 4480.0, 1500.0, 2500.0, 5000.0, 5000.0])
 patterns_timer = Array[float]([90.0, 90.0, 90.0, 90.0, 90.0, 120.0, 120.0, 120.0, 180.0, 180.0])
 patterns_flavor = Array[ExtResource("3_ysh17")]([ExtResource("4_to2kc"), ExtResource("5_ino1g"), ExtResource("8_v7aj6"), ExtResource("6_gts4h"), ExtResource("7_j7fm5"), ExtResource("15_y37xm"), ExtResource("8_1vxhs"), ExtResource("9_bybv3"), ExtResource("10_y7kwi"), ExtResource("18_kjv07")])
@@ -912,9 +913,11 @@ spawn_life = true
 [node name="Meltdown" parent="SubViewport/Game/GameSequencer" unique_id=376805303 instance=ExtResource("25_x3o37")]
 spawn_life = true
 
+[node name="BleedingStar" parent="SubViewport/Game/GameSequencer" unique_id=2113624139 instance=ExtResource("26_jfrga")]
+
 [node name="Scoring" type="Node" parent="SubViewport/Game" unique_id=269865828 node_paths=PackedStringArray("label", "score_item_manager", "score_item_particles", "score_sun_manager", "game_sequencer")]
 script = ExtResource("2_jld1g")
-score_awards_per_pattern = Array[int]([100000, 150000, 200000, 200000, 300000, 300000, 500000, 500000, 1000000])
+score_awards_per_pattern = Array[int]([100000, 150000, 200000, 200000, 300000, 300000, 500000, 500000, 1000000, 10000000])
 label = NodePath("../../../UI/ScoreLabel")
 score_item_manager = NodePath("ScoreItemManager")
 score_item_particles = NodePath("../ScoreItemParticles")
@@ -1538,7 +1541,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(0.735154, 0.2752892)
+position = Vector2(-0.033636384, -0.93912923)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -1550,7 +1553,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(0.5428945, 4.8486395)
+position = Vector2(-7.2001505, -2.9370365)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")

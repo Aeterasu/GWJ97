@@ -116,7 +116,7 @@ func on_pattern_death(pattern: Pattern) -> void:
 	
 	var next_idx = current_idx + 1
 
-	if next_idx >= patterns.size():
+	if next_idx >= patterns.size() - 1:
 		return
 
 	current_idx = next_idx
