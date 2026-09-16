@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bonkjsy6ujbfi"]
+
+[ext_resource type="Shader" uid="uid://wckw45cj8va3" path="res://enemy/enemy_shader.gdshader" id="1_g0ahh"]
+[ext_resource type="Texture2D" uid="uid://blgb5lxfsxd0b" path="res://enemy/texture/texture_enemy_plane.png" id="2_g0ahh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e0voa"]
+shader = ExtResource("1_g0ahh")
+shader_parameter/atlas = ExtResource("2_g0ahh")
+shader_parameter/hitflash = 0.0
+
+[sub_resource type="Gradient" id="Gradient_me6us"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ixbki"]
+gradient = SubResource("Gradient_me6us")
+width = 78
+height = 58
+
+[node name="PlaneVisual" type="Sprite2D" unique_id=1742974697]
+material = SubResource("ShaderMaterial_e0voa")
+texture = SubResource("GradientTexture2D_ixbki")

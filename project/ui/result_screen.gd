@@ -59,7 +59,7 @@ func show_results(data: Scoring, no_miss: bool, no_bomb: bool) -> void:
 	tween.tween_property(self, "score_suns_collected", data.results_suns_collected, d).set_delay(p)
 	tween.tween_property(self, "total", data.results_total, d).set_delay(p)
 	
-	tween.tween_callback(on_results_confirmed.emit).set_delay(9.0)
+	tween.tween_callback(on_results_confirmed.emit).set_delay(3.0)
 
 func show_timeout_results(data: Scoring) -> void:
 	kill_category.hide()

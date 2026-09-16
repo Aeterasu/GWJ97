@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://uydf6vurl6wg" path="res://pattern/high_roller.gd" id="1_4o7cs"]
 [ext_resource type="Script" uid="uid://du4pk0oohw2cn" path="res://enemy/enemy.gd" id="2_r0hix"]
-[ext_resource type="Texture2D" uid="uid://der8j8mn8cywb" path="res://enemy/texture/texture_enemy_plane_placeholder.png" id="3_ee0li"]
+[ext_resource type="PackedScene" uid="uid://bonkjsy6ujbfi" path="res://enemy/plane_visual.tscn" id="3_r0hix"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fjv3d"]
-radius = 18.0
+radius = 24.0
 
 [sub_resource type="Animation" id="Animation_fjv3d"]
 length = 0.001
@@ -102,9 +102,10 @@ _data = {
 &"timeout": SubResource("Animation_timeout_hr")
 }
 
-[node name="HighRoller" type="Node" unique_id=95005314 node_paths=PackedStringArray("entities", "animation_player")]
+[node name="HighRoller" type="Node" unique_id=95005314 node_paths=PackedStringArray("entities", "sprites", "animation_player")]
 script = ExtResource("1_4o7cs")
 entities = [NodePath("Enemy")]
+sprites = [NodePath("Enemy/PlaneVisual")]
 animation_player = NodePath("AnimationPlayer")
 metadata/_custom_type_script = "uid://16mvw7i2q77s"
 
@@ -113,9 +114,7 @@ position = Vector2(120, 88)
 script = ExtResource("2_r0hix")
 metadata/_custom_type_script = "uid://du4pk0oohw2cn"
 
-[node name="Sprite2D" type="Sprite2D" parent="Enemy" unique_id=940862032]
-scale = Vector2(0.8, 0.8)
-texture = ExtResource("3_ee0li")
+[node name="PlaneVisual" parent="Enemy" unique_id=1742974697 instance=ExtResource("3_r0hix")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy" unique_id=477702134]
 shape = SubResource("CircleShape2D_fjv3d")

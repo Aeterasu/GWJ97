@@ -124,4 +124,4 @@ func _on_animation_finished(anim_name: StringName) -> void:
 		on_death.emit(self)
 
 		for entity in entities:
-			remove_child.call_deferred(entity)
+			entity.get_parent().remove_child(entity)
