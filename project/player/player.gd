@@ -104,7 +104,7 @@ func _physics_process(delta: float) -> void:
 func process_movement(delta: float) -> void:
 	var dir: Vector2 = Vector2.ZERO
 
-	dir = Input.get_vector("player_input_left", "player_input_right", "player_input_up","player_input_down")
+	dir = Input.get_vector(InputAction.player_input_left,InputAction.player_input_right,InputAction.player_input_up,InputAction.player_input_up)
 	var move_speed = focus_speed if is_focused else base_speed
 
 	global_position += dir.normalized() * move_speed * delta
@@ -129,10 +129,10 @@ func process_movement(delta: float) -> void:
 	sprite_shader.set_shader_parameter("rot_x_deg", sprite_yaw)
 
 func process_weapon(delta: float) -> void:
-	is_focused = Input.is_action_pressed("player_input_action_2")
+	is_focused = Input.is_action_pressed(InputAction.player_input_action_2)
 
-	var fire_input = Input.is_action_pressed("player_input_action_1")
-	var bomb_input = Input.is_action_just_pressed("player_input_action_3")
+	var fire_input = Input.is_action_pressed(InputAction.player_input_action_1)
+	var bomb_input = Input.is_action_just_pressed(InputAction.player_input_action_3)
 
 	var focus_ready = options_transition_current_timer >= options_transition_duration
 
