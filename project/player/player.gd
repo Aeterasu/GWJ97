@@ -8,6 +8,9 @@ class_name Player extends Area2D
 var is_focused: bool = false
 
 @export var bullet_engine: BulletEngine = null
+@export var enemy_bullet_engine: BulletEngine = null
+
+@export var game_sequencer : GameSequencer = null
 
 @export var options_rotation_speed: float = 0.0
 @export var options_base_distance: float = 0.0
@@ -35,6 +38,12 @@ var enable_hitbox: bool = false
 var control_state: ControlState = ControlState.NORMAL
 
 var invincibility_timer: float = 0.0
+
+var bomb_restart_timer : float = 3.0
+var bomb_restart_time : float = 0.0
+var bomb_timer : float = 0.5
+var bomb_time : float = 0.0
+
 
 var is_dead: bool = false
 
@@ -119,15 +128,27 @@ func process_movement(delta: float) -> void:
 	sprite_shader.set_shader_parameter("rot_y_deg", sprite_tilt)
 	sprite_shader.set_shader_parameter("rot_x_deg", sprite_yaw)
 
-func process_weapon(_delta: float) -> void:
+func process_weapon(delta: float) -> void:
 	is_focused = Input.is_action_pressed("player_input_action_2")
 
 	var fire_input = Input.is_action_pressed("player_input_action_1")
+	var bomb_input = Input.is_action_just_pressed("player_input_action_3")
 
 	var focus_ready = options_transition_current_timer >= options_transition_duration
 
 	base_weapon.is_firing = fire_input and (not focus_ready)
 	focus_weapon.is_firing = fire_input and focus_ready
+	
+	if bomb_input and bomb_time <= 0.0 and bomb_restart_time <= 0.0:
+		bomb_time = bomb_timer
+		bomb_restart_time = bomb_restart_timer
+		game_sequencer.no_bomb = false
+	
+	if bomb_time > 0.0:
+		bomb_time -= delta
+		enemy_bullet_engine.bullet_cancel()
+	elif bomb_time <= 0.0:
+		bomb_restart_time -= delta
 
 func hit() -> void:
 	if is_dead:
