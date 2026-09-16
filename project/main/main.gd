@@ -51,6 +51,11 @@ func _ready() -> void:
 	get_viewport().debug_draw = Viewport.DEBUG_DRAW_UNSHADED
 	get_viewport().audio_listener_enable_3d = false
 
+	if OS.is_debug_build():
+		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
+	else:
+		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
+
 	settings = SettingsManager.new()
 	settings.load()
 
