@@ -10,6 +10,10 @@ var health: float = 0.0
 
 var time_left: float = 0.0
 
+var bullet_count_multiplier: float = 1.0
+var bullet_speed_multiplier: float = 1.0
+var fire_rate_multiplier: float = 1.0
+
 var sun_counter: int = 0
 
 var life_spawner: LifePickup = null

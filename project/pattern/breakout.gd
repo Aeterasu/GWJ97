@@ -15,7 +15,7 @@ var max_sun_counter: int = 5
 func init_pattern() -> void:
 	super()
 
-	fire_time_left = fire_rate
+	fire_time_left = fire_rate * fire_rate_multiplier
 	fire_secondary_time_left = fire_secondary_time_left
 
 	is_started = true
@@ -26,7 +26,7 @@ func update(delta: float) -> void:
 	fire_time_left -= delta
 
 	if fire_time_left <= 0.0:
-		fire_time_left = fire_rate
+		fire_time_left = fire_rate * fire_rate_multiplier
 
 		fire_primary()
 		sun_counter += 1
@@ -37,11 +37,11 @@ func update(delta: float) -> void:
 	fire_secondary_time_left -= delta
 
 	if fire_secondary_time_left <= 0.0:
-		fire_secondary_time_left = fire_rate_secondary
-		bullet_engine.fire_bullet(shot_origins.pick_random().global_position, PI / 2.0 + randf_range(-PI / 5.0, PI / 5.0), randf_range(60.0, 140.0), BulletSkin.Type.ENEMY_BULLET_ALT_SMALL)
+		fire_secondary_time_left = fire_rate_secondary * fire_rate_multiplier
+		bullet_engine.fire_bullet(shot_origins.pick_random().global_position, PI / 2.0 + randf_range(-PI / 5.0, PI / 5.0), randf_range(60.0, 140.0) * bullet_speed_multiplier, BulletSkin.Type.ENEMY_BULLET_ALT_SMALL)
 
 func fire_primary() -> void:
-	var bullet_count: int = 16
+	var bullet_count: int = int(16 * bullet_count_multiplier)
 
 	var origin = shot_origins[start_origin]
 
@@ -69,7 +69,7 @@ func fire_primary() -> void:
 		var target_offset = Vector2.from_angle(a) * radius
 		var intro_behaviour = process_circle_intro.bind(spawn_pos, target_offset, intro_duration, start_time)
 
-		bullet_engine.fire_bullet(spawn_pos, angle, 100.0, BulletSkin.Type.ENEMY_BULLET_RED_SMALL, intro_behaviour)
+		bullet_engine.fire_bullet(spawn_pos, angle, 100.0 * bullet_speed_multiplier, BulletSkin.Type.ENEMY_BULLET_RED_SMALL, intro_behaviour)
 
 	if sun_counter == max_sun_counter:
 		await get_tree().create_timer(intro_duration).timeout
