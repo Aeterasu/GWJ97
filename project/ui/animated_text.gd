@@ -46,13 +46,13 @@ func animate_text(str_text: String, duration_in: float, wait_time: float, durati
 			text = revealed + scramble_chars[randi() % scramble_chars.length()]
 			set_cursor(i + 1, true)
 			if step_time_in > 0.0:
-				await get_tree().create_timer(step_time_in).timeout
+				await get_tree().create_timer(step_time_in, false).timeout
 		if my_id != coroutine_id:
 			return
 		text = str_text.substr(0, i + 1)
 		set_cursor(i + 1, true)
 		if settle_span_in > 0.0:
-			await get_tree().create_timer(settle_span_in).timeout
+			await get_tree().create_timer(settle_span_in, false).timeout
 
 	if my_id != coroutine_id:
 		return
@@ -63,7 +63,7 @@ func animate_text(str_text: String, duration_in: float, wait_time: float, durati
 	typing_finished.emit()
 
 	if wait_time > 0.0:
-		await get_tree().create_timer(wait_time).timeout
+		await get_tree().create_timer(wait_time, false).timeout
 	if my_id != coroutine_id:
 		return
 
@@ -79,13 +79,13 @@ func animate_text(str_text: String, duration_in: float, wait_time: float, durati
 			text = str_text.substr(0, i - 1) + scramble_chars[randi() % scramble_chars.length()]
 			set_cursor(i, true, true)
 			if step_time_out > 0.0:
-				await get_tree().create_timer(step_time_out).timeout
+				await get_tree().create_timer(step_time_out, false).timeout
 		if my_id != coroutine_id:
 			return
 		text = str_text.substr(0, i - 1)
 		set_cursor(i - 1, true, true)
 		if settle_span_out > 0.0:
-			await get_tree().create_timer(settle_span_out).timeout
+			await get_tree().create_timer(settle_span_out, false).timeout
 
 	if my_id != coroutine_id:
 		return

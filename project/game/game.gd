@@ -10,11 +10,15 @@ var is_dark_screen: bool = false
 
 @export var debug_hp_label: Label = null
 
+@export var pause_overlay: Control = null
+
+var is_paused: bool = false
+
 const BOARD_SIZE: Vector2 = Vector2(240.0, 320.0)
 const PLAYER_STARTING_POSITION: Vector2 = Vector2(54.0, 260.0)
 
 var restart_timer : float = 0.0
-var restart_target_time : float = 3.0
+var restart_target_time : float = 1.0
 
 static var instance: Game = null
 
@@ -73,6 +77,12 @@ func _physics_process(delta: float) -> void:
 	else:
 		restart_timer = 0.0
 
+	if Input.is_action_just_pressed("pause"):
+		is_paused = not is_paused
+		pause_overlay.visible = is_paused
+
+	get_tree().paused = is_paused or game_sequencer.timeout_pause
+
 func _process(delta: float) -> void:
 	var lerp_weight: float = 1.0 - exp(-10.0 * delta)
 
@@ -93,7 +103,6 @@ func _process(delta: float) -> void:
 		ui_root.bomb_bar.tint_progress = Color("#faeac9")
 	else:
 		ui_root.bomb_bar.tint_progress = Color("#927873")
-
 
 func on_pattern_init(pattern_idx: int) -> void:
 	var pattern_str = game_sequencer.patterns_flavor[pattern_idx].pattern_names

@@ -58,7 +58,7 @@ func fire_circle() -> void:
 	while circle_current_count < circle_counts and (not is_dead):
 		var circle = BulletPatternHelper.get_circle(offset, 24)
 
-		await get_tree().create_timer(0.12).timeout
+		await get_tree().create_timer(0.12, false).timeout
 
 		if is_dead:
 			return

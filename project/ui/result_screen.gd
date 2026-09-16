@@ -81,7 +81,7 @@ func show_timeout_results(data: Scoring) -> void:
 
 func hide_results() -> void:
 	animation_player.play("hide_results")
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(1.0, false).timeout
 
 	self.hide()
 
