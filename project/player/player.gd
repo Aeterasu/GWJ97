@@ -49,6 +49,10 @@ var bomb_ready_toggle: bool = false
 
 var is_dead: bool = false
 
+const COUNTERBOMB_WINDOW: int = 6
+var counterbomb_ticker: int = 0
+var is_counterbomb_active: bool = false
+
 signal on_hit
 signal on_death
 signal on_heal
@@ -104,6 +108,15 @@ func _physics_process(delta: float) -> void:
 			var offset = Vector2(cos(angle), sin(angle)) * final_radius
 			options[i].position = offset
 
+	# counterbomb
+
+	if is_counterbomb_active:
+		if counterbomb_ticker > COUNTERBOMB_WINDOW:
+			is_counterbomb_active = false
+			deduct_life()
+
+		counterbomb_ticker += 1
+
 func process_movement(delta: float) -> void:
 	var dir: Vector2 = Vector2.ZERO
 
@@ -149,6 +162,9 @@ func process_weapon(delta: float) -> void:
 		game_sequencer.no_bomb = false
 		bomb_ready_toggle = true
 
+		if is_counterbomb_active:
+			is_counterbomb_active = false
+
 	if bomb_effect_timer > 0.0:
 		bomb_effect_timer -= delta
 		enemy_bullet_engine.bullet_cancel()
@@ -169,6 +185,13 @@ func hit() -> void:
 	if invincibility_timer > 0.0:
 		return
 
+	if is_counterbomb_active:
+		return
+
+	is_counterbomb_active = true
+	counterbomb_ticker = 0
+
+func deduct_life() -> void:
 	lives -= 1;
 
 	invincibility_timer = INVINCIBILITY_ON_HIT
