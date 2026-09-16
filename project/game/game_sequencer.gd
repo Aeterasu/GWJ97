@@ -11,6 +11,7 @@ class_name GameSequencer extends Node
 
 @export var patterns: Array[Pattern] = []
 @export var patterns_health: Array[float] = []
+@export var patterns_timer: Array[float] = []
 @export var patterns_flavor: Array[PatternFlavor] = []
 
 @export var scoring: Scoring = null
@@ -58,6 +59,7 @@ func init_pattern(idx: int) -> void:
 		patterns[idx].sun_spawner = self.sun_spawner
 		patterns[idx].life_spawner = self.life_spawner
 		patterns[idx].health = patterns_health[idx]
+		patterns[idx].time_left = patterns_timer[idx]
 		patterns[idx].init_pattern()
 		
 		# TODO: don't forget to unsubscribe when the pattern is disposed!

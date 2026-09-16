@@ -28,6 +28,8 @@ func _ready() -> void:
 	ui_root.boss_pattern_name_block.hide()
 	ui_root.boss_healthbar.generate_healthbar(game_sequencer.patterns_health)
 
+	ui_root.boss_healthbar.parent.hide()
+
 	if ui_root.boss_pattern_name_block.has_signal("resized"):
 		ui_root.boss_pattern_name_block.resized.connect(update_boss_ticker_layout)
 	

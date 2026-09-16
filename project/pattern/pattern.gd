@@ -7,6 +7,8 @@ class_name Pattern extends Node
 
 var health: float = 0.0
 
+var time_left: float = 0.0
+
 var sun_counter: int = 0
 
 var life_spawner: LifePickup = null
@@ -26,6 +28,8 @@ signal on_hit
 signal on_health_depleted
 signal on_death
 
+signal on_timeout
+
 func _ready() -> void:
 	for node in get_children():
 		remove_child(node)
@@ -43,8 +47,13 @@ func _physics_process(delta: float) -> void:
 	if is_started and (not is_dead):
 		update(delta)
 
-func update(_delta: float) -> void:
-	pass
+func update(delta: float) -> void:
+	time_left -= delta
+
+	if time_left <= 0.0:
+		on_timeout.emit(self)
+		immune = true
+		is_dead = true
 
 func on_entity_hit(entity: Enemy, damage: float) -> void:
 	if immune:
@@ -84,3 +93,11 @@ func kill_finish() -> void:
 
 	for entity in entities:
 		remove_child.call_deferred(entity)
+
+func timeout_finish() -> void:
+	on_death.emit(self)
+
+	for entity in entities:
+		remove_child.call_deferred(entity)
+
+
