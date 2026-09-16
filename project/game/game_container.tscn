@@ -871,13 +871,11 @@ color_ramp = SubResource("Gradient_3b7yk")
 [node name="GameSequencer" type="Node" parent="SubViewport/Game" unique_id=1424656608 node_paths=PackedStringArray("player", "boss_warning", "animation_player", "patterns", "scoring", "enemy_bullet_engine", "sun_spawner", "life_spawner", "results")]
 script = ExtResource("2_oryes")
 player = NodePath("../Player")
-show_boss_warning = false
 boss_warning = NodePath("../../../Overlay/BossWarning")
-starting_pattern = 6
 animation_player = NodePath("AnimationPlayer")
 patterns = [NodePath("Omen"), NodePath("Breakout"), NodePath("Riot"), NodePath("Dogfight"), NodePath("Pilebunker"), NodePath("HighRoller"), NodePath("Naysayer"), NodePath("SnakeEyes"), NodePath("Meltdown"), NodePath("BleedingStar")]
 patterns_health = Array[float]([3200.0, 3000.0, 3000.0, 960.0, 450.0, 4480.0, 1500.0, 2500.0, 5000.0, 5000.0])
-patterns_timer = Array[float]([90.0, 90.0, 90.0, 90.0, 90.0, 120.0, 120.0, 120.0, 180.0, 180.0])
+patterns_timer = Array[float]([60.0, 90.0, 90.0, 90.0, 90.0, 120.0, 120.0, 120.0, 180.0, 180.0])
 patterns_flavor = Array[ExtResource("3_ysh17")]([ExtResource("4_to2kc"), ExtResource("5_ino1g"), ExtResource("8_v7aj6"), ExtResource("6_gts4h"), ExtResource("7_j7fm5"), ExtResource("15_y37xm"), ExtResource("8_1vxhs"), ExtResource("9_bybv3"), ExtResource("10_y7kwi"), ExtResource("18_kjv07")])
 scoring = NodePath("../Scoring")
 enemy_bullet_engine = NodePath("../EnemyBulletEngine")
@@ -1541,7 +1539,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(-0.033636384, -0.93912923)
+position = Vector2(0.8328527, -0.18467255)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -1553,7 +1551,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(-7.2001505, -2.9370365)
+position = Vector2(0.018971821, -1.8162103)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")

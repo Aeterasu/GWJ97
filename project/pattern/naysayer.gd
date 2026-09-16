@@ -26,6 +26,11 @@ func init_pattern() -> void:
 	#line.hide()
 
 func update(delta: float) -> void:
+	if is_timeout:
+		timeout_pattern.shot_origin_position = entities[0].global_position
+		timeout_pattern.update(delta)
+		return
+
 	if is_raining:
 		rain_timer -= delta
 
@@ -35,6 +40,9 @@ func update(delta: float) -> void:
 				bullet_engine.fire_bullet(Vector2(randf_range(10.0, 230.0), -16), Vector2.DOWN.angle(), 100.0, BulletSkin.Type.ENEMY_BULLET_ALT_SMALL)
 
 func fire_circle() -> void:
+	if is_timeout:
+		return
+
 	circle_current_count = 0
 	side_toggle = not side_toggle
 

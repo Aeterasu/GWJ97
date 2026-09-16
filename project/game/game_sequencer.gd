@@ -91,23 +91,22 @@ func on_pattern_health_depleted(pattern: Pattern) -> void:
 	enemy_bullet_engine.bullet_cancel()
 
 func on_pattern_death(pattern: Pattern) -> void:
-	if pattern.is_timeout:
-		# TODO: timeout result screen
-		results.ticker_label.text = ("TOO BAD! // ").repeat(10)
-		results.show_timeout_results(scoring)
+	#if pattern.is_timeout:
+	#	results.ticker_label.text = ("TOO BAD! // ").repeat(10)
+	#	results.show_timeout_results(scoring)
 
-		await results.on_results_confirmed
+	#	await results.on_results_confirmed
 
-		results.hide_results()
-	else:
-		await scoring.score_item_manager.await_all_items_cleared()
+	#	results.hide_results()
+	#else:
+	await scoring.score_item_manager.await_all_items_cleared()
 
-		results.ticker_label.text = (patterns_flavor[current_idx].pattern_names + " // ").repeat(10)
-		results.show_results(scoring, no_miss, no_bomb)
+	results.ticker_label.text = (patterns_flavor[current_idx].pattern_names + " // ").repeat(10)
+	results.show_results(scoring, no_miss, no_bomb)
 
-		await results.on_results_confirmed
+	await results.on_results_confirmed
 
-		results.hide_results()
+	results.hide_results()
 
 	await get_tree().create_timer(1.0).timeout
 

@@ -23,6 +23,11 @@ func init_pattern() -> void:
 	start_origin = randi() % shot_origins.size()
 
 func update(delta: float) -> void:
+	if is_timeout:
+		timeout_pattern.shot_origin_position = entities[0].global_position
+		timeout_pattern.update(delta)
+		return
+
 	fire_time_left -= delta
 
 	if fire_time_left <= 0.0:

@@ -8,6 +8,11 @@ func init_pattern() -> void:
 	animation_player.play("default")
 
 func update(delta: float) -> void:
+	if is_timeout:
+		timeout_pattern.shot_origin_position = entities[0].global_position
+		timeout_pattern.update(delta)
+		return
+
 	var player = Game.get_player()
 	var target_pos = player.global_position if player else Vector2(120.0, 320.0)
 
@@ -16,6 +21,9 @@ func update(delta: float) -> void:
 	entities[0].rotation = rotate_toward(entities[0].rotation, target_angle, 2.0 * delta)
 
 func fire(sun: bool = false) -> void:
+	if is_timeout:
+		return
+
 	var angle = entities[0].rotation + PI / 2
 
 	var bullet_count_1: int = int(36 * bullet_count_multiplier)

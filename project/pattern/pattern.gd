@@ -26,6 +26,8 @@ var is_started: bool = false
 var is_dead: bool = false
 var is_timeout: bool = false
 
+var timeout_pattern: TimeoutPattern = null
+
 signal on_hit
 
 # the obvious difference here:
@@ -40,7 +42,9 @@ func _ready() -> void:
 		freeze.append(node)
 
 	if animation_player:
-		animation_player.animation_finished.connect(_on_animation_finished)
+		animation_player.animation_finished.connect(_on_animation_finished)	
+
+	timeout_pattern = TimeoutPattern.new()
 
 func init_pattern() -> void:	
 	for node in freeze:
@@ -50,13 +54,16 @@ func init_pattern() -> void:
 		entity.on_hit.connect(on_entity_hit)
 		entity.bullet_engine = self.bullet_engine
 
+	timeout_pattern.bullet_engine = bullet_engine
+
 func _physics_process(delta: float) -> void:
 	if is_started and (not is_dead):
 		time_left -= delta
 
 		if time_left <= 0.0:
-			start_timeout()
-			return
+			is_timeout = true
+			#start_timeout()
+			#return
 
 		update(delta)
 
@@ -102,15 +109,15 @@ func start_timeout() -> void:
 	if is_dead:
 		return
 
-	is_dead = true
+	#is_dead = true
 	is_timeout = true
 
-	bullet_engine.bullet_cancel()
+	#bullet_engine.bullet_cancel()
 
-	animation_player.play("timeout")
+	#animation_player.play("timeout")
 
 func _on_animation_finished(anim_name: StringName) -> void:
-	if anim_name == "death" or anim_name == "timeout":
+	if anim_name == "death":
 		on_death.emit(self)
 
 		for entity in entities:

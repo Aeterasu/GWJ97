@@ -13,6 +13,11 @@ func init_pattern() -> void:
 	animation_player.play("default")
 
 func update(delta: float) -> void:
+	if is_timeout:
+		timeout_pattern.shot_origin_position = entities[0].global_position
+		timeout_pattern.update(delta)
+		return
+
 	if is_firing:
 		fire_timer -= delta
 

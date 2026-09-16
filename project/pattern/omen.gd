@@ -30,6 +30,10 @@ func init_pattern() -> void:
 	animation_player.play("start")
 
 func update(delta: float) -> void:
+	if is_timeout:
+		timeout_pattern.shot_origin_position = entities[0].global_position
+		timeout_pattern.update(delta)
+
 	var entity = entities[0]
 
 	time += delta * 1.3333
@@ -44,6 +48,9 @@ func update(delta: float) -> void:
 		fire()
 
 func fire() -> void:
+	if is_timeout:
+		return
+
 	var arc_count: int = int(6 * bullet_count_multiplier)
 
 	var arc = BulletPatternHelper.get_arc(PI / 2 + deg_to_rad(current_offset), deg_to_rad(arc_spread), arc_count)

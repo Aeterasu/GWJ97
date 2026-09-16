@@ -28,6 +28,11 @@ func init_pattern() -> void:
 	shot_origins.sort_custom(func(a, b): return a.global_position.x < b.global_position.x)
 
 func update(delta: float) -> void:
+	if is_timeout:
+		timeout_pattern.shot_origin_position = entities[0].global_position
+		timeout_pattern.update(delta)
+		return
+
 	fire_time_left -= delta
 
 	if fire_time_left <= 0.0:
