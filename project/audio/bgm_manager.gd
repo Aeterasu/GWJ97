@@ -2,29 +2,32 @@ class_name BGMManager extends Node
 
 enum BGMType
 {
+	BOSS_1,
+	BOSS_2,
+	BOSS_3,
 	MENU,
-	GAME,
+	CUTSCENE,
+	TUTORIAL,
 }
 
 @export var bgm_dict : Dictionary[BGMType, BGM] = {}
 
-var current_bgm : AudioStreamPlayer = null
+var current_bgm: BGM = null
 
-func update_bgm(bgm : BGMType, reset : bool = false) -> void:
+static var instance: BGMManager = null
+
+func _ready() -> void:
+	instance = self
+
+func update_bgm(bgm : BGMType) -> void:
+	if bgm_dict.has(bgm) and current_bgm == bgm_dict[bgm]:
+		return
+
 	for type in bgm_dict.keys():
 		var player = bgm_dict[type]
 
 		if type == bgm:
-			player.enable(reset)
+			player.enable()
 			current_bgm = player
 		else:
 			player.disable()
-			current_bgm = null
-
-func pause() -> void:
-	if current_bgm:
-		current_bgm.stream_paused = true
-
-func resume() -> void:
-	if current_bgm:
-		current_bgm.stream_paused = false

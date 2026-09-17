@@ -1,48 +1,77 @@
-class_name BGM extends AudioStreamPlayer
+class_name BGM extends Node
+
+@export var audio_intro: AudioStreamPlayer = null
+@export var audio_loop: AudioStreamPlayer = null
 
 @export var start_at_zero: bool = false
-@export var start_time : float = 0.0
 @export var fade_in_duration: float = 0.5
+@export var fade_out_duration: float = 0.5
 
-var default_volume: float = 0.0
-var is_muted: bool = false
-var current_vol: float = 1.0:
-	set(value):
-		current_vol = value
-
-		volume_linear = value
+var playing: bool = false
 
 func _ready() -> void:
-	default_volume = db_to_linear(volume_db)
-	if start_at_zero:
-		current_vol = 0.0
-		is_muted = true
-	else:
-		current_vol = default_volume
+	if audio_intro:
+		audio_intro.finished.connect(on_intro_finished)
 
 func enable(reset: bool = false) -> void:
-	if (not playing) or reset:
-		if reset:
-			if start_at_zero:
-				current_vol = 0.0
-				var tween = create_tween()
-				tween.tween_property(self, "current_vol", default_volume, fade_in_duration).set_delay(0.1)
-			else:
-				current_vol = default_volume
-			is_muted = false
-
-		play.call_deferred(start_time)
-		return
-
-	if is_muted:
-		var tween = create_tween()
-		tween.tween_property(self, "current_vol", default_volume, fade_in_duration)
-		is_muted = false
+	if start_at_zero or reset:
+		seek(0.0)
+		play_from_start()
+	else:
+		if not playing:
+			play_from_start()
 
 func disable() -> void:
-	if (not playing) or is_muted:
-		return
+	stop()
 
+func play_from_start() -> void:
+	playing = true
+	if audio_intro:
+		audio_intro.play()
+		fade_in(audio_intro)
+	else:
+		audio_loop.play()
+		fade_in(audio_loop)
+
+func stop() -> void:
+	playing = false
+	fade_out()
+
+func seek(position: float) -> void:
+	if audio_intro:
+		audio_intro.seek(position)
+	if audio_loop:
+		audio_loop.seek(position)
+
+func on_intro_finished() -> void:
+	if playing:
+		audio_loop.volume_db = 0.0
+		audio_loop.play()
+
+func fade_in(player: AudioStreamPlayer) -> void:
+	if fade_in_duration <= 0.0:
+		return
+	player.volume_db = linear_to_db(0.01)
 	var tween = create_tween()
-	tween.tween_property(self, "current_vol", 0.0, 0.5)
-	is_muted = true
+	tween.tween_property(player, "volume_db", 0.0, fade_in_duration).from(linear_to_db(0.01))
+
+func fade_out() -> void:
+	if fade_out_duration <= 0.0:
+		if audio_intro:
+			audio_intro.stop()
+		if audio_loop:
+			audio_loop.stop()
+		return
+	var tween = create_tween()
+	tween.set_parallel(true)
+	if audio_intro and audio_intro.playing:
+		tween.tween_property(audio_intro, "volume_db", linear_to_db(0.01), fade_out_duration).from(0.0)
+	if audio_loop and audio_loop.playing:
+		tween.tween_property(audio_loop, "volume_db", linear_to_db(0.01), fade_out_duration).from(0.0)
+	tween.chain().tween_callback(stop_all)
+
+func stop_all() -> void:
+	if audio_intro:
+		audio_intro.stop()
+	if audio_loop:
+		audio_loop.stop()

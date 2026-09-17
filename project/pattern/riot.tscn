@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://davgf1ohcbiog" path="res://enemy/texture/texture_boss_part_1.png" id="4_siovc"]
 [ext_resource type="Texture2D" uid="uid://cdtdiud76sghw" path="res://enemy/texture/texture_boss_part_2.png" id="5_dg0vs"]
 [ext_resource type="PackedScene" uid="uid://35v81h21xsoj" path="res://fx/explosion.tscn" id="7_dg0vs"]
+[ext_resource type="AudioStream" uid="uid://nuqrtcfmpcps" path="res://audio/sfx/sfx_boss_riot_impact.ogg" id="8_pumjv"]
+[ext_resource type="PackedScene" uid="uid://caprr2iktjvhm" path="res://ui/threat_animated_text.tscn" id="9_gganu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pumjv"]
 shader = ExtResource("3_lcg72")
@@ -476,6 +478,34 @@ tracks/9/keys = {
 "update": 1,
 "values": [true, false]
 }
+tracks/10/type = "method"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("AudioStreamPlayer")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(1.75),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/11/type = "method"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("AnimatedText")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["The sun will be ground into dust!", 0.2, 1.5, 0.2],
+"method": &"animate_text"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_timeout_riot"]
 resource_name = "timeout"
@@ -600,3 +630,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=356890238]
+stream = ExtResource("8_pumjv")
+volume_db = -0.415
+bus = &"SFX"
+
+[node name="AnimatedText" parent="." unique_id=1100621936 instance=ExtResource("9_gganu")]

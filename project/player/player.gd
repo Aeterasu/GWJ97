@@ -46,7 +46,7 @@ var control_state: ControlState = ControlState.NORMAL
 
 var invincibility_timer: float = 0.0
 
-var bomb_restart_duration : float = 30.0
+var bomb_restart_duration : float = 50.0
 var bomb_restart_timer : float = 0.0
 var bomb_effect_duration : float = 0.8
 var bomb_effect_timer : float = 0.0

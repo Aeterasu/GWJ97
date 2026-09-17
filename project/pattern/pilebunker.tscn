@@ -298,6 +298,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_1ctc1"]
 resource_name = "start"
+length = 3.0000000000000004
 step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -306,7 +307,7 @@ tracks/0/path = NodePath(".:immune")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -318,7 +319,7 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(1),
+"times": PackedFloat32Array(3),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -348,6 +349,20 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(-2, -2),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(0, 26)]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimatedText")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["Time for a more DIRECT APPROACH!", 0.3, 3.0, 0.3],
+"method": &"animate_text"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_timeout_pile"]
@@ -387,7 +402,7 @@ metadata/_custom_type_script = "uid://du4pk0oohw2cn"
 [node name="PlaneVisual" parent="ShakyNode2D/Node2D/Enemy" unique_id=1742974697 instance=ExtResource("3_xyyh3")]
 
 [node name="ShakyNode2D2" type="Node2D" parent="ShakyNode2D/Node2D/Enemy/PlaneVisual" unique_id=519397907]
-position = Vector2(0.50311476, -0.48481503)
+position = Vector2(-0.6503065, 1.5275773)
 script = ExtResource("2_33kw3")
 force = 2.0
 decay_rate = 0.0

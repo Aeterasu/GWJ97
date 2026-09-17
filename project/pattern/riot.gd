@@ -67,6 +67,8 @@ func update(delta: float) -> void:
 
 			bullet_engine.fire_bullet(pos, angle, speed, BulletSkin.Type.ENEMY_BULLET_RED_LONG)
 
+		AudioManager.play_sfx(AudioManager.instance.sfx_boss_shot_4, randf_range(0.9, 1.1))
+
 		burst_timer = burst_rate * fire_rate_multiplier
 		burst_current += 1
 
@@ -104,6 +106,8 @@ func fire_arc() -> void:
 	for i in arc:
 		var speed = randf_range(90.0, 180.0) * bullet_speed_multiplier
 		bullet_engine.fire_bullet(pos, i, speed, BulletSkin.Type.ENEMY_BULLET_ALT_MEDIUM, gravity_bullet)
+	
+	AudioManager.play_sfx(AudioManager.instance.sfx_boss_shot_1, randf_range(0.9, 1.1))
 
 static func gravity_bullet(bullet: Bullet, delta: float) -> Vector2:
 	bullet.velocity += Vector2.DOWN * 98 * delta

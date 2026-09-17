@@ -15,8 +15,20 @@
 [ext_resource type="AudioStream" uid="uid://cwsltg0xwlc6o" path="res://audio/sfx/sfx_boss_shot_1.ogg" id="9_5xyti"]
 [ext_resource type="AudioStream" uid="uid://ccjqxogoof2mc" path="res://audio/sfx/sfx_explosion_1.ogg" id="10_5xyti"]
 [ext_resource type="AudioStream" uid="uid://1ou82id7v4ej" path="res://audio/sfx/sfx_boss_shot_2.ogg" id="10_n3o0a"]
-[ext_resource type="AudioStream" uid="uid://bts5rxisdkv84" path="res://audio/bgm/stg_bs003.ogg" id="11_73k8k"]
 [ext_resource type="AudioStream" uid="uid://bp5xybhrhh1bj" path="res://audio/sfx/sfx_boss_shot_3.ogg" id="11_s758e"]
+[ext_resource type="AudioStream" uid="uid://cwd1cu10o1bb6" path="res://audio/sfx/sfx_boss_shot_4.ogg" id="12_4hmqs"]
+[ext_resource type="Script" uid="uid://blxlds51u1tye" path="res://audio/bgm.gd" id="15_frbr6"]
+[ext_resource type="AudioStream" uid="uid://dtttaa52i0a7x" path="res://audio/bgm/stg_bs003-intro.ogg" id="16_o8j3b"]
+[ext_resource type="AudioStream" uid="uid://bnii2kcrqypv5" path="res://audio/bgm/stg_bs003-loop.ogg" id="17_wpkmi"]
+[ext_resource type="AudioStream" uid="uid://dwntebbnqhp4i" path="res://audio/bgm/stg_theme004-intro.ogg" id="18_o0l78"]
+[ext_resource type="AudioStream" uid="uid://bo3bm4oyd21d3" path="res://audio/bgm/stg_theme004-loop.ogg" id="19_576ah"]
+[ext_resource type="AudioStream" uid="uid://pfhvs4c6vb3l" path="res://audio/bgm/stg_st005-intro.ogg" id="20_wpvt5"]
+[ext_resource type="AudioStream" uid="uid://cjyt1hkm8hlcg" path="res://audio/bgm/stg_st005-loop.ogg" id="21_amlcg"]
+[ext_resource type="AudioStream" uid="uid://1rfpfuc7453s" path="res://audio/bgm/stg_theme002-intro.ogg" id="22_ue0mw"]
+[ext_resource type="AudioStream" uid="uid://kj34wmn3ht5o" path="res://audio/bgm/stg_theme002-loop.ogg" id="23_vqjab"]
+[ext_resource type="AudioStream" uid="uid://b46fj6xq6f3bh" path="res://audio/bgm/stg_theme007-intro.ogg" id="24_h3axc"]
+[ext_resource type="AudioStream" uid="uid://c4enooa374amb" path="res://audio/bgm/stg_theme007-loop.ogg" id="25_d7rgo"]
+[ext_resource type="AudioStream" uid="uid://0gr7kos1boo5" path="res://audio/bgm/stg_theme006-loop.ogg" id="26_yjufm"]
 
 [sub_resource type="Environment" id="Environment_3b7yk"]
 background_mode = 3
@@ -47,13 +59,14 @@ bgm_manager = NodePath("BGMManager")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1118035484]
 environment = SubResource("Environment_3b7yk")
 
-[node name="AudioManager" type="Node" parent="." unique_id=1791605055 node_paths=PackedStringArray("sfx_player_shot", "sfx_player_bomb", "sfx_boss_shot_1", "sfx_boss_shot_2", "sfx_boss_shot_3", "sfx_explosion_1")]
+[node name="AudioManager" type="Node" parent="." unique_id=1791605055 node_paths=PackedStringArray("sfx_player_shot", "sfx_player_bomb", "sfx_boss_shot_1", "sfx_boss_shot_2", "sfx_boss_shot_3", "sfx_boss_shot_4", "sfx_explosion_1")]
 script = ExtResource("2_3wy1v")
 sfx_player_shot = NodePath("AudioPlayerShot")
 sfx_player_bomb = NodePath("AudioPlayerBomb")
 sfx_boss_shot_1 = NodePath("AudioBossShot1")
 sfx_boss_shot_2 = NodePath("AudioBossShot2")
 sfx_boss_shot_3 = NodePath("AudioBossShot3")
+sfx_boss_shot_4 = NodePath("AudioBossShot4")
 sfx_explosion_1 = NodePath("AudioExplosion1")
 metadata/_custom_type_script = "uid://upphqgb3vovy"
 
@@ -86,17 +99,116 @@ volume_db = -9.0
 max_polyphony = 4
 bus = &"SFX"
 
+[node name="AudioBossShot4" type="AudioStreamPlayer" parent="AudioManager" unique_id=24180440]
+stream = ExtResource("12_4hmqs")
+max_polyphony = 4
+bus = &"SFX"
+
 [node name="AudioExplosion1" type="AudioStreamPlayer" parent="AudioManager" unique_id=1431809103]
 stream = ExtResource("10_5xyti")
 max_polyphony = 2
 bus = &"SFX"
 
-[node name="BGMManager" type="Node" parent="." unique_id=630858695]
+[node name="BGMManager" type="Node" parent="." unique_id=630858695 node_paths=PackedStringArray("bgm_dict")]
 script = ExtResource("3_kfbq2")
+bgm_dict = {
+0: NodePath("BGMBoss1"),
+1: NodePath("BGMBoss2"),
+2: NodePath("BGMBoss3"),
+3: NodePath("BGMMenu"),
+4: NodePath("BGMCutscene"),
+5: NodePath("BGMTutorial")
+}
 metadata/_custom_type_script = "uid://dtytuvraaohro"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="BGMManager" unique_id=1759192243]
-stream = ExtResource("11_73k8k")
+[node name="BGMBoss1" type="Node" parent="BGMManager" unique_id=1989439190 node_paths=PackedStringArray("audio_intro", "audio_loop")]
+script = ExtResource("15_frbr6")
+audio_intro = NodePath("Intro")
+audio_loop = NodePath("Loop")
+start_at_zero = true
+fade_out_duration = 1.0
+metadata/_custom_type_script = "uid://blxlds51u1tye"
+
+[node name="Intro" type="AudioStreamPlayer" parent="BGMManager/BGMBoss1" unique_id=1751646474]
+stream = ExtResource("16_o8j3b")
+bus = &"BGM"
+
+[node name="Loop" type="AudioStreamPlayer" parent="BGMManager/BGMBoss1" unique_id=231642273]
+stream = ExtResource("17_wpkmi")
+bus = &"BGM"
+
+[node name="BGMBoss2" type="Node" parent="BGMManager" unique_id=138152460 node_paths=PackedStringArray("audio_intro", "audio_loop")]
+script = ExtResource("15_frbr6")
+audio_intro = NodePath("Intro")
+audio_loop = NodePath("Loop")
+start_at_zero = true
+fade_out_duration = 1.0
+metadata/_custom_type_script = "uid://blxlds51u1tye"
+
+[node name="Intro" type="AudioStreamPlayer" parent="BGMManager/BGMBoss2" unique_id=1450687200]
+stream = ExtResource("18_o0l78")
+bus = &"BGM"
+
+[node name="Loop" type="AudioStreamPlayer" parent="BGMManager/BGMBoss2" unique_id=535509380]
+stream = ExtResource("19_576ah")
+bus = &"BGM"
+
+[node name="BGMBoss3" type="Node" parent="BGMManager" unique_id=477957869 node_paths=PackedStringArray("audio_intro", "audio_loop")]
+script = ExtResource("15_frbr6")
+audio_intro = NodePath("Intro")
+audio_loop = NodePath("Loop")
+start_at_zero = true
+fade_out_duration = 1.0
+metadata/_custom_type_script = "uid://blxlds51u1tye"
+
+[node name="Intro" type="AudioStreamPlayer" parent="BGMManager/BGMBoss3" unique_id=1186179265]
+stream = ExtResource("20_wpvt5")
+bus = &"BGM"
+
+[node name="Loop" type="AudioStreamPlayer" parent="BGMManager/BGMBoss3" unique_id=211358134]
+stream = ExtResource("21_amlcg")
+bus = &"BGM"
+
+[node name="BGMTutorial" type="Node" parent="BGMManager" unique_id=676930367 node_paths=PackedStringArray("audio_intro", "audio_loop")]
+script = ExtResource("15_frbr6")
+audio_intro = NodePath("Intro")
+audio_loop = NodePath("Loop")
+metadata/_custom_type_script = "uid://blxlds51u1tye"
+
+[node name="Intro" type="AudioStreamPlayer" parent="BGMManager/BGMTutorial" unique_id=429017006]
+stream = ExtResource("22_ue0mw")
+bus = &"BGM"
+
+[node name="Loop" type="AudioStreamPlayer" parent="BGMManager/BGMTutorial" unique_id=1382137107]
+stream = ExtResource("23_vqjab")
+bus = &"BGM"
+
+[node name="BGMMenu" type="Node" parent="BGMManager" unique_id=268071879 node_paths=PackedStringArray("audio_intro", "audio_loop")]
+script = ExtResource("15_frbr6")
+audio_intro = NodePath("Intro")
+audio_loop = NodePath("Loop")
+metadata/_custom_type_script = "uid://blxlds51u1tye"
+
+[node name="Intro" type="AudioStreamPlayer" parent="BGMManager/BGMMenu" unique_id=1347283049]
+stream = ExtResource("24_h3axc")
+bus = &"BGM"
+
+[node name="Loop" type="AudioStreamPlayer" parent="BGMManager/BGMMenu" unique_id=1187695098]
+stream = ExtResource("25_d7rgo")
+bus = &"BGM"
+
+[node name="BGMCutscene" type="Node" parent="BGMManager" unique_id=272428329 node_paths=PackedStringArray("audio_intro", "audio_loop")]
+script = ExtResource("15_frbr6")
+audio_intro = NodePath("Intro")
+audio_loop = NodePath("Loop")
+metadata/_custom_type_script = "uid://blxlds51u1tye"
+
+[node name="Intro" type="AudioStreamPlayer" parent="BGMManager/BGMCutscene" unique_id=574980038]
+stream = ExtResource("26_yjufm")
+bus = &"BGM"
+
+[node name="Loop" type="AudioStreamPlayer" parent="BGMManager/BGMCutscene" unique_id=1650377904]
+stream = ExtResource("25_d7rgo")
 bus = &"BGM"
 
 [node name="GameLayer" type="CanvasLayer" parent="." unique_id=796037030]

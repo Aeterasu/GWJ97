@@ -15,6 +15,7 @@ class_name GameSequencer extends Node
 @export var patterns_health: Array[float] = []
 @export var patterns_timer: Array[float] = []
 @export var patterns_flavor: Array[PatternFlavor] = []
+@export var patterns_bgm: Array[BGMManager.BGMType] = []
 
 @export var scoring: Scoring = null
 
@@ -95,6 +96,8 @@ func init_pattern(idx: int) -> void:
 		current_idx = idx
 
 		on_pattern_init.emit(idx)
+
+		BGMManager.instance.update_bgm(patterns_bgm[idx])
 
 func get_all_health_percentagees() -> Array[float]:
 	var result: Array[float] = []
