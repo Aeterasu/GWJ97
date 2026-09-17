@@ -82,6 +82,7 @@ func _ready() -> void:
 
 	base_weapon.on_fire.connect(on_fire)
 	focus_weapon.on_fire.connect(on_fire)
+	area_entered.connect(contact_hit)
 
 	collision_layer = 1 << BulletEngine.PLAYER_COLLISION_BIT
 	collision_mask = 1 << BulletEngine.ENEMY_COLLISION_BIT
@@ -90,6 +91,10 @@ func _ready() -> void:
 		flash.scale.x = 0.0
 
 	sprite_shader = sprite.material as ShaderMaterial
+
+func contact_hit(area: Area2D) -> void:
+	if area is Enemy:
+		deduct_life()
 
 func _physics_process(delta: float) -> void:
 	if control_state == ControlState.NORMAL:
