@@ -12,6 +12,8 @@ var is_dark_screen: bool = false
 
 @export var pause_overlay: Control = null
 
+@export var restart_overlay: Control = null
+
 var is_paused: bool = false
 
 const BOARD_SIZE: Vector2 = Vector2(240.0, 320.0)
@@ -28,6 +30,9 @@ func _ready() -> void:
 	game_sequencer.fix()
 
 	animate_player_intro()
+
+	pause_overlay.hide()
+	restart_overlay.modulate.a = 0.0
 
 	ui_root.boss_pattern_name_block.hide()
 	ui_root.boss_healthbar.generate_healthbar(game_sequencer.patterns_health)
@@ -68,20 +73,29 @@ func animate_player_intro() -> void:
 		.set_delay(0.4)
 	tween.tween_callback(func(): player.control_state = Player.ControlState.NORMAL)
 
-func _physics_process(delta: float) -> void:	
-	if Input.is_action_pressed("restart"):
-		restart_timer += delta
+func _physics_process(delta: float) -> void:
+	if not is_paused:
+		if Input.is_action_pressed("restart"):
+			restart_overlay.modulate.a = lerp(restart_overlay.modulate.a, 1.0, 1.0 - exp(-10.0 * delta))
 
-		if restart_timer > restart_target_time:
-			Main.instance.load_state(Main.State.GAME)
-	else:
-		restart_timer = 0.0
+			restart_timer += delta
+
+			if restart_timer > restart_target_time:
+				Main.instance.load_state(Main.State.GAME)
+		else:
+			restart_overlay.modulate.a = lerp(restart_overlay.modulate.a, 0.0, 1.0 - exp(-10.0 * delta))
+
+			restart_timer = 0.0
 
 	if Input.is_action_just_pressed("pause"):
 		is_paused = not is_paused
 		pause_overlay.visible = is_paused
 
-	get_tree().paused = is_paused or game_sequencer.timeout_pause
+	for progress in restart_overlay.progresses:
+		progress.max_value = restart_target_time - 0.1
+		progress.value = restart_timer
+
+	get_tree().paused = is_paused or game_sequencer.timeout_pause or restart_timer > 0.0
 
 func _process(delta: float) -> void:
 	var lerp_weight: float = 1.0 - exp(-10.0 * delta)
