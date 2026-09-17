@@ -8,20 +8,48 @@ signal animation_finished
 @export var cursor_offset: Vector2 = Vector2.ZERO
 @export var scramble_cycles: int = 4
 
+@export var bg: TextureRect = null
+
 var cursor_target_pos: Vector2 = Vector2.ZERO
 var cursor_snap_next: bool = false
 
 var coroutine_id: int = 0
+
+var show_bg: bool = false
 
 func _ready() -> void:
 	text = ""
 	if cursor_rect:
 		cursor_rect.visible = false
 
+	bg.modulate.a = 0.0
+
 func _process(delta: float) -> void:
 	cursor_rect.global_position = cursor_rect.global_position.lerp(cursor_target_pos, 1.0 - exp(-30.0 * delta))
 
+	bg.modulate.a = lerp(bg.modulate.a, 1.0 if show_bg else 0.0, 1.0 - exp(-8.0 * delta))
+
+func tween_1() -> void:
+	if cursor_rect:
+		var tween: Tween = create_tween()
+		tween.tween_property(cursor_rect, "scale", Vector2.ONE, 0.2)\
+			.from(Vector2(1.0, 5.0))\
+			.set_ease(Tween.EASE_OUT)\
+			.set_trans(Tween.TRANS_BACK)
+	
+func tween_2() -> void:
+	if cursor_rect:
+		var tween: Tween = create_tween()
+		tween.tween_property(cursor_rect, "scale", Vector2(1.0, 0.0), 0.1)\
+			.from(Vector2(1.0, 1.0))\
+			.set_ease(Tween.EASE_IN)\
+			.set_trans(Tween.TRANS_SINE)
+
 func animate_text(str_text: String, duration_in: float, wait_time: float, duration_out: float) -> void:
+	tween_1()
+
+	show_bg = true
+
 	coroutine_id += 1
 	var my_id: int = coroutine_id
 	cursor_snap_next = true
@@ -57,7 +85,10 @@ func animate_text(str_text: String, duration_in: float, wait_time: float, durati
 	if my_id != coroutine_id:
 		return
 	text = str_text
-	set_cursor(length, false)
+	#set_cursor(length, false)
+	
+	tween_2()
+
 	cursor_rect.global_position = cursor_target_pos
 
 	typing_finished.emit()
@@ -71,6 +102,8 @@ func animate_text(str_text: String, duration_in: float, wait_time: float, durati
 	var scramble_span_out: float = time_per_char_out * 0.65
 	var settle_span_out: float = time_per_char_out - scramble_span_out
 	var step_time_out: float = scramble_span_out / float(steps)
+
+	tween_1()
 
 	for i in range(length, 0, -1):
 		for s in range(steps):
@@ -90,7 +123,12 @@ func animate_text(str_text: String, duration_in: float, wait_time: float, durati
 	if my_id != coroutine_id:
 		return
 	text = ""
-	set_cursor(0, false)
+	
+	tween_2()
+
+	show_bg = false
+
+	#set_cursor(0, false)
 	animation_finished.emit()
 
 func stop_and_clear() -> void:

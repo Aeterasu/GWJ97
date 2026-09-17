@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://caprr2iktjvhm"]
+
+[ext_resource type="FontFile" uid="uid://dpddonpy8spcf" path="res://font/Silver.ttf" id="1_pfs8b"]
+[ext_resource type="Script" uid="uid://bxx60p474e34r" path="res://ui/animated_text.gd" id="2_03ppo"]
+[ext_resource type="Texture2D" uid="uid://baq0csno1deig" path="res://ui/texture/texture_ui_threat_cursor.png" id="3_03ppo"]
+[ext_resource type="Texture2D" uid="uid://djw560ch2c0ky" path="res://ui/texture/texture_ui_threat_cursor_fx_1.png" id="4_mg5p6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ixbki"]
+font = ExtResource("1_pfs8b")
+font_size = 19
+font_color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+outline_size = 2
+outline_color = Color(0.047058824, 0.09803922, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_mg5p6"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.16862746, 0.05490196, 0.007843138, 0.654902, 0.16862746, 0.05490196, 0.007843138, 0.27058825, 0.16862746, 0.05490196, 0.007843138, 0.654902)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3b7yk"]
+gradient = SubResource("Gradient_mg5p6")
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_03ppo"]
+blend_mode = 1
+
+[node name="AnimatedText" type="Label" unique_id=1100621936 node_paths=PackedStringArray("cursor_rect", "bg")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 177.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_ixbki")
+horizontal_alignment = 1
+script = ExtResource("2_03ppo")
+cursor_rect = NodePath("ColorRect")
+cursor_offset = Vector2(6, 8)
+scramble_cycles = 16
+bg = NodePath("TextureRect")
+metadata/_custom_type_script = "uid://bxx60p474e34r"
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1008022498]
+show_behind_parent = true
+layout_mode = 0
+offset_top = 2.0
+offset_right = 240.0
+offset_bottom = 14.0
+texture = SubResource("GradientTexture2D_3b7yk")
+expand_mode = 1
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2012156024]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 117.0
+offset_top = 3.0
+offset_right = 125.0
+offset_bottom = 15.0
+offset_transform_enabled = true
+offset_transform_position = Vector2(-4, -6)
+color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+
+[node name="TextureRect" type="TextureRect" parent="ColorRect" unique_id=483611913]
+show_behind_parent = true
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 12.0
+texture = ExtResource("3_03ppo")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="ColorRect" unique_id=500696186]
+modulate = Color(0.9411765, 0.45882353, 0.1254902, 1)
+show_behind_parent = true
+material = SubResource("CanvasItemMaterial_03ppo")
+layout_mode = 0
+offset_left = -2.0
+offset_top = -18.0
+offset_right = 10.0
+offset_bottom = 46.0
+texture = ExtResource("4_mg5p6")
+stretch_mode = 2
