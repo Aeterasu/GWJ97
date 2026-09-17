@@ -49,6 +49,8 @@ var bomb_ready_toggle: bool = false
 
 var is_dead: bool = false
 
+var shot_audio: float = 0.0
+
 const COUNTERBOMB_WINDOW: int = 6
 var counterbomb_ticker: int = 0
 var is_counterbomb_active: bool = false
@@ -174,6 +176,17 @@ func process_weapon(delta: float) -> void:
 		if bomb_restart_timer <= 0.0 and bomb_ready_toggle:
 			on_bomb_ready.emit()
 			bomb_ready_toggle = false
+
+	# hacky audio
+	if (not AudioManager.instance.sfx_player_shot.playing):
+		AudioManager.instance.sfx_player_shot.play()
+
+	AudioManager.instance.sfx_player_shot.volume_linear = shot_audio
+
+	if fire_input:
+		shot_audio = lerp(shot_audio, 0.8, 1.0 - exp(-40.0 * delta))
+	else:
+		shot_audio = lerp(shot_audio, 0.0, 1.0 - exp(-30.0 * delta))
 
 func hit() -> void:
 	if is_dead:

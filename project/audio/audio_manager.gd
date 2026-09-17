@@ -1,10 +1,22 @@
 class_name AudioManager extends Node
 
+@export var sfx_player_shot: AudioStreamPlayer = null
+
 const BUS_NAME_MASTER = "Master"
 const BUS_NAME_SFX = "SFX"
 const BUS_NAME_BGM = "BGM"
 
 var hitsound_deconflicter_time_left : float = 0.0
+
+static var instance: AudioManager = null
+
+func _ready() -> void:
+	instance = self
+
+static func play_sfx(player: AudioStreamPlayer, pitch: float = 1.0) -> void:
+	if player:
+		player.pitch_scale = pitch
+		player.play()
 
 func _physics_process(delta: float) -> void:
 	hitsound_deconflicter_time_left = max(hitsound_deconflicter_time_left - delta, 0.0)

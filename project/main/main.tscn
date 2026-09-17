@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://jpl6sm2bxl0p" path="res://main/texture/texture_ui_border.png" id="5_4dugh"]
 [ext_resource type="Script" uid="uid://cmfa1d5fwckcb" path="res://util/ui/colored_fps_counter.gd" id="5_67ri8"]
 [ext_resource type="PackedScene" uid="uid://gfkkvgh8m84c" path="res://ranking/ranking_menu.tscn" id="5_na0o7"]
+[ext_resource type="AudioStream" uid="uid://dmiwoftn4dkjf" path="res://audio/sfx/sfx_player_shot.wav" id="7_bsumw"]
 
 [sub_resource type="Environment" id="Environment_3b7yk"]
 background_mode = 3
@@ -40,9 +41,15 @@ bgm_manager = NodePath("BGMManager")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1118035484]
 environment = SubResource("Environment_3b7yk")
 
-[node name="AudioManager" type="Node" parent="." unique_id=1791605055]
+[node name="AudioManager" type="Node" parent="." unique_id=1791605055 node_paths=PackedStringArray("sfx_player_shot")]
 script = ExtResource("2_3wy1v")
+sfx_player_shot = NodePath("AudioPlayerShot")
 metadata/_custom_type_script = "uid://upphqgb3vovy"
+
+[node name="AudioPlayerShot" type="AudioStreamPlayer" parent="AudioManager" unique_id=320911030]
+stream = ExtResource("7_bsumw")
+max_polyphony = 4
+bus = &"SFX"
 
 [node name="BGMManager" type="Node" parent="." unique_id=630858695]
 script = ExtResource("3_kfbq2")
