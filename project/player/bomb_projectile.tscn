@@ -1,0 +1,119 @@
+[gd_scene format=3 uid="uid://wgri6c15rgpb"]
+
+[ext_resource type="Script" uid="uid://cbbvqacg8aem" path="res://player/bomb_projectile.gd" id="1_m4g78"]
+[ext_resource type="Script" uid="uid://dvqiup2un5h7j" path="res://util/2d/shaky_node_2d.gd" id="1_pvkk6"]
+[ext_resource type="Texture2D" uid="uid://bgar5avy0fbow" path="res://fx/texture/texture_fx_bomb_projectile.png" id="2_m4g78"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3b7yk"]
+radius = 32.0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ixbki"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_lc4qb"]
+offsets = PackedFloat32Array(0.17594655, 0.23830736, 1)
+colors = PackedColorArray(1, 0.16078432, 0, 1, 0.9411765, 0.45882353, 0.1254902, 1, 1, 0.53333336, 0.07450981, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3b7yk"]
+gradient = SubResource("Gradient_lc4qb")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.2)
+
+[sub_resource type="Animation" id="Animation_pvkk6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShakyNode2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_m4g78"]
+resource_name = "default"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShakyNode2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.175, 0.25, 0.375, 0.5, 0.7, 0.9, 1),
+"transitions": PackedFloat32Array(-2, -2, -2, -2, -2, -2, 2, 2, 1, 1),
+"update": 0,
+"values": [Vector2(3, 3), Vector2(0.5, 0.5), Vector2(1.5, 1.5), Vector2(0.8, 0.8), Vector2(1.1, 1.1), Vector2(0.95, 0.95), Vector2(1, 1), Vector2(1, 1), Vector2(0.4, 0.4), Vector2(0.4, 0.4)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(0.16862746, 0.05490196, 0.007843138, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lc4qb"]
+_data = {
+&"RESET": SubResource("Animation_pvkk6"),
+&"default": SubResource("Animation_m4g78")
+}
+
+[node name="BombProjectile" type="Area2D" unique_id=1349767880 node_paths=PackedStringArray("animation")]
+collision_layer = 4
+collision_mask = 4
+monitorable = false
+script = ExtResource("1_m4g78")
+animation = NodePath("AnimationPlayer")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1122690600]
+shape = SubResource("CircleShape2D_3b7yk")
+
+[node name="ShakyNode2D" type="Node2D" parent="." unique_id=431756967]
+position = Vector2(-2.6410599, 2.2928214)
+script = ExtResource("1_pvkk6")
+force = 3.0
+decay_rate = 0.0
+metadata/_custom_type_script = "uid://dvqiup2un5h7j"
+
+[node name="Sprite2D3" type="Sprite2D" parent="ShakyNode2D" unique_id=318965905]
+material = SubResource("CanvasItemMaterial_ixbki")
+scale = Vector2(4, 4)
+texture = SubResource("GradientTexture2D_3b7yk")
+
+[node name="Sprite2D2" type="Sprite2D" parent="ShakyNode2D" unique_id=184401234]
+modulate = Color(1, 1, 1, 0.56078434)
+scale = Vector2(4, 4)
+texture = SubResource("GradientTexture2D_3b7yk")
+
+[node name="Sprite2D" type="Sprite2D" parent="ShakyNode2D" unique_id=225396836]
+position = Vector2(-1.525336, -2.917678)
+texture = ExtResource("2_m4g78")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=805983376]
+libraries/ = SubResource("AnimationLibrary_lc4qb")
+autoplay = &"default"

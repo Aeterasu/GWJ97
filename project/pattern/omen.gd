@@ -69,7 +69,7 @@ func fire() -> void:
 	var speed: float = 200.0 * bullet_speed_multiplier
 
 	for angle in arc:
-		bullet_engine.fire_bullet(entities[0].global_position, angle, speed, BulletSkin.Type.ENEMY_BULLET_RED_SMALL)	
+		bullet_engine.fire_bullet(entities[0].global_position, angle, speed, BulletSkin.Type.ENEMY_BULLET_RED_MEDIUM)	
 
 	current_offset += arc_spread * direction
 

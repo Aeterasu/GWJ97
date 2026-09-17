@@ -37,7 +37,7 @@ func fire_2() -> void:
 	for i in 6:
 		var pos = Vector2.from_angle(TAU * randf()) * randf() * 16.0
 		var speed = randf_range(44.0, 90.0)
-		bullet_engine.fire_bullet(global_position + pos, PI / 2.0 + randf_range(-PI / 2.0, PI / 2.0), speed, BulletSkin.Type.ENEMY_BULLET_SMALL)
+		bullet_engine.fire_bullet(global_position + pos, PI / 2.0 + randf_range(-PI / 2.0, PI / 2.0), speed, BulletSkin.Type.ENEMY_BULLET_RED_MEDIUM)
 
 	fire_time_left_2 = fire_rate_2
 	

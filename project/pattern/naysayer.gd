@@ -37,7 +37,7 @@ func update(delta: float) -> void:
 		for i in 8:
 			if rain_timer <= 0.0:
 				rain_timer = rain_rate
-				bullet_engine.fire_bullet(Vector2(randf_range(10.0, 230.0), -16), Vector2.DOWN.angle(), 100.0, BulletSkin.Type.ENEMY_BULLET_ALT_SMALL)
+				bullet_engine.fire_bullet(Vector2(randf_range(10.0, 230.0), -16), Vector2.DOWN.angle(), 100.0, BulletSkin.Type.ENEMY_BULLET_ALT_MEDIUM)
 
 func fire_circle() -> void:
 	if is_timeout:

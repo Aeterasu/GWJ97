@@ -28,16 +28,16 @@ func update(delta: float) -> void:
 
 func fire_1() -> void:
 	var spread: float = randf_range(0.0, 0.2)
-	bullet_engine.fire_bullet(entities[0].global_position, Vector2.DOWN.angle() + spread, randf_range(80.0, 140.0), BulletSkin.Type.ENEMY_BULLET_ALT_SMALL)
+	bullet_engine.fire_bullet(entities[0].global_position, Vector2.DOWN.angle() + spread, randf_range(80.0, 140.0), BulletSkin.Type.ENEMY_BULLET_ALT_MEDIUM)
 
 	if Game.get_player().global_position.y < 30.0:
 		if randf() < 0.05:
 			for i in 32:
-				bullet_engine.fire_bullet(Vector2(240.0 / 32.0 * i, -16.0), Vector2.DOWN.angle(), randf_range(50.0, 100.0), BulletSkin.Type.ENEMY_BULLET_RED_SMALL)
+				bullet_engine.fire_bullet(Vector2(240.0 / 32.0 * i, -16.0), Vector2.DOWN.angle(), randf_range(50.0, 100.0), BulletSkin.Type.ENEMY_BULLET_RED_MEDIUM)
 
 func fire_2() -> void:
 	var spread: float = randf_range(-0.2, 0.0)
-	bullet_engine.fire_bullet(entities[1].global_position, Vector2.DOWN.angle() + spread, randf_range(80.0, 140.0), BulletSkin.Type.ENEMY_BULLET_RED_SMALL)
+	bullet_engine.fire_bullet(entities[1].global_position, Vector2.DOWN.angle() + spread, randf_range(80.0, 140.0), BulletSkin.Type.ENEMY_BULLET_RED_MEDIUM)
 	
 
 func fire_sun() -> void:

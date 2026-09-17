@@ -29,11 +29,16 @@ var sprite_yaw: float = 0.0
 
 @export var muzzle_flashes: Array[Node2D] = []
 
+@export var bomb_animation: BombAnimation = null
+
+@export var bomb_parent: Node = null
+@export var bomb_projectile_scene: PackedScene = null
+
 var lives: int = 0
 const STARTING_LIVES: int = 2
 const MAX_LIVES: int = 5
-const INVINCIBILITY_ON_HIT: float = 6.0
-const INVINCIBILITY_ON_BOMB: float = 3.0
+const INVINCIBILITY_ON_HIT: float = 8.0
+const INVINCIBILITY_ON_BOMB: float = 5.0
 
 var enable_hitbox: bool = false
 
@@ -43,7 +48,7 @@ var invincibility_timer: float = 0.0
 
 var bomb_restart_duration : float = 30.0
 var bomb_restart_timer : float = 0.0
-var bomb_effect_duration : float = 0.5
+var bomb_effect_duration : float = 0.8
 var bomb_effect_timer : float = 0.0
 var bomb_ready_toggle: bool = false
 
@@ -55,9 +60,12 @@ const COUNTERBOMB_WINDOW: int = 6
 var counterbomb_ticker: int = 0
 var is_counterbomb_active: bool = false
 
+var is_bomb_active: bool = false
+
 signal on_hit
 signal on_death
 signal on_heal
+signal on_bomb
 signal on_bomb_ready
 
 enum ControlState
@@ -109,6 +117,19 @@ func _physics_process(delta: float) -> void:
 			var angle = options_angle + (TAU / options.size()) * i
 			var offset = Vector2(cos(angle), sin(angle)) * final_radius
 			options[i].position = offset
+
+	# bomb
+
+	if is_bomb_active and game_sequencer.enemy_bullet_engine.active_bullet_count > 0:
+		var array: Array[Vector2] = []
+		array.resize(game_sequencer.enemy_bullet_engine.active_bullet_count)
+
+		for i in game_sequencer.enemy_bullet_engine.active_bullet_count:
+			array[i] = game_sequencer.enemy_bullet_engine.bullets[i].position
+	
+		bomb_animation.positions = array
+
+		game_sequencer.enemy_bullet_engine.bullet_cancel()	
 
 	# counterbomb
 
@@ -163,15 +184,23 @@ func process_weapon(delta: float) -> void:
 		invincibility_timer = INVINCIBILITY_ON_BOMB
 		game_sequencer.no_bomb = false
 		bomb_ready_toggle = true
+		on_bomb.emit()
+
+		is_bomb_active = true
+
+		var projectile = bomb_projectile_scene.instantiate() as Node2D
+		bomb_parent.add_child(projectile)
+		projectile.global_position = self.global_position + Vector2.UP * 128.0
+		projectile.reset_physics_interpolation()
 
 		if is_counterbomb_active:
 			is_counterbomb_active = false
 
 	if bomb_effect_timer > 0.0:
-		bomb_effect_timer -= delta
-		enemy_bullet_engine.bullet_cancel()
+		bomb_effect_timer -= delta	
 	elif bomb_effect_timer <= 0.0:
 		bomb_restart_timer -= delta
+		is_bomb_active = false
 
 		if bomb_restart_timer <= 0.0 and bomb_ready_toggle:
 			on_bomb_ready.emit()

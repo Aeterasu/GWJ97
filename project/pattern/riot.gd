@@ -96,7 +96,7 @@ func fire_arc() -> void:
 
 	for i in arc:
 		var speed = randf_range(90.0, 180.0) * bullet_speed_multiplier
-		bullet_engine.fire_bullet(pos, i, speed, BulletSkin.Type.ENEMY_BULLET_ALT_SMALL, gravity_bullet)
+		bullet_engine.fire_bullet(pos, i, speed, BulletSkin.Type.ENEMY_BULLET_ALT_MEDIUM, gravity_bullet)
 
 static func gravity_bullet(bullet: Bullet, delta: float) -> Vector2:
 	bullet.velocity += Vector2.DOWN * 98 * delta

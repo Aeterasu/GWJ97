@@ -13,7 +13,7 @@ func update(delta: float) -> void:
 		fire_1()
 
 func fire_1() -> void:
-	var types = [BulletSkin.Type.ENEMY_BULLET_RED_SMALL, BulletSkin.Type.ENEMY_BULLET_RED_LONG, BulletSkin.Type.ENEMY_BULLET_ALT_SMALL, BulletSkin.Type.ENEMY_BULLET_ALT_LONG]
+	var types = [BulletSkin.Type.ENEMY_BULLET_RED_MEDIUM, BulletSkin.Type.ENEMY_BULLET_RED_LONG, BulletSkin.Type.ENEMY_BULLET_ALT_MEDIUM, BulletSkin.Type.ENEMY_BULLET_ALT_LONG]
 
 	for i in 64:
 		bullet_engine.fire_bullet(shot_origin_position, TAU * randf(), randf_range(90.0, 200.0), types.pick_random())

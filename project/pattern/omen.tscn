@@ -2,11 +2,26 @@
 
 [ext_resource type="Script" uid="uid://cdpqp7ivn2muk" path="res://pattern/omen.gd" id="1_va266"]
 [ext_resource type="Script" uid="uid://cjrjlngs4kufj" path="res://util/2d/drunk_node_2d.gd" id="2_4xvy2"]
+[ext_resource type="Texture2D" uid="uid://drxq2i6wcxj" path="res://fx/texture/texture_fx_flash.png" id="2_fnp6n"]
 [ext_resource type="Script" uid="uid://dvqiup2un5h7j" path="res://util/2d/shaky_node_2d.gd" id="2_lpg1t"]
 [ext_resource type="Script" uid="uid://du4pk0oohw2cn" path="res://enemy/enemy.gd" id="2_va266"]
 [ext_resource type="PackedScene" uid="uid://xin8fxth4lin" path="res://enemy/large_ship_visual.tscn" id="3_spfd6"]
 [ext_resource type="PackedScene" uid="uid://caprr2iktjvhm" path="res://ui/threat_animated_text.tscn" id="6_4xvy2"]
 [ext_resource type="PackedScene" uid="uid://35v81h21xsoj" path="res://fx/explosion.tscn" id="7_lpg1t"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ixbki"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_fnp6n"]
+colors = PackedColorArray(1, 0.16078432, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3b7yk"]
+gradient = SubResource("Gradient_fnp6n")
+width = 96
+height = 96
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.90000004, 0.1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3b7yk"]
 radius = 64.0
@@ -92,6 +107,30 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Sprite2D:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Sprite2D:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_va266"]
@@ -360,8 +399,8 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_fnp6n"]
 resource_name = "start"
-length = 7.0
-step = 0.1
+length = 8.0
+step = 0.025
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -369,7 +408,7 @@ tracks/0/path = NodePath("DeathDrunkNode2D/ShakyNode2D/DrunkNode2D/Enemy:positio
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 2, 2.7, 7),
+"times": PackedFloat32Array(0, 2, 2.7, 8),
 "transitions": PackedFloat32Array(-2, -2, 1, 1),
 "update": 0,
 "values": [Vector2(120, -90), Vector2(120, 93), Vector2(120, 88), Vector2(120, 88)]
@@ -381,7 +420,7 @@ tracks/1/path = NodePath(".:immune")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 7),
+"times": PackedFloat32Array(0, 8),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, true]
@@ -407,10 +446,34 @@ tracks/3/path = NodePath("DeathDrunkNode2D/ShakyNode2D/DrunkNode2D:strength")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 4.4, 7),
+"times": PackedFloat32Array(0, 4.4, 8),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [1.0, 1.0, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 6.95, 7, 7.075, 7.175, 7.325, 7.575, 7.8999996),
+"transitions": PackedFloat32Array(0, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(2, 2), Vector2(0.7, 0.7), Vector2(1.2, 1.2), Vector2(0.9, 0.9), Vector2(1, 1), Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sprite2D:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 6.95, 7.7, 7.95),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_timeout_omen"]
@@ -449,6 +512,15 @@ entities = [NodePath("DeathDrunkNode2D/ShakyNode2D/DrunkNode2D/Enemy")]
 sprites = [NodePath("DeathDrunkNode2D/ShakyNode2D/DrunkNode2D/Enemy/LargeShipVisual")]
 animation_player = NodePath("AnimationPlayer")
 
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=765810337]
+z_index = 2
+position = Vector2(119, 85)
+texture = ExtResource("2_fnp6n")
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite2D" unique_id=632410157]
+material = SubResource("CanvasItemMaterial_ixbki")
+texture = SubResource("GradientTexture2D_3b7yk")
+
 [node name="DeathDrunkNode2D" type="Node2D" parent="." unique_id=1314341656]
 script = ExtResource("2_4xvy2")
 speed = 4.0
@@ -457,7 +529,6 @@ strength = 0.0
 metadata/_custom_type_script = "uid://cjrjlngs4kufj"
 
 [node name="ShakyNode2D" type="Node2D" parent="DeathDrunkNode2D" unique_id=1207859735]
-position = Vector2(0.60278285, 1.9603251)
 script = ExtResource("2_lpg1t")
 metadata/_custom_type_script = "uid://dvqiup2un5h7j"
 

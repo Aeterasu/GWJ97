@@ -39,7 +39,7 @@ func update(delta: float) -> void:
 
 func fire_1() -> void:
 	var count = clampi(remap(intensity, 0.2, 2.0, 1, 10), 1, 10)
-	var type = [BulletSkin.Type.ENEMY_BULLET_RED_SMALL, BulletSkin.Type.ENEMY_BULLET_RED_LONG]
+	var type = [BulletSkin.Type.ENEMY_BULLET_RED_MEDIUM, BulletSkin.Type.ENEMY_BULLET_RED_LONG]
 
 	for i in (1 if count <= 1 else randi() % int(count)):
 		var pos = Utils.get_random_rectangle_perimeter_pos(Vector2(260.0, 340.0), Vector2(130.0, 170.0))
@@ -54,7 +54,7 @@ func fire_1() -> void:
 
 func fire_2() -> void:
 	var count = clampi(remap(intensity, 0.2, 2.0, 5, 12), 5, 12)
-	var type = [BulletSkin.Type.ENEMY_BULLET_ALT_SMALL, BulletSkin.Type.ENEMY_BULLET_ALT_LONG]
+	var type = [BulletSkin.Type.ENEMY_BULLET_ALT_MEDIUM, BulletSkin.Type.ENEMY_BULLET_ALT_LONG]
 
 	var circle = BulletPatternHelper.get_circle(offset, count)
 	offset += 0.3

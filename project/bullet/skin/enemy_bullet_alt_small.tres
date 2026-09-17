@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BulletSkin" format=3 uid="uid://btwy200jo7pmh"]
+
+[ext_resource type="Script" uid="uid://cnhr5ggnp7gby" path="res://bullet/bullet_skin.gd" id="1_6ocgj"]
+
+[resource]
+script = ExtResource("1_6ocgj")
+atlas_offset = Vector2(80, 52)
+metadata/_custom_type_script = "uid://cnhr5ggnp7gby"

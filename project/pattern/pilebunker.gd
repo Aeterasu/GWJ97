@@ -34,14 +34,14 @@ func fire(sun: bool = false) -> void:
 		
 		var speed: float = randf_range(60.0, 350.0) * bullet_speed_multiplier
 
-		var type = BulletSkin.Type.ENEMY_BULLET_RED_SMALL if randf() <= 0.5 else BulletSkin.Type.ENEMY_BULLET_ALT_LONG
+		var type = BulletSkin.Type.ENEMY_BULLET_RED_MEDIUM if randf() <= 0.5 else BulletSkin.Type.ENEMY_BULLET_ALT_LONG
 
 		bullet_engine.fire_bullet(pos, angle + randf_range(-0.05, 0.05), speed, type)
 
 	var arc = BulletPatternHelper.get_arc(angle, PI / 6, bullet_count_2)
 
 	for a in arc:
-		bullet_engine.fire_bullet(entities[0].position, a, 50.0 * bullet_speed_multiplier, BulletSkin.Type.ENEMY_BULLET_RED_SMALL)
+		bullet_engine.fire_bullet(entities[0].position, a, 50.0 * bullet_speed_multiplier, BulletSkin.Type.ENEMY_BULLET_RED_MEDIUM)
 
 	if sun:
 		sun_spawner.spawn_sun(entities[0].position, Vector2.from_angle(angle) * 25.0)
