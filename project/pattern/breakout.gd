@@ -18,9 +18,13 @@ func init_pattern() -> void:
 	fire_time_left = fire_rate * fire_rate_multiplier
 	fire_secondary_time_left = fire_secondary_time_left
 
-	is_started = true
+	#is_started = true
 
 	start_origin = randi() % shot_origins.size()
+	
+	animation_player.animation_finished.connect(on_anim_finished)
+
+	animation_player.play("start")
 
 func update(delta: float) -> void:
 	if is_timeout:
@@ -92,3 +96,10 @@ static func process_circle_intro(bullet: Bullet, delta: float, spawn_position: V
 	t = smoothstep(0.0, 1.0, t)
 
 	return spawn_position.lerp(spawn_position + target_offset, t)
+
+func on_anim_finished(anim_name: StringName) -> void:
+	if anim_name == "start":
+		animation_player.play("default")
+		is_started = true
+
+

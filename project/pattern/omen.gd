@@ -62,6 +62,8 @@ func fire() -> void:
 	if is_timeout:
 		return
 
+	AudioManager.play_sfx(AudioManager.instance.sfx_boss_shot_1, randf_range(0.9, 1.1))
+
 	var arc_count: int = int(6 * bullet_count_multiplier)
 
 	var arc = BulletPatternHelper.get_arc(PI / 2 + deg_to_rad(current_offset), deg_to_rad(arc_spread), arc_count)
@@ -95,6 +97,8 @@ func on_anim_finished(anim_name: StringName) -> void:
 		is_started = true
 
 func create_random_explosion(scale: Vector2 = Vector2.ONE) -> void:
+	AudioManager.play_sfx(AudioManager.instance.sfx_explosion_1, randf_range(0.9, 1.1))
+	
 	var exp = explosion.duplicate()
 	add_child(exp)
 

@@ -187,6 +187,8 @@ func process_weapon(delta: float) -> void:
 		on_bomb.emit()
 
 		is_bomb_active = true
+		
+		AudioManager.play_sfx(AudioManager.instance.sfx_player_bomb)
 
 		var projectile = bomb_projectile_scene.instantiate() as Node2D
 		bomb_parent.add_child(projectile)
@@ -213,7 +215,7 @@ func process_weapon(delta: float) -> void:
 	AudioManager.instance.sfx_player_shot.volume_linear = shot_audio
 
 	if fire_input:
-		shot_audio = lerp(shot_audio, 0.8, 1.0 - exp(-40.0 * delta))
+		shot_audio = lerp(shot_audio, 1.2, 1.0 - exp(-40.0 * delta))
 	else:
 		shot_audio = lerp(shot_audio, 0.0, 1.0 - exp(-30.0 * delta))
 

@@ -91,6 +91,7 @@
 [ext_resource type="Texture2D" uid="uid://deey7m156ijks" path="res://ui/texture/texture_ui_time_is_up.png" id="69_vjk86"]
 [ext_resource type="Script" uid="uid://dibderq3e64a3" path="res://ui/restart_overlay.gd" id="78_7mcrh"]
 [ext_resource type="Texture2D" uid="uid://c6cshepotwdf5" path="res://ui/texture/texture_ui_pause_symbol.png" id="78_ghgmb"]
+[ext_resource type="AudioStream" uid="uid://b5tpf1y7p8n23" path="res://audio/sfx/sfx_alarm.ogg" id="84_k6uy7"]
 
 [sub_resource type="Gradient" id="Gradient_uamdk"]
 offsets = PackedFloat32Array(0.05511811, 0.511811, 0.8937008, 1)
@@ -559,7 +560,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_0qxbh"]
 resource_name = "boss_warning"
-length = 6.0
+length = 6.2
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -568,7 +569,7 @@ tracks/0/path = NodePath("BossWarningFlash:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(1.075, 1.2, 1.55, 4.825, 4.96, 6),
+"times": PackedFloat32Array(1.075, 1.2, 1.55, 5.0249996, 5.16, 6.2),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 0.30778617, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -580,7 +581,7 @@ tracks/1/path = NodePath("BossWarning:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(1, 1.2, 5),
+"times": PackedFloat32Array(1, 1.2, 5.2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
@@ -592,7 +593,7 @@ tracks/2/path = NodePath("../SubViewport/Game")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(1.2, 5),
+"times": PackedFloat32Array(1.2, 5.2),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],
@@ -609,11 +610,34 @@ tracks/3/path = NodePath("../UI/BossHealthbarUnder")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(4.96),
+"times": PackedFloat32Array(5.2),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
 "method": &"show"
+}]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BossWarning/AudioStreamPlayer")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1.2, 2.2, 3.2, 4.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
 }]
 }
 
@@ -2032,7 +2056,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(-0.048788637, -0.7819227)
+position = Vector2(0.54466987, 0.6055214)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -2044,12 +2068,17 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(-0.10070425, 7.7728934)
+position = Vector2(-6.764699, -0.9167697)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
 force = 8.0
 decay_rate = 0.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Overlay/BossWarning" unique_id=1133836232]
+stream = ExtResource("84_k6uy7")
+volume_db = -6.0
+bus = &"SFX"
 
 [node name="BossWarningFlash" type="ColorRect" parent="Overlay" unique_id=1176801634]
 modulate = Color(1, 1, 1, 0)
