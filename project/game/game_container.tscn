@@ -58,6 +58,8 @@
 [ext_resource type="Texture2D" uid="uid://bbgmlb3pvevtj" path="res://ui/texture/texture_ui_stripe_diagonal.png" id="38_jseim"]
 [ext_resource type="FontFile" uid="uid://cn1h41d4rq4n8" path="res://font/m5x7.ttf" id="38_ms3xe"]
 [ext_resource type="Texture2D" uid="uid://dwfao3ssrku40" path="res://ui/texture/texture_ui_boss_warning.png" id="43_wuin1"]
+[ext_resource type="Texture2D" uid="uid://c3061256a3yof" path="res://bullet/texture/texture_enemy_muzzle_flash.png" id="49_6w6lo"]
+[ext_resource type="Script" uid="uid://gylipsriuh21" path="res://bullet/bullet_muzzle_flash.gd" id="50_v3i0y"]
 [ext_resource type="Shader" uid="uid://cj4sdfqxylu30" path="res://ui/broken_tv.gdshader" id="51_5vun2"]
 [ext_resource type="Script" uid="uid://c8n4ohg53ujhd" path="res://ui/ui_boss_warning.gd" id="51_n823w"]
 [ext_resource type="Script" uid="uid://dfm4leymaw5n2" path="res://ui/ticker.gd" id="52_p2ewd"]
@@ -186,6 +188,15 @@ size = Vector2(1, -1)
 use_colors = true
 use_custom_data = true
 mesh = SubResource("QuadMesh_u5opy")
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5rcqa"]
+blend_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_unuiy"]
+size = Vector2(38, -38)
+
+[sub_resource type="MultiMesh" id="MultiMesh_ioxjq"]
+mesh = SubResource("QuadMesh_unuiy")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wurgr"]
 shader = ExtResource("13_lw3qe")
@@ -1146,12 +1157,13 @@ color_ramp = SubResource("Gradient_3b7yk")
 process_mode = 1
 script = ExtResource("2_oryes")
 player = NodePath("../Player")
+show_boss_warning = false
 boss_warning = NodePath("../../../../Overlay/BossWarning")
 timeout_warning = NodePath("../../../../Overlay/TimeoutWarning")
 animation_player = NodePath("AnimationPlayer")
 patterns = [NodePath("Omen"), NodePath("Breakout"), NodePath("Riot"), NodePath("Dogfight"), NodePath("Pilebunker"), NodePath("HighRoller"), NodePath("Naysayer"), NodePath("SnakeEyes"), NodePath("Meltdown"), NodePath("BleedingStar")]
-patterns_health = Array[float]([3200.0, 3000.0, 3000.0, 1000.0, 1100.0, 4480.0, 1500.0, 2500.0, 5000.0, 5000.0])
-patterns_timer = Array[float]([60.0, 90.0, 90.0, 90.0, 90.0, 120.0, 120.0, 120.0, 180.0, 180.0])
+patterns_health = Array[float]([3600.0, 3200.0, 3200.0, 1200.0, 1100.0, 4800.0, 1800.0, 2800.0, 6000.0, 7000.0])
+patterns_timer = Array[float]([45.0, 45.0, 45.0, 60.0, 60.0, 75.0, 75.0, 75.0, 90.0, 90.0])
 patterns_flavor = Array[ExtResource("3_ysh17")]([ExtResource("4_to2kc"), ExtResource("5_ino1g"), ExtResource("8_v7aj6"), ExtResource("6_gts4h"), ExtResource("7_j7fm5"), ExtResource("15_y37xm"), ExtResource("8_1vxhs"), ExtResource("9_bybv3"), ExtResource("10_y7kwi"), ExtResource("18_kjv07")])
 scoring = NodePath("../Scoring")
 enemy_bullet_engine = NodePath("../EnemyBulletEngine")
@@ -1191,7 +1203,7 @@ spawn_life = true
 
 [node name="Scoring" type="Node" parent="SubViewport/Game/Pausable" unique_id=269865828 node_paths=PackedStringArray("label", "score_item_manager", "score_item_particles", "score_sun_manager", "game_sequencer")]
 script = ExtResource("2_jld1g")
-score_awards_per_pattern = Array[int]([100000, 150000, 200000, 200000, 300000, 300000, 500000, 500000, 1000000, 10000000])
+score_awards_per_pattern = Array[int]([100000, 150000, 200000, 300000, 500000, 750000, 750000, 1000000, 5000000, 7500000])
 label = NodePath("../../../../UI/ScoreLabel")
 score_item_manager = NodePath("ScoreItemManager")
 score_item_particles = NodePath("../ScoreItemParticles")
@@ -1301,18 +1313,28 @@ bullet_engine = NodePath("../PlayerBulletEngine")
 enemy_bullet_engine = NodePath("../EnemyBulletEngine")
 game_sequencer = NodePath("../GameSequencer")
 
-[node name="EnemyBulletEngine" type="Node" parent="SubViewport/Game/Pausable" unique_id=1260966031 node_paths=PackedStringArray("bullet_visual")]
+[node name="EnemyBulletEngine" type="Node" parent="SubViewport/Game/Pausable" unique_id=1260966031 node_paths=PackedStringArray("bullet_visual", "muzzle_flash")]
 script = ExtResource("5_wurgr")
 max_bullet_count = 4096
 bullet_visual = NodePath("../EnemyBulletVisual")
 collision_mask = 2
+muzzle_flash = NodePath("../BulletMuzzleFlash")
 metadata/_custom_type_script = "uid://dpcpbpske8jii"
 
 [node name="EnemyBulletVisual" type="MultiMeshInstance2D" parent="SubViewport/Game/Pausable" unique_id=1686160402]
-z_index = 4096
+z_index = 4095
 z_as_relative = false
 material = SubResource("ShaderMaterial_3vho3")
 multimesh = SubResource("MultiMesh_y36n6")
+
+[node name="BulletMuzzleFlash" type="MultiMeshInstance2D" parent="SubViewport/Game/Pausable" unique_id=1962539165]
+z_index = 4096
+z_as_relative = false
+material = SubResource("CanvasItemMaterial_5rcqa")
+multimesh = SubResource("MultiMesh_ioxjq")
+texture = ExtResource("49_6w6lo")
+script = ExtResource("50_v3i0y")
+metadata/_custom_type_script = "uid://gylipsriuh21"
 
 [node name="UI" type="Control" parent="." unique_id=339268598 node_paths=PackedStringArray("player_health", "immune_label", "boss_healthbar", "boss_pattern_name_block", "boss_pattern_name", "boss_ticker_text", "boss_timer", "bomb_bar")]
 custom_minimum_size = Vector2(240, 320)
@@ -1872,7 +1894,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(-0.72969997, -0.13166851)
+position = Vector2(-0.76123, 0.9939521)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -1884,7 +1906,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(2.9069483, -1.5656556)
+position = Vector2(-6.5605226, 4.5155725)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")

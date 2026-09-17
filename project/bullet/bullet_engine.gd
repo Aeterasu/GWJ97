@@ -6,6 +6,8 @@ class_name BulletEngine extends Node
 @export var bullet_visual: MultiMeshInstance2D = null
 @export_flags("Default", "Player", "Enemy") var collision_mask: int = 0
 
+@export var muzzle_flash: BulletMuzzleFlash = null
+
 var bullets: Array[Bullet] = []
 var area_rids: Array[RID] = []
 var shape_rid: RID = RID()
@@ -61,6 +63,9 @@ func _ready() -> void:
 		var transform = Transform2D.IDENTITY.scaled(Vector2.ZERO)
 		bullet_visual.multimesh.set_instance_transform_2d(i, transform)
 
+	if muzzle_flash:
+		muzzle_flash.configure(max_bullet_count)
+	
 func _physics_process(delta: float) -> void:
 	var space_state: PhysicsDirectSpaceState2D = PhysicsServer2D.space_get_direct_state(bullet_visual.get_world_2d().space)
 
@@ -75,11 +80,17 @@ func _physics_process(delta: float) -> void:
 			bullets[active_bullet_count] = bullet
 			bullet_visual.multimesh.set_instance_transform_2d(bullet.multimesh_id, Transform2D.IDENTITY.scaled(Vector2.ZERO))
 			bullet_visual.multimesh.reset_instance_physics_interpolation(bullet.multimesh_id)
+
+			if muzzle_flash:
+				muzzle_flash.hide_at_idx(bullet.multimesh_id) 
 			continue
 		else:
 			if use_tunneling_fix:
 				update_tunnel_hit(bullet, space_state)
-	
+			
+			if muzzle_flash:
+				muzzle_flash.update(bullet, delta)
+
 		PhysicsServer2D.area_set_transform(bullet.area_rid, Transform2D.IDENTITY.translated(bullet.position))
 		set_bullet_mesh_position(bullet, bullet.position)
 		i += 1
@@ -133,6 +144,9 @@ func fire_bullet(position: Vector2, angle: float, speed: float, skin: BulletSkin
 	PhysicsServer2D.area_set_shape_disabled(bullet.area_rid, 0, false)
 
 	active_bullet_count += 1
+
+	if muzzle_flash:
+		muzzle_flash.show_at_bullet(bullet)
 
 	return bullet
 
