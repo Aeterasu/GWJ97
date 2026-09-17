@@ -10,11 +10,17 @@ var is_dark_screen: bool = false
 
 @export var debug_hp_label: Label = null
 
+@export var pause_overlay: Control = null
+
+@export var restart_overlay: Control = null
+
+var is_paused: bool = false
+
 const BOARD_SIZE: Vector2 = Vector2(240.0, 320.0)
 const PLAYER_STARTING_POSITION: Vector2 = Vector2(54.0, 260.0)
 
 var restart_timer : float = 0.0
-var restart_target_time : float = 3.0
+var restart_target_time : float = 1.0
 
 static var instance: Game = null
 
@@ -24,6 +30,9 @@ func _ready() -> void:
 	game_sequencer.fix()
 
 	animate_player_intro()
+
+	pause_overlay.hide()
+	restart_overlay.modulate.a = 0.0
 
 	ui_root.boss_pattern_name_block.hide()
 	ui_root.boss_healthbar.generate_healthbar(game_sequencer.patterns_health)
@@ -40,8 +49,9 @@ func _ready() -> void:
 		ui_root.boss_healthbar.parent.show()
 
 	player.on_hit.connect(scoring.on_player_hit)
-	player.on_hit.connect(ui_root.player_health.on_player_hit.bind(player.lives))
-	player.on_heal.connect(ui_root.player_health.on_player_heal.bind(player.lives))
+	player.on_hit.connect(func(): ui_root.player_health.on_player_hit(player.lives))
+	player.on_heal.connect(func(): ui_root.player_health.on_player_heal(player.lives))
+	player.on_bomb_ready.connect(ui_root.bomb_bar.show_bomb_ready_notif)
 
 	game_sequencer.start_game()
 
@@ -63,14 +73,29 @@ func animate_player_intro() -> void:
 		.set_delay(0.4)
 	tween.tween_callback(func(): player.control_state = Player.ControlState.NORMAL)
 
-func _physics_process(delta: float) -> void:	
-	if Input.is_action_pressed("restart"):
-		restart_timer += delta
+func _physics_process(delta: float) -> void:
+	if not is_paused:
+		if Input.is_action_pressed("restart"):
+			restart_overlay.modulate.a = lerp(restart_overlay.modulate.a, 1.0, 1.0 - exp(-10.0 * delta))
 
-		if restart_timer > restart_target_time:
-			Main.instance.load_state(Main.State.GAME)
-	else:
-		restart_timer = 0.0
+			restart_timer += delta
+
+			if restart_timer > restart_target_time:
+				Main.instance.load_state(Main.State.GAME)
+		else:
+			restart_overlay.modulate.a = lerp(restart_overlay.modulate.a, 0.0, 1.0 - exp(-10.0 * delta))
+
+			restart_timer = 0.0
+
+	if Input.is_action_just_pressed("pause"):
+		is_paused = not is_paused
+		pause_overlay.visible = is_paused
+
+	for progress in restart_overlay.progresses:
+		progress.max_value = restart_target_time - 0.1
+		progress.value = restart_timer
+
+	get_tree().paused = is_paused or game_sequencer.timeout_pause or restart_timer > 0.0
 
 func _process(delta: float) -> void:
 	var lerp_weight: float = 1.0 - exp(-10.0 * delta)
@@ -84,6 +109,14 @@ func _process(delta: float) -> void:
 	ui_root.immune_label.text = "IMMUNE: " + str(Utils.round_place(player.invincibility_timer, 1)) + "s"
 
 	ui_root.boss_timer.text = str(game_sequencer.get_current_timer())
+
+	ui_root.bomb_bar.max_value = 1.0
+	ui_root.bomb_bar.value = 1.0 - (player.bomb_restart_timer / player.bomb_restart_duration)
+
+	if ui_root.bomb_bar.value >= 1.0:
+		ui_root.bomb_bar.tint_progress = Color("#faeac9")
+	else:
+		ui_root.bomb_bar.tint_progress = Color("#927873")
 
 func on_pattern_init(pattern_idx: int) -> void:
 	var pattern_str = game_sequencer.patterns_flavor[pattern_idx].pattern_names

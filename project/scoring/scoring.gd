@@ -131,5 +131,7 @@ func on_sun_collection(item: ScoreItem) -> void:
 
 	results_suns_collected += 1
 
+	Game.get_player().bomb_restart_timer -= 1.0
+
 func on_player_hit() -> void:
 	current_rescue_multiplier = 1.0

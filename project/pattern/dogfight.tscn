@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://b8d47jehovp1y" path="res://pattern/dogfight.gd" id="1_6bsjc"]
 [ext_resource type="Script" uid="uid://du4pk0oohw2cn" path="res://enemy/enemy.gd" id="2_1j440"]
-[ext_resource type="Texture2D" uid="uid://der8j8mn8cywb" path="res://enemy/texture/texture_enemy_plane_placeholder.png" id="3_sc6r3"]
+[ext_resource type="PackedScene" uid="uid://bonkjsy6ujbfi" path="res://enemy/plane_visual.tscn" id="3_1j440"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_c0ape"]
-radius = 18.0
+radius = 24.0
 
 [sub_resource type="Animation" id="Animation_sc6r3"]
 length = 0.001
@@ -49,9 +49,6 @@ tracks/0/keys = {
 "update": 1,
 "values": [false]
 }
-
-[sub_resource type="Animation" id="Animation_timeout_dog"]
-resource_name = "timeout"
 
 [sub_resource type="Animation" id="Animation_1j440"]
 resource_name = "default"
@@ -121,6 +118,9 @@ tracks/2/keys = {
 "values": [false, true, false, true, false, true, false]
 }
 
+[sub_resource type="Animation" id="Animation_timeout_dog"]
+resource_name = "timeout"
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sc6r3"]
 _data = {
 &"RESET": SubResource("Animation_sc6r3"),
@@ -129,11 +129,12 @@ _data = {
 &"timeout": SubResource("Animation_timeout_dog")
 }
 
-[node name="Dogfight" type="Node" unique_id=285190987 node_paths=PackedStringArray("animation_player", "entities")]
+[node name="Dogfight" type="Node" unique_id=285190987 node_paths=PackedStringArray("entities", "sprites", "animation_player")]
 script = ExtResource("1_6bsjc")
 fire_rate = 0.1
-animation_player = NodePath("AnimationPlayer")
 entities = [NodePath("Enemy")]
+sprites = [NodePath("Enemy/PlaneVisual")]
+animation_player = NodePath("AnimationPlayer")
 metadata/_custom_type_script = "uid://16mvw7i2q77s"
 
 [node name="Enemy" type="Area2D" parent="." unique_id=1112101402]
@@ -141,9 +142,7 @@ position = Vector2(120, 88)
 script = ExtResource("2_1j440")
 metadata/_custom_type_script = "uid://du4pk0oohw2cn"
 
-[node name="Sprite2D" type="Sprite2D" parent="Enemy" unique_id=741438333]
-scale = Vector2(0.8, 0.8)
-texture = ExtResource("3_sc6r3")
+[node name="PlaneVisual" parent="Enemy" unique_id=1742974697 instance=ExtResource("3_1j440")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy" unique_id=2088825118]
 shape = SubResource("CircleShape2D_c0ape")

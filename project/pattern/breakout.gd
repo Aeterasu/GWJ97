@@ -77,7 +77,7 @@ func fire_primary() -> void:
 		bullet_engine.fire_bullet(spawn_pos, angle, 100.0 * bullet_speed_multiplier, BulletSkin.Type.ENEMY_BULLET_RED_SMALL, intro_behaviour)
 
 	if sun_counter == max_sun_counter:
-		await get_tree().create_timer(intro_duration).timeout
+		await get_tree().create_timer(intro_duration, false).timeout
 		sun_spawner.spawn_sun(origin.global_position, Vector2.DOWN * 100.0)
 
 static func process_circle_intro(bullet: Bullet, delta: float, spawn_position: Vector2, target_offset: Vector2, intro_duration: float, start_time_msec: int) -> Vector2:

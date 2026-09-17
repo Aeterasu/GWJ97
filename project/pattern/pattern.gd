@@ -3,6 +3,8 @@ class_name Pattern extends Node
 @export var spawn_life: bool = false
 
 @export var entities: Array[Enemy] = []
+@export var sprites: Array[Sprite2D] = []
+
 @export var immune: bool = false
 @export var animation_player: AnimationPlayer = null
 
@@ -86,6 +88,8 @@ func on_entity_hit(entity: Enemy, damage: float) -> void:
 		on_health_depleted.emit(self)
 		start_death()
 
+	#Game.get_player().bomb_restart_timer -= 0.01
+
 func start_death() -> void:
 	if is_dead:
 		return
@@ -122,4 +126,4 @@ func _on_animation_finished(anim_name: StringName) -> void:
 		on_death.emit(self)
 
 		for entity in entities:
-			remove_child.call_deferred(entity)
+			entity.get_parent().remove_child(entity)

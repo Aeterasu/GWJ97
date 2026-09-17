@@ -41,17 +41,24 @@ var control_state: ControlState = ControlState.NORMAL
 
 var invincibility_timer: float = 0.0
 
-var bomb_restart_timer : float = 3.0
-var bomb_restart_time : float = 0.0
-var bomb_timer : float = 0.5
-var bomb_time : float = 0.0
-
+var bomb_restart_duration : float = 30.0
+var bomb_restart_timer : float = 0.0
+var bomb_effect_duration : float = 0.5
+var bomb_effect_timer : float = 0.0
+var bomb_ready_toggle: bool = false
 
 var is_dead: bool = false
+
+var shot_audio: float = 0.0
+
+const COUNTERBOMB_WINDOW: int = 6
+var counterbomb_ticker: int = 0
+var is_counterbomb_active: bool = false
 
 signal on_hit
 signal on_death
 signal on_heal
+signal on_bomb_ready
 
 enum ControlState
 {
@@ -103,10 +110,19 @@ func _physics_process(delta: float) -> void:
 			var offset = Vector2(cos(angle), sin(angle)) * final_radius
 			options[i].position = offset
 
+	# counterbomb
+
+	if is_counterbomb_active:
+		if counterbomb_ticker > COUNTERBOMB_WINDOW:
+			is_counterbomb_active = false
+			deduct_life()
+
+		counterbomb_ticker += 1
+
 func process_movement(delta: float) -> void:
 	var dir: Vector2 = Vector2.ZERO
 
-	dir = Input.get_vector(InputAction.player_input_left,InputAction.player_input_right,InputAction.player_input_up,InputAction.player_input_down)
+	dir = Input.get_vector(InputActions.PLAYER_INPUT_LEFT, InputActions.PLAYER_INPUT_RIGHT, InputActions.PLAYER_INPUT_UP, InputActions.PLAYER_INPUT_DOWN)
 	var move_speed = focus_speed if is_focused else base_speed
 
 	global_position += dir.normalized() * move_speed * delta
@@ -131,26 +147,46 @@ func process_movement(delta: float) -> void:
 	sprite_shader.set_shader_parameter("rot_x_deg", sprite_yaw)
 
 func process_weapon(delta: float) -> void:
-	is_focused = Input.is_action_pressed(InputAction.player_input_action_2)
+	is_focused = Input.is_action_pressed(InputActions.PLAYER_INPUT_ACTION_2)
 
-	var fire_input = Input.is_action_pressed(InputAction.player_input_action_1)
-	var bomb_input = Input.is_action_just_pressed(InputAction.player_input_action_3)
+	var fire_input = Input.is_action_pressed(InputActions.PLAYER_INPUT_ACTION_1)
+	var bomb_input = Input.is_action_just_pressed(InputActions.PLAYER_INPUT_ACTION_3)
 
 	var focus_ready = options_transition_current_timer >= options_transition_duration
 
 	base_weapon.is_firing = fire_input and (not focus_ready)
 	focus_weapon.is_firing = fire_input and focus_ready
 	
-	if bomb_input and bomb_time <= 0.0 and bomb_restart_time <= 0.0:
-		bomb_time = bomb_timer
-		bomb_restart_time = bomb_restart_timer
+	if bomb_input and bomb_effect_timer <= 0.0 and bomb_restart_timer <= 0.0:
+		bomb_effect_timer = bomb_effect_duration
+		bomb_restart_timer = bomb_restart_duration
+		invincibility_timer = INVINCIBILITY_ON_BOMB
 		game_sequencer.no_bomb = false
-	
-	if bomb_time > 0.0:
-		bomb_time -= delta
+		bomb_ready_toggle = true
+
+		if is_counterbomb_active:
+			is_counterbomb_active = false
+
+	if bomb_effect_timer > 0.0:
+		bomb_effect_timer -= delta
 		enemy_bullet_engine.bullet_cancel()
-	elif bomb_time <= 0.0:
-		bomb_restart_time -= delta
+	elif bomb_effect_timer <= 0.0:
+		bomb_restart_timer -= delta
+
+		if bomb_restart_timer <= 0.0 and bomb_ready_toggle:
+			on_bomb_ready.emit()
+			bomb_ready_toggle = false
+
+	# hacky audio
+	if (not AudioManager.instance.sfx_player_shot.playing):
+		AudioManager.instance.sfx_player_shot.play()
+
+	AudioManager.instance.sfx_player_shot.volume_linear = shot_audio
+
+	if fire_input:
+		shot_audio = lerp(shot_audio, 0.8, 1.0 - exp(-40.0 * delta))
+	else:
+		shot_audio = lerp(shot_audio, 0.0, 1.0 - exp(-30.0 * delta))
 
 func hit() -> void:
 	if is_dead:
@@ -162,6 +198,13 @@ func hit() -> void:
 	if invincibility_timer > 0.0:
 		return
 
+	if is_counterbomb_active:
+		return
+
+	is_counterbomb_active = true
+	counterbomb_ticker = 0
+
+func deduct_life() -> void:
 	lives -= 1;
 
 	invincibility_timer = INVINCIBILITY_ON_HIT
@@ -205,3 +248,7 @@ func award_life() -> void:
 
 	lives += 1
 	on_heal.emit()
+
+func reset_position() -> void:
+	global_position = Game.PLAYER_STARTING_POSITION
+	reset_physics_interpolation()

@@ -24,10 +24,15 @@ class_name GameSequencer extends Node
 
 @export var results: ResultScreen = null
 
+var hitflash: float = 0.0
+
+var current_pattern: Pattern = null
 var current_idx: int = 0
 
 var no_miss: bool = true
 var no_bomb: bool = true
+
+var timeout_pause: bool = false
 
 signal on_pattern_init
 signal propagate_pattern_hit
@@ -37,6 +42,13 @@ func _ready() -> void:
 		show_boss_warning = true
 		starting_pattern = 0
 
+func _process(delta: float) -> void:
+	if current_pattern:
+		for sprite in current_pattern.sprites:
+			(sprite.material as ShaderMaterial).set_shader_parameter("hitflash", hitflash)
+
+	hitflash = max(hitflash - delta * 5.0, 0.0)
+
 func start_game() -> void:
 	life_spawner.on_life_collected.connect(on_life_collected)
 
@@ -45,7 +57,7 @@ func start_game() -> void:
 	if not show_boss_warning:
 		init_pattern(starting_pattern)
 	else:
-		await get_tree().create_timer(1.0).timeout
+		await get_tree().create_timer(1.0, false).timeout
 
 		boss_warning.on_finished.connect(on_boss_warning_finished)
 		boss_warning.animate()
@@ -75,6 +87,8 @@ func init_pattern(idx: int) -> void:
 		patterns[idx].on_death.connect(on_pattern_death)
 		patterns[idx].on_timeout.connect(on_pattern_timeout)
 
+		current_pattern = patterns[idx]
+
 		current_idx = idx
 
 		on_pattern_init.emit(idx)
@@ -94,13 +108,15 @@ func get_all_health_percentagees() -> Array[float]:
 func on_pattern_hit(pattern: Pattern) -> void:
 	propagate_pattern_hit.emit(pattern)
 
+	hitflash = 1.0
+
 func on_pattern_timeout(pattern: Pattern) -> void:
-	get_tree().paused = true
+	timeout_pause = true
 
 	timeout_warning.animation_player.play("flash")
 	await timeout_warning.animation_player.animation_finished
 
-	get_tree().paused = false
+	timeout_pause = false
 
 func on_pattern_health_depleted(pattern: Pattern) -> void:
 	scoring.on_pattern_completed(current_idx)
@@ -124,14 +140,14 @@ func on_pattern_death(pattern: Pattern) -> void:
 
 	results.hide_results()
 
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(1.0, false).timeout
 
 	pattern.is_started = false
 	pattern.is_dead = true
 	
 	var next_idx = current_idx + 1
 
-	if next_idx >= patterns.size() - 1:
+	if next_idx >= patterns.size():
 		return
 
 	current_idx = next_idx
@@ -143,4 +159,3 @@ func on_pattern_death(pattern: Pattern) -> void:
 
 func get_current_timer() -> int:
 	return floori(patterns[current_idx].time_left)
-

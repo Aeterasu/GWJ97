@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://bl7qk0283xh4e" path="res://pattern/pilebunker.gd" id="1_oetio"]
 [ext_resource type="Script" uid="uid://du4pk0oohw2cn" path="res://enemy/enemy.gd" id="2_xyyh3"]
-[ext_resource type="Texture2D" uid="uid://der8j8mn8cywb" path="res://enemy/texture/texture_enemy_plane_placeholder.png" id="3_33kw3"]
+[ext_resource type="PackedScene" uid="uid://bonkjsy6ujbfi" path="res://enemy/plane_visual.tscn" id="3_xyyh3"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_pp47w"]
-radius = 18.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_33kw3"]
+radius = 24.0
 
 [sub_resource type="Animation" id="Animation_xyyh3"]
 length = 0.001
@@ -31,10 +31,34 @@ tracks/1/keys = {
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Node2D/Enemy/PlaneVisual:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_pp47w"]
 resource_name = "death"
 step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D/Enemy/PlaneVisual:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_33kw3"]
 resource_name = "default"
@@ -110,9 +134,10 @@ _data = {
 &"timeout": SubResource("Animation_timeout_pile")
 }
 
-[node name="Pilebunker" type="Node" unique_id=1439410849 node_paths=PackedStringArray("entities", "animation_player")]
+[node name="Pilebunker" type="Node" unique_id=1439410849 node_paths=PackedStringArray("entities", "sprites", "animation_player")]
 script = ExtResource("1_oetio")
 entities = [NodePath("Node2D/Enemy")]
+sprites = [NodePath("Node2D/Enemy/PlaneVisual")]
 animation_player = NodePath("AnimationPlayer")
 metadata/_custom_type_script = "uid://16mvw7i2q77s"
 
@@ -123,12 +148,10 @@ position = Vector2(0, -26)
 script = ExtResource("2_xyyh3")
 metadata/_custom_type_script = "uid://du4pk0oohw2cn"
 
-[node name="Sprite2D" type="Sprite2D" parent="Node2D/Enemy" unique_id=680617765]
-scale = Vector2(0.8, 0.8)
-texture = ExtResource("3_33kw3")
+[node name="PlaneVisual" parent="Node2D/Enemy" unique_id=1742974697 instance=ExtResource("3_xyyh3")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Enemy" unique_id=1028229126]
-shape = SubResource("CircleShape2D_pp47w")
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Node2D/Enemy" unique_id=2028297000]
+shape = SubResource("CircleShape2D_33kw3")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=738189791]
 libraries/ = SubResource("AnimationLibrary_pp47w")

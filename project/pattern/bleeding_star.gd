@@ -49,7 +49,7 @@ func fire_1() -> void:
 func fire_2() -> void:
 	if not sun_toggle:
 		for i in 6:
-			await get_tree().create_timer(0.08).timeout
+			await get_tree().create_timer(0.08, false).timeout
 
 			bullet_engine.fire_bullet(ORIGIN, BulletPatternHelper.get_angle_to_player(ORIGIN), 100.0, BulletSkin.Type.ENEMY_BULLET_ALT_LONG)
 	else:

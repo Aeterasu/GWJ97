@@ -71,7 +71,7 @@ func _ready() -> void:
 	add_child(input_device_detector)
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed(InputAction.debug_1):
+	if Input.is_action_just_pressed(InputActions.DEBUG_1):
 		show_fps = not show_fps
 		fps_counter.visible = show_fps
 		fps_counter.set_process(true)

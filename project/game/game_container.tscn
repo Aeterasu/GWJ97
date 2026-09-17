@@ -37,7 +37,7 @@
 [ext_resource type="Resource" uid="uid://u77hjgf5b1xn" path="res://pattern/flavor/flavor_6.tres" id="15_y37xm"]
 [ext_resource type="PackedScene" uid="uid://v2yky2ict4cp" path="res://pattern/breakout.tscn" id="17_g7uki"]
 [ext_resource type="PackedScene" uid="uid://vugwune8fbhe" path="res://pattern/omen.tscn" id="17_ijhnq"]
-[ext_resource type="Resource" uid="uid://d1ck7qmgmck54" path="res://pattern/flavor/flavor_10.tres" id="18_kjv07"]
+[ext_resource type="Resource" uid="uid://ca0xsbul6o6q7" path="res://pattern/flavor/flavor_10.tres" id="18_kjv07"]
 [ext_resource type="PackedScene" uid="uid://dhp3eywon6pi6" path="res://pattern/pilebunker.tscn" id="19_xfsju"]
 [ext_resource type="Script" uid="uid://debx0k47w1p5p" path="res://ui/ui.gd" id="20_gts4h"]
 [ext_resource type="PackedScene" uid="uid://iw61jl5rfh8k" path="res://pattern/high_roller.tscn" id="20_o7b2k"]
@@ -72,9 +72,13 @@
 [ext_resource type="FontFile" uid="uid://dekxaqxocvhf7" path="res://font/m6x11.ttf" id="60_78uyn"]
 [ext_resource type="PackedScene" uid="uid://cdkh4caga30ay" path="res://ui/result_screen_checkbox.tscn" id="61_1xbv1"]
 [ext_resource type="Texture2D" uid="uid://bl0je63ccfsau" path="res://ui/texture/texture_ui_results_decorative_line.png" id="61_phvc2"]
+[ext_resource type="Texture2D" uid="uid://2yutpkm08ph1" path="res://ui/texture/texture_ui_bomb_bar.png" id="65_8nq8a"]
+[ext_resource type="Script" uid="uid://bi00vjvavxiyh" path="res://ui/ui_bomb_bar.gd" id="66_s673l"]
 [ext_resource type="Shader" uid="uid://txjvwiejygxd" path="res://ui/scroll.gdshader" id="69_ipk4o"]
 [ext_resource type="Script" uid="uid://bnnfh6rwowuw3" path="res://ui/ui_timeout_warning.gd" id="69_qei43"]
 [ext_resource type="Texture2D" uid="uid://deey7m156ijks" path="res://ui/texture/texture_ui_time_is_up.png" id="69_vjk86"]
+[ext_resource type="Script" uid="uid://dibderq3e64a3" path="res://ui/restart_overlay.gd" id="78_7mcrh"]
+[ext_resource type="Texture2D" uid="uid://c6cshepotwdf5" path="res://ui/texture/texture_ui_pause_symbol.png" id="78_ghgmb"]
 
 [sub_resource type="Environment" id="Environment_y36n6"]
 background_mode = 1
@@ -297,11 +301,23 @@ tracks/4/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_vss03"]
 resource_name = "heal"
-length = 5.0
-step = 0.025
+length = 1.5
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -379,6 +395,18 @@ tracks/5/keys = {
 "method": &"reset_update"
 }]
 }
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ljlx8"]
 _data = {
@@ -425,6 +453,22 @@ outline_size = 4
 outline_color = Color(0.047058824, 0.09803922, 0, 1)
 shadow_color = Color(1, 0.16078432, 0, 0.24705882)
 shadow_offset = Vector2(-1.495, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3b7yk"]
+atlas = ExtResource("65_8nq8a")
+region = Rect2(0, 6, 0, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8nq8a"]
+atlas = ExtResource("65_8nq8a")
+region = Rect2(0, 12, 0, 6)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s673l"]
+shader = ExtResource("69_ipk4o")
+shader_parameter/scroll_speed = Vector2(0.1, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s68re"]
+atlas = ExtResource("65_8nq8a")
+region = Rect2(0, 0, 0, 6)
 
 [sub_resource type="Animation" id="Animation_n823w"]
 length = 0.001
@@ -809,6 +853,20 @@ tracks/3/keys = {
 "method": &"lighten_scree"
 }]
 }
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../SubViewport/Game/Pausable/Player")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"reset_position"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_p2ewd"]
 resource_name = "show_results"
@@ -888,6 +946,94 @@ _data = {
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.038961045, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7mcrh"]
+shader = ExtResource("51_5vun2")
+shader_parameter/color_dark = Color(0.16862746, 0.05490196, 0.007843138, 1)
+shader_parameter/color_light = Color(0.36862746, 0.11372549, 0.05490196, 0.40392157)
+shader_parameter/grain_size = 227.90001077775
+shader_parameter/speed = 24.0
+shader_parameter/contrast = 1.0
+shader_parameter/brightness = 0.0
+shader_parameter/scanlines = true
+shader_parameter/scanline_strength = 0.4410000209475
+shader_parameter/scanline_count = 480.0
+shader_parameter/roll_bars = false
+shader_parameter/roll_speed = 5.0
+shader_parameter/roll_bar_count = 3.0
+shader_parameter/opacity = 1.0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ixbki"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_bpwoh"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.98039216, 0.91764706, 0.7882353, 0, 1, 0.16078432, 0, 1, 0.98039216, 0.91764706, 0.7882353, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6w6lo"]
+gradient = SubResource("Gradient_bpwoh")
+fill_from = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_ghgmb"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.1351431, 0.034505833, 0, 1, 0.16862746, 0.05490196, 0.007843138, 0.7529412, 0.13333334, 0.03529412, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4kn18"]
+gradient = SubResource("Gradient_ghgmb")
+
+[sub_resource type="Gradient" id="Gradient_v3i0y"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.5, 0.8, 0.9)
+colors = PackedColorArray(0.98039216, 0.91764706, 0.7882353, 0, 0.98039216, 0.91764706, 0.7882353, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_n33i2"]
+gradient = SubResource("Gradient_v3i0y")
+width = 96
+height = 96
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.90000004, 0.1)
+metadata/_snap_enabled = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4kn18"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_lhvh0"]
+offsets = PackedFloat32Array(0.5, 0.8, 0.9)
+colors = PackedColorArray(0.98039216, 0.91764706, 0.7882353, 0, 0.98039216, 0.91764706, 0.7882353, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_uamdk"]
+gradient = SubResource("Gradient_lhvh0")
+width = 96
+height = 96
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.90000004, 0.1)
+metadata/_snap_enabled = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ghgmb"]
+shader = ExtResource("51_5vun2")
+shader_parameter/color_dark = Color(0.047058824, 0.09803922, 0, 1)
+shader_parameter/color_light = Color(0.2784314, 0.16862746, 0, 0.44313726)
+shader_parameter/grain_size = 227.90001077775
+shader_parameter/speed = 24.0
+shader_parameter/contrast = 1.0
+shader_parameter/brightness = 0.0
+shader_parameter/scanlines = true
+shader_parameter/scanline_strength = 0.4410000209475
+shader_parameter/scanline_count = 480.0
+shader_parameter/roll_bars = false
+shader_parameter/roll_speed = 5.0
+shader_parameter/roll_bar_count = 3.0
+shader_parameter/opacity = 1.0
+
+[sub_resource type="Gradient" id="Gradient_7mcrh"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.98039216, 0.91764706, 0.7882353, 0, 0.98039216, 0.91764706, 0.7882353, 1, 0.98039216, 0.91764706, 0.7882353, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_htow4"]
+gradient = SubResource("Gradient_7mcrh")
+fill_from = Vector2(1, 1)
+
 [node name="GameContainer" type="SubViewportContainer" unique_id=1996078482]
 process_mode = 3
 texture_filter = 1
@@ -908,7 +1054,7 @@ oversampling = false
 size = Vector2i(240, 320)
 render_target_update_mode = 4
 
-[node name="Game" type="Node2D" parent="SubViewport" unique_id=1321649675 node_paths=PackedStringArray("game_sequencer", "player", "scoring", "ui_root", "dark_screen", "debug_hp_label")]
+[node name="Game" type="Node2D" parent="SubViewport" unique_id=1321649675 node_paths=PackedStringArray("game_sequencer", "player", "scoring", "ui_root", "dark_screen", "debug_hp_label", "pause_overlay", "restart_overlay")]
 script = ExtResource("1_q4ejq")
 game_sequencer = NodePath("Pausable/GameSequencer")
 player = NodePath("Pausable/Player")
@@ -916,6 +1062,8 @@ scoring = NodePath("Pausable/Scoring")
 ui_root = NodePath("../../UI")
 dark_screen = NodePath("../../Overlay/Darken")
 debug_hp_label = NodePath("../../UI/DebugHPLabel")
+pause_overlay = NodePath("../../Overlay/ColorRect")
+restart_overlay = NodePath("../../Overlay/RestartOverlay")
 
 [node name="Pausable" type="Node" parent="SubViewport/Game" unique_id=490273109]
 process_mode = 1
@@ -995,14 +1143,15 @@ color = Color(0.9411765, 0.45882353, 0.1254902, 1)
 color_ramp = SubResource("Gradient_3b7yk")
 
 [node name="GameSequencer" type="Node" parent="SubViewport/Game/Pausable" unique_id=1424656608 node_paths=PackedStringArray("player", "boss_warning", "timeout_warning", "animation_player", "patterns", "scoring", "enemy_bullet_engine", "sun_spawner", "life_spawner", "results")]
+process_mode = 1
 script = ExtResource("2_oryes")
 player = NodePath("../Player")
 boss_warning = NodePath("../../../../Overlay/BossWarning")
 timeout_warning = NodePath("../../../../Overlay/TimeoutWarning")
 animation_player = NodePath("AnimationPlayer")
 patterns = [NodePath("Omen"), NodePath("Breakout"), NodePath("Riot"), NodePath("Dogfight"), NodePath("Pilebunker"), NodePath("HighRoller"), NodePath("Naysayer"), NodePath("SnakeEyes"), NodePath("Meltdown"), NodePath("BleedingStar")]
-patterns_health = Array[float]([3200.0, 3000.0, 3000.0, 960.0, 450.0, 4480.0, 1500.0, 2500.0, 5000.0, 5000.0])
-patterns_timer = Array[float]([5.0, 90.0, 90.0, 90.0, 90.0, 120.0, 120.0, 120.0, 180.0, 180.0])
+patterns_health = Array[float]([3200.0, 3000.0, 3000.0, 1000.0, 1100.0, 4480.0, 1500.0, 2500.0, 5000.0, 5000.0])
+patterns_timer = Array[float]([60.0, 90.0, 90.0, 90.0, 90.0, 120.0, 120.0, 120.0, 180.0, 180.0])
 patterns_flavor = Array[ExtResource("3_ysh17")]([ExtResource("4_to2kc"), ExtResource("5_ino1g"), ExtResource("8_v7aj6"), ExtResource("6_gts4h"), ExtResource("7_j7fm5"), ExtResource("15_y37xm"), ExtResource("8_1vxhs"), ExtResource("9_bybv3"), ExtResource("10_y7kwi"), ExtResource("18_kjv07")])
 scoring = NodePath("../Scoring")
 enemy_bullet_engine = NodePath("../EnemyBulletEngine")
@@ -1144,7 +1293,7 @@ z_index = 16
 material = SubResource("ShaderMaterial_ijhnq")
 multimesh = SubResource("MultiMesh_dxrkv")
 
-[node name="Player" parent="SubViewport/Game/Pausable" unique_id=1584514943 node_paths=PackedStringArray("bullet_engine") instance=ExtResource("7_mp07y")]
+[node name="Player" parent="SubViewport/Game/Pausable" unique_id=1584514943 node_paths=PackedStringArray("bullet_engine", "enemy_bullet_engine", "game_sequencer") instance=ExtResource("7_mp07y")]
 z_index = 64
 base_speed = 240.0
 focus_speed = 120.0
@@ -1165,7 +1314,7 @@ z_as_relative = false
 material = SubResource("ShaderMaterial_3vho3")
 multimesh = SubResource("MultiMesh_y36n6")
 
-[node name="UI" type="Control" parent="." unique_id=339268598 node_paths=PackedStringArray("player_health", "immune_label", "boss_healthbar", "boss_pattern_name_block", "boss_pattern_name", "boss_ticker_text", "boss_timer")]
+[node name="UI" type="Control" parent="." unique_id=339268598 node_paths=PackedStringArray("player_health", "immune_label", "boss_healthbar", "boss_pattern_name_block", "boss_pattern_name", "boss_ticker_text", "boss_timer", "bomb_bar")]
 custom_minimum_size = Vector2(240, 320)
 layout_mode = 2
 script = ExtResource("20_gts4h")
@@ -1176,6 +1325,7 @@ boss_pattern_name_block = NodePath("BossHealthbarUnder/PatternNameBlock")
 boss_pattern_name = NodePath("BossHealthbarUnder/PatternNameBlock/Label")
 boss_ticker_text = NodePath("BossHealthbarUnder/PatternNameBlock/TickerLabel")
 boss_timer = NodePath("UITimer")
+bomb_bar = NodePath("BombBar")
 
 [node name="UIBossHealthbar" type="Node" parent="UI" unique_id=104798359 node_paths=PackedStringArray("parent")]
 script = ExtResource("21_j7fm5")
@@ -1368,6 +1518,31 @@ font = ExtResource("38_ms3xe")
 color = Color(0.047058824, 0.09803922, 0, 1)
 metadata/_custom_type_script = "uid://dfm4leymaw5n2"
 
+[node name="BombReadyNotification" type="ColorRect" parent="UI" unique_id=1181424307]
+layout_mode = 0
+offset_left = 174.0
+offset_top = 310.0
+offset_right = 240.0
+offset_bottom = 321.0
+color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+
+[node name="TickerLabel" type="Control" parent="UI/BombReadyNotification" unique_id=939099692]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("52_p2ewd")
+text = "BOMB READY! // BOMB READY! // BOMB READY! // BOMB READY! // BOMB READY! // BOMB READY! // "
+speed = 30.0
+gap = 4.0
+font = ExtResource("38_ms3xe")
+color = Color(0.047058824, 0.1764706, 0.40784314, 1)
+metadata/_custom_type_script = "uid://dfm4leymaw5n2"
+
 [node name="HPPanel" type="TextureRect" parent="UI" unique_id=2030564919 node_paths=PackedStringArray("hearts", "damage_fx", "oneup_notification", "heal_animation", "animation_shit")]
 layout_mode = 0
 offset_top = 310.0
@@ -1444,6 +1619,7 @@ texture = ExtResource("59_afsd1")
 offset = Vector2(0, -20.5)
 
 [node name="Sprite2D2" type="Sprite2D" parent="UI/HPPanel/HBoxContainer" unique_id=1682528990]
+visible = false
 modulate = Color(1, 1, 1, 0)
 position = Vector2(45, 0.2561771)
 scale = Vector2(1e-05, 1e-05)
@@ -1549,7 +1725,35 @@ label_settings = SubResource("LabelSettings_n33i2")
 horizontal_alignment = 2
 vertical_alignment = 1
 
+[node name="BombBar" type="TextureProgressBar" parent="UI" unique_id=883245038 node_paths=PackedStringArray("bomb_ready_notification")]
+layout_mode = 0
+offset_left = 183.0
+offset_top = 312.0
+offset_right = 231.0
+offset_bottom = 318.0
+max_value = 1.0
+step = 0.0
+value = 0.5
+fill_mode = 1
+texture_under = SubResource("AtlasTexture_3b7yk")
+texture_progress = SubResource("AtlasTexture_8nq8a")
+tint_progress = Color(0.98039216, 0.91764706, 0.7882353, 1)
+script = ExtResource("66_s673l")
+bomb_ready_notification = NodePath("../BombReadyNotification")
+
+[node name="ColorRect" type="TextureRect" parent="UI/BombBar" unique_id=1031050808]
+show_behind_parent = true
+material = SubResource("ShaderMaterial_s673l")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_s68re")
+
 [node name="Overlay" type="Control" parent="." unique_id=1886945607]
+process_mode = 1
 z_index = 4
 custom_minimum_size = Vector2(240, 320)
 layout_mode = 2
@@ -1668,7 +1872,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(-0.014657275, 0.1682648)
+position = Vector2(-0.72969997, -0.13166851)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -1680,7 +1884,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(3.577191, -4.6727824)
+position = Vector2(2.9069483, -1.5656556)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -1818,7 +2022,6 @@ color = Color(0.98039216, 0.91764706, 0.7882353, 1)
 metadata/_edit_lock_ = true
 
 [node name="ResultScreen" type="Control" parent="Overlay" unique_id=287103774 node_paths=PackedStringArray("animation_player", "pattern_reward_label", "score_multiplier_label", "score_item_label", "score_suns_label", "total_label", "no_miss_checkmark", "no_bomb_checkmark", "ticker_label", "kill_category", "timeout_category")]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2218,3 +2421,184 @@ initial_velocity_max = 232.56
 scale_amount_max = 4.0
 scale_amount_curve = SubResource("Curve_2675o")
 color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+
+[node name="RestartOverlay" type="ColorRect" parent="Overlay" unique_id=1532360364 node_paths=PackedStringArray("progresses")]
+z_index = 4096
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.12941177, 0.03137255, 0, 0.84313726)
+script = ExtResource("78_7mcrh")
+progresses = [NodePath("TextureProgressBar"), NodePath("TextureProgressBar2")]
+
+[node name="TV" type="ColorRect" parent="Overlay/RestartOverlay" unique_id=252342594]
+material = SubResource("ShaderMaterial_7mcrh")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect2" type="TextureRect" parent="Overlay/RestartOverlay" unique_id=1501102385]
+modulate = Color(1, 1, 1, 0.22352941)
+material = SubResource("CanvasItemMaterial_ixbki")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_6w6lo")
+
+[node name="TextureRect" type="TextureRect" parent="Overlay/RestartOverlay" unique_id=1075360530]
+layout_mode = 0
+offset_right = 240.0
+offset_bottom = 18.0
+texture = SubResource("GradientTexture2D_4kn18")
+expand_mode = 1
+
+[node name="TextureRect3" type="TextureRect" parent="Overlay/RestartOverlay" unique_id=625824920]
+layout_mode = 0
+offset_top = 302.0
+offset_right = 240.0
+offset_bottom = 320.0
+texture = SubResource("GradientTexture2D_4kn18")
+expand_mode = 1
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Overlay/RestartOverlay" unique_id=203323952]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 72.0
+offset_top = 112.0
+offset_right = -72.0
+offset_bottom = -112.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 1.0
+step = 0.0
+value = 0.83
+fill_mode = 5
+texture_progress = SubResource("GradientTexture2D_n33i2")
+
+[node name="TextureProgressBar2" type="TextureProgressBar" parent="Overlay/RestartOverlay" unique_id=137157438]
+modulate = Color(1, 1, 1, 0.26666668)
+texture_filter = 2
+material = SubResource("CanvasItemMaterial_4kn18")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 72.0
+offset_top = 112.0
+offset_right = -72.0
+offset_bottom = -112.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 1.0
+step = 0.0
+value = 0.83
+fill_mode = 5
+texture_progress = SubResource("GradientTexture2D_uamdk")
+
+[node name="TickerLabel" type="Control" parent="Overlay/RestartOverlay" unique_id=863270652]
+process_mode = 3
+anchors_preset = 0
+offset_top = 304.0
+offset_right = 240.0
+offset_bottom = 320.0
+script = ExtResource("52_p2ewd")
+text = "RESTART // RESTART // RESTART // RESTART // RESTART // RESTART // RESTART // RESTART // RESTART // RESTART // RESTART // RESTART // RESTART // RESTART // "
+speed = 15.0
+gap = 4.0
+font = ExtResource("60_78uyn")
+color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+metadata/_custom_type_script = "uid://dfm4leymaw5n2"
+
+[node name="TickerLabel2" type="Control" parent="Overlay/RestartOverlay" unique_id=21869464]
+process_mode = 3
+anchors_preset = 0
+offset_top = -9.0
+offset_right = 240.0
+offset_bottom = 31.0
+script = ExtResource("52_p2ewd")
+text = "RESTART // RESTART // RESTART // RESTART // RESTART // RESTART // RESTART // RESTART // RESTART // RESTART // RESTART // RESTART // RESTART // RESTART // "
+speed = 15.0
+gap = 4.0
+font = ExtResource("60_78uyn")
+color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+metadata/_custom_type_script = "uid://dfm4leymaw5n2"
+
+[node name="ColorRect" type="ColorRect" parent="Overlay" unique_id=1035716408]
+visible = false
+z_index = 4096
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.047058824, 0.09803922, 0, 0.6745098)
+
+[node name="TV" type="ColorRect" parent="Overlay/ColorRect" unique_id=2009017050]
+material = SubResource("ShaderMaterial_ghgmb")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect2" type="TextureRect" parent="Overlay/ColorRect" unique_id=1055289017]
+modulate = Color(1, 1, 1, 0.13333334)
+material = SubResource("CanvasItemMaterial_ixbki")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_htow4")
+
+[node name="TextureRect4" type="TextureRect" parent="Overlay/ColorRect" unique_id=529720486]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("78_ghgmb")
+stretch_mode = 3
+
+[node name="TextureRect3" type="TextureRect" parent="Overlay/ColorRect" unique_id=891995356]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("78_ghgmb")
+stretch_mode = 3
+
+[node name="TextureRect" type="TextureRect" parent="Overlay/ColorRect" unique_id=1717480706]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("78_ghgmb")
+stretch_mode = 3
