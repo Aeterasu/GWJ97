@@ -123,7 +123,16 @@ func start_timeout() -> void:
 
 func _on_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "death":
+		if animation_player.has_animation("death_loop"):
+			animation_player.play("death_loop")
 		on_death.emit(self)
 
-		for entity in entities:
+func deactivate() -> void:
+	if animation_player:
+		animation_player.stop()
+		if animation_player.animation_finished.is_connected(_on_animation_finished):
+			animation_player.animation_finished.disconnect(_on_animation_finished)
+
+	for entity in entities:
+		if entity.get_parent():
 			entity.get_parent().remove_child(entity)

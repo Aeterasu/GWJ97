@@ -73,6 +73,9 @@ func fix() -> void:
 		patterns[i].health = patterns_health[i]
 
 func init_pattern(idx: int) -> void:
+	if current_pattern:
+		current_pattern.deactivate()
+
 	if idx >= 0 and idx < patterns.size():
 		patterns[idx].bullet_engine = self.enemy_bullet_engine
 		patterns[idx].sun_spawner = self.sun_spawner

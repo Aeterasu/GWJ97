@@ -14,9 +14,19 @@ step = 0.1
 [sub_resource type="Animation" id="Animation_timeout_break"]
 resource_name = "timeout"
 
+[sub_resource type="Animation" id="Animation_dl_break"]
+resource_name = "death_loop"
+length = 1.0
+
+[sub_resource type="Animation" id="Animation_st_break"]
+resource_name = "start"
+length = 1.0
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uyx1u"]
 _data = {
 &"death": SubResource("Animation_24cxn"),
+&"death_loop": SubResource("Animation_dl_break"),
+&"start": SubResource("Animation_st_break"),
 &"timeout": SubResource("Animation_timeout_break")
 }
 

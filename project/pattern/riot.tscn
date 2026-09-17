@@ -16,10 +16,20 @@ resource_name = "default"
 [sub_resource type="Animation" id="Animation_timeout_riot"]
 resource_name = "timeout"
 
+[sub_resource type="Animation" id="Animation_dl_riot"]
+resource_name = "death_loop"
+length = 1.0
+
+[sub_resource type="Animation" id="Animation_st_riot"]
+resource_name = "start"
+length = 1.0
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2bcf6"]
 _data = {
 &"death": SubResource("Animation_2bcf6"),
+&"death_loop": SubResource("Animation_dl_riot"),
 &"default": SubResource("Animation_jpa7l"),
+&"start": SubResource("Animation_st_riot"),
 &"timeout": SubResource("Animation_timeout_riot")
 }
 
