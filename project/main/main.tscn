@@ -39,7 +39,6 @@ scenes = Dictionary[int, PackedScene]({
 3: ExtResource("4_fwcvl"),
 4: ExtResource("5_na0o7")
 })
-default_state = 2
 audio_manager = NodePath("AudioManager")
 bgm_manager = NodePath("BGMManager")
 
@@ -77,9 +76,8 @@ stream = ExtResource("10_5xyti")
 max_polyphony = 2
 bus = &"SFX"
 
-[node name="BGMManager" type="Node" parent="." unique_id=630858695 node_paths=PackedStringArray("audsidsif")]
+[node name="BGMManager" type="Node" parent="." unique_id=630858695]
 script = ExtResource("3_kfbq2")
-audsidsif = NodePath("AudioStreamPlayer")
 metadata/_custom_type_script = "uid://dtytuvraaohro"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="BGMManager" unique_id=1759192243]

@@ -23,11 +23,16 @@ func init_pattern() -> void:
 	fire_time_left = fire_rate * fire_rate_multiplier
 	arc_time_left = arc_fire_rate * fire_rate_multiplier
 
-	is_started = true
-
 	shot_origins.sort_custom(func(a, b): return a.global_position.x < b.global_position.x)
 
+	animation_player.animation_finished.connect(on_anim_finished)
+
 	animation_player.play("start")
+
+func on_anim_finished(anim_name: StringName) -> void:
+	if anim_name == "start":
+		animation_player.play("default")
+		is_started = true
 
 func update(delta: float) -> void:
 	if is_timeout:

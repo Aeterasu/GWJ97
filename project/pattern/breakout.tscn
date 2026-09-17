@@ -359,7 +359,7 @@ strength = 0.0
 metadata/_custom_type_script = "uid://cjrjlngs4kufj"
 
 [node name="LargeShipVisual" parent="DrunkNode2D" unique_id=1742974697 instance=ExtResource("7_x54tp")]
-position = Vector2(120, 88)
+position = Vector2(120, 80)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2060591086]
 libraries/ = SubResource("AnimationLibrary_8kwni")

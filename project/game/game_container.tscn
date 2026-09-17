@@ -2056,7 +2056,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(0.54466987, 0.6055214)
+position = Vector2(0.12909731, -0.07099696)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -2068,7 +2068,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(-6.764699, -0.9167697)
+position = Vector2(4.7533584, 7.8360515)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
