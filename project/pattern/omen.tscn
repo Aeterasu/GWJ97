@@ -511,15 +511,15 @@ _data = {
 &"timeout": SubResource("Animation_timeout_omen")
 }
 
-[node name="Omen" type="Node" unique_id=425168190 node_paths=PackedStringArray("particles", "explosion", "entities", "sprites", "animation_player")]
+[node name="Omen" type="Node" unique_id=425168190 node_paths=PackedStringArray("particles", "entities", "sprites", "animation_player", "explosion")]
 script = ExtResource("1_va266")
 fire_rate = 0.48
 arc_spread = 25.0
 particles = NodePath("DeathDrunkNode2D/ShakyNode2D/DrunkNode2D/Enemy/CPUParticles2D")
-explosion = NodePath("Explosion")
 entities = [NodePath("DeathDrunkNode2D/ShakyNode2D/DrunkNode2D/Enemy")]
 sprites = [NodePath("DeathDrunkNode2D/ShakyNode2D/DrunkNode2D/Enemy/LargeShipVisual")]
 animation_player = NodePath("AnimationPlayer")
+explosion = NodePath("Explosion")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=765810337]
 z_index = 2

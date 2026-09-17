@@ -8,6 +8,8 @@ class_name Pattern extends Node
 @export var immune: bool = false
 @export var animation_player: AnimationPlayer = null
 
+@export var explosion: Node2D = null
+
 var health: float = 0.0
 
 var time_left: float = 0.0
@@ -58,6 +60,9 @@ func init_pattern() -> void:
 		entity.bullet_engine = self.bullet_engine
 
 	timeout_pattern.bullet_engine = bullet_engine
+
+func start() -> void:
+	is_started = true
 
 func _physics_process(delta: float) -> void:
 	if is_started and (not is_dead):
@@ -136,3 +141,16 @@ func deactivate() -> void:
 	for entity in entities:
 		if entity.get_parent():
 			entity.get_parent().remove_child(entity)
+
+func create_random_explosion(scale: Vector2 = Vector2.ONE) -> void:
+	AudioManager.play_sfx(AudioManager.instance.sfx_explosion_1, randf_range(0.9, 1.1))
+	
+	var exp = explosion.duplicate()
+	add_child(exp)
+
+	exp.scale = scale
+
+	exp.global_position = Vector2(randf_range(100.0, 140.0), randf_range(60.0, 150.0))
+	exp.reset_physics_interpolation()
+	exp.on_all_finished.connect(exp.queue_free)
+	exp.fire()

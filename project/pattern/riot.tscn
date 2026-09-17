@@ -116,9 +116,229 @@ tracks/5/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("ColorRect:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("ShakyNode2D:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("ShakyNode2D2:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("ShakyNode2D3:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath(".:immune")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_2bcf6"]
 resource_name = "death"
+length = 3.0000000000000004
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShakyNode2D:force")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 5.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShakyNode2D2:force")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 9.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ShakyNode2D3:force")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 9.0]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.70000005, 0.8, 0.90000004, 1, 1.1, 1.2, 1.3, 1.4000001, 1.5, 1.5999999, 1.7, 1.8000001, 1.9, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ColorRect:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1.8, 1.9, 2.1, 2.6, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ShakyNode2D:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("ShakyNode2D2:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("ShakyNode2D3:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
 
 [sub_resource type="Animation" id="Animation_dl_riot"]
 resource_name = "death_loop"
@@ -173,10 +393,10 @@ tracks/3/path = NodePath("ShakyNode2D:force")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.5, 1.4, 1.9, 2.25),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.05, 0.25, 0.5, 1.4, 1.9, 2.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [0.0, 4.0, 0.0, 0.0, 5.0, 0.0]
+"values": [0.0, 0.0, 4.0, 0.0, 0.0, 5.0, 0.0]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -185,10 +405,10 @@ tracks/4/path = NodePath("ShakyNode2D2:force")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.5, 1.3, 1.6, 1.8, 2.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 0.25000003, 0.22531275, 1),
+"times": PackedFloat32Array(0, 0.05, 0.25, 0.5, 1.3, 1.6, 1.8, 2.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 0.25000003, 0.22531275, 1),
 "update": 0,
-"values": [0.0, 3.0, 0.0, 0.0, 0.0, 8.0, 0.0]
+"values": [0.0, 0.0, 3.0, 0.0, 0.0, 0.0, 8.0, 0.0]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -197,10 +417,10 @@ tracks/5/path = NodePath("ShakyNode2D3:force")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.5, 1.3, 1.6, 1.8, 2.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 0.25000003, 0.22531275, 1),
+"times": PackedFloat32Array(0, 0.05, 0.25, 0.5, 1.3, 1.6, 1.8, 2.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 0.25000003, 0.22531275, 1),
 "update": 0,
-"values": [0.0, 3.0, 0.0, 0.0, 0.0, 8.0, 0.0]
+"values": [0.0, 0.0, 3.0, 0.0, 0.0, 0.0, 8.0, 0.0]
 }
 tracks/6/type = "method"
 tracks/6/imported = false
@@ -230,6 +450,32 @@ tracks/7/keys = {
 "method": &"fire"
 }]
 }
+tracks/8/type = "method"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath(".")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(1.8),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"start"
+}]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath(".:immune")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 3.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
 
 [sub_resource type="Animation" id="Animation_timeout_riot"]
 resource_name = "timeout"
@@ -244,7 +490,7 @@ _data = {
 &"timeout": SubResource("Animation_timeout_riot")
 }
 
-[node name="Riot" type="Node" unique_id=2000619167 node_paths=PackedStringArray("shot_origins", "entities", "sprites", "animation_player")]
+[node name="Riot" type="Node" unique_id=2000619167 node_paths=PackedStringArray("shot_origins", "entities", "sprites", "animation_player", "explosion")]
 script = ExtResource("1_jpa7l")
 shot_origins = [NodePath("Marker2D1"), NodePath("Marker2D2"), NodePath("Marker2D5"), NodePath("Marker2D3"), NodePath("Marker2D4"), NodePath("Marker2D6"), NodePath("Marker2D7")]
 fire_rate = 0.8
@@ -254,10 +500,10 @@ arc_fire_rate = 2.0
 entities = [NodePath("ShakyNode2D/Enemy"), NodePath("ShakyNode2D2/Part1"), NodePath("ShakyNode2D3/Part2")]
 sprites = [NodePath("ShakyNode2D/Enemy/Boss"), NodePath("ShakyNode2D2/Part1/Sprite2D"), NodePath("ShakyNode2D3/Part2/Sprite2D")]
 animation_player = NodePath("AnimationPlayer")
+explosion = NodePath("Explosion3")
 metadata/_custom_type_script = "uid://16mvw7i2q77s"
 
 [node name="ShakyNode2D" type="Node2D" parent="." unique_id=904306249]
-position = Vector2(-1.0690677, 2.4884827)
 script = ExtResource("2_siovc")
 decay_rate = 0.0
 metadata/_custom_type_script = "uid://dvqiup2un5h7j"
@@ -275,7 +521,6 @@ texture = SubResource("GradientTexture2D_kmx47")
 shape = SubResource("CircleShape2D_lcg72")
 
 [node name="ShakyNode2D2" type="Node2D" parent="." unique_id=818274803]
-position = Vector2(-6.092499, -6.856078)
 script = ExtResource("2_siovc")
 decay_rate = 0.0
 metadata/_custom_type_script = "uid://dvqiup2un5h7j"
@@ -295,7 +540,6 @@ centered = false
 shape = SubResource("RectangleShape2D_ec3xy")
 
 [node name="ShakyNode2D3" type="Node2D" parent="." unique_id=1190065137]
-position = Vector2(6.28553, -0.3913752)
 script = ExtResource("2_siovc")
 decay_rate = 0.0
 metadata/_custom_type_script = "uid://dvqiup2un5h7j"
@@ -344,3 +588,15 @@ position = Vector2(-1, 53)
 
 [node name="Explosion2" parent="." unique_id=1435388190 instance=ExtResource("7_dg0vs")]
 position = Vector2(247, 53)
+
+[node name="Explosion3" parent="." unique_id=828190061 instance=ExtResource("7_dg0vs")]
+position = Vector2(247, 53)
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1363089508]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.98039216, 0.91764706, 0.7882353, 1)

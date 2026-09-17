@@ -2,7 +2,10 @@
 
 [ext_resource type="Script" uid="uid://b8d47jehovp1y" path="res://pattern/dogfight.gd" id="1_6bsjc"]
 [ext_resource type="Script" uid="uid://du4pk0oohw2cn" path="res://enemy/enemy.gd" id="2_1j440"]
+[ext_resource type="Script" uid="uid://dvqiup2un5h7j" path="res://util/2d/shaky_node_2d.gd" id="2_4cjny"]
 [ext_resource type="PackedScene" uid="uid://bonkjsy6ujbfi" path="res://enemy/plane_visual.tscn" id="3_1j440"]
+[ext_resource type="PackedScene" uid="uid://caprr2iktjvhm" path="res://ui/threat_animated_text.tscn" id="4_sc6r3"]
+[ext_resource type="PackedScene" uid="uid://35v81h21xsoj" path="res://fx/explosion.tscn" id="6_xpdlf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_c0ape"]
 radius = 24.0
@@ -12,7 +15,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Enemy:position")
+tracks/0/path = NodePath("Node2D/ShakyNode2D/Enemy:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -33,9 +36,82 @@ tracks/1/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Node2D/ShakyNode2D/Enemy:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [3.1415927]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Node2D/ShakyNode2D/Enemy:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Node2D/ShakyNode2D/Enemy:z_index")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Node2D/ShakyNode2D:force")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Node2D:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".:immune")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_c0ape"]
 resource_name = "death"
+length = 5.0
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -49,6 +125,99 @@ tracks/0/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Node2D/ShakyNode2D/Enemy/Explosion")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"fire"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Node2D/ShakyNode2D:force")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 16.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Node2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.4, 0.7, 1.1, 1.6),
+"transitions": PackedFloat32Array(2, 0.5, -2, -2, -2, -2),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -48), Vector2(0, 16), Vector2(0, -8), Vector2(0, 4), Vector2(0, 0)]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimatedText")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["NOT BAD! DON'T PULL ANY PUNCHES NOW!", 0.3, 2.5, 0.2],
+"method": &"animate_text"
+}]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Node2D/ShakyNode2D/Enemy:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(1.6),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(120, 88)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Node2D/ShakyNode2D/Enemy:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_dl_dog"]
+resource_name = "death_loop"
 
 [sub_resource type="Animation" id="Animation_1j440"]
 resource_name = "default"
@@ -58,7 +227,7 @@ step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Enemy:position")
+tracks/0/path = NodePath("Node2D/ShakyNode2D/Enemy:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -118,16 +287,101 @@ tracks/2/keys = {
 "values": [false, true, false, true, false, true, false]
 }
 
-[sub_resource type="Animation" id="Animation_timeout_dog"]
-resource_name = "timeout"
-
-[sub_resource type="Animation" id="Animation_dl_dog"]
-resource_name = "death_loop"
-length = 1.0
-
 [sub_resource type="Animation" id="Animation_st_dog"]
 resource_name = "start"
-length = 1.0
+length = 4.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D/ShakyNode2D/Enemy:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 1.3, 1.5),
+"transitions": PackedFloat32Array(0.12940823, -2, 1, 1),
+"update": 0,
+"values": [Vector2(120, 390), Vector2(120, 63), Vector2(120, 95), Vector2(120, 88)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedText")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["I'M HERE TO FINISH THIS!", 0.2, 1.5, 0.2],
+"method": &"animate_text"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"start"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Node2D/ShakyNode2D/Enemy:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5, 1.2, 1.7),
+"transitions": PackedFloat32Array(-2, 2, 0.5, -2),
+"update": 0,
+"values": [3.1415927, 3.1415927, -0.08726646259971647, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Node2D/ShakyNode2D/Enemy:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.9, 1.3, 1.8),
+"transitions": PackedFloat32Array(-2, -2, -2, -2),
+"update": 0,
+"values": [Vector2(1.5, 1.5), Vector2(1.5, 1.5), Vector2(0.9, 0.9), Vector2(1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Node2D/ShakyNode2D/Enemy:z_index")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1.3, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [2048, 0, 0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:immune")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_timeout_dog"]
+resource_name = "timeout"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sc6r3"]
 _data = {
@@ -139,23 +393,39 @@ _data = {
 &"timeout": SubResource("Animation_timeout_dog")
 }
 
-[node name="Dogfight" type="Node" unique_id=285190987 node_paths=PackedStringArray("entities", "sprites", "animation_player")]
+[node name="Dogfight" type="Node" unique_id=285190987 node_paths=PackedStringArray("entities", "sprites", "animation_player", "explosion")]
 script = ExtResource("1_6bsjc")
 fire_rate = 0.1
-entities = [NodePath("Enemy")]
-sprites = [NodePath("Enemy/PlaneVisual")]
+entities = [NodePath("Node2D/ShakyNode2D/Enemy")]
+sprites = [NodePath("Node2D/ShakyNode2D/Enemy/PlaneVisual")]
 animation_player = NodePath("AnimationPlayer")
+explosion = NodePath("Explosion")
 metadata/_custom_type_script = "uid://16mvw7i2q77s"
 
-[node name="Enemy" type="Area2D" parent="." unique_id=1112101402]
+[node name="Node2D" type="Node2D" parent="." unique_id=557639596]
+
+[node name="ShakyNode2D" type="Node2D" parent="Node2D" unique_id=2070874748]
+script = ExtResource("2_4cjny")
+decay_rate = 0.0
+metadata/_custom_type_script = "uid://dvqiup2un5h7j"
+
+[node name="Enemy" type="Area2D" parent="Node2D/ShakyNode2D" unique_id=1112101402]
 position = Vector2(120, 88)
+rotation = 3.1415927
 script = ExtResource("2_1j440")
 metadata/_custom_type_script = "uid://du4pk0oohw2cn"
 
-[node name="PlaneVisual" parent="Enemy" unique_id=1742974697 instance=ExtResource("3_1j440")]
+[node name="Explosion" parent="Node2D/ShakyNode2D/Enemy" unique_id=1251670886 instance=ExtResource("6_xpdlf")]
+position = Vector2(-121, -35)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy" unique_id=2088825118]
+[node name="PlaneVisual" parent="Node2D/ShakyNode2D/Enemy" unique_id=1742974697 instance=ExtResource("3_1j440")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/ShakyNode2D/Enemy" unique_id=2088825118]
 shape = SubResource("CircleShape2D_c0ape")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=148943428]
 libraries/ = SubResource("AnimationLibrary_sc6r3")
+
+[node name="AnimatedText" parent="." unique_id=1100621936 instance=ExtResource("4_sc6r3")]
+
+[node name="Explosion" parent="." unique_id=840624034 instance=ExtResource("6_xpdlf")]

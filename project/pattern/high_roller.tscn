@@ -1,8 +1,11 @@
 [gd_scene format=3 uid="uid://iw61jl5rfh8k"]
 
 [ext_resource type="Script" uid="uid://uydf6vurl6wg" path="res://pattern/high_roller.gd" id="1_4o7cs"]
+[ext_resource type="Script" uid="uid://dvqiup2un5h7j" path="res://util/2d/shaky_node_2d.gd" id="2_fjv3d"]
 [ext_resource type="Script" uid="uid://du4pk0oohw2cn" path="res://enemy/enemy.gd" id="2_r0hix"]
 [ext_resource type="PackedScene" uid="uid://bonkjsy6ujbfi" path="res://enemy/plane_visual.tscn" id="3_r0hix"]
+[ext_resource type="PackedScene" uid="uid://caprr2iktjvhm" path="res://ui/threat_animated_text.tscn" id="4_ee0li"]
+[ext_resource type="PackedScene" uid="uid://35v81h21xsoj" path="res://fx/explosion.tscn" id="6_ghneh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fjv3d"]
 radius = 24.0
@@ -45,10 +48,183 @@ tracks/2/keys = {
 "update": 0,
 "values": [1.0]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ShakyNode2D:force")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:immune")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ShakyNode2D/Enemy/PlaneVisual:offset")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("ColorRect:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("ShakyNode2D/Enemy:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_r0hix"]
 resource_name = "death"
+length = 5.0
 step = 0.1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedText")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["THERE'S NO WAY... I CAN'T LOSE...", 0.2, 2.0, 0.2],
+"method": &"animate_text"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.7, 1.1, 1.6, 2, 2.3, 2.5, 2.6999998, 2.8, 2.9, 3, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.6999998, 3.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}, {
+"args": [Vector2(1, 1)],
+"method": &"create_random_explosion"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ColorRect:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1.8, 3.6999998, 3.8, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ShakyNode2D/Enemy:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 3.7, 3.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_dl_hr"]
+resource_name = "death_loop"
 
 [sub_resource type="Animation" id="Animation_ee0li"]
 resource_name = "default"
@@ -61,7 +237,7 @@ tracks/0/path = NodePath(".:is_firing")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 2),
+"times": PackedFloat32Array(0, 0.9),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
@@ -90,17 +266,76 @@ tracks/2/keys = {
 "update": 0,
 "values": [4.0, 4.0, 0.4]
 }
-
-[sub_resource type="Animation" id="Animation_timeout_hr"]
-resource_name = "timeout"
-
-[sub_resource type="Animation" id="Animation_dl_hr"]
-resource_name = "death_loop"
-length = 1.0
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ShakyNode2D:force")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.9, 1.3, 3, 10),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [5.0, 5.0, 0.0, 0.0, 4.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ShakyNode2D/Enemy/PlaneVisual:offset")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.8, 0.9, 1.1, 1.4, 1.7),
+"transitions": PackedFloat32Array(-2, -2, -2, -2, -2, -2),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, -32), Vector2(0, 8), Vector2(0, -2), Vector2(0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_st_hr"]
 resource_name = "start"
-length = 1.0
+length = 5.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShakyNode2D:force")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 5.0]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedText")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["THAT'S IT! Time for my ULTIMATE WEAPON!", 0.2, 2.0, 0.2],
+"method": &"animate_text"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:immune")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_timeout_hr"]
+resource_name = "timeout"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fjv3d"]
 _data = {
@@ -112,22 +347,43 @@ _data = {
 &"timeout": SubResource("Animation_timeout_hr")
 }
 
-[node name="HighRoller" type="Node" unique_id=95005314 node_paths=PackedStringArray("entities", "sprites", "animation_player")]
+[node name="HighRoller" type="Node" unique_id=95005314 node_paths=PackedStringArray("entities", "sprites", "animation_player", "explosion")]
 script = ExtResource("1_4o7cs")
-entities = [NodePath("Enemy")]
-sprites = [NodePath("Enemy/PlaneVisual")]
+spawn_life = true
+entities = [NodePath("ShakyNode2D/Enemy")]
+sprites = [NodePath("ShakyNode2D/Enemy/PlaneVisual")]
 animation_player = NodePath("AnimationPlayer")
+explosion = NodePath("Explosion")
 metadata/_custom_type_script = "uid://16mvw7i2q77s"
 
-[node name="Enemy" type="Area2D" parent="." unique_id=1103872824]
+[node name="ShakyNode2D" type="Node2D" parent="." unique_id=433677295]
+position = Vector2(2.5073, -2.9566433)
+script = ExtResource("2_fjv3d")
+decay_rate = 0.0
+metadata/_custom_type_script = "uid://dvqiup2un5h7j"
+
+[node name="Enemy" type="Area2D" parent="ShakyNode2D" unique_id=1103872824]
 position = Vector2(120, 88)
 script = ExtResource("2_r0hix")
 metadata/_custom_type_script = "uid://du4pk0oohw2cn"
 
-[node name="PlaneVisual" parent="Enemy" unique_id=1742974697 instance=ExtResource("3_r0hix")]
+[node name="PlaneVisual" parent="ShakyNode2D/Enemy" unique_id=1742974697 instance=ExtResource("3_r0hix")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy" unique_id=477702134]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShakyNode2D/Enemy" unique_id=477702134]
 shape = SubResource("CircleShape2D_fjv3d")
+
+[node name="AnimatedText" parent="." unique_id=1100621936 instance=ExtResource("4_ee0li")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1489608949]
 libraries/ = SubResource("AnimationLibrary_fjv3d")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1633209835]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+
+[node name="Explosion" parent="." unique_id=1251670886 instance=ExtResource("6_ghneh")]

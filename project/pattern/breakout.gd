@@ -31,7 +31,7 @@ func update(delta: float) -> void:
 		timeout_pattern.shot_origin_position = entities[0].global_position
 		timeout_pattern.update(delta)
 		return
-
+	
 	fire_time_left -= delta
 
 	if fire_time_left <= 0.0:
@@ -49,7 +49,11 @@ func update(delta: float) -> void:
 		fire_secondary_time_left = fire_rate_secondary * fire_rate_multiplier
 		bullet_engine.fire_bullet(shot_origins.pick_random().global_position, PI / 2.0 + randf_range(-PI / 5.0, PI / 5.0), randf_range(60.0, 140.0) * bullet_speed_multiplier, BulletSkin.Type.ENEMY_BULLET_ALT_MEDIUM)
 
+		AudioManager.play_sfx(AudioManager.instance.sfx_boss_shot_3, randf_range(0.9, 1.1))
+
 func fire_primary() -> void:
+	AudioManager.play_sfx(AudioManager.instance.sfx_boss_shot_2, randf_range(0.9, 1.1))
+
 	var bullet_count: int = int(16 * bullet_count_multiplier)
 
 	var origin = shot_origins[start_origin]

@@ -1310,11 +1310,13 @@ texture = ExtResource("7_yfvcu")
 process_mode = 1
 script = ExtResource("2_oryes")
 player = NodePath("../Player")
+show_boss_warning = false
 boss_warning = NodePath("../../../../Overlay/BossWarning")
 timeout_warning = NodePath("../../../../Overlay/TimeoutWarning")
+starting_pattern = 5
 animation_player = NodePath("AnimationPlayer")
 patterns = [NodePath("Omen"), NodePath("Breakout"), NodePath("Riot"), NodePath("Dogfight"), NodePath("Pilebunker"), NodePath("HighRoller"), NodePath("Naysayer"), NodePath("SnakeEyes"), NodePath("Meltdown"), NodePath("BleedingStar")]
-patterns_health = Array[float]([3000.0, 3200.0, 3200.0, 1200.0, 1100.0, 4800.0, 1800.0, 2800.0, 6000.0, 7000.0])
+patterns_health = Array[float]([3000.0, 3200.0, 3200.0, 2000.0, 1000.0, 4800.0, 1800.0, 2800.0, 6000.0, 7000.0])
 patterns_timer = Array[float]([45.0, 45.0, 45.0, 60.0, 60.0, 75.0, 75.0, 75.0, 90.0, 90.0])
 patterns_flavor = Array[ExtResource("3_ysh17")]([ExtResource("4_to2kc"), ExtResource("5_ino1g"), ExtResource("8_v7aj6"), ExtResource("6_gts4h"), ExtResource("7_j7fm5"), ExtResource("15_y37xm"), ExtResource("8_1vxhs"), ExtResource("9_bybv3"), ExtResource("10_y7kwi"), ExtResource("18_kjv07")])
 scoring = NodePath("../Scoring")
@@ -2056,7 +2058,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(0.12909731, -0.07099696)
+position = Vector2(-0.16837798, 0.5708726)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -2068,7 +2070,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(4.7533584, 7.8360515)
+position = Vector2(3.0581732, -6.733642)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")

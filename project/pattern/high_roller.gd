@@ -21,11 +21,16 @@ var circle_idx: int = 24
 func init_pattern() -> void:
 	super()
 
-	is_started = true
-
 	fire_timer_secondary = fire_rate_secondary * fire_rate_multiplier
+	
+	animation_player.animation_finished.connect(on_anim_finished)
 
-	animation_player.play("default")
+	animation_player.play("start")
+
+func on_anim_finished(anim_name: StringName) -> void:
+	if anim_name == "start":
+		animation_player.play("default")
+		is_started = true
 
 func update(delta: float) -> void:
 	if is_timeout:

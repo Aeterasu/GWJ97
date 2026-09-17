@@ -6,6 +6,8 @@ class_name AudioManager extends Node
 
 @export_group("Enemy")
 @export var sfx_boss_shot_1: AudioStreamPlayer = null
+@export var sfx_boss_shot_2: AudioStreamPlayer = null
+@export var sfx_boss_shot_3: AudioStreamPlayer = null
 @export var sfx_explosion_1: AudioStreamPlayer = null
 
 const BUS_NAME_MASTER = "Master"

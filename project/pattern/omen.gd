@@ -17,8 +17,6 @@ var direction: float = 1.0
 
 @export var particles: CPUParticles2D = null
 
-@export var explosion: Node2D = null
-
 var count: int = 0
 
 func _ready() -> void:
@@ -96,15 +94,3 @@ func on_anim_finished(anim_name: StringName) -> void:
 		animation_player.play("default")
 		is_started = true
 
-func create_random_explosion(scale: Vector2 = Vector2.ONE) -> void:
-	AudioManager.play_sfx(AudioManager.instance.sfx_explosion_1, randf_range(0.9, 1.1))
-	
-	var exp = explosion.duplicate()
-	add_child(exp)
-
-	exp.scale = scale
-
-	exp.global_position = Vector2(randf_range(100.0, 140.0), randf_range(60.0, 150.0))
-	exp.reset_physics_interpolation()
-	exp.on_all_finished.connect(exp.queue_free)
-	exp.fire()
