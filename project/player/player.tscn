@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://crfc8fl4s2ydv" path="res://player/texture/texture_player_hitbox.png" id="6_8t03j"]
 [ext_resource type="Texture2D" uid="uid://pbvi3x36nsw6" path="res://player/texture/texture_player_muzzle_flash.png" id="7_boad6"]
 [ext_resource type="Shader" uid="uid://dnjynoll1mra0" path="res://player/player_option.gdshader" id="8_2ieo8"]
+[ext_resource type="PackedScene" uid="uid://35v81h21xsoj" path="res://fx/explosion.tscn" id="11_2ieo8"]
 
 [sub_resource type="Curve" id="Curve_3b7yk"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -72,29 +73,32 @@ blend_mode = 1
 [sub_resource type="CircleShape2D" id="CircleShape2D_3b7yk"]
 radius = 2.0
 
-[node name="Player" type="Area2D" unique_id=1584514943 node_paths=PackedStringArray("base_weapon", "focus_weapon", "options", "sprite", "hitbox_sprite", "muzzle_flashes")]
+[node name="Player" type="Area2D" unique_id=1584514943 node_paths=PackedStringArray("base_weapon", "focus_weapon", "options", "sprite", "hitbox_sprite", "muzzle_flashes", "death_explosion")]
 y_sort_enabled = true
 script = ExtResource("1_rkbax")
 base_speed = 210.0
 focus_speed = 100.0
-base_weapon = NodePath("BaseWeapon")
-focus_weapon = NodePath("FocusWeapon")
+base_weapon = NodePath("VisibilityOrigin/BaseWeapon")
+focus_weapon = NodePath("VisibilityOrigin/FocusWeapon")
 options_rotation_speed = 0.785
 options_base_distance = 54.0
 options_focus_distance = 16.0
-options = [NodePath("Option1"), NodePath("Option2")]
+options = [NodePath("VisibilityOrigin/Option1"), NodePath("VisibilityOrigin/Option2")]
 options_transition_duration = 0.3
-sprite = NodePath("Sprite2D")
-hitbox_sprite = NodePath("Hitbox")
-muzzle_flashes = [NodePath("MuzzleFlash"), NodePath("Option1/MuzzleFlash"), NodePath("Option2/MuzzleFlash")]
+sprite = NodePath("VisibilityOrigin/Sprite2D")
+hitbox_sprite = NodePath("VisibilityOrigin/Hitbox")
+muzzle_flashes = [NodePath("VisibilityOrigin/MuzzleFlash"), NodePath("VisibilityOrigin/Option1/MuzzleFlash"), NodePath("VisibilityOrigin/Option2/MuzzleFlash")]
+death_explosion = NodePath("Explosion")
 
-[node name="LerpFollower2D" type="Node2D" parent="." unique_id=2089604479]
+[node name="VisibilityOrigin" type="Node2D" parent="." unique_id=1244139579]
+
+[node name="LerpFollower2D" type="Node2D" parent="VisibilityOrigin" unique_id=2089604479]
 position = Vector2(0, 15)
 script = ExtResource("3_g6k8r")
 lerp_weight = 25.0
 metadata/_custom_type_script = "uid://bd3qyvjnay3cr"
 
-[node name="Trail2D" type="Line2D" parent="LerpFollower2D" unique_id=1387270608]
+[node name="Trail2D" type="Line2D" parent="VisibilityOrigin/LerpFollower2D" unique_id=1387270608]
 show_behind_parent = true
 z_index = -1
 z_as_relative = false
@@ -106,13 +110,13 @@ script = ExtResource("3_qjkh3")
 length = 25
 metadata/_custom_type_script = "uid://cnksq2oeepu0y"
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1154157569]
+[node name="Sprite2D" type="Sprite2D" parent="VisibilityOrigin" unique_id=1154157569]
 z_index = -1
 material = SubResource("ShaderMaterial_8t03j")
 texture = SubResource("GradientTexture2D_2ieo8")
 offset = Vector2(-0.5, -0.5)
 
-[node name="Hitbox" type="Sprite2D" parent="." unique_id=551572882]
+[node name="Hitbox" type="Sprite2D" parent="VisibilityOrigin" unique_id=551572882]
 z_index = 64
 z_as_relative = false
 material = SubResource("ShaderMaterial_2ieo8")
@@ -120,7 +124,7 @@ position = Vector2(1, -1)
 texture = SubResource("GradientTexture2D_ebec5")
 offset = Vector2(-0.5, 0.5)
 
-[node name="BaseWeapon" type="Node2D" parent="." unique_id=1696975318 node_paths=PackedStringArray("shot_origins")]
+[node name="BaseWeapon" type="Node2D" parent="VisibilityOrigin" unique_id=1696975318 node_paths=PackedStringArray("shot_origins")]
 script = ExtResource("4_yw30f")
 shot_origins = [NodePath("../ShotOrigin1"), NodePath("../ShotOrigin2"), NodePath("../Option1/ShotOrigin1"), NodePath("../Option2/ShotOrigin1")]
 origin_random_offset = Vector2(4, 0)
@@ -129,7 +133,7 @@ damage = 1.0
 shot_speed = 1000.0
 metadata/_custom_type_script = "uid://daly1svuqwggy"
 
-[node name="FocusWeapon" type="Node2D" parent="." unique_id=1213521630 node_paths=PackedStringArray("shot_origins")]
+[node name="FocusWeapon" type="Node2D" parent="VisibilityOrigin" unique_id=1213521630 node_paths=PackedStringArray("shot_origins")]
 script = ExtResource("4_yw30f")
 shot_origins = [NodePath("../ShotOrigin1"), NodePath("../ShotOrigin2"), NodePath("../Option1/ShotOrigin1"), NodePath("../Option2/ShotOrigin1")]
 origin_random_offset = Vector2(1, 0)
@@ -138,26 +142,26 @@ damage = 1.5
 shot_speed = 1500.0
 metadata/_custom_type_script = "uid://daly1svuqwggy"
 
-[node name="ShotOrigin1" type="Marker2D" parent="." unique_id=1864858623]
+[node name="ShotOrigin1" type="Marker2D" parent="VisibilityOrigin" unique_id=1864858623]
 position = Vector2(-5, -32)
 
-[node name="ShotOrigin2" type="Marker2D" parent="." unique_id=1002547425]
+[node name="ShotOrigin2" type="Marker2D" parent="VisibilityOrigin" unique_id=1002547425]
 position = Vector2(5, -32)
 
-[node name="Option1" type="Sprite2D" parent="." unique_id=703252772]
+[node name="Option1" type="Sprite2D" parent="VisibilityOrigin" unique_id=703252772]
 material = SubResource("ShaderMaterial_yllr7")
 position = Vector2(-32, 0)
 texture = SubResource("GradientTexture2D_hg6s5")
 
-[node name="ShotOrigin1" type="Marker2D" parent="Option1" unique_id=681034560]
+[node name="ShotOrigin1" type="Marker2D" parent="VisibilityOrigin/Option1" unique_id=681034560]
 position = Vector2(0, -27)
 
-[node name="LerpFollower2D" type="Node2D" parent="Option1" unique_id=1059055063]
+[node name="LerpFollower2D" type="Node2D" parent="VisibilityOrigin/Option1" unique_id=1059055063]
 script = ExtResource("3_g6k8r")
 lerp_weight = 25.0
 metadata/_custom_type_script = "uid://bd3qyvjnay3cr"
 
-[node name="Trail2D" type="Line2D" parent="Option1/LerpFollower2D" unique_id=1704746616]
+[node name="Trail2D" type="Line2D" parent="VisibilityOrigin/Option1/LerpFollower2D" unique_id=1704746616]
 show_behind_parent = true
 z_index = -1
 z_as_relative = false
@@ -169,26 +173,26 @@ script = ExtResource("3_qjkh3")
 length = 25
 metadata/_custom_type_script = "uid://cnksq2oeepu0y"
 
-[node name="MuzzleFlash" type="Sprite2D" parent="Option1" unique_id=1687499647]
+[node name="MuzzleFlash" type="Sprite2D" parent="VisibilityOrigin/Option1" unique_id=1687499647]
 material = SubResource("CanvasItemMaterial_boad6")
 position = Vector2(0, -11)
 texture = ExtResource("7_boad6")
 offset = Vector2(0, -16)
 
-[node name="Option2" type="Sprite2D" parent="." unique_id=1015326118]
+[node name="Option2" type="Sprite2D" parent="VisibilityOrigin" unique_id=1015326118]
 material = SubResource("ShaderMaterial_yllr7")
 position = Vector2(32, 0)
 texture = SubResource("GradientTexture2D_hg6s5")
 
-[node name="ShotOrigin1" type="Marker2D" parent="Option2" unique_id=1266983150]
+[node name="ShotOrigin1" type="Marker2D" parent="VisibilityOrigin/Option2" unique_id=1266983150]
 position = Vector2(0, -27)
 
-[node name="LerpFollower2D" type="Node2D" parent="Option2" unique_id=506980988]
+[node name="LerpFollower2D" type="Node2D" parent="VisibilityOrigin/Option2" unique_id=506980988]
 script = ExtResource("3_g6k8r")
 lerp_weight = 25.0
 metadata/_custom_type_script = "uid://bd3qyvjnay3cr"
 
-[node name="Trail2D" type="Line2D" parent="Option2/LerpFollower2D" unique_id=878729094]
+[node name="Trail2D" type="Line2D" parent="VisibilityOrigin/Option2/LerpFollower2D" unique_id=878729094]
 show_behind_parent = true
 z_index = -1
 z_as_relative = false
@@ -200,17 +204,19 @@ script = ExtResource("3_qjkh3")
 length = 25
 metadata/_custom_type_script = "uid://cnksq2oeepu0y"
 
-[node name="MuzzleFlash" type="Sprite2D" parent="Option2" unique_id=1787583620]
+[node name="MuzzleFlash" type="Sprite2D" parent="VisibilityOrigin/Option2" unique_id=1787583620]
 material = SubResource("CanvasItemMaterial_boad6")
 position = Vector2(0, -11)
+texture = ExtResource("7_boad6")
+offset = Vector2(0, -16)
+
+[node name="MuzzleFlash" type="Sprite2D" parent="VisibilityOrigin" unique_id=1549284357]
+material = SubResource("CanvasItemMaterial_boad6")
+position = Vector2(0, -20)
 texture = ExtResource("7_boad6")
 offset = Vector2(0, -16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=128030895]
 shape = SubResource("CircleShape2D_3b7yk")
 
-[node name="MuzzleFlash" type="Sprite2D" parent="." unique_id=1549284357]
-material = SubResource("CanvasItemMaterial_boad6")
-position = Vector2(0, -20)
-texture = ExtResource("7_boad6")
-offset = Vector2(0, -16)
+[node name="Explosion" parent="." unique_id=1251670886 instance=ExtResource("11_2ieo8")]

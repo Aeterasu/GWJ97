@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://bonkjsy6ujbfi" path="res://enemy/plane_visual.tscn" id="3_1j440"]
 [ext_resource type="PackedScene" uid="uid://caprr2iktjvhm" path="res://ui/threat_animated_text.tscn" id="4_sc6r3"]
 [ext_resource type="PackedScene" uid="uid://35v81h21xsoj" path="res://fx/explosion.tscn" id="6_xpdlf"]
+[ext_resource type="AudioStream" uid="uid://bmow8jo5dewrb" path="res://audio/sfx/sfx_boss_shot_5.ogg" id="7_xpdlf"]
+[ext_resource type="AudioStream" uid="uid://1ou82id7v4ej" path="res://audio/sfx/sfx_boss_shot_2.ogg" id="8_lbi0x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_c0ape"]
 radius = 24.0
@@ -286,6 +288,43 @@ tracks/2/keys = {
 "update": 1,
 "values": [false, true, false, true, false, true, false]
 }
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AudioStreamPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.5, 3, 5.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AudioStreamPlayer2")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(2, 4.5),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_st_dog"]
 resource_name = "start"
@@ -429,3 +468,12 @@ libraries/ = SubResource("AnimationLibrary_sc6r3")
 [node name="AnimatedText" parent="." unique_id=1100621936 instance=ExtResource("4_sc6r3")]
 
 [node name="Explosion" parent="." unique_id=840624034 instance=ExtResource("6_xpdlf")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=944446653]
+stream = ExtResource("7_xpdlf")
+volume_db = -5.0
+bus = &"SFX"
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="." unique_id=688001147]
+stream = ExtResource("8_lbi0x")
+bus = &"SFX"

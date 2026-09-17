@@ -34,6 +34,9 @@ var sprite_yaw: float = 0.0
 @export var bomb_parent: Node = null
 @export var bomb_projectile_scene: PackedScene = null
 
+@export var visibilty_origin: Node2D = null
+@export var death_explosion: Node2D = null
+
 var lives: int = 0
 const STARTING_LIVES: int = 2
 const MAX_LIVES: int = 5
@@ -53,10 +56,11 @@ var bomb_effect_timer : float = 0.0
 var bomb_ready_toggle: bool = false
 
 var is_dead: bool = false
+var disable_input: bool = false
 
 var shot_audio: float = 0.0
 
-const COUNTERBOMB_WINDOW: int = 6
+const COUNTERBOMB_WINDOW: int = 8
 var counterbomb_ticker: int = 0
 var is_counterbomb_active: bool = false
 
@@ -96,6 +100,9 @@ func _physics_process(delta: float) -> void:
 		if is_dead:
 			return
 
+		if disable_input:
+			return
+
 		process_movement(delta)
 		process_weapon(delta)
 
@@ -121,14 +128,6 @@ func _physics_process(delta: float) -> void:
 	# bomb
 
 	if is_bomb_active and game_sequencer.enemy_bullet_engine.active_bullet_count > 0:
-		var array: Array[Vector2] = []
-		array.resize(game_sequencer.enemy_bullet_engine.active_bullet_count)
-
-		for i in game_sequencer.enemy_bullet_engine.active_bullet_count:
-			array[i] = game_sequencer.enemy_bullet_engine.bullets[i].position
-	
-		bomb_animation.positions = array
-
 		game_sequencer.enemy_bullet_engine.bullet_cancel()	
 
 	# counterbomb
@@ -137,6 +136,7 @@ func _physics_process(delta: float) -> void:
 		if counterbomb_ticker > COUNTERBOMB_WINDOW:
 			is_counterbomb_active = false
 			deduct_life()
+			death_explosion.fire()
 
 		counterbomb_ticker += 1
 
@@ -184,6 +184,13 @@ func process_weapon(delta: float) -> void:
 		invincibility_timer = INVINCIBILITY_ON_BOMB
 		game_sequencer.no_bomb = false
 		bomb_ready_toggle = true
+
+		bomb_animation.positions.resize(game_sequencer.enemy_bullet_engine.active_bullet_count)
+		for i in game_sequencer.enemy_bullet_engine.active_bullet_count:
+			bomb_animation.positions[i] = game_sequencer.enemy_bullet_engine.bullets[i].position
+
+		bomb_animation.particles.amount = game_sequencer.enemy_bullet_engine.active_bullet_count * 48
+
 		on_bomb.emit()
 
 		is_bomb_active = true
@@ -194,7 +201,7 @@ func process_weapon(delta: float) -> void:
 		bomb_parent.add_child(projectile)
 		projectile.global_position = self.global_position + Vector2.UP * 128.0
 		projectile.reset_physics_interpolation()
-
+		
 		if is_counterbomb_active:
 			is_counterbomb_active = false
 

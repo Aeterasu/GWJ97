@@ -17,6 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://1ou82id7v4ej" path="res://audio/sfx/sfx_boss_shot_2.ogg" id="10_n3o0a"]
 [ext_resource type="AudioStream" uid="uid://bp5xybhrhh1bj" path="res://audio/sfx/sfx_boss_shot_3.ogg" id="11_s758e"]
 [ext_resource type="AudioStream" uid="uid://cwd1cu10o1bb6" path="res://audio/sfx/sfx_boss_shot_4.ogg" id="12_4hmqs"]
+[ext_resource type="AudioStream" uid="uid://bmow8jo5dewrb" path="res://audio/sfx/sfx_boss_shot_5.ogg" id="13_o8j3b"]
 [ext_resource type="Script" uid="uid://blxlds51u1tye" path="res://audio/bgm.gd" id="15_frbr6"]
 [ext_resource type="AudioStream" uid="uid://dtttaa52i0a7x" path="res://audio/bgm/stg_bs003-intro.ogg" id="16_o8j3b"]
 [ext_resource type="AudioStream" uid="uid://bnii2kcrqypv5" path="res://audio/bgm/stg_bs003-loop.ogg" id="17_wpkmi"]
@@ -59,7 +60,7 @@ bgm_manager = NodePath("BGMManager")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1118035484]
 environment = SubResource("Environment_3b7yk")
 
-[node name="AudioManager" type="Node" parent="." unique_id=1791605055 node_paths=PackedStringArray("sfx_player_shot", "sfx_player_bomb", "sfx_boss_shot_1", "sfx_boss_shot_2", "sfx_boss_shot_3", "sfx_boss_shot_4", "sfx_explosion_1")]
+[node name="AudioManager" type="Node" parent="." unique_id=1791605055 node_paths=PackedStringArray("sfx_player_shot", "sfx_player_bomb", "sfx_boss_shot_1", "sfx_boss_shot_2", "sfx_boss_shot_3", "sfx_boss_shot_4", "sfx_boss_shot_5", "sfx_explosion_1")]
 script = ExtResource("2_3wy1v")
 sfx_player_shot = NodePath("AudioPlayerShot")
 sfx_player_bomb = NodePath("AudioPlayerBomb")
@@ -67,6 +68,7 @@ sfx_boss_shot_1 = NodePath("AudioBossShot1")
 sfx_boss_shot_2 = NodePath("AudioBossShot2")
 sfx_boss_shot_3 = NodePath("AudioBossShot3")
 sfx_boss_shot_4 = NodePath("AudioBossShot4")
+sfx_boss_shot_5 = NodePath("AudioBossShot5")
 sfx_explosion_1 = NodePath("AudioExplosion1")
 metadata/_custom_type_script = "uid://upphqgb3vovy"
 
@@ -101,6 +103,12 @@ bus = &"SFX"
 
 [node name="AudioBossShot4" type="AudioStreamPlayer" parent="AudioManager" unique_id=24180440]
 stream = ExtResource("12_4hmqs")
+max_polyphony = 4
+bus = &"SFX"
+
+[node name="AudioBossShot5" type="AudioStreamPlayer" parent="AudioManager" unique_id=818805892]
+stream = ExtResource("13_o8j3b")
+volume_db = -5.0
 max_polyphony = 4
 bus = &"SFX"
 

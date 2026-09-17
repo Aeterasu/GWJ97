@@ -40,7 +40,7 @@ script = ExtResource("1_1wbg1")
 particles = [NodePath("ShakyNode2D/CPUParticles2D"), NodePath("CPUParticles2D")]
 
 [node name="ShakyNode2D" type="Node2D" parent="." unique_id=206532229]
-position = Vector2(-1.0410371, -5.217723)
+position = Vector2(-4.2361965, 4.035862)
 script = ExtResource("1_srif0")
 force = 8.0
 decay_rate = 0.0

@@ -28,6 +28,7 @@ func update(delta: float) -> void:
 
 		if fire_timer <= 0.0:
 			fire_timer = fire_rate * fire_rate_multiplier
+			#AudioManager.play_sfx(AudioManager.instance.sfx_boss_shot_5, randf_range(0.9, 1.1))
 			fire_rapid()
 	else:
 		fire_timer = 0.0
