@@ -94,11 +94,21 @@ tracks/2/keys = {
 [sub_resource type="Animation" id="Animation_timeout_hr"]
 resource_name = "timeout"
 
+[sub_resource type="Animation" id="Animation_dl_hr"]
+resource_name = "death_loop"
+length = 1.0
+
+[sub_resource type="Animation" id="Animation_st_hr"]
+resource_name = "start"
+length = 1.0
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fjv3d"]
 _data = {
 &"RESET": SubResource("Animation_fjv3d"),
 &"death": SubResource("Animation_r0hix"),
+&"death_loop": SubResource("Animation_dl_hr"),
 &"default": SubResource("Animation_ee0li"),
+&"start": SubResource("Animation_st_hr"),
 &"timeout": SubResource("Animation_timeout_hr")
 }
 

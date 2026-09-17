@@ -23,9 +23,16 @@ func init_pattern() -> void:
 	fire_time_left = fire_rate * fire_rate_multiplier
 	arc_time_left = arc_fire_rate * fire_rate_multiplier
 
-	is_started = true
-
 	shot_origins.sort_custom(func(a, b): return a.global_position.x < b.global_position.x)
+
+	animation_player.animation_finished.connect(on_anim_finished)
+
+	animation_player.play("start")
+
+func on_anim_finished(anim_name: StringName) -> void:
+	if anim_name == "start":
+		animation_player.play("default")
+		is_started = true
 
 func update(delta: float) -> void:
 	if is_timeout:
@@ -96,7 +103,7 @@ func fire_arc() -> void:
 
 	for i in arc:
 		var speed = randf_range(90.0, 180.0) * bullet_speed_multiplier
-		bullet_engine.fire_bullet(pos, i, speed, BulletSkin.Type.ENEMY_BULLET_ALT_SMALL, gravity_bullet)
+		bullet_engine.fire_bullet(pos, i, speed, BulletSkin.Type.ENEMY_BULLET_ALT_MEDIUM, gravity_bullet)
 
 static func gravity_bullet(bullet: Bullet, delta: float) -> Vector2:
 	bullet.velocity += Vector2.DOWN * 98 * delta

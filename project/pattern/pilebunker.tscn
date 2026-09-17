@@ -126,11 +126,21 @@ tracks/2/keys = {
 [sub_resource type="Animation" id="Animation_timeout_pile"]
 resource_name = "timeout"
 
+[sub_resource type="Animation" id="Animation_dl_pile"]
+resource_name = "death_loop"
+length = 1.0
+
+[sub_resource type="Animation" id="Animation_st_pile"]
+resource_name = "start"
+length = 1.0
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pp47w"]
 _data = {
 &"RESET": SubResource("Animation_xyyh3"),
 &"death": SubResource("Animation_pp47w"),
+&"death_loop": SubResource("Animation_dl_pile"),
 &"default": SubResource("Animation_33kw3"),
+&"start": SubResource("Animation_st_pile"),
 &"timeout": SubResource("Animation_timeout_pile")
 }
 

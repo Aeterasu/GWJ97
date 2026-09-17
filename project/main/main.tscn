@@ -11,6 +11,10 @@
 [ext_resource type="Script" uid="uid://cmfa1d5fwckcb" path="res://util/ui/colored_fps_counter.gd" id="5_67ri8"]
 [ext_resource type="PackedScene" uid="uid://gfkkvgh8m84c" path="res://ranking/ranking_menu.tscn" id="5_na0o7"]
 [ext_resource type="AudioStream" uid="uid://dmiwoftn4dkjf" path="res://audio/sfx/sfx_player_shot.wav" id="7_bsumw"]
+[ext_resource type="AudioStream" uid="uid://cwpno1kebrd61" path="res://audio/sfx/sfx_player_bomb.ogg" id="8_na0o7"]
+[ext_resource type="AudioStream" uid="uid://cwsltg0xwlc6o" path="res://audio/sfx/sfx_boss_shot_1.ogg" id="9_5xyti"]
+[ext_resource type="AudioStream" uid="uid://ccjqxogoof2mc" path="res://audio/sfx/sfx_explosion_1.ogg" id="10_5xyti"]
+[ext_resource type="AudioStream" uid="uid://bts5rxisdkv84" path="res://audio/bgm/stg_bs003.ogg" id="11_73k8k"]
 
 [sub_resource type="Environment" id="Environment_3b7yk"]
 background_mode = 3
@@ -41,19 +45,44 @@ bgm_manager = NodePath("BGMManager")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1118035484]
 environment = SubResource("Environment_3b7yk")
 
-[node name="AudioManager" type="Node" parent="." unique_id=1791605055 node_paths=PackedStringArray("sfx_player_shot")]
+[node name="AudioManager" type="Node" parent="." unique_id=1791605055 node_paths=PackedStringArray("sfx_player_shot", "sfx_player_bomb", "sfx_boss_shot_1", "sfx_explosion_1")]
 script = ExtResource("2_3wy1v")
 sfx_player_shot = NodePath("AudioPlayerShot")
+sfx_player_bomb = NodePath("AudioPlayerBomb")
+sfx_boss_shot_1 = NodePath("AudioBossShot1")
+sfx_explosion_1 = NodePath("AudioExplosion1")
 metadata/_custom_type_script = "uid://upphqgb3vovy"
 
 [node name="AudioPlayerShot" type="AudioStreamPlayer" parent="AudioManager" unique_id=320911030]
 stream = ExtResource("7_bsumw")
+volume_db = 1.0
 max_polyphony = 4
+bus = &"SFX"
+
+[node name="AudioPlayerBomb" type="AudioStreamPlayer" parent="AudioManager" unique_id=321434719]
+stream = ExtResource("8_na0o7")
+volume_db = 2.0
+max_polyphony = 2
+bus = &"SFX"
+
+[node name="AudioBossShot1" type="AudioStreamPlayer" parent="AudioManager" unique_id=703836895]
+stream = ExtResource("9_5xyti")
+volume_db = 9.0
+max_polyphony = 4
+bus = &"SFX"
+
+[node name="AudioExplosion1" type="AudioStreamPlayer" parent="AudioManager" unique_id=1431809103]
+stream = ExtResource("10_5xyti")
+max_polyphony = 2
 bus = &"SFX"
 
 [node name="BGMManager" type="Node" parent="." unique_id=630858695]
 script = ExtResource("3_kfbq2")
 metadata/_custom_type_script = "uid://dtytuvraaohro"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="BGMManager" unique_id=1759192243]
+stream = ExtResource("11_73k8k")
+bus = &"BGM"
 
 [node name="GameLayer" type="CanvasLayer" parent="." unique_id=796037030]
 

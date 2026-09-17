@@ -46,7 +46,7 @@ func fire_rapid() -> void:
 
 	for j in bullet_count_2:
 		var pos = entities[0].position + Vector2(randf_range(-12.0, 12.0), randf_range(-4.0, 4.0))
-		bullet_engine.fire_bullet(pos, TAU * randf(), randf_range(90.0, 150.0) * bullet_speed_multiplier, BulletSkin.Type.ENEMY_BULLET_RED_SMALL)
+		bullet_engine.fire_bullet(pos, TAU * randf(), randf_range(90.0, 150.0) * bullet_speed_multiplier, BulletSkin.Type.ENEMY_BULLET_RED_MEDIUM)
 
 func fire_circle(idx: int = 0) -> void:
 	var bullet_count = 0
@@ -65,7 +65,7 @@ func fire_circle(idx: int = 0) -> void:
 	var circle = BulletPatternHelper.get_circle(0.0, bullet_count)
 
 	for angle in circle:
-		bullet_engine.fire_bullet(entities[0].global_position, angle, speed, BulletSkin.Type.ENEMY_BULLET_ALT_SMALL)
+		bullet_engine.fire_bullet(entities[0].global_position, angle, speed, BulletSkin.Type.ENEMY_BULLET_ALT_MEDIUM)
 
 func spawn_sun() -> void:
 	sun_counter += 1

@@ -1,20 +1,44 @@
 [gd_scene format=3 uid="uid://vugwune8fbhe"]
 
-[ext_resource type="Script" uid="uid://dpsgkb70urefo" path="res://pattern/omen.gd" id="1_va266"]
+[ext_resource type="Script" uid="uid://cdpqp7ivn2muk" path="res://pattern/omen.gd" id="1_va266"]
+[ext_resource type="Script" uid="uid://cjrjlngs4kufj" path="res://util/2d/drunk_node_2d.gd" id="2_4xvy2"]
+[ext_resource type="Texture2D" uid="uid://drxq2i6wcxj" path="res://fx/texture/texture_fx_flash.png" id="2_fnp6n"]
+[ext_resource type="Script" uid="uid://dvqiup2un5h7j" path="res://util/2d/shaky_node_2d.gd" id="2_lpg1t"]
 [ext_resource type="Script" uid="uid://du4pk0oohw2cn" path="res://enemy/enemy.gd" id="2_va266"]
 [ext_resource type="PackedScene" uid="uid://xin8fxth4lin" path="res://enemy/large_ship_visual.tscn" id="3_spfd6"]
-[ext_resource type="FontFile" uid="uid://dpddonpy8spcf" path="res://font/Silver.ttf" id="4_spfd6"]
-[ext_resource type="Script" uid="uid://bxx60p474e34r" path="res://ui/animated_text.gd" id="5_spfd6"]
+[ext_resource type="PackedScene" uid="uid://35v81h21xsoj" path="res://fx/explosion.tscn" id="7_lpg1t"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ixbki"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_fnp6n"]
+colors = PackedColorArray(1, 0.16078432, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3b7yk"]
+gradient = SubResource("Gradient_fnp6n")
+width = 96
+height = 96
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.90000004, 0.1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3b7yk"]
 radius = 64.0
+
+[sub_resource type="Curve" id="Curve_3b7yk"]
+_data = [Vector2(0.6168831, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_lpg1t"]
+offsets = PackedFloat32Array(0.3723404, 0.5106383, 0.9113475, 1)
+colors = PackedColorArray(0.98039216, 0.91764706, 0.7882353, 1, 1, 0.73333335, 0.20392157, 1, 1, 0.16078432, 0, 1, 0.36862746, 0.11372549, 0.05490196, 1)
 
 [sub_resource type="Animation" id="Animation_4xvy2"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Enemy:position")
+tracks/0/path = NodePath("DeathDrunkNode2D/ShakyNode2D/DrunkNode2D/Enemy:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -47,22 +71,82 @@ tracks/2/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DeathDrunkNode2D/ShakyNode2D/DrunkNode2D:strength")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("DeathDrunkNode2D/ShakyNode2D:force")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("DeathDrunkNode2D:strength")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Sprite2D:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Sprite2D:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_va266"]
 resource_name = "death"
-length = 2.0
+length = 4.0
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Enemy:position")
+tracks/0/path = NodePath("DeathDrunkNode2D/ShakyNode2D/DrunkNode2D/Enemy:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8000001, 1, 1.2, 1.4000001, 1.6000001, 1.8, 2),
-"transitions": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(0, 0),
 "update": 0,
-"values": [Vector2(120, 88), Vector2(140, 76), Vector2(80, 88), Vector2(140, 102), Vector2(80, 88), Vector2(140, 67), Vector2(80, 88), Vector2(134, 88), Vector2(80, 88), Vector2(140, 88), Vector2(80, 88)]
+"values": [Vector2(120, 88), Vector2(120, 88)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -71,10 +155,241 @@ tracks/1/path = NodePath(".:immune")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DeathDrunkNode2D/ShakyNode2D:force")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 12.0, 5.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DeathDrunkNode2D:strength")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.8, 4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 1.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:sin_ratio")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.6, 0.7, 0.90000004, 1.1, 1.2, 1.4, 1.5, 1.7, 1.8, 2, 2.1000001, 2.3, 2.4, 2.7, 2.8, 3, 3.3, 3.4, 3.6000001, 3.7, 3.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [Vector2(2, 2)],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_t2vjh"]
+resource_name = "death_loop"
+length = 5.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DeathDrunkNode2D/ShakyNode2D/DrunkNode2D/Enemy:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2.1, 3.2),
+"transitions": PackedFloat32Array(0, 0, 0, 0),
+"update": 0,
+"values": [Vector2(120, 88), Vector2(120, 88), Vector2(120, 88), Vector2(120, 88)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:immune")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DeathDrunkNode2D/ShakyNode2D:force")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 3.2, 4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [5.0, 5.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DeathDrunkNode2D:strength")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 3.2, 4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.0, 1.0, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:sin_ratio")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
+"update": 0,
+"values": [0.0]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.7, 1, 1.3, 1.4999999, 1.8, 2.1, 2.4, 2.6, 2.9, 3.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}, {
+"args": [],
+"method": &"create_random_explosion"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_lpg1t"]
@@ -107,19 +422,19 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_fnp6n"]
 resource_name = "start"
-length = 5.5
+length = 3.0000000000000004
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Enemy:position")
+tracks/0/path = NodePath("DeathDrunkNode2D/ShakyNode2D/DrunkNode2D/Enemy:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1, 1.5, 2, 5.5),
-"transitions": PackedFloat32Array(0.5, -2, 1, 1, 1),
+"times": PackedFloat32Array(0, 2, 2.7, 3),
+"transitions": PackedFloat32Array(-2, -2, 1, 1),
 "update": 0,
-"values": [Vector2(120, -88), Vector2(120, 95), Vector2(120, 85), Vector2(120, 88), Vector2(120, 88)]
+"values": [Vector2(120, -90), Vector2(120, 93), Vector2(120, 88), Vector2(120, 88)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -128,24 +443,46 @@ tracks/1/path = NodePath(".:immune")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 5.5),
+"times": PackedFloat32Array(0, 3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, true]
 }
-tracks/2/type = "method"
+tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedText")
+tracks/2/path = NodePath("DeathDrunkNode2D/ShakyNode2D/DrunkNode2D:strength")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(1.5),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": ["Bitter, the medicine we're delivering.", 0.3, 2.0, 0.3],
-"method": &"animate_text"
-}]
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.9499998, 2, 2.0749998, 2.1750002, 2.3249998, 2.5749998, 2.8999996),
+"transitions": PackedFloat32Array(0, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(2, 2), Vector2(0.7, 0.7), Vector2(1.2, 1.2), Vector2(0.9, 0.9), Vector2(1, 1), Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1.9499998, 2.6999998, 2.9499998),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_timeout_omen"]
@@ -154,7 +491,7 @@ length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Enemy:position")
+tracks/0/path = NodePath("DeathDrunkNode2D/ShakyNode2D/DrunkNode2D/Enemy:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -164,124 +501,80 @@ tracks/0/keys = {
 "values": [Vector2(120, 88), Vector2(140, 76), Vector2(80, 88), Vector2(140, 102), Vector2(80, 88), Vector2(140, 67), Vector2(80, 88), Vector2(134, 88), Vector2(80, 88), Vector2(140, 88), Vector2(80, 88)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_t2vjh"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qk6eu"]
 _data = {
 &"RESET": SubResource("Animation_4xvy2"),
 &"death": SubResource("Animation_va266"),
+&"death_loop": SubResource("Animation_t2vjh"),
 &"default": SubResource("Animation_lpg1t"),
 &"start": SubResource("Animation_fnp6n"),
 &"timeout": SubResource("Animation_timeout_omen")
 }
 
-[sub_resource type="LabelSettings" id="LabelSettings_ixbki"]
-font = ExtResource("4_spfd6")
-font_size = 19
-font_color = Color(0.98039216, 0.91764706, 0.7882353, 1)
-outline_size = 2
-outline_color = Color(0.047058824, 0.09803922, 0, 1)
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_spfd6"]
-blend_mode = 1
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4xvy2"]
-blend_mode = 1
-
-[sub_resource type="Gradient" id="Gradient_spfd6"]
-offsets = PackedFloat32Array(0, 0.5, 1)
-colors = PackedColorArray(0.98039216, 0.91764706, 0.7882353, 0, 0.98039216, 0.91764706, 0.7882353, 1, 0.98039216, 0.91764706, 0.7882353, 0)
-metadata/_snap_enabled = true
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_ixbki"]
-gradient = SubResource("Gradient_spfd6")
-fill_from = Vector2(0, 0.1)
-fill_to = Vector2(0, 0.90000004)
-
-[sub_resource type="Gradient" id="Gradient_4xvy2"]
-offsets = PackedFloat32Array(0, 0.9)
-colors = PackedColorArray(0.98039216, 0.91764706, 0.7882353, 1, 0.98039216, 0.91764706, 0.7882353, 0)
-metadata/_snap_enabled = true
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_lpg1t"]
-gradient = SubResource("Gradient_4xvy2")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.2, 0.90000004)
-metadata/_snap_enabled = true
-
-[node name="Omen" type="Node" unique_id=425168190 node_paths=PackedStringArray("text", "entities", "sprites", "animation_player")]
+[node name="Omen" type="Node" unique_id=425168190 node_paths=PackedStringArray("particles", "explosion", "entities", "sprites", "animation_player")]
 script = ExtResource("1_va266")
-text = NodePath("AnimatedText")
 fire_rate = 0.48
 arc_spread = 25.0
-entities = [NodePath("Enemy")]
-sprites = [NodePath("Enemy/LargeShipVisual")]
+particles = NodePath("DeathDrunkNode2D/ShakyNode2D/DrunkNode2D/Enemy/CPUParticles2D")
+explosion = NodePath("Explosion")
+entities = [NodePath("DeathDrunkNode2D/ShakyNode2D/DrunkNode2D/Enemy")]
+sprites = [NodePath("DeathDrunkNode2D/ShakyNode2D/DrunkNode2D/Enemy/LargeShipVisual")]
 animation_player = NodePath("AnimationPlayer")
-metadata/_custom_type_script = "uid://dpsgkb70urefo"
 
-[node name="Enemy" type="Area2D" parent="." unique_id=1699698573]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=765810337]
+z_index = 2
+position = Vector2(119, 85)
+texture = ExtResource("2_fnp6n")
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite2D" unique_id=632410157]
+material = SubResource("CanvasItemMaterial_ixbki")
+texture = SubResource("GradientTexture2D_3b7yk")
+
+[node name="DeathDrunkNode2D" type="Node2D" parent="." unique_id=1314341656]
+script = ExtResource("2_4xvy2")
+speed = 4.0
+offset = Vector2(9, 8)
+strength = 0.0
+metadata/_custom_type_script = "uid://cjrjlngs4kufj"
+
+[node name="ShakyNode2D" type="Node2D" parent="DeathDrunkNode2D" unique_id=1207859735]
+script = ExtResource("2_lpg1t")
+metadata/_custom_type_script = "uid://dvqiup2un5h7j"
+
+[node name="DrunkNode2D" type="Node2D" parent="DeathDrunkNode2D/ShakyNode2D" unique_id=479589653]
+script = ExtResource("2_4xvy2")
+offset = Vector2(4, 4)
+strength = 0.0
+metadata/_custom_type_script = "uid://cjrjlngs4kufj"
+
+[node name="Enemy" type="Area2D" parent="DeathDrunkNode2D/ShakyNode2D/DrunkNode2D" unique_id=1699698573]
 position = Vector2(120, -88)
 script = ExtResource("2_va266")
 metadata/_custom_type_script = "uid://du4pk0oohw2cn"
 
-[node name="LargeShipVisual" parent="Enemy" unique_id=1229315615 instance=ExtResource("3_spfd6")]
+[node name="LargeShipVisual" parent="DeathDrunkNode2D/ShakyNode2D/DrunkNode2D/Enemy" unique_id=1229315615 instance=ExtResource("3_spfd6")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy" unique_id=2143023239]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathDrunkNode2D/ShakyNode2D/DrunkNode2D/Enemy" unique_id=2143023239]
 shape = SubResource("CircleShape2D_3b7yk")
 
+[node name="CPUParticles2D" type="CPUParticles2D" parent="DeathDrunkNode2D/ShakyNode2D/DrunkNode2D/Enemy" unique_id=1716503142]
+z_index = 1
+position = Vector2(0, -3)
+emitting = false
+amount = 96
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.69
+direction = Vector2(1, -0.5)
+spread = 180.0
+gravity = Vector2(0, 98)
+initial_velocity_min = 21.09
+initial_velocity_max = 99.38
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_3b7yk")
+color_ramp = SubResource("Gradient_lpg1t")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1125337104]
-libraries/ = SubResource("AnimationLibrary_t2vjh")
+libraries/ = SubResource("AnimationLibrary_qk6eu")
 
-[node name="AnimatedText" type="Label" parent="." unique_id=514255002 node_paths=PackedStringArray("cursor_rect")]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 177.0
-grow_horizontal = 2
-grow_vertical = 2
-label_settings = SubResource("LabelSettings_ixbki")
-horizontal_alignment = 1
-script = ExtResource("5_spfd6")
-cursor_rect = NodePath("ColorRect")
-cursor_offset = Vector2(2, 2)
-scramble_cycles = 16
-metadata/_custom_type_script = "uid://bxx60p474e34r"
-
-[node name="ColorRect" type="ColorRect" parent="AnimatedText" unique_id=1211189804]
-material = SubResource("CanvasItemMaterial_spfd6")
-layout_mode = 0
-offset_left = 117.0
-offset_top = 3.0
-offset_right = 122.0
-offset_bottom = 13.0
-color = Color(0.98039216, 0.91764706, 0.7882353, 1)
-
-[node name="ColorRect" type="ColorRect" parent="AnimatedText/ColorRect" unique_id=1374484881]
-modulate = Color(0.047058824, 0.09803922, 0, 1)
-show_behind_parent = true
-layout_mode = 0
-offset_left = -1.0
-offset_top = -1.0
-offset_right = 6.0
-offset_bottom = 11.0
-
-[node name="TextureRect" type="TextureRect" parent="AnimatedText/ColorRect" unique_id=2137381934]
-show_behind_parent = true
-material = SubResource("CanvasItemMaterial_4xvy2")
-layout_mode = 0
-offset_top = -7.0
-offset_right = 5.0
-offset_bottom = 18.0
-texture = SubResource("GradientTexture2D_ixbki")
-expand_mode = 1
-
-[node name="TextureRect2" type="TextureRect" parent="AnimatedText/ColorRect" unique_id=1655815434]
-self_modulate = Color(1, 1, 1, 0.3137255)
-show_behind_parent = true
-material = SubResource("CanvasItemMaterial_4xvy2")
-layout_mode = 0
-offset_left = -9.0
-offset_top = -7.0
-offset_right = 15.0
-offset_bottom = 18.0
-texture = SubResource("GradientTexture2D_lpg1t")
-expand_mode = 1
+[node name="Explosion" parent="." unique_id=1251670886 instance=ExtResource("7_lpg1t")]

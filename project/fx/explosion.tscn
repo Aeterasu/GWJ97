@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://35v81h21xsoj"]
+
+[ext_resource type="Script" uid="uid://b0l8trncrjysb" path="res://fx/explosion.gd" id="1_1wbg1"]
+[ext_resource type="Script" uid="uid://dvqiup2un5h7j" path="res://util/2d/shaky_node_2d.gd" id="1_srif0"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1wbg1"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_siol0"]
+offsets = PackedFloat32Array(0.7377622, 0.74125874, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.9411765, 0.45882353, 0.1254902, 0.2901961, 0.9411765, 0.45882353, 0.1254902, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3b7yk"]
+gradient = SubResource("Gradient_siol0")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8418803, 0.14957266)
+
+[sub_resource type="Curve" id="Curve_htow4"]
+_limits = [0.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.045454547, 2), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_n33i2"]
+offsets = PackedFloat32Array(0.32624114, 0.61702126, 0.88297874, 1)
+colors = PackedColorArray(0.98039216, 0.91764706, 0.7882353, 1, 0.9411765, 0.45882353, 0.1254902, 1, 1, 0.16078432, 0, 1, 0.16862746, 0.05490196, 0.007843138, 1)
+
+[sub_resource type="Curve" id="Curve_3b7yk"]
+_data = [Vector2(0.6038961, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_ixbki"]
+offsets = PackedFloat32Array(0.34042552, 0.57092196, 0.8475177, 1)
+colors = PackedColorArray(0.98039216, 0.91764706, 0.7882353, 1, 0.9992621, 0.7402699, 0.22591186, 1, 0.7921569, 0.20784314, 0.08627451, 1, 0.16862746, 0.05490196, 0.007843138, 1)
+
+[node name="Explosion" type="Node2D" unique_id=1251670886 node_paths=PackedStringArray("particles")]
+script = ExtResource("1_1wbg1")
+particles = [NodePath("ShakyNode2D/CPUParticles2D"), NodePath("CPUParticles2D")]
+
+[node name="ShakyNode2D" type="Node2D" parent="." unique_id=206532229]
+position = Vector2(-1.0410371, -5.217723)
+script = ExtResource("1_srif0")
+force = 8.0
+decay_rate = 0.0
+metadata/_custom_type_script = "uid://dvqiup2un5h7j"
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="ShakyNode2D" unique_id=347506970]
+material = SubResource("CanvasItemMaterial_1wbg1")
+emitting = false
+texture = SubResource("GradientTexture2D_3b7yk")
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.65
+local_coords = true
+draw_order = 1
+emission_shape = 1
+emission_sphere_radius = 32.0
+gravity = Vector2(0, 0)
+scale_amount_min = 0.8
+scale_amount_max = 1.5
+scale_amount_curve = SubResource("Curve_htow4")
+color_ramp = SubResource("Gradient_n33i2")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=1424162460]
+emitting = false
+amount = 64
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.7
+emission_shape = 1
+emission_sphere_radius = 32.0
+spread = 180.0
+gravity = Vector2(0, 400)
+initial_velocity_min = 53.03
+initial_velocity_max = 198.4
+angle_min = -720.0
+angle_max = 105.0
+scale_amount_max = 3.0
+scale_amount_curve = SubResource("Curve_3b7yk")
+color_ramp = SubResource("Gradient_ixbki")

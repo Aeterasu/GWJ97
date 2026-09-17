@@ -37,7 +37,7 @@ func update(delta: float) -> void:
 
 func fire_1() -> void:
 	var count = clampi(remap(intensity, 0.2, 2.0, 1, 10), 1, 10)
-	var type = [BulletSkin.Type.ENEMY_BULLET_RED_SMALL, BulletSkin.Type.ENEMY_BULLET_RED_LONG]
+	var type = [BulletSkin.Type.ENEMY_BULLET_RED_MEDIUM, BulletSkin.Type.ENEMY_BULLET_RED_LONG]
 
 	var circle = BulletPatternHelper.get_circle(offset, count)
 

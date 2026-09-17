@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_rhnvj")
-size = Vector2(20, 20)
+atlas_offset = Vector2(0, 52)
 metadata/_custom_type_script = "uid://cnhr5ggnp7gby"

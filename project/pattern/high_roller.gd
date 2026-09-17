@@ -67,8 +67,8 @@ func fire_rapid() -> void:
 
 		var speed = remap(i, 0, bullet_count, 40.0, 250.0) * bullet_speed_multiplier
 
-		bullet_engine.fire_bullet(pos, -TAU * (float(circle_idx) / float(circle_max)), speed, BulletSkin.Type.ENEMY_BULLET_RED_SMALL)
-		#bullet_engine.fire_bullet(pos, current_angle - PI / 2, speed, BulletSkin.Type.ENEMY_BULLET_RED_SMALL)
+		bullet_engine.fire_bullet(pos, -TAU * (float(circle_idx) / float(circle_max)), speed, BulletSkin.Type.ENEMY_BULLET_RED_MEDIUM)
+		#bullet_engine.fire_bullet(pos, current_angle - PI / 2, speed, BulletSkin.Type.ENEMY_BULLET_RED_MEDIUM)
 
 	circle_idx += 1
 
@@ -79,7 +79,7 @@ func fire_secondary() -> void:
 	var count: int = int(16 * bullet_count_multiplier)
 
 	for i in count:
-		bullet_engine.fire_bullet(entities[0].position, TAU * randf(), 60.0 * bullet_speed_multiplier, BulletSkin.Type.ENEMY_BULLET_ALT_SMALL)
+		bullet_engine.fire_bullet(entities[0].position, TAU * randf(), 60.0 * bullet_speed_multiplier, BulletSkin.Type.ENEMY_BULLET_ALT_MEDIUM)
 
 func fire_sun() -> void:
 	var dir = randi_range(22, 26)

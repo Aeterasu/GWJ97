@@ -97,11 +97,21 @@ tracks/2/keys = {
 resource_name = "timeout"
 step = 0.1
 
+[sub_resource type="Animation" id="Animation_dl_melt"]
+resource_name = "death_loop"
+length = 1.0
+
+[sub_resource type="Animation" id="Animation_st_melt"]
+resource_name = "start"
+length = 1.0
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mary8"]
 _data = {
 &"RESET": SubResource("Animation_3n22r"),
 &"death": SubResource("Animation_beq8s"),
+&"death_loop": SubResource("Animation_dl_melt"),
 &"default": SubResource("Animation_rkkxg"),
+&"start": SubResource("Animation_st_melt"),
 &"timeout": SubResource("Animation_mqeyp")
 }
 

@@ -15,6 +15,10 @@ var fire_time_left: float = 0.0
 @export var max_offset: float = 45.0
 var direction: float = 1.0
 
+@export var particles: CPUParticles2D = null
+
+@export var explosion: Node2D = null
+
 var count: int = 0
 
 func _ready() -> void:
@@ -29,10 +33,8 @@ func init_pattern() -> void:
 
 	animation_player.play("start")
 
-func update(delta: float) -> void:
-	if is_timeout:
-		timeout_pattern.shot_origin_position = entities[0].global_position
-		timeout_pattern.update(delta)
+func _physics_process(delta: float) -> void:
+	super(delta)
 
 	var entity = entities[0]
 
@@ -41,15 +43,26 @@ func update(delta: float) -> void:
 	entity.global_position.x = 120.0 + (sin(time * 0.5) * 32.0) * sin_ratio
 	entity.global_position.y = 88.0 + (sin(time * 1.0) * 16.0) * sin_ratio
 
+func update(delta: float) -> void:
+	if is_timeout:
+		timeout_pattern.shot_origin_position = entities[0].global_position
+		timeout_pattern.update(delta)
+
 	fire_time_left -= delta
 
 	if fire_time_left <= 0.0:
 		fire_time_left = fire_rate * fire_rate_multiplier
 		fire()
+		var part = particles.duplicate()
+		entities[0].add_child(part)
+		part.emitting = true
+		part.finished.connect(part.queue_free)
 
 func fire() -> void:
 	if is_timeout:
 		return
+
+	AudioManager.play_sfx(AudioManager.instance.sfx_boss_shot_1, randf_range(0.9, 1.1))
 
 	var arc_count: int = int(6 * bullet_count_multiplier)
 
@@ -58,7 +71,7 @@ func fire() -> void:
 	var speed: float = 200.0 * bullet_speed_multiplier
 
 	for angle in arc:
-		bullet_engine.fire_bullet(entities[0].global_position, angle, speed, BulletSkin.Type.ENEMY_BULLET_RED_SMALL)	
+		bullet_engine.fire_bullet(entities[0].global_position, angle, speed, BulletSkin.Type.ENEMY_BULLET_RED_MEDIUM)	
 
 	current_offset += arc_spread * direction
 
@@ -82,3 +95,16 @@ func on_anim_finished(anim_name: StringName) -> void:
 	if anim_name == "start":
 		animation_player.play("default")
 		is_started = true
+
+func create_random_explosion(scale: Vector2 = Vector2.ONE) -> void:
+	AudioManager.play_sfx(AudioManager.instance.sfx_explosion_1, randf_range(0.9, 1.1))
+	
+	var exp = explosion.duplicate()
+	add_child(exp)
+
+	exp.scale = scale
+
+	exp.global_position = Vector2(randf_range(100.0, 140.0), randf_range(60.0, 150.0))
+	exp.reset_physics_interpolation()
+	exp.on_all_finished.connect(exp.queue_free)
+	exp.fire()

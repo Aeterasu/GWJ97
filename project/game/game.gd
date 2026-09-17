@@ -5,6 +5,8 @@ class_name Game extends Node2D
 @export var scoring: Scoring = null
 @export var ui_root: UI = null
 
+@export var bomb_animation: BombAnimation = null
+
 @export var dark_screen: Control = null
 var is_dark_screen: bool = false
 
@@ -52,6 +54,7 @@ func _ready() -> void:
 	player.on_hit.connect(func(): ui_root.player_health.on_player_hit(player.lives))
 	player.on_heal.connect(func(): ui_root.player_health.on_player_heal(player.lives))
 	player.on_bomb_ready.connect(ui_root.bomb_bar.show_bomb_ready_notif)
+	player.on_bomb.connect(on_player_bomb)
 
 	game_sequencer.start_game()
 
@@ -187,3 +190,6 @@ static func get_player() -> Player:
 	else:
 		push_warning("Player not found! Proceed with caution...")
 		return null
+
+func on_player_bomb() -> void:
+	bomb_animation.show_bomb_flash()

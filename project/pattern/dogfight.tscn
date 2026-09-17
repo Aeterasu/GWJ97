@@ -121,11 +121,21 @@ tracks/2/keys = {
 [sub_resource type="Animation" id="Animation_timeout_dog"]
 resource_name = "timeout"
 
+[sub_resource type="Animation" id="Animation_dl_dog"]
+resource_name = "death_loop"
+length = 1.0
+
+[sub_resource type="Animation" id="Animation_st_dog"]
+resource_name = "start"
+length = 1.0
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sc6r3"]
 _data = {
 &"RESET": SubResource("Animation_sc6r3"),
 &"death": SubResource("Animation_c0ape"),
+&"death_loop": SubResource("Animation_dl_dog"),
 &"default": SubResource("Animation_1j440"),
+&"start": SubResource("Animation_st_dog"),
 &"timeout": SubResource("Animation_timeout_dog")
 }
 

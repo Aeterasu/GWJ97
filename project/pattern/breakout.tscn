@@ -2,45 +2,291 @@
 
 [ext_resource type="Script" uid="uid://cxtlivobxmk6c" path="res://pattern/breakout.gd" id="1_24cxn"]
 [ext_resource type="Script" uid="uid://du4pk0oohw2cn" path="res://enemy/enemy.gd" id="2_uyx1u"]
-[ext_resource type="PackedScene" uid="uid://xin8fxth4lin" path="res://enemy/large_ship_visual.tscn" id="3_24cxn"]
+[ext_resource type="Shader" uid="uid://wckw45cj8va3" path="res://enemy/enemy_shader.gdshader" id="3_8bsyu"]
+[ext_resource type="Texture2D" uid="uid://davgf1ohcbiog" path="res://enemy/texture/texture_boss_part_1.png" id="4_uhpgq"]
+[ext_resource type="Texture2D" uid="uid://cdtdiud76sghw" path="res://enemy/texture/texture_boss_part_2.png" id="5_35ijx"]
+[ext_resource type="Script" uid="uid://cjrjlngs4kufj" path="res://util/2d/drunk_node_2d.gd" id="6_rbd55"]
+[ext_resource type="PackedScene" uid="uid://caprr2iktjvhm" path="res://ui/threat_animated_text.tscn" id="6_uhpgq"]
+[ext_resource type="PackedScene" uid="uid://xin8fxth4lin" path="res://enemy/large_ship_visual.tscn" id="7_x54tp"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_lcg72"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rbd55"]
+shader = ExtResource("3_8bsyu")
+shader_parameter/atlas = ExtResource("4_uhpgq")
+shader_parameter/hitflash = 0.0
+
+[sub_resource type="Gradient" id="Gradient_gganu"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_x54tp"]
+gradient = SubResource("Gradient_gganu")
+width = 102
+height = 156
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lobjj"]
 radius = 64.0
 
-[sub_resource type="Animation" id="Animation_24cxn"]
-resource_name = "death"
-step = 0.1
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ekk35"]
+shader = ExtResource("3_8bsyu")
+shader_parameter/atlas = ExtResource("5_35ijx")
+shader_parameter/hitflash = 0.0
 
-[sub_resource type="Animation" id="Animation_timeout_break"]
+[sub_resource type="Gradient" id="Gradient_t68kc"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4yci6"]
+gradient = SubResource("Gradient_t68kc")
+width = 67
+height = 147
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gs0xs"]
+size = Vector2(46, 80)
+
+[sub_resource type="Animation" id="Animation_lcg72"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Enemy:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(120, 88)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Part1:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(85, 96)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Part2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(156, 96)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Enemy:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Part2:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Part1:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("DrunkNode2D:strength")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("DrunkNode2D/LargeShipVisual:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_2bcf6"]
+resource_name = "death"
+
+[sub_resource type="Animation" id="Animation_dl_riot"]
+resource_name = "death_loop"
+
+[sub_resource type="Animation" id="Animation_jpa7l"]
+resource_name = "default"
+
+[sub_resource type="Animation" id="Animation_st_riot"]
+resource_name = "start"
+length = 6.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Enemy:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(4.2, 4.6, 5, 5.3, 5.5999994, 5.8, 6),
+"transitions": PackedFloat32Array(-2, -2, -2, -2, -2, -2, -2),
+"update": 0,
+"values": [Vector2(120, 88), Vector2(120, 100), Vector2(120, 40), Vector2(120, 55), Vector2(120, 48), Vector2(120, 51), Vector2(120, 50)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Part1:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(4.2, 4.6, 5.0999994, 5.5, 5.7),
+"transitions": PackedFloat32Array(-2, -2, -2, -2, -2),
+"update": 0,
+"values": [Vector2(85, 96), Vector2(85, 100), Vector2(50, 40), Vector2(50, 48), Vector2(50, 45)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Part2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(4.2, 4.6, 5.0999994, 5.5, 5.7),
+"transitions": PackedFloat32Array(-2, -2, -2, -2, -2),
+"update": 0,
+"values": [Vector2(156, 96), Vector2(156, 100), Vector2(190, 50), Vector2(190, 48), Vector2(190, 45)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Enemy:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 4.157128),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Part2:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 4.178564),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Part1:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 4.157128),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("DrunkNode2D:strength")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.79999995, 4.0999994),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [0.0, 3.0, 0.0]
+}
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("AnimatedText")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0.8),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["Bitter, the medicine we're delivering.", 0.3, 2.0, 0.3],
+"method": &"animate_text"
+}]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("DrunkNode2D/LargeShipVisual:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 4.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_timeout_riot"]
 resource_name = "timeout"
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_uyx1u"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8kwni"]
 _data = {
-&"death": SubResource("Animation_24cxn"),
-&"timeout": SubResource("Animation_timeout_break")
+&"RESET": SubResource("Animation_lcg72"),
+&"death": SubResource("Animation_2bcf6"),
+&"death_loop": SubResource("Animation_dl_riot"),
+&"default": SubResource("Animation_jpa7l"),
+&"start": SubResource("Animation_st_riot"),
+&"timeout": SubResource("Animation_timeout_riot")
 }
 
 [node name="Breakout" type="Node" unique_id=2000619167 node_paths=PackedStringArray("shot_origins", "entities", "sprites", "animation_player")]
 script = ExtResource("1_24cxn")
 shot_origins = [NodePath("Marker2D"), NodePath("Marker2D5"), NodePath("Marker2D2"), NodePath("Marker2D3"), NodePath("Marker2D4"), NodePath("Marker2D6"), NodePath("Marker2D7")]
 fire_rate = 1.0
-entities = [NodePath("Enemy")]
-sprites = [NodePath("Enemy/LargeShipVisual")]
+entities = [NodePath("Enemy"), NodePath("Part1"), NodePath("Part2")]
+sprites = [NodePath("Enemy/Boss"), NodePath("Part1/Sprite2D"), NodePath("Part2/Sprite2D")]
 animation_player = NodePath("AnimationPlayer")
 metadata/_custom_type_script = "uid://16mvw7i2q77s"
-
-[node name="Enemy" type="Area2D" parent="." unique_id=1988950251]
-position = Vector2(120, 88)
-script = ExtResource("2_uyx1u")
-metadata/_custom_type_script = "uid://du4pk0oohw2cn"
-
-[node name="LargeShipVisual" parent="Enemy" unique_id=1742974697 instance=ExtResource("3_24cxn")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy" unique_id=763111959]
-shape = SubResource("CircleShape2D_lcg72")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1347378341]
-libraries/ = SubResource("AnimationLibrary_uyx1u")
 
 [node name="Marker2D" type="Marker2D" parent="." unique_id=1755830307]
 position = Vector2(100, 54)
@@ -62,3 +308,60 @@ position = Vector2(210, 34)
 
 [node name="Marker2D7" type="Marker2D" parent="." unique_id=2053562732]
 position = Vector2(30, 34)
+
+[node name="Enemy" type="Area2D" parent="." unique_id=1783463150]
+position = Vector2(120, 88)
+script = ExtResource("2_uyx1u")
+metadata/_custom_type_script = "uid://du4pk0oohw2cn"
+
+[node name="Boss" type="Sprite2D" parent="Enemy" unique_id=1031578566]
+material = SubResource("ShaderMaterial_rbd55")
+texture = SubResource("GradientTexture2D_x54tp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy" unique_id=1916532858]
+shape = SubResource("CircleShape2D_lobjj")
+
+[node name="Part1" type="Area2D" parent="." unique_id=1075515749]
+position = Vector2(85, 96)
+script = ExtResource("2_uyx1u")
+metadata/_custom_type_script = "uid://du4pk0oohw2cn"
+
+[node name="Sprite2D" type="Sprite2D" parent="Part1" unique_id=1758668243]
+material = SubResource("ShaderMaterial_ekk35")
+position = Vector2(-57, -101)
+texture = SubResource("GradientTexture2D_4yci6")
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Part1" unique_id=1096285292]
+position = Vector2(-13, 0)
+shape = SubResource("RectangleShape2D_gs0xs")
+
+[node name="Part2" type="Area2D" parent="." unique_id=1185193855]
+position = Vector2(156, 96)
+script = ExtResource("2_uyx1u")
+metadata/_custom_type_script = "uid://du4pk0oohw2cn"
+
+[node name="Sprite2D" type="Sprite2D" parent="Part2" unique_id=2075932317]
+material = SubResource("ShaderMaterial_ekk35")
+position = Vector2(-11, -101)
+texture = SubResource("GradientTexture2D_4yci6")
+centered = false
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Part2" unique_id=2105256537]
+position = Vector2(15, 0)
+shape = SubResource("RectangleShape2D_gs0xs")
+
+[node name="DrunkNode2D" type="Node2D" parent="." unique_id=147125433]
+script = ExtResource("6_rbd55")
+offset = Vector2(8, 4)
+strength = 0.0
+metadata/_custom_type_script = "uid://cjrjlngs4kufj"
+
+[node name="LargeShipVisual" parent="DrunkNode2D" unique_id=1742974697 instance=ExtResource("7_x54tp")]
+position = Vector2(120, 80)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2060591086]
+libraries/ = SubResource("AnimationLibrary_8kwni")
+
+[node name="AnimatedText" parent="." unique_id=1100621936 instance=ExtResource("6_uhpgq")]

@@ -2,24 +2,245 @@
 
 [ext_resource type="Script" uid="uid://bca4q0k37dxxk" path="res://pattern/riot.gd" id="1_jpa7l"]
 [ext_resource type="Script" uid="uid://du4pk0oohw2cn" path="res://enemy/enemy.gd" id="2_jpa7l"]
-[ext_resource type="PackedScene" uid="uid://xin8fxth4lin" path="res://enemy/large_ship_visual.tscn" id="3_jpa7l"]
+[ext_resource type="Script" uid="uid://dvqiup2un5h7j" path="res://util/2d/shaky_node_2d.gd" id="2_siovc"]
+[ext_resource type="Shader" uid="uid://wckw45cj8va3" path="res://enemy/enemy_shader.gdshader" id="3_lcg72"]
+[ext_resource type="Texture2D" uid="uid://davgf1ohcbiog" path="res://enemy/texture/texture_boss_part_1.png" id="4_siovc"]
+[ext_resource type="Texture2D" uid="uid://cdtdiud76sghw" path="res://enemy/texture/texture_boss_part_2.png" id="5_dg0vs"]
+[ext_resource type="PackedScene" uid="uid://35v81h21xsoj" path="res://fx/explosion.tscn" id="7_dg0vs"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pumjv"]
+shader = ExtResource("3_lcg72")
+shader_parameter/atlas = ExtResource("4_siovc")
+shader_parameter/hitflash = 0.0
+
+[sub_resource type="Gradient" id="Gradient_gganu"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kmx47"]
+gradient = SubResource("Gradient_gganu")
+width = 102
+height = 156
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lcg72"]
 radius = 64.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dxp7x"]
+shader = ExtResource("3_lcg72")
+shader_parameter/atlas = ExtResource("5_dg0vs")
+shader_parameter/hitflash = 0.0
+
+[sub_resource type="Gradient" id="Gradient_t68kc"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2iyvg"]
+gradient = SubResource("Gradient_t68kc")
+width = 67
+height = 147
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ec3xy"]
+size = Vector2(20, 80)
+
+[sub_resource type="Animation" id="Animation_lcg72"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShakyNode2D/Enemy:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(120, 88)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShakyNode2D2/Part1:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(85, 96)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ShakyNode2D3/Part2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(156, 96)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ShakyNode2D:force")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ShakyNode2D2:force")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ShakyNode2D3:force")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
 [sub_resource type="Animation" id="Animation_2bcf6"]
 resource_name = "death"
 
+[sub_resource type="Animation" id="Animation_dl_riot"]
+resource_name = "death_loop"
+
 [sub_resource type="Animation" id="Animation_jpa7l"]
 resource_name = "default"
+
+[sub_resource type="Animation" id="Animation_st_riot"]
+resource_name = "start"
+length = 3.4000000000000004
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShakyNode2D/Enemy:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(-2),
+"update": 0,
+"values": [Vector2(120, 50)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShakyNode2D2/Part1:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1.7, 1.8, 2.1, 2.5, 2.95, 3.4),
+"transitions": PackedFloat32Array(-2, 4.1410604, 0.5, -2, -2, -2, -2, -2),
+"update": 0,
+"values": [Vector2(35, 35), Vector2(35, 35), Vector2(80, 35), Vector2(15, 35), Vector2(50, 35), Vector2(20, 35), Vector2(30, 35), Vector2(25, 35)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ShakyNode2D3/Part2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5, 1.7, 1.8, 2.1, 2.5, 2.95, 3.4),
+"transitions": PackedFloat32Array(-2, 4.1410604, 0.5, -2, -2, -2, -2, -2),
+"update": 0,
+"values": [Vector2(205, 35), Vector2(205, 35), Vector2(160, 35), Vector2(225, 35), Vector2(180, 35), Vector2(220, 35), Vector2(210, 35), Vector2(215, 35)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ShakyNode2D:force")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.5, 1.4, 1.9, 2.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 4.0, 0.0, 0.0, 5.0, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ShakyNode2D2:force")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.5, 1.3, 1.6, 1.8, 2.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 0.25000003, 0.22531275, 1),
+"update": 0,
+"values": [0.0, 3.0, 0.0, 0.0, 0.0, 8.0, 0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ShakyNode2D3:force")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.5, 1.3, 1.6, 1.8, 2.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 0.25000003, 0.22531275, 1),
+"update": 0,
+"values": [0.0, 3.0, 0.0, 0.0, 0.0, 8.0, 0.0]
+}
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Explosion")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(1.75),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"fire"
+}]
+}
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Explosion2")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(1.75),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"fire"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_timeout_riot"]
 resource_name = "timeout"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2bcf6"]
 _data = {
+&"RESET": SubResource("Animation_lcg72"),
 &"death": SubResource("Animation_2bcf6"),
+&"death_loop": SubResource("Animation_dl_riot"),
 &"default": SubResource("Animation_jpa7l"),
+&"start": SubResource("Animation_st_riot"),
 &"timeout": SubResource("Animation_timeout_riot")
 }
 
@@ -30,20 +251,69 @@ fire_rate = 0.8
 burst_count = 6
 burst_rate = 0.06
 arc_fire_rate = 2.0
-entities = [NodePath("Enemy")]
-sprites = [NodePath("Enemy/LargeShipVisual")]
+entities = [NodePath("ShakyNode2D/Enemy"), NodePath("ShakyNode2D2/Part1"), NodePath("ShakyNode2D3/Part2")]
+sprites = [NodePath("ShakyNode2D/Enemy/Boss"), NodePath("ShakyNode2D2/Part1/Sprite2D"), NodePath("ShakyNode2D3/Part2/Sprite2D")]
 animation_player = NodePath("AnimationPlayer")
 metadata/_custom_type_script = "uid://16mvw7i2q77s"
 
-[node name="Enemy" type="Area2D" parent="." unique_id=1988950251]
+[node name="ShakyNode2D" type="Node2D" parent="." unique_id=904306249]
+position = Vector2(-1.0690677, 2.4884827)
+script = ExtResource("2_siovc")
+decay_rate = 0.0
+metadata/_custom_type_script = "uid://dvqiup2un5h7j"
+
+[node name="Enemy" type="Area2D" parent="ShakyNode2D" unique_id=1988950251]
 position = Vector2(120, 88)
 script = ExtResource("2_jpa7l")
 metadata/_custom_type_script = "uid://du4pk0oohw2cn"
 
-[node name="LargeShipVisual" parent="Enemy" unique_id=1742974697 instance=ExtResource("3_jpa7l")]
+[node name="Boss" type="Sprite2D" parent="ShakyNode2D/Enemy" unique_id=1742974697]
+material = SubResource("ShaderMaterial_pumjv")
+texture = SubResource("GradientTexture2D_kmx47")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy" unique_id=763111959]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShakyNode2D/Enemy" unique_id=763111959]
 shape = SubResource("CircleShape2D_lcg72")
+
+[node name="ShakyNode2D2" type="Node2D" parent="." unique_id=818274803]
+position = Vector2(-6.092499, -6.856078)
+script = ExtResource("2_siovc")
+decay_rate = 0.0
+metadata/_custom_type_script = "uid://dvqiup2un5h7j"
+
+[node name="Part1" type="Area2D" parent="ShakyNode2D2" unique_id=1086534430]
+position = Vector2(85, 96)
+script = ExtResource("2_jpa7l")
+metadata/_custom_type_script = "uid://du4pk0oohw2cn"
+
+[node name="Sprite2D" type="Sprite2D" parent="ShakyNode2D2/Part1" unique_id=1076725513]
+material = SubResource("ShaderMaterial_dxp7x")
+position = Vector2(-57, -101)
+texture = SubResource("GradientTexture2D_2iyvg")
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShakyNode2D2/Part1" unique_id=1553929741]
+shape = SubResource("RectangleShape2D_ec3xy")
+
+[node name="ShakyNode2D3" type="Node2D" parent="." unique_id=1190065137]
+position = Vector2(6.28553, -0.3913752)
+script = ExtResource("2_siovc")
+decay_rate = 0.0
+metadata/_custom_type_script = "uid://dvqiup2un5h7j"
+
+[node name="Part2" type="Area2D" parent="ShakyNode2D3" unique_id=1950314563]
+position = Vector2(156, 96)
+script = ExtResource("2_jpa7l")
+metadata/_custom_type_script = "uid://du4pk0oohw2cn"
+
+[node name="Sprite2D" type="Sprite2D" parent="ShakyNode2D3/Part2" unique_id=1119597027]
+material = SubResource("ShaderMaterial_dxp7x")
+position = Vector2(-11, -101)
+texture = SubResource("GradientTexture2D_2iyvg")
+centered = false
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShakyNode2D3/Part2" unique_id=1495526077]
+shape = SubResource("RectangleShape2D_ec3xy")
 
 [node name="Marker2D1" type="Marker2D" parent="." unique_id=652182968]
 position = Vector2(40, 71)
@@ -68,3 +338,9 @@ position = Vector2(10, 71)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=69702977]
 libraries/ = SubResource("AnimationLibrary_2bcf6")
+
+[node name="Explosion" parent="." unique_id=1251670886 instance=ExtResource("7_dg0vs")]
+position = Vector2(-1, 53)
+
+[node name="Explosion2" parent="." unique_id=1435388190 instance=ExtResource("7_dg0vs")]
+position = Vector2(247, 53)
