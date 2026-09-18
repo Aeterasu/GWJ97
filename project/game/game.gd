@@ -47,6 +47,7 @@ func _ready() -> void:
 	ui_root.boss_healthbar.generate_healthbar(game_sequencer.patterns_health)
 
 	ui_root.boss_healthbar.parent.hide()
+	ui_root.boss_timer.hide()
 
 	if ui_root.boss_pattern_name_block.has_signal("resized"):
 		ui_root.boss_pattern_name_block.resized.connect(update_boss_ticker_layout)
@@ -120,7 +121,7 @@ func _process(delta: float) -> void:
 	ui_root.immune_label.visible = player.invincibility_timer > 0.0
 	ui_root.immune_label.text = "IMMUNE: " + str(Utils.round_place(player.invincibility_timer, 1)) + "s"
 
-	ui_root.boss_timer.text = str(game_sequencer.get_current_timer())
+	#ui_root.boss_timer.text = "%02d" % int(game_sequencer.get_current_timer())
 
 	ui_root.bomb_bar.max_value = 1.0
 	ui_root.bomb_bar.value = 1.0 - (player.bomb_restart_timer / player.bomb_restart_duration)
@@ -129,6 +130,8 @@ func _process(delta: float) -> void:
 		ui_root.bomb_bar.tint_progress = Color("#faeac9")
 	else:
 		ui_root.bomb_bar.tint_progress = Color("#927873")
+
+	ui_root.boss_timer_panel.visible = ui_root.boss_timer.visible
 
 	#death_screen.modulate.a = death_screen_alpha
 
@@ -141,6 +144,7 @@ func on_pattern_init(pattern_idx: int) -> void:
 
 	if current_text.is_empty():
 		ui_root.boss_pattern_name_block.show()
+		ui_root.boss_timer.show()
 		ui_root.boss_pattern_name.position.y = -16.0
 		ui_root.boss_ticker_text.text = ticker_text.to_upper() + " " + ticker_text.to_upper()
 		set_pattern_text('"' + pattern_str.to_upper() + '"')
@@ -152,7 +156,8 @@ func on_pattern_init(pattern_idx: int) -> void:
 	else:
 		var tween: Tween = create_tween()
 		ui_root.boss_pattern_name_block.show()	
-		
+		ui_root.boss_timer.show()
+
 		tween.tween_property(ui_root.boss_pattern_name, "position:y", -16.0, dur)\
 			.set_ease(Tween.EASE_IN)\
 			.set_trans(Tween.TRANS_SINE)

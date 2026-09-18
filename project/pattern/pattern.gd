@@ -13,6 +13,7 @@ class_name Pattern extends Node
 var health: float = 0.0
 
 var time_left: float = 0.0
+var timer: Timer = null
 
 var bullet_count_multiplier: float = 1.0
 var bullet_speed_multiplier: float = 1.0
@@ -26,7 +27,12 @@ var bullet_engine: BulletEngine = null
 
 var freeze: Array[Node] = []
 
-var is_started: bool = false
+var is_started: bool = false:
+	set(value):
+		if value and is_started != value:
+			timer.start(1.0)
+		is_started = value
+
 var is_dead: bool = false
 var is_timeout: bool = false
 
@@ -34,6 +40,7 @@ var timeout_pattern: TimeoutPattern = null
 
 signal on_hit
 signal on_timeout
+signal on_time_tick
 
 # the obvious difference here:
 # on_health_depleted fires when the health reaches 0
@@ -42,6 +49,14 @@ signal on_health_depleted
 signal on_death
 
 func _ready() -> void:
+	timer = Timer.new()
+	add_child(timer)
+	timer.timeout.connect(func(): 
+		if time_left > 0.0:
+			if is_started and (not is_dead):
+				time_left -= 1.0
+				on_time_tick.emit())	
+
 	for node in get_children():
 		remove_child(node)
 		freeze.append(node)
@@ -57,16 +72,16 @@ func init_pattern() -> void:
 
 	for entity in entities:
 		entity.on_hit.connect(on_entity_hit)
-		entity.bullet_engine = self.bullet_engine
+		entity.bullet_engine = self.bullet_engine	
 
-	timeout_pattern.bullet_engine = bullet_engine
+	timeout_pattern.bullet_engine = bullet_engine	
 
 func start() -> void:
 	is_started = true
 
 func _physics_process(delta: float) -> void:
 	if is_started and (not is_dead):
-		time_left -= delta
+		#time_left -= delta
 
 		if time_left <= 0.0:
 			if not is_timeout:

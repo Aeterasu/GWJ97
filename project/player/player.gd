@@ -100,6 +100,17 @@ func _ready() -> void:
 	sprite_shader = sprite.material as ShaderMaterial
 
 func _physics_process(delta: float) -> void:
+	# hacky audio
+	if (not AudioManager.instance.sfx_player_shot.playing):
+		AudioManager.instance.sfx_player_shot.play()
+
+	AudioManager.instance.sfx_player_shot.volume_linear = shot_audio
+
+	if base_weapon.is_firing or focus_weapon.is_firing:
+		shot_audio = lerp(shot_audio, 1.2, 1.0 - exp(-40.0 * delta))
+	else:
+		shot_audio = lerp(shot_audio, 0.0, 1.0 - exp(-30.0 * delta))
+
 	# counterbomb
 
 	if is_counterbomb_active:
@@ -209,7 +220,7 @@ func activate_bomb() -> void:
 
 	var projectile = bomb_projectile_scene.instantiate() as Node2D
 	bomb_parent.add_child(projectile)
-	projectile.global_position = self.global_position + Vector2.UP * 128.0
+	projectile.global_position = self.global_position + Vector2.UP * 64.0
 	projectile.reset_physics_interpolation()
 
 func process_weapon(delta: float) -> void:
@@ -242,17 +253,6 @@ func process_weapon(delta: float) -> void:
 			on_bomb_ready.emit()
 			bomb_ready_toggle = false
 
-	# hacky audio
-	if (not AudioManager.instance.sfx_player_shot.playing):
-		AudioManager.instance.sfx_player_shot.play()
-
-	AudioManager.instance.sfx_player_shot.volume_linear = shot_audio
-
-	if fire_input:
-		shot_audio = lerp(shot_audio, 1.2, 1.0 - exp(-40.0 * delta))
-	else:
-		shot_audio = lerp(shot_audio, 0.0, 1.0 - exp(-30.0 * delta))
-
 func hit(bullet: Bullet = null) -> void:
 	if is_dead:
 		return
@@ -274,6 +274,9 @@ func hit(bullet: Bullet = null) -> void:
 	disable_input = true
 	visibilty_origin.visible = false
 	death_explosion.fire()
+
+	base_weapon.is_firing = false
+	focus_weapon.is_firing = false
 
 	AudioManager.play_sfx(AudioManager.instance.sfx_player_death)
 

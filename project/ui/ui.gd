@@ -10,5 +10,6 @@ class_name UI extends Control
 @export var boss_ticker_text: TickerLabel = null
 
 @export var boss_timer: Label = null
+@export var boss_timer_panel: Control = null
 
 @export var bomb_bar: TextureProgressBar = null

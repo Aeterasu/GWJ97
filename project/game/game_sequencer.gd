@@ -25,6 +25,8 @@ class_name GameSequencer extends Node
 
 @export var results: ResultScreen = null
 
+@export var timer_ui: Label = null
+
 var hitflash: float = 0.0
 
 var current_pattern: Pattern = null
@@ -91,6 +93,8 @@ func init_pattern(idx: int) -> void:
 		patterns[idx].on_death.connect(on_pattern_death)
 		patterns[idx].on_timeout.connect(on_pattern_timeout)
 
+		patterns[idx].on_time_tick.connect(on_pattern_timer_tick)
+
 		current_pattern = patterns[idx]
 
 		current_idx = idx
@@ -98,6 +102,8 @@ func init_pattern(idx: int) -> void:
 		on_pattern_init.emit(idx)
 
 		BGMManager.instance.update_bgm(patterns_bgm[idx])
+
+		timer_ui.text = "%02d" % int(patterns_timer[idx])
 
 func get_all_health_percentagees() -> Array[float]:
 	var result: Array[float] = []
@@ -164,4 +170,14 @@ func on_pattern_death(pattern: Pattern) -> void:
 	no_bomb = true
 
 func get_current_timer() -> int:
-	return floori(patterns[current_idx].time_left)
+	return roundi(patterns[current_idx].time_left)
+
+func on_pattern_timer_tick() -> void:
+	timer_ui.text = "%02d" % int(get_current_timer())
+	
+	timer_ui.offset_transform_position = Vector2.UP * 6.0
+
+	var tween: Tween = create_tween()
+	tween.tween_property(timer_ui, "offset_transform_position", Vector2.ZERO, 0.3)\
+			.set_ease(Tween.EASE_OUT)\
+			.set_trans(Tween.TRANS_BACK)

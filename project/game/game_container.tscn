@@ -89,6 +89,7 @@
 [ext_resource type="Shader" uid="uid://txjvwiejygxd" path="res://ui/scroll.gdshader" id="69_ipk4o"]
 [ext_resource type="Script" uid="uid://bnnfh6rwowuw3" path="res://ui/ui_timeout_warning.gd" id="69_qei43"]
 [ext_resource type="Texture2D" uid="uid://deey7m156ijks" path="res://ui/texture/texture_ui_time_is_up.png" id="69_vjk86"]
+[ext_resource type="Texture2D" uid="uid://bwbuwl4p4pkbj" path="res://ui/texture/texture_ui_timer.png" id="77_ec3xy"]
 [ext_resource type="Script" uid="uid://dibderq3e64a3" path="res://ui/restart_overlay.gd" id="78_7mcrh"]
 [ext_resource type="Texture2D" uid="uid://c6cshepotwdf5" path="res://ui/texture/texture_ui_pause_symbol.png" id="78_ghgmb"]
 [ext_resource type="AudioStream" uid="uid://b5tpf1y7p8n23" path="res://audio/sfx/sfx_alarm.ogg" id="84_k6uy7"]
@@ -518,10 +519,7 @@ outline_color = Color(0.047058824, 0.09803922, 0, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_n33i2"]
 font = ExtResource("60_78uyn")
 font_color = Color(0.98039216, 0.91764706, 0.7882353, 1)
-outline_size = 4
-outline_color = Color(0.047058824, 0.09803922, 0, 1)
-shadow_color = Color(1, 0.16078432, 0, 0.24705882)
-shadow_offset = Vector2(-1.495, 1)
+shadow_size = 0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3b7yk"]
 atlas = ExtResource("65_8nq8a")
@@ -1314,12 +1312,13 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("7_yfvcu")
 
-[node name="GameSequencer" type="Node" parent="SubViewport/Game/Pausable" unique_id=1424656608 node_paths=PackedStringArray("player", "boss_warning", "timeout_warning", "animation_player", "patterns", "scoring", "enemy_bullet_engine", "sun_spawner", "life_spawner", "results")]
+[node name="GameSequencer" type="Node" parent="SubViewport/Game/Pausable" unique_id=1424656608 node_paths=PackedStringArray("player", "boss_warning", "timeout_warning", "animation_player", "patterns", "scoring", "enemy_bullet_engine", "sun_spawner", "life_spawner", "results", "timer_ui")]
 process_mode = 1
 script = ExtResource("2_oryes")
 player = NodePath("../Player")
 boss_warning = NodePath("../../../../Overlay/BossWarning")
 timeout_warning = NodePath("../../../../Overlay/TimeoutWarning")
+starting_pattern = 1
 animation_player = NodePath("AnimationPlayer")
 patterns = [NodePath("Omen"), NodePath("Breakout"), NodePath("Riot"), NodePath("Dogfight"), NodePath("Pilebunker"), NodePath("HighRoller"), NodePath("Naysayer"), NodePath("SnakeEyes"), NodePath("Meltdown"), NodePath("BleedingStar")]
 patterns_health = Array[float]([4000.0, 4200.0, 4400.0, 2000.0, 1500.0, 7200.0, 4000.0, 4200.0, 9000.0, 10500.0])
@@ -1331,6 +1330,7 @@ enemy_bullet_engine = NodePath("../EnemyBulletEngine")
 sun_spawner = NodePath("../Scoring/ScoreSunManager")
 life_spawner = NodePath("../LifePickup")
 results = NodePath("../../../../Overlay/ResultScreen")
+timer_ui = NodePath("../../../../UI/UITimer")
 metadata/_custom_type_script = "uid://dbaxnfdbt6cyt"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="SubViewport/Game/Pausable/GameSequencer" unique_id=450444269]
@@ -1526,7 +1526,7 @@ scale_amount_max = 3.0
 scale_amount_curve = SubResource("Curve_k6uy7")
 color_ramp = SubResource("Gradient_ec3xy")
 
-[node name="UI" type="Control" parent="." unique_id=339268598 node_paths=PackedStringArray("player_health", "immune_label", "boss_healthbar", "boss_pattern_name_block", "boss_pattern_name", "boss_ticker_text", "boss_timer", "bomb_bar")]
+[node name="UI" type="Control" parent="." unique_id=339268598 node_paths=PackedStringArray("player_health", "immune_label", "boss_healthbar", "boss_pattern_name_block", "boss_pattern_name", "boss_ticker_text", "boss_timer", "boss_timer_panel", "bomb_bar")]
 custom_minimum_size = Vector2(240, 320)
 layout_mode = 2
 script = ExtResource("20_gts4h")
@@ -1537,6 +1537,7 @@ boss_pattern_name_block = NodePath("BossHealthbarUnder/PatternNameBlock")
 boss_pattern_name = NodePath("BossHealthbarUnder/PatternNameBlock/Label")
 boss_ticker_text = NodePath("BossHealthbarUnder/PatternNameBlock/TickerLabel")
 boss_timer = NodePath("UITimer")
+boss_timer_panel = NodePath("NinePatchRect")
 bomb_bar = NodePath("BombBar")
 
 [node name="UIBossHealthbar" type="Node" parent="UI" unique_id=104798359 node_paths=PackedStringArray("parent")]
@@ -1926,13 +1927,38 @@ offset_right = 145.0
 offset_bottom = 23.0
 color = Color(0.047058824, 0.09803922, 0, 1)
 
+[node name="NinePatchRect" type="NinePatchRect" parent="UI" unique_id=1865696625]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.133
+anchor_top = -0.286
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 236.92
+offset_top = 134.52
+offset_right = -3.0
+offset_bottom = -259.0
+texture = ExtResource("77_ec3xy")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 14
+patch_margin_bottom = 2
+
 [node name="UITimer" type="Label" parent="UI" unique_id=1762986707]
-layout_mode = 0
-offset_left = 186.0
-offset_top = 47.0
-offset_right = 238.0
-offset_bottom = 61.0
-text = "120"
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.9250001
+anchor_top = 0.147
+anchor_right = 0.9250001
+anchor_bottom = 0.19100001
+offset_left = -15.000015
+offset_top = -1.0400009
+offset_right = -1.5258789e-05
+offset_bottom = -1.1200027
+grow_horizontal = 0
+offset_transform_enabled = true
+text = "99"
 label_settings = SubResource("LabelSettings_n33i2")
 horizontal_alignment = 2
 vertical_alignment = 1
@@ -2084,7 +2110,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(0.044340193, -0.7339379)
+position = Vector2(-0.57537174, 0.42263)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -2096,7 +2122,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(5.111628, -2.582478)
+position = Vector2(-7.046992, 7.118921)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
