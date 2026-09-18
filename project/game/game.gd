@@ -130,7 +130,7 @@ func _process(delta: float) -> void:
 	else:
 		ui_root.bomb_bar.tint_progress = Color("#927873")
 
-	death_screen.modulate.a = death_screen_alpha
+	#death_screen.modulate.a = death_screen_alpha
 
 func on_pattern_init(pattern_idx: int) -> void:
 	var pattern_str = game_sequencer.patterns_flavor[pattern_idx].pattern_names
