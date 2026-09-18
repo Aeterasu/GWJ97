@@ -73,7 +73,7 @@ blend_mode = 1
 [sub_resource type="CircleShape2D" id="CircleShape2D_3b7yk"]
 radius = 2.0
 
-[node name="Player" type="Area2D" unique_id=1584514943 node_paths=PackedStringArray("base_weapon", "focus_weapon", "options", "sprite", "hitbox_sprite", "muzzle_flashes", "death_explosion")]
+[node name="Player" type="Area2D" unique_id=1584514943 node_paths=PackedStringArray("base_weapon", "focus_weapon", "options", "sprite", "hitbox_sprite", "muzzle_flashes", "visibilty_origin", "death_explosion")]
 y_sort_enabled = true
 script = ExtResource("1_rkbax")
 base_speed = 210.0
@@ -88,7 +88,9 @@ options_transition_duration = 0.3
 sprite = NodePath("VisibilityOrigin/Sprite2D")
 hitbox_sprite = NodePath("VisibilityOrigin/Hitbox")
 muzzle_flashes = [NodePath("VisibilityOrigin/MuzzleFlash"), NodePath("VisibilityOrigin/Option1/MuzzleFlash"), NodePath("VisibilityOrigin/Option2/MuzzleFlash")]
+visibilty_origin = NodePath("VisibilityOrigin")
 death_explosion = NodePath("Explosion")
+death_delay = 1.0
 
 [node name="VisibilityOrigin" type="Node2D" parent="." unique_id=1244139579]
 
@@ -220,3 +222,4 @@ offset = Vector2(0, -16)
 shape = SubResource("CircleShape2D_3b7yk")
 
 [node name="Explosion" parent="." unique_id=1251670886 instance=ExtResource("11_2ieo8")]
+z_index = 4096

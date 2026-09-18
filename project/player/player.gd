@@ -58,9 +58,13 @@ var bomb_ready_toggle: bool = false
 var is_dead: bool = false
 var disable_input: bool = false
 
+@export var death_delay: float = 0.5
+var death_delay_timer: float = 0.0
+var is_death_pending: bool = false
+
 var shot_audio: float = 0.0
 
-const COUNTERBOMB_WINDOW: int = 8
+const COUNTERBOMB_WINDOW: int = 10
 var counterbomb_ticker: int = 0
 var is_counterbomb_active: bool = false
 
@@ -96,6 +100,33 @@ func _ready() -> void:
 	sprite_shader = sprite.material as ShaderMaterial
 
 func _physics_process(delta: float) -> void:
+	# counterbomb
+
+	if is_counterbomb_active:
+		if counterbomb_ticker > COUNTERBOMB_WINDOW:
+			is_counterbomb_active = false
+			is_death_pending = true
+			death_delay_timer = death_delay
+
+		counterbomb_ticker += 1
+
+	if is_death_pending:
+		death_delay_timer -= delta
+		if death_delay_timer <= 0.0:
+			is_death_pending = false
+			disable_input = false
+			deduct_life()
+			visibilty_origin.visible = true
+
+	# counterbomb input - must run even when input is disabled
+	if is_counterbomb_active and Input.is_action_just_pressed(InputActions.PLAYER_INPUT_ACTION_3):
+		if bomb_effect_timer <= 0.0 and bomb_restart_timer <= 0.0:
+			activate_bomb()
+			is_counterbomb_active = false
+			disable_input = false
+			visibilty_origin.visible = true
+			print("COUNTERBOMB!")
+
 	if control_state == ControlState.NORMAL:
 		if is_dead:
 			return
@@ -130,16 +161,6 @@ func _physics_process(delta: float) -> void:
 	if is_bomb_active and game_sequencer.enemy_bullet_engine.active_bullet_count > 0:
 		game_sequencer.enemy_bullet_engine.bullet_cancel()	
 
-	# counterbomb
-
-	if is_counterbomb_active:
-		if counterbomb_ticker > COUNTERBOMB_WINDOW:
-			is_counterbomb_active = false
-			deduct_life()
-			death_explosion.fire()
-
-		counterbomb_ticker += 1
-
 func process_movement(delta: float) -> void:
 	var dir: Vector2 = Vector2.ZERO
 
@@ -167,6 +188,30 @@ func process_movement(delta: float) -> void:
 	sprite_shader.set_shader_parameter("rot_y_deg", sprite_tilt)
 	sprite_shader.set_shader_parameter("rot_x_deg", sprite_yaw)
 
+func activate_bomb() -> void:
+	bomb_effect_timer = bomb_effect_duration
+	bomb_restart_timer = bomb_restart_duration
+	invincibility_timer = INVINCIBILITY_ON_BOMB
+	game_sequencer.no_bomb = false
+	bomb_ready_toggle = true
+
+	bomb_animation.positions.resize(game_sequencer.enemy_bullet_engine.active_bullet_count)
+	for i in game_sequencer.enemy_bullet_engine.active_bullet_count:
+		bomb_animation.positions[i] = game_sequencer.enemy_bullet_engine.bullets[i].position
+
+	bomb_animation.particles.amount = game_sequencer.enemy_bullet_engine.active_bullet_count * 48
+
+	on_bomb.emit()
+
+	is_bomb_active = true
+	
+	AudioManager.play_sfx(AudioManager.instance.sfx_player_bomb)
+
+	var projectile = bomb_projectile_scene.instantiate() as Node2D
+	bomb_parent.add_child(projectile)
+	projectile.global_position = self.global_position + Vector2.UP * 128.0
+	projectile.reset_physics_interpolation()
+
 func process_weapon(delta: float) -> void:
 	is_focused = Input.is_action_pressed(InputActions.PLAYER_INPUT_ACTION_2)
 
@@ -179,31 +224,13 @@ func process_weapon(delta: float) -> void:
 	focus_weapon.is_firing = fire_input and focus_ready
 	
 	if bomb_input and bomb_effect_timer <= 0.0 and bomb_restart_timer <= 0.0:
-		bomb_effect_timer = bomb_effect_duration
-		bomb_restart_timer = bomb_restart_duration
-		invincibility_timer = INVINCIBILITY_ON_BOMB
-		game_sequencer.no_bomb = false
-		bomb_ready_toggle = true
-
-		bomb_animation.positions.resize(game_sequencer.enemy_bullet_engine.active_bullet_count)
-		for i in game_sequencer.enemy_bullet_engine.active_bullet_count:
-			bomb_animation.positions[i] = game_sequencer.enemy_bullet_engine.bullets[i].position
-
-		bomb_animation.particles.amount = game_sequencer.enemy_bullet_engine.active_bullet_count * 48
-
-		on_bomb.emit()
-
-		is_bomb_active = true
-		
-		AudioManager.play_sfx(AudioManager.instance.sfx_player_bomb)
-
-		var projectile = bomb_projectile_scene.instantiate() as Node2D
-		bomb_parent.add_child(projectile)
-		projectile.global_position = self.global_position + Vector2.UP * 128.0
-		projectile.reset_physics_interpolation()
+		activate_bomb()
 		
 		if is_counterbomb_active:
 			is_counterbomb_active = false
+			disable_input = false
+			visibilty_origin.visible = true
+			print("COUNTERBOMB!")
 
 	if bomb_effect_timer > 0.0:
 		bomb_effect_timer -= delta	
@@ -226,7 +253,7 @@ func process_weapon(delta: float) -> void:
 	else:
 		shot_audio = lerp(shot_audio, 0.0, 1.0 - exp(-30.0 * delta))
 
-func hit() -> void:
+func hit(bullet: Bullet = null) -> void:
 	if is_dead:
 		return
 
@@ -239,11 +266,23 @@ func hit() -> void:
 	if is_counterbomb_active:
 		return
 
+	if death_delay_timer > 0.0:
+		return
+
 	is_counterbomb_active = true
 	counterbomb_ticker = 0
+	disable_input = true
+	visibilty_origin.visible = false
+	death_explosion.fire()
+
+	AudioManager.play_sfx(AudioManager.instance.sfx_player_death)
+
+	#Game.instance.show_death_freezeframe(self, bullet)
 
 func deduct_life() -> void:
 	lives -= 1;
+
+	bomb_restart_timer -= 999.0
 
 	invincibility_timer = INVINCIBILITY_ON_HIT
 	
@@ -286,6 +325,8 @@ func award_life() -> void:
 
 	lives += 1
 	on_heal.emit()
+
+	AudioManager.play_sfx(AudioManager.instance.sfx_player_heal)
 
 func reset_position() -> void:
 	global_position = Game.PLAYER_STARTING_POSITION

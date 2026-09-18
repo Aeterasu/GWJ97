@@ -118,7 +118,7 @@ func check_collision_hit(bullet: Bullet, body: Object) -> void:
 	if body is Enemy:
 		(body as Enemy).hit(bullet.damage)
 	elif body is Player:
-		(body as Player).hit()
+		(body as Player).hit(bullet)
 
 	bullet.is_active = false
 	PhysicsServer2D.area_set_shape_disabled.call_deferred(bullet.area_rid, 0, true)

@@ -12,9 +12,11 @@
 [ext_resource type="PackedScene" uid="uid://gfkkvgh8m84c" path="res://ranking/ranking_menu.tscn" id="5_na0o7"]
 [ext_resource type="AudioStream" uid="uid://dmiwoftn4dkjf" path="res://audio/sfx/sfx_player_shot.wav" id="7_bsumw"]
 [ext_resource type="AudioStream" uid="uid://cwpno1kebrd61" path="res://audio/sfx/sfx_player_bomb.ogg" id="8_na0o7"]
+[ext_resource type="AudioStream" uid="uid://5us5bw2v5jmy" path="res://audio/sfx/sfx_player_death.ogg" id="8_wpkmi"]
 [ext_resource type="AudioStream" uid="uid://cwsltg0xwlc6o" path="res://audio/sfx/sfx_boss_shot_1.ogg" id="9_5xyti"]
 [ext_resource type="AudioStream" uid="uid://ccjqxogoof2mc" path="res://audio/sfx/sfx_explosion_1.ogg" id="10_5xyti"]
 [ext_resource type="AudioStream" uid="uid://1ou82id7v4ej" path="res://audio/sfx/sfx_boss_shot_2.ogg" id="10_n3o0a"]
+[ext_resource type="AudioStream" uid="uid://bxdc4k1fem87s" path="res://audio/sfx/sfx_player_heal.ogg" id="10_o0l78"]
 [ext_resource type="AudioStream" uid="uid://bp5xybhrhh1bj" path="res://audio/sfx/sfx_boss_shot_3.ogg" id="11_s758e"]
 [ext_resource type="AudioStream" uid="uid://cwd1cu10o1bb6" path="res://audio/sfx/sfx_boss_shot_4.ogg" id="12_4hmqs"]
 [ext_resource type="AudioStream" uid="uid://bmow8jo5dewrb" path="res://audio/sfx/sfx_boss_shot_5.ogg" id="13_o8j3b"]
@@ -60,10 +62,13 @@ bgm_manager = NodePath("BGMManager")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1118035484]
 environment = SubResource("Environment_3b7yk")
 
-[node name="AudioManager" type="Node" parent="." unique_id=1791605055 node_paths=PackedStringArray("sfx_player_shot", "sfx_player_bomb", "sfx_boss_shot_1", "sfx_boss_shot_2", "sfx_boss_shot_3", "sfx_boss_shot_4", "sfx_boss_shot_5", "sfx_explosion_1")]
+[node name="AudioManager" type="Node" parent="." unique_id=1791605055 node_paths=PackedStringArray("sfx_player_shot", "sfx_player_bomb", "sfx_player_death", "sfx_player_heal", "sfx_boss_shot_1", "sfx_boss_shot_2", "sfx_boss_shot_3", "sfx_boss_shot_4", "sfx_boss_shot_5", "sfx_explosion_1")]
+process_mode = 3
 script = ExtResource("2_3wy1v")
 sfx_player_shot = NodePath("AudioPlayerShot")
 sfx_player_bomb = NodePath("AudioPlayerBomb")
+sfx_player_death = NodePath("AudioPlayerDeath")
+sfx_player_heal = NodePath("AudioPlayerHeal")
 sfx_boss_shot_1 = NodePath("AudioBossShot1")
 sfx_boss_shot_2 = NodePath("AudioBossShot2")
 sfx_boss_shot_3 = NodePath("AudioBossShot3")
@@ -78,9 +83,19 @@ volume_db = 1.0
 max_polyphony = 4
 bus = &"SFX"
 
+[node name="AudioPlayerDeath" type="AudioStreamPlayer" parent="AudioManager" unique_id=474987818]
+stream = ExtResource("8_wpkmi")
+pitch_scale = 0.6
+bus = &"SFX"
+
 [node name="AudioPlayerBomb" type="AudioStreamPlayer" parent="AudioManager" unique_id=321434719]
 stream = ExtResource("8_na0o7")
 volume_db = 2.0
+max_polyphony = 2
+bus = &"SFX"
+
+[node name="AudioPlayerHeal" type="AudioStreamPlayer" parent="AudioManager" unique_id=2093646810]
+stream = ExtResource("10_o0l78")
 max_polyphony = 2
 bus = &"SFX"
 
@@ -118,6 +133,7 @@ max_polyphony = 2
 bus = &"SFX"
 
 [node name="BGMManager" type="Node" parent="." unique_id=630858695 node_paths=PackedStringArray("bgm_dict")]
+process_mode = 3
 script = ExtResource("3_kfbq2")
 bgm_dict = {
 0: NodePath("BGMBoss1"),

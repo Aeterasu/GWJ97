@@ -3,6 +3,8 @@ class_name AudioManager extends Node
 @export_group("Player")
 @export var sfx_player_shot: AudioStreamPlayer = null
 @export var sfx_player_bomb: AudioStreamPlayer = null
+@export var sfx_player_death: AudioStreamPlayer = null
+@export var sfx_player_heal: AudioStreamPlayer = null
 
 @export_group("Enemy")
 @export var sfx_boss_shot_1: AudioStreamPlayer = null
