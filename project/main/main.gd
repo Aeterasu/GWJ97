@@ -10,48 +10,45 @@ enum State
 	EPILEPSY_WARNING,
 }
 
-@export var control : Control = null
-@export var transition : Transition = null
-@export var world : WorldEnvironment = null
-@export var fps_counter : Control = null
+@export var debug: Debug = null
+
+@export var transition: Transition = null
+@export var world: WorldEnvironment = null
 
 @export_group("State")
-@export var scenes : Dictionary[Main.State, PackedScene] = {}
-@export var default_state : Main.State = Main.State.GAME
+@export var scenes: Dictionary[Main.State, PackedScene] = {}
+@export var default_state: Main.State = Main.State.GAME
 
 @export_group("Audio")
-@export var audio_manager : AudioManager = null
-@export var bgm_manager : BGMManager = null
+@export var audio_manager: AudioManager = null
+@export var bgm_manager: BGMManager = null
 
-var settings : SettingsManager = null
-var save : SaveManager = null
+var settings: SettingsManager = null
+var save: SaveManager = null
 
-var currently_loaded : Node = null
-var current_state : State = State.DEFAULT
+var currently_loaded: Node = null
+var current_state: State = State.DEFAULT
 
-var is_loading : bool = false
+var is_loading: bool = false
 
-var input_device_detector : InputDeviceDetector = null
+var input_device_detector: InputDeviceDetector = null
 
-var os : String = ""
+var os: String = ""
 
-var show_fps : bool = false
-
-static var instance : Main = null
+static var instance: Main = null
 
 func _ready() -> void:
 	instance = self
 
-	os = OS.get_name()
+	debug.init()
 
-	fps_counter.hide()
-	fps_counter.set_process(false)
+	os = OS.get_name()
 
 	get_viewport().disable_3d = true
 	get_viewport().debug_draw = Viewport.DEBUG_DRAW_UNSHADED
 	get_viewport().audio_listener_enable_3d = false
 
-	if OS.is_debug_build():
+	if Debug.IS_DEBUG:
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 	else:
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
@@ -69,12 +66,6 @@ func _ready() -> void:
 
 	input_device_detector = InputDeviceDetector.new()
 	add_child(input_device_detector)
-
-func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed(InputActions.DEBUG_1):
-		show_fps = not show_fps
-		fps_counter.visible = show_fps
-		fps_counter.set_process(true)
 
 func _input(_event: InputEvent) -> void:
 	if (not currently_loaded)\
@@ -110,10 +101,8 @@ func load_state(state : State, with_transition : bool = true, transition_alt_col
 	if node:
 		currently_loaded = node
 		current_state = state
-		if control:
-			control.add_child.call_deferred(node)
-		else:
-			add_child.call_deferred(node)
+
+		add_child.call_deferred(node)
 
 	Engine.set_deferred("time_scale", 1.0)
 

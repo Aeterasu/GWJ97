@@ -16,11 +16,6 @@ var is_dark_screen: bool = false
 
 @export var restart_overlay: Control = null
 
-@export var death_screen: ColorRect = null
-var death_screen_alpha: float = 0.0
-@export var death_player: Sprite2D = null
-@export var death_bullet: Sprite2D = null
-
 var is_paused: bool = false
 
 const BOARD_SIZE: Vector2 = Vector2(240.0, 320.0)
@@ -121,8 +116,6 @@ func _process(delta: float) -> void:
 	ui_root.immune_label.visible = player.invincibility_timer > 0.0
 	ui_root.immune_label.text = "IMMUNE: " + str(Utils.round_place(player.invincibility_timer, 1)) + "s"
 
-	#ui_root.boss_timer.text = "%02d" % int(game_sequencer.get_current_timer())
-
 	ui_root.bomb_bar.max_value = 1.0
 	ui_root.bomb_bar.value = 1.0 - (player.bomb_restart_timer / player.bomb_restart_duration)
 
@@ -132,8 +125,6 @@ func _process(delta: float) -> void:
 		ui_root.bomb_bar.tint_progress = Color("#927873")
 
 	ui_root.boss_timer_panel.visible = ui_root.boss_timer.visible
-
-	#death_screen.modulate.a = death_screen_alpha
 
 func on_pattern_init(pattern_idx: int) -> void:
 	var pattern_str = game_sequencer.patterns_flavor[pattern_idx].pattern_names
@@ -209,22 +200,3 @@ static func get_player() -> Player:
 
 func on_player_bomb() -> void:
 	bomb_animation.show_bomb_flash()
-
-
-#func show_death_freezeframe(player: Player, bullet: Bullet) -> void:
-	#death_screen_alpha = 1.0
-
-	#death_player.show()
-	#death_player.global_position = player.global_position
-	#death_player.reset_physics_interpolation()
-
-	#if bullet:
-	#	death_bullet.show()
-	#	death_bullet.global_position = bullet.position
-	#	death_bullet.reset_physics_interpolation()
-
-	#get_tree().paused = true
-	#await get_tree().create_timer(0.5, false).timeout
-
-	#var tween: Tween = create_tween()
-	#tween.tween_property(self, "death_screen_alpha", 0.0, 1.0)v

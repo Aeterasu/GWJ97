@@ -41,7 +41,8 @@ signal on_pattern_init
 signal propagate_pattern_hit
 
 func _ready() -> void:
-	if not OS.is_debug_build():
+	# sanity checking
+	if not Debug.IS_DEBUG:
 		show_boss_warning = true
 		starting_pattern = 0
 

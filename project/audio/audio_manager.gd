@@ -62,3 +62,12 @@ static func set_bgm_volume(vol : float) -> void:
 static func get_bgm_volume() -> float:
 	var bus = AudioServer.get_bus_index(BUS_NAME_BGM)
 	return AudioServer.get_bus_volume_linear(bus)    
+
+static func mute_audio() -> void:
+	var bus = AudioServer.get_bus_index(BUS_NAME_MASTER)
+	AudioServer.set_bus_mute(bus, true)
+
+static func unmute_audio() -> void:
+	var bus = AudioServer.get_bus_index(BUS_NAME_MASTER)
+	AudioServer.set_bus_mute(bus, false)
+

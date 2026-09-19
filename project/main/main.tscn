@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://jpl6sm2bxl0p" path="res://main/texture/texture_ui_border.png" id="5_4dugh"]
 [ext_resource type="Script" uid="uid://cmfa1d5fwckcb" path="res://util/ui/colored_fps_counter.gd" id="5_67ri8"]
 [ext_resource type="PackedScene" uid="uid://gfkkvgh8m84c" path="res://ranking/ranking_menu.tscn" id="5_na0o7"]
+[ext_resource type="Script" uid="uid://c0r00w3n1mapr" path="res://debug/debug.gd" id="6_576ah"]
 [ext_resource type="AudioStream" uid="uid://dmiwoftn4dkjf" path="res://audio/sfx/sfx_player_shot.wav" id="7_bsumw"]
 [ext_resource type="AudioStream" uid="uid://cwpno1kebrd61" path="res://audio/sfx/sfx_player_bomb.ogg" id="8_na0o7"]
 [ext_resource type="AudioStream" uid="uid://5us5bw2v5jmy" path="res://audio/sfx/sfx_player_death.ogg" id="8_wpkmi"]
@@ -46,10 +47,10 @@ font = ExtResource("4_4dugh")
 outline_size = 3
 outline_color = Color(0.047058824, 0.09803922, 0, 1)
 
-[node name="Main" type="Node" unique_id=1833842509 node_paths=PackedStringArray("world", "fps_counter", "audio_manager", "bgm_manager")]
+[node name="Main" type="Node" unique_id=1833842509 node_paths=PackedStringArray("debug", "world", "audio_manager", "bgm_manager")]
 script = ExtResource("1_53q0u")
+debug = NodePath("Debug")
 world = NodePath("WorldEnvironment")
-fps_counter = NodePath("TopLayer/FpsCounter")
 scenes = Dictionary[int, PackedScene]({
 1: ExtResource("2_0i4oc"),
 2: ExtResource("3_bsumw"),
@@ -61,6 +62,12 @@ bgm_manager = NodePath("BGMManager")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1118035484]
 environment = SubResource("Environment_3b7yk")
+
+[node name="Debug" type="Node" parent="." unique_id=1948088921 node_paths=PackedStringArray("fps_counter")]
+script = ExtResource("6_576ah")
+fps_counter = NodePath("../TopLayer/FpsCounter")
+mute_audio = true
+metadata/_custom_type_script = "uid://c0r00w3n1mapr"
 
 [node name="AudioManager" type="Node" parent="." unique_id=1791605055 node_paths=PackedStringArray("sfx_player_shot", "sfx_player_bomb", "sfx_player_death", "sfx_player_heal", "sfx_boss_shot_1", "sfx_boss_shot_2", "sfx_boss_shot_3", "sfx_boss_shot_4", "sfx_boss_shot_5", "sfx_explosion_1")]
 process_mode = 3

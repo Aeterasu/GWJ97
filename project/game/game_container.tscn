@@ -2110,7 +2110,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(-0.57537174, 0.42263)
+position = Vector2(-0.35926363, 0.36746523)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -2122,7 +2122,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(-7.046992, 7.118921)
+position = Vector2(-1.2480774, 4.4840546)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -2273,16 +2273,16 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("58_1xbv1")
 animation_player = NodePath("AnimationPlayer")
-pattern_reward_label = NodePath("TextureRect/Kill/PatternReward2")
-score_multiplier_label = NodePath("TextureRect/Kill/ScoreMultiplier2")
-score_item_label = NodePath("TextureRect/Kill/ScoreItem2")
-score_suns_label = NodePath("TextureRect/Kill/ScoreItem4")
-total_label = NodePath("TextureRect/Kill/Total2")
-no_miss_checkmark = NodePath("TextureRect/Kill/Checkbox1")
-no_bomb_checkmark = NodePath("TextureRect/Kill/Checkbox2")
+pattern_reward_label = NodePath("TextureRect/PatternReward2")
+score_multiplier_label = NodePath("TextureRect/ScoreMultiplier2")
+score_item_label = NodePath("TextureRect/ScoreItem2")
+score_suns_label = NodePath("TextureRect/ScoreItem4")
+total_label = NodePath("TextureRect/Total2")
+no_miss_checkmark = NodePath("TextureRect/Checkbox1")
+no_bomb_checkmark = NodePath("TextureRect/Checkbox2")
 ticker_label = NodePath("TextureRect/ColorRect/Label")
 kill_category = NodePath("TextureRect/Kill")
-timeout_category = NodePath("TextureRect/Timeout")
+timeout_category = NodePath("")
 metadata/_edit_lock_ = true
 
 [node name="TextureRect" type="NinePatchRect" parent="Overlay/ResultScreen" unique_id=234158589]
@@ -2328,13 +2328,7 @@ font = ExtResource("60_78uyn")
 color = Color(0.047058824, 0.09803922, 0, 1)
 metadata/_custom_type_script = "uid://dfm4leymaw5n2"
 
-[node name="Kill" type="Control" parent="Overlay/ResultScreen/TextureRect" unique_id=877250916]
-visible = false
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="TextureRect" type="ColorRect" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=2090735832]
+[node name="TextureRect" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=2090735832]
 material = SubResource("ShaderMaterial_1xbv1")
 layout_mode = 0
 offset_left = 3.0
@@ -2342,7 +2336,7 @@ offset_top = 194.0
 offset_right = 177.0
 offset_bottom = 197.0
 
-[node name="TextureRect3" type="ColorRect" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=2059789168]
+[node name="TextureRect3" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=2059789168]
 material = SubResource("ShaderMaterial_p2ewd")
 layout_mode = 0
 offset_left = 9.0
@@ -2350,7 +2344,7 @@ offset_top = 47.0
 offset_right = 25.0
 offset_bottom = 50.0
 
-[node name="TextureRect4" type="ColorRect" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=1234452527]
+[node name="TextureRect4" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=1234452527]
 material = SubResource("ShaderMaterial_p2ewd")
 layout_mode = 0
 offset_left = 9.0
@@ -2358,7 +2352,7 @@ offset_top = 74.0
 offset_right = 25.0
 offset_bottom = 77.0
 
-[node name="TextureRect2" type="ColorRect" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=166993355]
+[node name="TextureRect2" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=166993355]
 material = SubResource("ShaderMaterial_1xbv1")
 layout_mode = 0
 offset_left = 3.0
@@ -2366,14 +2360,14 @@ offset_top = 3.0
 offset_right = 177.0
 offset_bottom = 6.0
 
-[node name="Checkbox1" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=1107499871 instance=ExtResource("61_1xbv1")]
+[node name="Checkbox1" parent="Overlay/ResultScreen/TextureRect" unique_id=1107499871 instance=ExtResource("61_1xbv1")]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 29.0
 offset_right = 25.0
 offset_bottom = 45.0
 
-[node name="Checkbox1NoMiss" type="Label" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=819919018]
+[node name="Checkbox1NoMiss" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=819919018]
 layout_mode = 0
 offset_left = 29.0
 offset_top = 34.0
@@ -2382,14 +2376,14 @@ offset_bottom = 47.0
 text = "NO MISS"
 label_settings = SubResource("LabelSettings_wvij3")
 
-[node name="Checkbox2" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=886465222 instance=ExtResource("61_1xbv1")]
+[node name="Checkbox2" parent="Overlay/ResultScreen/TextureRect" unique_id=886465222 instance=ExtResource("61_1xbv1")]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 56.0
 offset_right = 25.0
 offset_bottom = 72.0
 
-[node name="Checkbox2NoBomb" type="Label" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=257270458]
+[node name="Checkbox2NoBomb" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=257270458]
 layout_mode = 0
 offset_left = 29.0
 offset_top = 61.0
@@ -2398,7 +2392,7 @@ offset_bottom = 74.0
 text = "NO BOMB"
 label_settings = SubResource("LabelSettings_wvij3")
 
-[node name="PatternReward1" type="Label" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=550176540]
+[node name="PatternReward1" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=550176540]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 8.0
@@ -2407,7 +2401,7 @@ offset_bottom = 21.0
 text = "PATTERN REWARD:"
 label_settings = SubResource("LabelSettings_78uyn")
 
-[node name="PatternReward2" type="Label" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=367187383]
+[node name="PatternReward2" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=367187383]
 layout_mode = 0
 offset_left = -3.0
 offset_top = 8.0
@@ -2417,7 +2411,7 @@ text = "999,999,999,999"
 label_settings = SubResource("LabelSettings_wvij3")
 horizontal_alignment = 2
 
-[node name="ScoreMultiplier1" type="Label" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=302004814]
+[node name="ScoreMultiplier1" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=302004814]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 77.0
@@ -2426,7 +2420,7 @@ offset_bottom = 90.0
 text = "PATTERN MULTIPLIER:"
 label_settings = SubResource("LabelSettings_78uyn")
 
-[node name="ScoreMultiplier2" type="Label" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=384959182]
+[node name="ScoreMultiplier2" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=384959182]
 layout_mode = 0
 offset_left = -3.0
 offset_top = 77.0
@@ -2436,7 +2430,7 @@ text = "2.0x"
 label_settings = SubResource("LabelSettings_wvij3")
 horizontal_alignment = 2
 
-[node name="ScoreItem1" type="Label" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=1140889526]
+[node name="ScoreItem1" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=1140889526]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 95.0
@@ -2445,7 +2439,7 @@ offset_bottom = 108.0
 text = "GOLD COLLECTED:"
 label_settings = SubResource("LabelSettings_78uyn")
 
-[node name="ScoreItem2" type="Label" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=1013543451]
+[node name="ScoreItem2" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=1013543451]
 layout_mode = 0
 offset_left = -3.0
 offset_top = 95.0
@@ -2455,7 +2449,7 @@ text = "999,999,999,999"
 label_settings = SubResource("LabelSettings_wvij3")
 horizontal_alignment = 2
 
-[node name="ScoreItem3" type="Label" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=2119602602]
+[node name="ScoreItem3" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=2119602602]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 112.0
@@ -2464,7 +2458,7 @@ offset_bottom = 125.0
 text = "SUNS COLLECTED:"
 label_settings = SubResource("LabelSettings_78uyn")
 
-[node name="ScoreItem4" type="Label" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=808437591]
+[node name="ScoreItem4" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=808437591]
 layout_mode = 0
 offset_left = -3.0
 offset_top = 112.0
@@ -2474,7 +2468,7 @@ text = "999,999,999,999"
 label_settings = SubResource("LabelSettings_wvij3")
 horizontal_alignment = 2
 
-[node name="Total1" type="Label" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=1001860862]
+[node name="Total1" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=1001860862]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 176.0
@@ -2483,7 +2477,7 @@ offset_bottom = 189.0
 text = "TOTAL:"
 label_settings = SubResource("LabelSettings_78uyn")
 
-[node name="Total2" type="Label" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=1725918783]
+[node name="Total2" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=1725918783]
 layout_mode = 0
 offset_left = -3.0
 offset_top = 176.0
@@ -2493,7 +2487,7 @@ text = "999,999,999,999"
 label_settings = SubResource("LabelSettings_wvij3")
 horizontal_alignment = 2
 
-[node name="ColorRect2" type="ColorRect" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=260542151]
+[node name="ColorRect2" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=260542151]
 layout_mode = 0
 offset_left = 29.0
 offset_top = 47.0
@@ -2501,7 +2495,7 @@ offset_right = 170.0
 offset_bottom = 48.0
 color = Color(1, 0.16078432, 0, 1)
 
-[node name="ColorRect3" type="ColorRect" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=509196919]
+[node name="ColorRect3" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=509196919]
 layout_mode = 0
 offset_left = 29.0
 offset_top = 74.0
@@ -2509,7 +2503,7 @@ offset_right = 170.0
 offset_bottom = 75.0
 color = Color(1, 0.16078432, 0, 1)
 
-[node name="ColorRect4" type="ColorRect" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=2043297196]
+[node name="ColorRect4" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=2043297196]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 21.0
@@ -2517,7 +2511,7 @@ offset_right = 170.0
 offset_bottom = 22.0
 color = Color(1, 0.16078432, 0, 1)
 
-[node name="ColorRect5" type="ColorRect" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=1877824517]
+[node name="ColorRect5" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=1877824517]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 90.0
@@ -2525,7 +2519,7 @@ offset_right = 170.0
 offset_bottom = 91.0
 color = Color(1, 0.16078432, 0, 1)
 
-[node name="ColorRect6" type="ColorRect" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=2033967910]
+[node name="ColorRect6" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=2033967910]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 108.0
@@ -2533,7 +2527,7 @@ offset_right = 170.0
 offset_bottom = 109.0
 color = Color(1, 0.16078432, 0, 1)
 
-[node name="ColorRect10" type="ColorRect" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=287090658]
+[node name="ColorRect10" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=287090658]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 125.0
@@ -2541,7 +2535,7 @@ offset_right = 170.0
 offset_bottom = 126.0
 color = Color(1, 0.16078432, 0, 1)
 
-[node name="ColorRect7" type="ColorRect" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=1092770982]
+[node name="ColorRect7" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=1092770982]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 189.0
@@ -2549,7 +2543,7 @@ offset_right = 170.0
 offset_bottom = 190.0
 color = Color(1, 0.16078432, 0, 1)
 
-[node name="Label" type="Label" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=990171608]
+[node name="Label" type="Label" parent="Overlay/ResultScreen/TextureRect" unique_id=990171608]
 layout_mode = 0
 offset_top = -40.0
 offset_right = 68.0
@@ -2558,14 +2552,14 @@ text = "CLEAR!"
 label_settings = SubResource("LabelSettings_htow4")
 vertical_alignment = 2
 
-[node name="ColorRect8" type="ColorRect" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=1394448795]
+[node name="ColorRect8" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=1394448795]
 layout_mode = 0
 offset_top = -17.0
 offset_right = 2.0
 offset_bottom = 1.0
 color = Color(1, 0.16078432, 0, 1)
 
-[node name="ColorRect9" type="ColorRect" parent="Overlay/ResultScreen/TextureRect/Kill" unique_id=2300241]
+[node name="ColorRect9" type="ColorRect" parent="Overlay/ResultScreen/TextureRect" unique_id=2300241]
 layout_mode = 0
 offset_left = 178.0
 offset_top = -17.0
@@ -2573,67 +2567,10 @@ offset_right = 180.0
 offset_bottom = 1.0
 color = Color(1, 0.16078432, 0, 1)
 
-[node name="Timeout" type="Control" parent="Overlay/ResultScreen/TextureRect" unique_id=745610545]
+[node name="Kill" type="Control" parent="Overlay/ResultScreen/TextureRect" unique_id=877250916]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-
-[node name="TextureRect" type="ColorRect" parent="Overlay/ResultScreen/TextureRect/Timeout" unique_id=413851762]
-material = SubResource("ShaderMaterial_1xbv1")
-layout_mode = 0
-offset_left = 3.0
-offset_top = 194.0
-offset_right = 177.0
-offset_bottom = 197.0
-
-[node name="TextureRect2" type="ColorRect" parent="Overlay/ResultScreen/TextureRect/Timeout" unique_id=1994493741]
-material = SubResource("ShaderMaterial_1xbv1")
-layout_mode = 0
-offset_left = 3.0
-offset_top = 3.0
-offset_right = 177.0
-offset_bottom = 6.0
-
-[node name="Label2" type="Label" parent="Overlay/ResultScreen/TextureRect/Timeout" unique_id=1690004067]
-layout_mode = 0
-offset_left = 9.0
-offset_top = 8.0
-offset_right = 183.0
-offset_bottom = 193.0
-text = "TIMEOUT, NO SCORE AWARDED."
-label_settings = SubResource("LabelSettings_wvij3")
-
-[node name="Label" type="Label" parent="Overlay/ResultScreen/TextureRect/Timeout" unique_id=1655035810]
-layout_mode = 0
-offset_top = -40.0
-offset_right = 68.0
-offset_bottom = -17.0
-text = "TIMEOUT..."
-label_settings = SubResource("LabelSettings_htow4")
-vertical_alignment = 2
-
-[node name="ColorRect8" type="ColorRect" parent="Overlay/ResultScreen/TextureRect/Timeout" unique_id=541068150]
-layout_mode = 0
-offset_top = -17.0
-offset_right = 2.0
-offset_bottom = 1.0
-color = Color(1, 0.16078432, 0, 1)
-
-[node name="ColorRect9" type="ColorRect" parent="Overlay/ResultScreen/TextureRect/Timeout" unique_id=734638209]
-layout_mode = 0
-offset_left = 178.0
-offset_top = -17.0
-offset_right = 180.0
-offset_bottom = 1.0
-color = Color(1, 0.16078432, 0, 1)
-
-[node name="ColorRect7" type="ColorRect" parent="Overlay/ResultScreen/TextureRect/Timeout" unique_id=639840903]
-layout_mode = 0
-offset_left = 9.0
-offset_top = 21.0
-offset_right = 170.0
-offset_bottom = 22.0
-color = Color(1, 0.16078432, 0, 1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Overlay/ResultScreen" unique_id=2120560650]
 root_node = NodePath("../..")
