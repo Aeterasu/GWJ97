@@ -122,7 +122,7 @@ func on_area_entered(status: int, _area_rid: RID, instance_id: int, _area_shape_
 func check_collision_hit(bullet: Bullet, body: Object) -> void:
 	if body is Enemy:
 		(body as Enemy).hit(bullet.damage)
-	elif body is Player:
+	elif body is Player and (body as Player).state != Player.State.DEAD:
 		(body as Player).hit()
 
 	bullet.is_active = false

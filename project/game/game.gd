@@ -7,23 +7,18 @@ class_name Game extends Node2D
 
 @export var bomb_animation: BombAnimation = null
 
-@export var dark_screen: Control = null
-var is_dark_screen: bool = false
-
+@export var dark_screen: DarkScreen = null
 @export var debug_hp_label: Label = null
-
-@export var pause_overlay: Control = null
-
-@export var restart_overlay: Control = null
-
-var is_paused: bool = false
+@export var pause_overlay: PauseOverlay = null
+@export var restart_overlay: RestartOverlay = null
 
 const BOARD_SIZE: Vector2 = Vector2(240.0, 320.0)
 const PLAYER_STARTING_POSITION: Vector2 = Vector2(54.0, 260.0)
 
-var restart_timer : float = 0.0
-var restart_target_time : float = 1.0
+var restart_timer: float = 0.0
+var restart_target_time: float = 1.0
 
+var is_paused: bool = false
 var time: float = 0.0
 
 static var instance: Game = null
@@ -34,9 +29,6 @@ func _ready() -> void:
 	game_sequencer.fix()
 
 	animate_player_intro()
-
-	pause_overlay.hide()
-	restart_overlay.modulate.a = 0.0
 
 	ui_root.boss_pattern_name_block.hide()
 	ui_root.boss_healthbar.generate_healthbar(game_sequencer.patterns_health)
@@ -63,10 +55,10 @@ func _ready() -> void:
 	game_sequencer.start_game()
 
 func darken_screen() -> void:
-	is_dark_screen = true
+	dark_screen.darken()
 
 func lighten_scree() -> void:
-	is_dark_screen = false
+	dark_screen.lighten()
 
 func animate_player_intro() -> void:
 	player.state = Player.State.CUTSCENE
@@ -81,39 +73,28 @@ func animate_player_intro() -> void:
 	tween.tween_callback(func(): player.state = Player.State.DEFAULT)
 
 func _physics_process(delta: float) -> void:
-	time += delta	
+	time += delta
+
+	if Input.is_action_just_pressed("pause"):
+		is_paused = not is_paused
+		pause_overlay.update_overlay(is_paused)
+		return
 
 	if not is_paused:
 		if time > 1.0 and Input.is_action_pressed("restart"):
-			restart_overlay.modulate.a = lerp(restart_overlay.modulate.a, 1.0, 1.0 - exp(-10.0 * delta))
-
 			restart_timer += delta
 
 			if restart_timer > restart_target_time:
 				Main.instance.load_state(Main.State.GAME)
 		else:
-			restart_overlay.modulate.a = lerp(restart_overlay.modulate.a, 0.0, 1.0 - exp(-10.0 * delta))
-
 			restart_timer = 0.0
-
-	if Input.is_action_just_pressed("pause"):
-		is_paused = not is_paused
-		pause_overlay.visible = is_paused
-
-	for progress in restart_overlay.progresses:
-		progress.max_value = restart_target_time - 0.1
-		progress.value = restart_timer
-
+	
 	get_tree().paused = is_paused or game_sequencer.timeout_pause or restart_timer > 0.0
 
 	if player.is_bomb_active and game_sequencer.enemy_bullet_engine.active_bullet_count > 0:
 		game_sequencer.enemy_bullet_engine.bullet_cancel()
 
 func _process(delta: float) -> void:
-	var lerp_weight: float = 1.0 - exp(-10.0 * delta)
-
-	dark_screen.modulate.a = lerp(dark_screen.modulate.a, 1.0 if is_dark_screen else 0.0, lerp_weight)
-
 	ui_root.boss_ticker_text.position.y = ui_root.boss_pattern_name.position.y
 	ui_root.player_health.lives = player.lives
 
@@ -129,6 +110,8 @@ func _process(delta: float) -> void:
 		ui_root.bomb_bar.tint_progress = Color("#927873")
 
 	ui_root.boss_timer_panel.visible = ui_root.boss_timer.visible
+
+	restart_overlay.set_progress(restart_timer, restart_target_time)
 
 func on_pattern_init(pattern_idx: int) -> void:
 	var pattern_str = game_sequencer.patterns_flavor[pattern_idx].pattern_names
@@ -207,9 +190,10 @@ func on_player_bomb() -> void:
 
 	var bullet_count: int = game_sequencer.enemy_bullet_engine.active_bullet_count
 	bomb_animation.positions.resize(bullet_count)
+	
 	for i: int in bullet_count:
 		bomb_animation.positions[i] = game_sequencer.enemy_bullet_engine.bullets[i].position
-	bomb_animation.particles.amount = bullet_count * 48
+	bomb_animation.particles.amount = max(bullet_count * 48, 1)
 
 	bomb_animation.show_bomb_flash()
 

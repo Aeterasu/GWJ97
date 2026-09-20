@@ -91,7 +91,9 @@
 [ext_resource type="Texture2D" uid="uid://bwbuwl4p4pkbj" path="res://ui/texture/texture_ui_timer.png" id="77_ec3xy"]
 [ext_resource type="Script" uid="uid://dibderq3e64a3" path="res://ui/restart_overlay.gd" id="78_7mcrh"]
 [ext_resource type="Texture2D" uid="uid://c6cshepotwdf5" path="res://ui/texture/texture_ui_pause_symbol.png" id="78_ghgmb"]
+[ext_resource type="Script" uid="uid://c7k0g572ll0ve" path="res://ui/dark_screen.gd" id="80_pu0v6"]
 [ext_resource type="AudioStream" uid="uid://b5tpf1y7p8n23" path="res://audio/sfx/sfx_alarm.ogg" id="84_k6uy7"]
+[ext_resource type="Script" uid="uid://dgpfcue61u456" path="res://ui/pause_overlay.gd" id="93_584sq"]
 
 [sub_resource type="Gradient" id="Gradient_uamdk"]
 offsets = PackedFloat32Array(0.05511811, 0.511811, 0.8937008, 1)
@@ -1136,7 +1138,7 @@ ui_root = NodePath("../../UI")
 bomb_animation = NodePath("Pausable/BombFlash")
 dark_screen = NodePath("../../Overlay/Darken")
 debug_hp_label = NodePath("../../UI/DebugHPLabel")
-pause_overlay = NodePath("../../Overlay/ColorRect")
+pause_overlay = NodePath("../../Overlay/PauseOverlay")
 restart_overlay = NodePath("../../Overlay/RestartOverlay")
 
 [node name="Pausable" type="Node" parent="SubViewport/Game" unique_id=490273109]
@@ -1971,6 +1973,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.16862746, 0.05490196, 0.007843138, 1)
+script = ExtResource("80_pu0v6")
 metadata/_edit_lock_ = true
 
 [node name="BossWarning" type="Control" parent="Overlay" unique_id=2041718326 node_paths=PackedStringArray("animation")]
@@ -2076,7 +2079,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(0.5903667, -0.62698007)
+position = Vector2(0.80689836, 0.458052)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -2088,7 +2091,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(-3.9248898, 3.020766)
+position = Vector2(-6.435528, 1.5376124)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -2201,6 +2204,18 @@ expand_mode = 1
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Overlay/TimeoutWarning" unique_id=1812818493]
 libraries/ = SubResource("AnimationLibrary_8nq8a")
 
+[node name="TimeoutFlash" type="ColorRect" parent="Overlay" unique_id=2083144092]
+modulate = Color(1, 1, 1, 0)
+z_index = 2095
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+metadata/_edit_lock_ = true
+
 [node name="CPUParticles2D" type="CPUParticles2D" parent="Overlay" unique_id=561543664]
 position = Vector2(120, 160)
 emitting = false
@@ -2217,18 +2232,6 @@ initial_velocity_max = 67.13
 scale_amount_max = 3.0
 scale_amount_curve = SubResource("Curve_s68re")
 color = Color(0.98039216, 0.91764706, 0.7882353, 1)
-
-[node name="TimeoutFlash" type="ColorRect" parent="Overlay" unique_id=2083144092]
-modulate = Color(1, 1, 1, 0)
-z_index = 2095
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.98039216, 0.91764706, 0.7882353, 1)
-metadata/_edit_lock_ = true
 
 [node name="ResultScreen" type="Control" parent="Overlay" unique_id=287103774 node_paths=PackedStringArray("animation_player", "pattern_reward_label", "score_multiplier_label", "score_item_label", "score_suns_label", "total_label", "no_miss_checkmark", "no_bomb_checkmark", "ticker_label", "kill_category")]
 layout_mode = 1
@@ -2568,6 +2571,7 @@ scale_amount_curve = SubResource("Curve_2675o")
 color = Color(0.98039216, 0.91764706, 0.7882353, 1)
 
 [node name="RestartOverlay" type="ColorRect" parent="Overlay" unique_id=1532360364 node_paths=PackedStringArray("progresses")]
+process_mode = 3
 z_index = 4096
 layout_mode = 1
 anchors_preset = 15
@@ -2679,8 +2683,7 @@ font = ExtResource("60_78uyn")
 color = Color(0.98039216, 0.91764706, 0.7882353, 1)
 metadata/_custom_type_script = "uid://dfm4leymaw5n2"
 
-[node name="ColorRect" type="ColorRect" parent="Overlay" unique_id=1035716408]
-visible = false
+[node name="PauseOverlay" type="ColorRect" parent="Overlay" unique_id=1035716408]
 z_index = 4096
 layout_mode = 1
 anchors_preset = 15
@@ -2689,8 +2692,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.047058824, 0.09803922, 0, 0.6745098)
+script = ExtResource("93_584sq")
 
-[node name="TV" type="ColorRect" parent="Overlay/ColorRect" unique_id=2009017050]
+[node name="TV" type="ColorRect" parent="Overlay/PauseOverlay" unique_id=2009017050]
 material = SubResource("ShaderMaterial_ghgmb")
 layout_mode = 1
 anchors_preset = 15
@@ -2699,7 +2703,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect2" type="TextureRect" parent="Overlay/ColorRect" unique_id=1055289017]
+[node name="TextureRect2" type="TextureRect" parent="Overlay/PauseOverlay" unique_id=1055289017]
 modulate = Color(1, 1, 1, 0.13333334)
 material = SubResource("CanvasItemMaterial_ixbki")
 layout_mode = 1
@@ -2710,7 +2714,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_htow4")
 
-[node name="TextureRect4" type="TextureRect" parent="Overlay/ColorRect" unique_id=529720486]
+[node name="TextureRect4" type="TextureRect" parent="Overlay/PauseOverlay" unique_id=529720486]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2724,7 +2728,7 @@ grow_vertical = 2
 texture = ExtResource("78_ghgmb")
 stretch_mode = 3
 
-[node name="TextureRect3" type="TextureRect" parent="Overlay/ColorRect" unique_id=891995356]
+[node name="TextureRect3" type="TextureRect" parent="Overlay/PauseOverlay" unique_id=891995356]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2738,7 +2742,7 @@ grow_vertical = 2
 texture = ExtResource("78_ghgmb")
 stretch_mode = 3
 
-[node name="TextureRect" type="TextureRect" parent="Overlay/ColorRect" unique_id=1717480706]
+[node name="TextureRect" type="TextureRect" parent="Overlay/PauseOverlay" unique_id=1717480706]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
