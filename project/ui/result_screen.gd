@@ -14,7 +14,6 @@ class_name ResultScreen extends Control
 @export var ticker_label: TickerLabel = null
 
 @export var kill_category: Control = null
-@export var timeout_category: Control = null
 
 var pattern_reward: int = 0
 var score_multiplier: float = 1.0
@@ -29,7 +28,6 @@ func _ready() -> void:
 
 func show_results(data: Scoring, no_miss: bool, no_bomb: bool) -> void:
 	kill_category.show()
-	timeout_category.hide()
 
 	pattern_reward = 0
 	score_multiplier = 1.0
@@ -63,7 +61,6 @@ func show_results(data: Scoring, no_miss: bool, no_bomb: bool) -> void:
 
 func show_timeout_results(data: Scoring) -> void:
 	kill_category.hide()
-	timeout_category.show()
 
 	pattern_reward = 0
 	score_multiplier = 1.0

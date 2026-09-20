@@ -1,6 +1,7 @@
 class_name Player extends Area2D
 
-enum State {
+enum State
+{
 	DEFAULT,
 	COUNTERBOMB,
 	DYING,
@@ -34,14 +35,12 @@ const COUNTERBOMB_WINDOW: int = 10
 @export_group("Visuals")
 @export var sprite: Sprite2D = null
 @export var hitbox_sprite: Sprite2D = null
-
 @export var muzzle_flashes: Array[Node2D] = []
+@export var visibilty_origin: Node2D = null
+@export var death_explosion: Node2D = null
 
 @export var bomb_parent: Node = null
 @export var bomb_projectile_scene: PackedScene = null
-
-@export var visibilty_origin: Node2D = null
-@export var death_explosion: Node2D = null
 
 @export var death_delay: float = 0.5
 
