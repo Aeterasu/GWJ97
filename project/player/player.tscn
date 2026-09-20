@@ -11,6 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://pbvi3x36nsw6" path="res://player/texture/texture_player_muzzle_flash.png" id="7_boad6"]
 [ext_resource type="Shader" uid="uid://dnjynoll1mra0" path="res://player/player_option.gdshader" id="8_2ieo8"]
 [ext_resource type="PackedScene" uid="uid://35v81h21xsoj" path="res://fx/explosion.tscn" id="11_2ieo8"]
+[ext_resource type="Script" uid="uid://dpcpbpske8jii" path="res://bullet/bullet_engine.gd" id="12_kb6p2"]
+[ext_resource type="Shader" uid="uid://brnm1dduy7bpo" path="res://bullet/bullet_shader.gdshader" id="13_wodsf"]
+[ext_resource type="Texture2D" uid="uid://cag6n42kgn62k" path="res://bullet/texture/texture_player_bullet.png" id="14_32hag"]
 
 [sub_resource type="Curve" id="Curve_3b7yk"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -73,7 +76,23 @@ blend_mode = 1
 [sub_resource type="CircleShape2D" id="CircleShape2D_3b7yk"]
 radius = 2.0
 
-[node name="Player" type="Area2D" unique_id=1584514943 node_paths=PackedStringArray("base_weapon", "focus_weapon", "options", "sprite", "hitbox_sprite", "muzzle_flashes", "visibilty_origin", "death_explosion")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tqiix"]
+shader = ExtResource("13_wodsf")
+shader_parameter/atlas = ExtResource("14_32hag")
+shader_parameter/hFrames = 1
+shader_parameter/vFrames = 1
+shader_parameter/speed = 8.0
+shader_parameter/game_time = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_dakft"]
+size = Vector2(1, -1)
+
+[sub_resource type="MultiMesh" id="MultiMesh_e7oew"]
+use_colors = true
+use_custom_data = true
+mesh = SubResource("QuadMesh_dakft")
+
+[node name="Player" type="Area2D" unique_id=1584514943 node_paths=PackedStringArray("base_weapon", "focus_weapon", "options", "bullet_engine", "sprite", "hitbox_sprite", "muzzle_flashes", "visibilty_origin", "death_explosion")]
 y_sort_enabled = true
 script = ExtResource("1_rkbax")
 base_speed = 210.0
@@ -85,6 +104,7 @@ options_base_distance = 54.0
 options_focus_distance = 16.0
 options = [NodePath("VisibilityOrigin/Option1"), NodePath("VisibilityOrigin/Option2")]
 options_transition_duration = 0.3
+bullet_engine = NodePath("PlayerBulletEngine")
 sprite = NodePath("VisibilityOrigin/ShipSprite")
 hitbox_sprite = NodePath("VisibilityOrigin/HitboxSprite")
 muzzle_flashes = [NodePath("VisibilityOrigin/MuzzleFlash"), NodePath("VisibilityOrigin/Option1/MuzzleFlash"), NodePath("VisibilityOrigin/Option2/MuzzleFlash")]
@@ -225,3 +245,18 @@ debug_color = Color(0, 1, 0.6784314, 0.3764706)
 
 [node name="Explosion" parent="." unique_id=1251670886 instance=ExtResource("11_2ieo8")]
 z_index = 4096
+
+[node name="PlayerBulletEngine" type="Node" parent="." unique_id=108815505 node_paths=PackedStringArray("bullet_visual")]
+script = ExtResource("12_kb6p2")
+max_bullet_count = 512
+shape_radius = 3.0
+use_tunneling_fix = true
+bullet_visual = NodePath("../PlayerBulletVisual")
+collision_mask = 4
+metadata/_custom_type_script = "uid://dpcpbpske8jii"
+
+[node name="PlayerBulletVisual" type="MultiMeshInstance2D" parent="." unique_id=1570982456]
+top_level = true
+z_index = 16
+material = SubResource("ShaderMaterial_tqiix")
+multimesh = SubResource("MultiMesh_e7oew")

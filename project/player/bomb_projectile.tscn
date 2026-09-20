@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bgar5avy0fbow" path="res://fx/texture/texture_fx_bomb_projectile.png" id="2_m4g78"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3b7yk"]
-radius = 32.0
+radius = 64.0
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ixbki"]
 blend_mode = 1
@@ -94,7 +94,7 @@ animation = NodePath("AnimationPlayer")
 shape = SubResource("CircleShape2D_3b7yk")
 
 [node name="ShakyNode2D" type="Node2D" parent="." unique_id=431756967]
-position = Vector2(-2.6410599, 2.2928214)
+position = Vector2(-2.6620922, 2.3024151)
 script = ExtResource("1_pvkk6")
 force = 3.0
 decay_rate = 0.0
