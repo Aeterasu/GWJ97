@@ -26,6 +26,8 @@ func init() -> void:
 		show_fps = false
 		mute_audio = false
 
+	BulletEngine.SHOW_HITBOXES = IS_DEBUG and get_tree().debug_collisions_hint
+
 func update_audio_mute() -> void:
 	if mute_audio:
 		AudioManager.mute_audio()

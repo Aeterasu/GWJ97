@@ -7,6 +7,7 @@ class_name BulletEngine extends Node
 @export_flags("Default", "Player", "Enemy") var collision_mask: int = 0
 
 @export var muzzle_flash: BulletMuzzleFlash = null
+@export var hitbox_debug_color: Color = Color("65e2cdbb")
 
 var bullets: Array[Bullet] = []
 var area_rids: Array[RID] = []
@@ -17,15 +18,16 @@ var ray_query: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.new()
 
 var active_bullet_count: int = 0
 
-const PLAYER_COLLISION_BIT = 1
-const ENEMY_COLLISION_BIT = 2
+static var SHOW_HITBOXES: bool = false
+
+const PLAYER_COLLISION_BIT: int = 1
+const ENEMY_COLLISION_BIT: int = 2
 
 func _ready() -> void:
 	bullets.resize(max_bullet_count)
 	area_rids.resize(max_bullet_count)
 	
-	# physics
-	
+	# physics	
 	shape_rid = PhysicsServer2D.circle_shape_create()
 	PhysicsServer2D.shape_set_data(shape_rid, shape_radius)
 
@@ -34,12 +36,10 @@ func _ready() -> void:
 	ray_query.collide_with_bodies = false
 
 	# visual
-
 	bullet_visual.multimesh.instance_count = max_bullet_count
 	bullet_visual.multimesh.visible_instance_count = max_bullet_count
 
 	# hot loop
-
 	for i in max_bullet_count:
 		bullets[i] = Bullet.new()
 		bullets[i].multimesh_id = i
@@ -47,6 +47,7 @@ func _ready() -> void:
 		# physics
 
 		var area = PhysicsServer2D.area_create()
+
 		PhysicsServer2D.area_set_space(area, bullet_visual.get_world_2d().space)
 		PhysicsServer2D.area_add_shape(area, shape_rid, Transform2D())
 		PhysicsServer2D.area_set_collision_layer(area, 0)
@@ -65,8 +66,15 @@ func _ready() -> void:
 
 	if muzzle_flash:
 		muzzle_flash.configure(max_bullet_count)
-	
+
+	if get_tree().debug_collisions_hint:
+		var renderer := BulletHitboxRenderer.new()
+		renderer.engine = self
+		renderer.hitbox_debug_color = hitbox_debug_color
+		add_child(renderer)
+
 func _physics_process(delta: float) -> void:
+	SHOW_HITBOXES = get_tree().debug_collisions_hint
 	var space_state: PhysicsDirectSpaceState2D = PhysicsServer2D.space_get_direct_state(bullet_visual.get_world_2d().space)
 
 	var i: int = 0
@@ -105,9 +113,6 @@ func update_tunnel_hit(bullet: Bullet, space_state: PhysicsDirectSpaceState2D) -
 		return
 	else:
 		check_collision_hit(bullet, result.collider)
-
-func _process(_delta: float) -> void:
-	(bullet_visual.material as ShaderMaterial).set_shader_parameter("game_time", fmod(Time.get_ticks_msec() / 1000.0, 1800.0))
 
 func on_area_entered(status: int, _area_rid: RID, instance_id: int, _area_shape_idx: int, _self_shape_idx: int, bullet: Bullet) -> void:
 	if status == PhysicsServer2D.AREA_BODY_ADDED:
@@ -162,3 +167,7 @@ func bullet_cancel() -> void:
 	for i in active_bullet_count:
 		bullets[i].is_active = false
 		PhysicsServer2D.area_set_shape_disabled.call_deferred(bullets[i].area_rid, 0, true)
+
+func _process(_delta: float) -> void:
+	(bullet_visual.material as ShaderMaterial).set_shader_parameter("game_time", fmod(Time.get_ticks_msec() / 1000.0, 1800.0))
+

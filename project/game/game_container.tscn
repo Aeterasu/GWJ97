@@ -1299,6 +1299,7 @@ texture = ExtResource("7_yfvcu")
 process_mode = 1
 script = ExtResource("2_oryes")
 player = NodePath("../Player")
+show_boss_warning = false
 boss_warning = NodePath("../../../../Overlay/BossWarning")
 timeout_warning = NodePath("../../../../Overlay/TimeoutWarning")
 starting_pattern = 1
@@ -1448,10 +1449,10 @@ bomb_projectile_scene = ExtResource("57_ulhlw")
 [node name="EnemyBulletEngine" type="Node" parent="SubViewport/Game/Pausable" unique_id=1260966031 node_paths=PackedStringArray("bullet_visual", "muzzle_flash")]
 script = ExtResource("5_wurgr")
 max_bullet_count = 4096
-shape_radius = 1.0
 bullet_visual = NodePath("../EnemyBulletVisual")
 collision_mask = 2
 muzzle_flash = NodePath("../BulletMuzzleFlash")
+hitbox_debug_color = Color(0.39607844, 0.8862745, 0.8039216, 1)
 metadata/_custom_type_script = "uid://dpcpbpske8jii"
 
 [node name="EnemyBulletVisual" type="MultiMeshInstance2D" parent="SubViewport/Game/Pausable" unique_id=1686160402]
@@ -2075,7 +2076,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(0.79021764, -0.85752493)
+position = Vector2(-0.38668424, -0.95074654)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -2087,7 +2088,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(6.533786, -1.3063241)
+position = Vector2(1.7931672, 7.828198)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")

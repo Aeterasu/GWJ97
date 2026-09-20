@@ -23,6 +23,7 @@ buses/default_bus_layout="uid://b14bxijlqedpu"
 
 [debug]
 
+gdscript/warnings/enable=false
 gdscript/warnings/untyped_declaration=1
 gdscript/warnings/inferred_declaration=1
 gdscript/warnings/unsafe_property_access=1
