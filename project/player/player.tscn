@@ -78,19 +78,37 @@ y_sort_enabled = true
 script = ExtResource("1_rkbax")
 base_speed = 210.0
 focus_speed = 100.0
-base_weapon = NodePath("VisibilityOrigin/BaseWeapon")
-focus_weapon = NodePath("VisibilityOrigin/FocusWeapon")
+base_weapon = NodePath("BaseWeapon")
+focus_weapon = NodePath("FocusWeapon")
 options_rotation_speed = 0.785
 options_base_distance = 54.0
 options_focus_distance = 16.0
 options = [NodePath("VisibilityOrigin/Option1"), NodePath("VisibilityOrigin/Option2")]
 options_transition_duration = 0.3
-sprite = NodePath("VisibilityOrigin/Sprite2D")
-hitbox_sprite = NodePath("VisibilityOrigin/Hitbox")
+sprite = NodePath("VisibilityOrigin/ShipSprite")
+hitbox_sprite = NodePath("VisibilityOrigin/HitboxSprite")
 muzzle_flashes = [NodePath("VisibilityOrigin/MuzzleFlash"), NodePath("VisibilityOrigin/Option1/MuzzleFlash"), NodePath("VisibilityOrigin/Option2/MuzzleFlash")]
 visibilty_origin = NodePath("VisibilityOrigin")
 death_explosion = NodePath("Explosion")
 death_delay = 1.0
+
+[node name="BaseWeapon" type="Node2D" parent="." unique_id=1696975318 node_paths=PackedStringArray("shot_origins")]
+script = ExtResource("4_yw30f")
+shot_origins = [NodePath("../VisibilityOrigin/ShotOrigin1"), NodePath("../VisibilityOrigin/ShotOrigin2"), NodePath("../VisibilityOrigin/Option1/ShotOrigin1"), NodePath("../VisibilityOrigin/Option2/ShotOrigin1")]
+origin_random_offset = Vector2(4, 0)
+fire_rate = 0.024
+damage = 1.0
+shot_speed = 1000.0
+metadata/_custom_type_script = "uid://daly1svuqwggy"
+
+[node name="FocusWeapon" type="Node2D" parent="." unique_id=1213521630 node_paths=PackedStringArray("shot_origins")]
+script = ExtResource("4_yw30f")
+shot_origins = [NodePath("../VisibilityOrigin/ShotOrigin1"), NodePath("../VisibilityOrigin/ShotOrigin2"), NodePath("../VisibilityOrigin/Option1/ShotOrigin1"), NodePath("../VisibilityOrigin/Option2/ShotOrigin1")]
+origin_random_offset = Vector2(1, 0)
+fire_rate = 0.024
+damage = 1.5
+shot_speed = 1500.0
+metadata/_custom_type_script = "uid://daly1svuqwggy"
 
 [node name="VisibilityOrigin" type="Node2D" parent="." unique_id=1244139579]
 
@@ -112,37 +130,19 @@ script = ExtResource("3_qjkh3")
 length = 25
 metadata/_custom_type_script = "uid://cnksq2oeepu0y"
 
-[node name="Sprite2D" type="Sprite2D" parent="VisibilityOrigin" unique_id=1154157569]
+[node name="ShipSprite" type="Sprite2D" parent="VisibilityOrigin" unique_id=1154157569]
 z_index = -1
 material = SubResource("ShaderMaterial_8t03j")
 texture = SubResource("GradientTexture2D_2ieo8")
 offset = Vector2(-0.5, -0.5)
 
-[node name="Hitbox" type="Sprite2D" parent="VisibilityOrigin" unique_id=551572882]
+[node name="HitboxSprite" type="Sprite2D" parent="VisibilityOrigin" unique_id=551572882]
 z_index = 64
 z_as_relative = false
 material = SubResource("ShaderMaterial_2ieo8")
-position = Vector2(1, -1)
+position = Vector2(0, -1)
 texture = SubResource("GradientTexture2D_ebec5")
-offset = Vector2(-0.5, 0.5)
-
-[node name="BaseWeapon" type="Node2D" parent="VisibilityOrigin" unique_id=1696975318 node_paths=PackedStringArray("shot_origins")]
-script = ExtResource("4_yw30f")
-shot_origins = [NodePath("../ShotOrigin1"), NodePath("../ShotOrigin2"), NodePath("../Option1/ShotOrigin1"), NodePath("../Option2/ShotOrigin1")]
-origin_random_offset = Vector2(4, 0)
-fire_rate = 0.024
-damage = 1.0
-shot_speed = 1000.0
-metadata/_custom_type_script = "uid://daly1svuqwggy"
-
-[node name="FocusWeapon" type="Node2D" parent="VisibilityOrigin" unique_id=1213521630 node_paths=PackedStringArray("shot_origins")]
-script = ExtResource("4_yw30f")
-shot_origins = [NodePath("../ShotOrigin1"), NodePath("../ShotOrigin2"), NodePath("../Option1/ShotOrigin1"), NodePath("../Option2/ShotOrigin1")]
-origin_random_offset = Vector2(1, 0)
-fire_rate = 0.024
-damage = 1.5
-shot_speed = 1500.0
-metadata/_custom_type_script = "uid://daly1svuqwggy"
+offset = Vector2(0, 0.5)
 
 [node name="ShotOrigin1" type="Marker2D" parent="VisibilityOrigin" unique_id=1864858623]
 position = Vector2(-5, -32)
@@ -219,7 +219,9 @@ texture = ExtResource("7_boad6")
 offset = Vector2(0, -16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=128030895]
+z_index = 4096
 shape = SubResource("CircleShape2D_3b7yk")
+debug_color = Color(0, 1, 0.6784314, 0.3764706)
 
 [node name="Explosion" parent="." unique_id=1251670886 instance=ExtResource("11_2ieo8")]
 z_index = 4096

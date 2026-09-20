@@ -1469,14 +1469,11 @@ z_index = 16
 material = SubResource("ShaderMaterial_ijhnq")
 multimesh = SubResource("MultiMesh_dxrkv")
 
-[node name="Player" parent="SubViewport/Game/Pausable" unique_id=1584514943 node_paths=PackedStringArray("bullet_engine", "enemy_bullet_engine", "game_sequencer", "bomb_animation", "bomb_parent") instance=ExtResource("7_mp07y")]
+[node name="Player" parent="SubViewport/Game/Pausable" unique_id=1584514943 node_paths=PackedStringArray("bullet_engine", "bomb_parent") instance=ExtResource("7_mp07y")]
 z_index = 64
 base_speed = 240.0
 focus_speed = 120.0
 bullet_engine = NodePath("../PlayerBulletEngine")
-enemy_bullet_engine = NodePath("../EnemyBulletEngine")
-game_sequencer = NodePath("../GameSequencer")
-bomb_animation = NodePath("../BombFlash")
 bomb_parent = NodePath("../Node2D")
 bomb_projectile_scene = ExtResource("57_ulhlw")
 

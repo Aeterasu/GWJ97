@@ -58,6 +58,7 @@ func _ready() -> void:
 	player.on_heal.connect(func(): ui_root.player_health.on_player_heal(player.lives))
 	player.on_bomb_ready.connect(ui_root.bomb_bar.show_bomb_ready_notif)
 	player.on_bomb.connect(on_player_bomb)
+	player.on_bomb_end.connect(on_player_bomb_end)
 
 	game_sequencer.start_game()
 
@@ -68,7 +69,7 @@ func lighten_scree() -> void:
 	is_dark_screen = false
 
 func animate_player_intro() -> void:
-	player.control_state = Player.ControlState.IN_CUTSCENE
+	player.state = Player.State.CUTSCENE
 	player.global_position = PLAYER_STARTING_POSITION + Vector2.DOWN * 150.0
 	player.reset_physics_interpolation()
 
@@ -77,7 +78,7 @@ func animate_player_intro() -> void:
 		.set_ease(Tween.EASE_OUT)\
 		.set_trans(Tween.TRANS_BACK)\
 		.set_delay(0.4)
-	tween.tween_callback(func(): player.control_state = Player.ControlState.NORMAL)
+	tween.tween_callback(func(): player.state = Player.State.DEFAULT)
 
 func _physics_process(delta: float) -> void:
 	time += delta	
@@ -104,6 +105,9 @@ func _physics_process(delta: float) -> void:
 		progress.value = restart_timer
 
 	get_tree().paused = is_paused or game_sequencer.timeout_pause or restart_timer > 0.0
+
+	if player.is_bomb_active and game_sequencer.enemy_bullet_engine.active_bullet_count > 0:
+		game_sequencer.enemy_bullet_engine.bullet_cancel()
 
 func _process(delta: float) -> void:
 	var lerp_weight: float = 1.0 - exp(-10.0 * delta)
@@ -199,4 +203,15 @@ static func get_player() -> Player:
 		return null
 
 func on_player_bomb() -> void:
+	game_sequencer.no_bomb = false
+
+	var bullet_count: int = game_sequencer.enemy_bullet_engine.active_bullet_count
+	bomb_animation.positions.resize(bullet_count)
+	for i: int in bullet_count:
+		bomb_animation.positions[i] = game_sequencer.enemy_bullet_engine.bullets[i].position
+	bomb_animation.particles.amount = bullet_count * 48
+
 	bomb_animation.show_bomb_flash()
+
+func on_player_bomb_end() -> void:
+	pass

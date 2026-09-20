@@ -34,4 +34,8 @@ func update_audio_mute() -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed(InputActions.DEBUG_1):
-		show_fps = not show_fps	
+		show_fps = not show_fps
+	
+	if Input.is_action_just_pressed(InputActions.DEBUG_2):
+		mute_audio = not mute_audio
+	
