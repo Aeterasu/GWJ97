@@ -2,8 +2,6 @@
 
 [ext_resource type="Script" uid="uid://bghv017mpdmfg" path="res://player/player.gd" id="1_rkbax"]
 [ext_resource type="Texture2D" uid="uid://vc3iv2rrc83u" path="res://player/texture/texture_player.png" id="2_g1dw6"]
-[ext_resource type="Script" uid="uid://bd3qyvjnay3cr" path="res://util/2d/lerp_follower_2d.gd" id="3_g6k8r"]
-[ext_resource type="Script" uid="uid://cnksq2oeepu0y" path="res://util/2d/trail_2d.gd" id="3_qjkh3"]
 [ext_resource type="Texture2D" uid="uid://cw3vre4x0mjwl" path="res://player/texture/texture_player_option.png" id="4_qjkh3"]
 [ext_resource type="Script" uid="uid://daly1svuqwggy" path="res://player/player_weapon.gd" id="4_yw30f"]
 [ext_resource type="Shader" uid="uid://bx6v6qu8uop7f" path="res://player/player.gdshader" id="5_hg6s5"]
@@ -13,19 +11,16 @@
 [ext_resource type="PackedScene" uid="uid://35v81h21xsoj" path="res://fx/explosion.tscn" id="11_2ieo8"]
 [ext_resource type="Script" uid="uid://dpcpbpske8jii" path="res://bullet/bullet_engine.gd" id="12_kb6p2"]
 [ext_resource type="Shader" uid="uid://brnm1dduy7bpo" path="res://bullet/bullet_shader.gdshader" id="13_wodsf"]
+[ext_resource type="Script" uid="uid://bwhp15idkjb2d" path="res://player/cutscene_config.gd" id="13_yllr7"]
 [ext_resource type="Texture2D" uid="uid://cag6n42kgn62k" path="res://bullet/texture/texture_player_bullet.png" id="14_32hag"]
-
-[sub_resource type="Curve" id="Curve_3b7yk"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8t03j"]
 shader = ExtResource("5_hg6s5")
 shader_parameter/atlas = ExtResource("2_g1dw6")
-shader_parameter/is_invul = true
+shader_parameter/is_invul = false
 shader_parameter/is_focused = 0.0
 shader_parameter/cull_backface = false
-shader_parameter/fov = 90.0
+shader_parameter/fov = 15.000000665
 shader_parameter/rot_y_deg = 0.0
 shader_parameter/rot_x_deg = 360.0
 shader_parameter/inset = 0.0
@@ -36,8 +31,8 @@ colors = PackedColorArray(1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_2ieo8"]
 gradient = SubResource("Gradient_hg6s5")
-width = 38
-height = 42
+width = 32
+height = 35
 fill_from = Vector2(0.018893387, 0.012820512)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2ieo8"]
@@ -92,8 +87,139 @@ use_colors = true
 use_custom_data = true
 mesh = SubResource("QuadMesh_dakft")
 
-[node name="Player" type="Area2D" unique_id=1584514943 node_paths=PackedStringArray("base_weapon", "focus_weapon", "options", "bullet_engine", "sprite", "hitbox_sprite", "muzzle_flashes", "visibilty_origin", "death_explosion")]
+[sub_resource type="Animation" id="Animation_ebec5"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VisibilityOrigin:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VisibilityOrigin:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("VisibilityOrigin:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CutsceneConfig:sprite_tilt")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CutsceneConfig:sprite_yaw")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_yllr7"]
+resource_name = "intro"
+length = 4.0
+step = 0.05
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VisibilityOrigin:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(66, 0, 0, 0, 0, 66, 0, 0, 0, 0, 61.5, -0.53325146, 2.666257, 0.7294946, -25.5, 0, -1.0527515, -11, 0.42541385, -1.5, 0, 0, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.3, 1.25, 2.75, 3.5625)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VisibilityOrigin:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(2, 0, 0, 0, 0),
+"points": PackedFloat32Array(120, 0, 0, 0.95, -2.5, -111.5, -1.7, -8, 0.83349097, 1, 8.5, -0.46650934, 5, 0.10704255, 2, 2.5, -0.09999999, 0, 0.078457914, 0, 0, 0, 0, 0, 0),
+"times": PackedFloat32Array(0, 1.9, 2.9, 3.6, 3.8353736)
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("VisibilityOrigin:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3, 1.45, 2.6, 2.9, 3.25, 3.5, 3.85, 4),
+"transitions": PackedFloat32Array(-2, -2, -2, -2, -2, -2, -2, -2, -2),
+"update": 0,
+"values": [Vector2(1.5, 1.5), Vector2(1.5, 1.5), Vector2(1.7, 1.7), Vector2(0.8, 0.8), Vector2(1.2, 1.2), Vector2(0.9, 0.9), Vector2(1.05, 1.05), Vector2(1, 1), Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CutsceneConfig:sprite_tilt")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.85, 1.5, 2.05, 2.55, 4),
+"transitions": PackedFloat32Array(-2, -2, -2, -2, -2, 0),
+"update": 0,
+"values": [180.0, 180.0, -50.0, 20.0, 0.0, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CutsceneConfig:sprite_yaw")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.85, 2.05, 2.35, 2.85, 3.3, 3.7, 4),
+"transitions": PackedFloat32Array(0.5, 0.5, 1, -2, -2, -2, 1, -2),
+"update": 0,
+"values": [45.0, 45.0, 0.0, 0.0, -45.0, 15.0, -5.0, -4.78965858974334e-06]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kb6p2"]
+_data = {
+&"RESET": SubResource("Animation_ebec5"),
+&"intro": SubResource("Animation_yllr7")
+}
+
+[node name="Player" type="Area2D" unique_id=1584514943 node_paths=PackedStringArray("base_weapon", "focus_weapon", "options", "bullet_engine", "sprite", "hitbox_sprite", "muzzle_flashes", "visibilty_origin", "death_explosion", "animation_player", "cutscene_config")]
 y_sort_enabled = true
+position = Vector2(54, 260)
 script = ExtResource("1_rkbax")
 base_speed = 210.0
 focus_speed = 100.0
@@ -111,6 +237,8 @@ muzzle_flashes = [NodePath("VisibilityOrigin/MuzzleFlash"), NodePath("Visibility
 visibilty_origin = NodePath("VisibilityOrigin")
 death_explosion = NodePath("Explosion")
 death_delay = 1.0
+animation_player = NodePath("AnimationPlayer")
+cutscene_config = NodePath("CutsceneConfig")
 
 [node name="BaseWeapon" type="Node2D" parent="." unique_id=1696975318 node_paths=PackedStringArray("shot_origins")]
 script = ExtResource("4_yw30f")
@@ -132,24 +260,6 @@ metadata/_custom_type_script = "uid://daly1svuqwggy"
 
 [node name="VisibilityOrigin" type="Node2D" parent="." unique_id=1244139579]
 
-[node name="LerpFollower2D" type="Node2D" parent="VisibilityOrigin" unique_id=2089604479]
-position = Vector2(0, 15)
-script = ExtResource("3_g6k8r")
-lerp_weight = 25.0
-metadata/_custom_type_script = "uid://bd3qyvjnay3cr"
-
-[node name="Trail2D" type="Line2D" parent="VisibilityOrigin/LerpFollower2D" unique_id=1387270608]
-show_behind_parent = true
-z_index = -1
-z_as_relative = false
-position = Vector2(0, 15)
-width = 4.0
-width_curve = SubResource("Curve_3b7yk")
-default_color = Color(1, 0.73333335, 0.20392157, 1)
-script = ExtResource("3_qjkh3")
-length = 25
-metadata/_custom_type_script = "uid://cnksq2oeepu0y"
-
 [node name="ShipSprite" type="Sprite2D" parent="VisibilityOrigin" unique_id=1154157569]
 z_index = -1
 material = SubResource("ShaderMaterial_8t03j")
@@ -157,6 +267,7 @@ texture = SubResource("GradientTexture2D_2ieo8")
 offset = Vector2(-0.5, -0.5)
 
 [node name="HitboxSprite" type="Sprite2D" parent="VisibilityOrigin" unique_id=551572882]
+visible = false
 z_index = 64
 z_as_relative = false
 material = SubResource("ShaderMaterial_2ieo8")
@@ -178,23 +289,6 @@ texture = SubResource("GradientTexture2D_hg6s5")
 [node name="ShotOrigin1" type="Marker2D" parent="VisibilityOrigin/Option1" unique_id=681034560]
 position = Vector2(0, -27)
 
-[node name="LerpFollower2D" type="Node2D" parent="VisibilityOrigin/Option1" unique_id=1059055063]
-script = ExtResource("3_g6k8r")
-lerp_weight = 25.0
-metadata/_custom_type_script = "uid://bd3qyvjnay3cr"
-
-[node name="Trail2D" type="Line2D" parent="VisibilityOrigin/Option1/LerpFollower2D" unique_id=1704746616]
-show_behind_parent = true
-z_index = -1
-z_as_relative = false
-position = Vector2(0, 15)
-width = 4.0
-width_curve = SubResource("Curve_3b7yk")
-default_color = Color(1, 0.73333335, 0.20392157, 1)
-script = ExtResource("3_qjkh3")
-length = 25
-metadata/_custom_type_script = "uid://cnksq2oeepu0y"
-
 [node name="MuzzleFlash" type="Sprite2D" parent="VisibilityOrigin/Option1" unique_id=1687499647]
 material = SubResource("CanvasItemMaterial_boad6")
 position = Vector2(0, -11)
@@ -208,23 +302,6 @@ texture = SubResource("GradientTexture2D_hg6s5")
 
 [node name="ShotOrigin1" type="Marker2D" parent="VisibilityOrigin/Option2" unique_id=1266983150]
 position = Vector2(0, -27)
-
-[node name="LerpFollower2D" type="Node2D" parent="VisibilityOrigin/Option2" unique_id=506980988]
-script = ExtResource("3_g6k8r")
-lerp_weight = 25.0
-metadata/_custom_type_script = "uid://bd3qyvjnay3cr"
-
-[node name="Trail2D" type="Line2D" parent="VisibilityOrigin/Option2/LerpFollower2D" unique_id=878729094]
-show_behind_parent = true
-z_index = -1
-z_as_relative = false
-position = Vector2(0, 15)
-width = 4.0
-width_curve = SubResource("Curve_3b7yk")
-default_color = Color(1, 0.73333335, 0.20392157, 1)
-script = ExtResource("3_qjkh3")
-length = 25
-metadata/_custom_type_script = "uid://cnksq2oeepu0y"
 
 [node name="MuzzleFlash" type="Sprite2D" parent="VisibilityOrigin/Option2" unique_id=1787583620]
 material = SubResource("CanvasItemMaterial_boad6")
@@ -260,3 +337,9 @@ top_level = true
 z_index = 16
 material = SubResource("ShaderMaterial_tqiix")
 multimesh = SubResource("MultiMesh_e7oew")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=511086541]
+libraries/ = SubResource("AnimationLibrary_kb6p2")
+
+[node name="CutsceneConfig" type="Node" parent="." unique_id=1644403867]
+script = ExtResource("13_yllr7")

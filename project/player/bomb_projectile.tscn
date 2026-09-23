@@ -84,7 +84,7 @@ _data = {
 }
 
 [node name="BombProjectile" type="Area2D" unique_id=1349767880 node_paths=PackedStringArray("animation")]
-collision_layer = 4
+collision_layer = 0
 collision_mask = 4
 monitorable = false
 script = ExtResource("1_m4g78")
@@ -94,7 +94,7 @@ animation = NodePath("AnimationPlayer")
 shape = SubResource("CircleShape2D_3b7yk")
 
 [node name="ShakyNode2D" type="Node2D" parent="." unique_id=431756967]
-position = Vector2(-2.6620922, 2.3024151)
+position = Vector2(1.4363747, -2.858891)
 script = ExtResource("1_pvkk6")
 force = 3.0
 decay_rate = 0.0

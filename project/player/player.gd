@@ -9,6 +9,8 @@ enum State
 	CUTSCENE,
 }
 
+const PLAYER_STARTING_POSITION: Vector2 = Vector2(54.0, 260.0)
+
 const STARTING_LIVES_EASY: int = 3
 const STARTING_LIVES_NORMAL: int = 2
 const MAX_LIVES: int = 5
@@ -43,6 +45,9 @@ const COUNTERBOMB_WINDOW: int = 10
 @export var bomb_projectile_scene: PackedScene = null
 
 @export var death_delay: float = 0.5
+
+@export var animation_player: AnimationPlayer = null
+@export var cutscene_config: CustceneConfig = null
 
 var state: State = State.DEFAULT
 var lives: int = 0
@@ -90,6 +95,8 @@ func _ready() -> void:
 
 	visuals.init(sprite, hitbox_sprite, options, muzzle_flashes)
 
+	cutscene_config.visual_component = visuals
+
 func _physics_process(delta: float) -> void:
 	update_audio(delta)
 
@@ -110,7 +117,13 @@ func _physics_process(delta: float) -> void:
 
 func _process(delta: float) -> void:
 	var is_firing: bool = base_weapon.is_firing or focus_weapon.is_firing
-	visuals.update_frame(delta, is_focused, invincibility_timer > 0.0, is_firing)
+
+	if state != State.CUTSCENE:
+		visuals.update_frame(delta, is_focused, invincibility_timer > 0.0, is_firing)
+	else:
+		cutscene_config.update(delta)
+
+#	visuals.update_3d_effect()
 
 func state_default(delta: float) -> void:
 	if disable_input:
@@ -277,5 +290,5 @@ func update_audio(delta: float) -> void:
 		shot_audio = lerp(shot_audio, 0.0, 1.0 - exp(-30.0 * delta))
 
 func reset_position() -> void:
-	global_position = Game.PLAYER_STARTING_POSITION
+	global_position = PLAYER_STARTING_POSITION
 	reset_physics_interpolation()

@@ -13,7 +13,6 @@ class_name Game extends Node2D
 @export var restart_overlay: RestartOverlay = null
 
 const BOARD_SIZE: Vector2 = Vector2(240.0, 320.0)
-const PLAYER_STARTING_POSITION: Vector2 = Vector2(54.0, 260.0)
 
 var restart_timer: float = 0.0
 var restart_target_time: float = 1.0
@@ -61,16 +60,21 @@ func lighten_scree() -> void:
 	dark_screen.lighten()
 
 func animate_player_intro() -> void:
+	player.animation_player.play("intro")
 	player.state = Player.State.CUTSCENE
-	player.global_position = PLAYER_STARTING_POSITION + Vector2.DOWN * 150.0
-	player.reset_physics_interpolation()
 
-	var tween: Tween = create_tween()
-	tween.tween_property(player, "global_position", PLAYER_STARTING_POSITION, 1.0)\
-		.set_ease(Tween.EASE_OUT)\
-		.set_trans(Tween.TRANS_BACK)\
-		.set_delay(0.4)
-	tween.tween_callback(func(): player.state = Player.State.DEFAULT)
+	player.animation_player.animation_finished.connect(func(anim):
+		if anim == "intro":
+			player.state = Player.State.DEFAULT)
+	#player.global_position = PLAYER_STARTING_POSITION + Vector2.DOWN * 150.0
+	#player.reset_physics_interpolation()
+
+	#var tween: Tween = create_tween()
+	#tween.tween_property(player, "global_position", PLAYER_STARTING_POSITION, 1.0)\
+	#	.set_ease(Tween.EASE_OUT)\
+	#	.set_trans(Tween.TRANS_BACK)\
+	#	.set_delay(0.4)
+	#tween.tween_callback(func(): player.state = Player.State.DEFAULT)
 
 func _physics_process(delta: float) -> void:
 	time += delta

@@ -1300,11 +1300,10 @@ texture = ExtResource("7_yfvcu")
 [node name="GameSequencer" type="Node" parent="SubViewport/Game/Pausable" unique_id=1424656608 node_paths=PackedStringArray("player", "boss_warning", "timeout_warning", "animation_player", "patterns", "scoring", "enemy_bullet_engine", "sun_spawner", "life_spawner", "results", "timer_ui")]
 process_mode = 1
 script = ExtResource("2_oryes")
+enabled = true
 player = NodePath("../Player")
-show_boss_warning = false
 boss_warning = NodePath("../../../../Overlay/BossWarning")
 timeout_warning = NodePath("../../../../Overlay/TimeoutWarning")
-starting_pattern = 1
 animation_player = NodePath("AnimationPlayer")
 patterns = [NodePath("Omen"), NodePath("Breakout"), NodePath("Riot"), NodePath("Dogfight"), NodePath("Pilebunker"), NodePath("HighRoller"), NodePath("Naysayer"), NodePath("SnakeEyes"), NodePath("Meltdown"), NodePath("BleedingStar")]
 patterns_health = Array[float]([4000.0, 4200.0, 4400.0, 2000.0, 1500.0, 7200.0, 4000.0, 4200.0, 9000.0, 10500.0])
@@ -2079,7 +2078,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(0.80689836, 0.458052)
+position = Vector2(-0.1830722, 0.36258602)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -2091,7 +2090,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(-6.435528, 1.5376124)
+position = Vector2(3.412545, -5.4711227)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")

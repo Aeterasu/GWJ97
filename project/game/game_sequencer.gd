@@ -1,5 +1,7 @@
 class_name GameSequencer extends Node
 
+@export var enabled: bool = false
+
 @export var player: Player = null
 
 @export var show_boss_warning: bool = true
@@ -54,6 +56,9 @@ func _process(delta: float) -> void:
 	hitflash = max(hitflash - delta * 5.0, 0.0)
 
 func start_game() -> void:
+	if not enabled:
+		return
+
 	life_spawner.on_life_collected.connect(on_life_collected)
 
 	player.on_hit.connect(func(): no_miss = false)
