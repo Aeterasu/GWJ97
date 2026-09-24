@@ -5,9 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://cw3vre4x0mjwl" path="res://player/texture/texture_player_option.png" id="4_qjkh3"]
 [ext_resource type="Script" uid="uid://daly1svuqwggy" path="res://player/player_weapon.gd" id="4_yw30f"]
 [ext_resource type="Shader" uid="uid://bx6v6qu8uop7f" path="res://player/player.gdshader" id="5_hg6s5"]
-[ext_resource type="Texture2D" uid="uid://crfc8fl4s2ydv" path="res://player/texture/texture_player_hitbox.png" id="6_8t03j"]
 [ext_resource type="Texture2D" uid="uid://pbvi3x36nsw6" path="res://player/texture/texture_player_muzzle_flash.png" id="7_boad6"]
 [ext_resource type="Shader" uid="uid://dnjynoll1mra0" path="res://player/player_option.gdshader" id="8_2ieo8"]
+[ext_resource type="Script" uid="uid://cnksq2oeepu0y" path="res://util/2d/trail_2d.gd" id="8_yllr7"]
 [ext_resource type="PackedScene" uid="uid://35v81h21xsoj" path="res://fx/explosion.tscn" id="11_2ieo8"]
 [ext_resource type="Script" uid="uid://dpcpbpske8jii" path="res://bullet/bullet_engine.gd" id="12_kb6p2"]
 [ext_resource type="Shader" uid="uid://brnm1dduy7bpo" path="res://bullet/bullet_shader.gdshader" id="13_wodsf"]
@@ -35,21 +35,6 @@ width = 32
 height = 35
 fill_from = Vector2(0.018893387, 0.012820512)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2ieo8"]
-shader = ExtResource("8_2ieo8")
-shader_parameter/atlas = ExtResource("6_8t03j")
-shader_parameter/is_invul = false
-shader_parameter/is_focused = 0.0
-
-[sub_resource type="Gradient" id="Gradient_ebec5"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(1, 1, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_ebec5"]
-gradient = SubResource("Gradient_ebec5")
-width = 38
-height = 42
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yllr7"]
 shader = ExtResource("8_2ieo8")
 shader_parameter/atlas = ExtResource("4_qjkh3")
@@ -62,11 +47,15 @@ colors = PackedColorArray(1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_hg6s5"]
 gradient = SubResource("Gradient_8t03j")
-width = 19
-height = 24
+width = 26
+height = 27
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_boad6"]
 blend_mode = 1
+
+[sub_resource type="Curve" id="Curve_3b7yk"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3b7yk"]
 radius = 2.0
@@ -217,7 +206,7 @@ _data = {
 &"intro": SubResource("Animation_yllr7")
 }
 
-[node name="Player" type="Area2D" unique_id=1584514943 node_paths=PackedStringArray("base_weapon", "focus_weapon", "options", "bullet_engine", "sprite", "hitbox_sprite", "muzzle_flashes", "visibilty_origin", "death_explosion", "animation_player", "cutscene_config")]
+[node name="Player" type="Area2D" unique_id=1584514943 node_paths=PackedStringArray("base_weapon", "focus_weapon", "options", "bullet_engine", "sprite", "muzzle_flashes", "visibilty_origin", "death_explosion", "animation_player", "cutscene_config")]
 y_sort_enabled = true
 position = Vector2(54, 260)
 script = ExtResource("1_rkbax")
@@ -232,7 +221,6 @@ options = [NodePath("VisibilityOrigin/Option1"), NodePath("VisibilityOrigin/Opti
 options_transition_duration = 0.3
 bullet_engine = NodePath("PlayerBulletEngine")
 sprite = NodePath("VisibilityOrigin/ShipSprite")
-hitbox_sprite = NodePath("VisibilityOrigin/HitboxSprite")
 muzzle_flashes = [NodePath("VisibilityOrigin/MuzzleFlash"), NodePath("VisibilityOrigin/Option1/MuzzleFlash"), NodePath("VisibilityOrigin/Option2/MuzzleFlash")]
 visibilty_origin = NodePath("VisibilityOrigin")
 death_explosion = NodePath("Explosion")
@@ -264,16 +252,7 @@ metadata/_custom_type_script = "uid://daly1svuqwggy"
 z_index = -1
 material = SubResource("ShaderMaterial_8t03j")
 texture = SubResource("GradientTexture2D_2ieo8")
-offset = Vector2(-0.5, -0.5)
-
-[node name="HitboxSprite" type="Sprite2D" parent="VisibilityOrigin" unique_id=551572882]
-visible = false
-z_index = 64
-z_as_relative = false
-material = SubResource("ShaderMaterial_2ieo8")
-position = Vector2(0, -1)
-texture = SubResource("GradientTexture2D_ebec5")
-offset = Vector2(0, 0.5)
+offset = Vector2(0, 3.5)
 
 [node name="ShotOrigin1" type="Marker2D" parent="VisibilityOrigin" unique_id=1864858623]
 position = Vector2(-5, -32)
@@ -295,6 +274,14 @@ position = Vector2(0, -11)
 texture = ExtResource("7_boad6")
 offset = Vector2(0, -16)
 
+[node name="Trail2D" type="Line2D" parent="VisibilityOrigin/Option1" unique_id=752564385]
+width = 6.0
+width_curve = SubResource("Curve_3b7yk")
+default_color = Color(0.9843137, 0.654902, 0.3647059, 1)
+script = ExtResource("8_yllr7")
+length = 45
+metadata/_custom_type_script = "uid://cnksq2oeepu0y"
+
 [node name="Option2" type="Sprite2D" parent="VisibilityOrigin" unique_id=1015326118]
 material = SubResource("ShaderMaterial_yllr7")
 position = Vector2(32, 0)
@@ -308,6 +295,14 @@ material = SubResource("CanvasItemMaterial_boad6")
 position = Vector2(0, -11)
 texture = ExtResource("7_boad6")
 offset = Vector2(0, -16)
+
+[node name="Trail2D" type="Line2D" parent="VisibilityOrigin/Option2" unique_id=495003315]
+width = 6.0
+width_curve = SubResource("Curve_3b7yk")
+default_color = Color(0.9843137, 0.654902, 0.3647059, 1)
+script = ExtResource("8_yllr7")
+length = 45
+metadata/_custom_type_script = "uid://cnksq2oeepu0y"
 
 [node name="MuzzleFlash" type="Sprite2D" parent="VisibilityOrigin" unique_id=1549284357]
 material = SubResource("CanvasItemMaterial_boad6")

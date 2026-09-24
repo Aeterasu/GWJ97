@@ -56,16 +56,19 @@ void fragment()
 
 	vec2 final_uv = vec2(1.0 - projected_uv.x, projected_uv.y);
 
-	vec2 uv1 = vec2(final_uv.x / 3.0 + 0.0 / 3.0, final_uv.y);
-	vec2 uv2 = vec2(final_uv.x / 3.0 + 1.0 / 3.0, final_uv.y);
-	vec2 uv3 = vec2(final_uv.x / 3.0 + 2.0 / 3.0, final_uv.y);
+	vec2 uv1 = vec2(final_uv.x / 4.0 + 0.0 / 4.0, final_uv.y);
+	vec2 uv2 = vec2(final_uv.x / 4.0 + 1.0 / 4.0, final_uv.y);
+	vec2 uv3 = vec2(final_uv.x / 4.0 + 2.0 / 4.0, final_uv.y);
+	vec2 uv4 = vec2(final_uv.x / 4.0 + 3.0 / 4.0, final_uv.y);
 
 	vec4 tex1 = texture(atlas, uv1);
 	vec4 tex2 = texture(atlas, uv2);
 	vec4 tex3 = texture(atlas, uv3);
+	vec4 tex4 = texture(atlas, uv4);
 	
     float blink = 0.5 - sin(TIME * 35.0) * 0.5;
-    float factor = blink * float(is_invul);
+    float invul_factor = blink * float(is_invul);
+	vec4 focus_blink = mix(tex2, tex3, blink);
 
-	COLOR = mix(mix(tex1, tex2, is_focused), tex3, factor);
+	COLOR = mix(mix(tex1, focus_blink, is_focused), tex4, invul_factor);
 }

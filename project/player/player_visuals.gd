@@ -1,7 +1,6 @@
 class_name PlayerVisuals extends RefCounted
 
 var sprite: Sprite2D = null
-var hitbox_sprite: Sprite2D = null
 var options: Array[Node2D] = []
 var muzzle_flashes: Array[Node2D] = []
 
@@ -10,9 +9,8 @@ var sprite_tilt: float = 0.0
 var sprite_yaw: float = 0.0
 var focus_fx: float = 0.0
 
-func init(sprite_: Sprite2D, hitbox_: Sprite2D, options_: Array[Node2D], flashes_: Array[Node2D]) -> void:
+func init(sprite_: Sprite2D, options_: Array[Node2D], flashes_: Array[Node2D]) -> void:
 	sprite = sprite_
-	hitbox_sprite = hitbox_
 	options = options_
 	muzzle_flashes = flashes_
 	sprite_shader = sprite.material as ShaderMaterial
@@ -25,10 +23,10 @@ func update_tilt(delta: float, dir: Vector2) -> void:
 	var target_yaw: float = 0.0
 
 	if dir.x < -0.1 or dir.x > 0.1:
-		target_tilt = 35.0 * sign(dir.x)
+		target_tilt = 25.0 * sign(dir.x)
 
 	if dir.y < -0.1 or dir.y > 0.1:
-		target_yaw = 35.0 * -sign(dir.y)
+		target_yaw = 15.0 * -sign(dir.y)
 
 	sprite_tilt = lerp(sprite_tilt, target_tilt, lerp_weight)
 	sprite_yaw = lerp(sprite_yaw, target_yaw, lerp_weight)
@@ -51,9 +49,6 @@ func update_frame(delta: float, is_focused: bool, is_invul: bool, is_firing: boo
 	for option: Node2D in options:
 		(option.material as ShaderMaterial).set_shader_parameter("is_invul", is_invul)
 		(option.material as ShaderMaterial).set_shader_parameter("is_focused", focus_fx)
-
-	(hitbox_sprite.material as ShaderMaterial).set_shader_parameter("is_invul", is_invul)
-	(hitbox_sprite.material as ShaderMaterial).set_shader_parameter("is_focused", focus_fx)
 
 func on_fire() -> void:
 	for flash: Sprite2D in muzzle_flashes:

@@ -36,7 +36,6 @@ const COUNTERBOMB_WINDOW: int = 10
 
 @export_group("Visuals")
 @export var sprite: Sprite2D = null
-@export var hitbox_sprite: Sprite2D = null
 @export var muzzle_flashes: Array[Node2D] = []
 @export var visibilty_origin: Node2D = null
 @export var death_explosion: Node2D = null
@@ -93,7 +92,8 @@ func _ready() -> void:
 	collision_layer = 1 << BulletEngine.PLAYER_COLLISION_BIT
 	collision_mask = 1 << BulletEngine.ENEMY_COLLISION_BIT
 
-	visuals.init(sprite, hitbox_sprite, options, muzzle_flashes)
+	visuals.init(sprite, options, muzzle_flashes)
+	visuals.update_frame(1.0, false, false, false)
 
 	cutscene_config.visual_component = visuals
 
