@@ -14,6 +14,8 @@ var is_firing: bool = false
 
 var bullet_engine: BulletEngine = null
 
+var z: int = 0
+
 signal on_fire
 
 func _physics_process(delta: float) -> void:
@@ -27,11 +29,16 @@ func _physics_process(delta: float) -> void:
 		fire_time_left = 0.0
 
 func fire() -> void:
+	z += 1
+
 	for origin in shot_origins:
 		var offset: Vector2 = Vector2(
 			randf_range(-origin_random_offset.x, origin_random_offset.x),
 			randf_range(-origin_random_offset.y, origin_random_offset.y))
-		var bullet = bullet_engine.fire_bullet(origin.global_position + offset, Vector2.UP.angle(), shot_speed, BulletSkin.Type.PLAYER_BULLET_DEFAULT)
+		var bullet = bullet_engine.fire_bullet(origin.global_position + offset, Vector2.UP.angle(), shot_speed, BulletSkin.Type.PLAYER_BULLET_DEFAULT, Bullet.process_standard_bullet, z)
 		bullet.damage = damage
+
+	if z > 100:
+		z = 0
 
 	on_fire.emit()

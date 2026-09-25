@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://c8c5fy1fkujjp"]
+
+[ext_resource type="Script" uid="uid://bqss13mefb8kc" path="res://debug/batch_tester_multimesh.gd" id="1_66w7l"]
+[ext_resource type="Texture2D" uid="uid://jpl6sm2bxl0p" path="res://main/texture/texture_ui_border.png" id="2_ri6or"]
+[ext_resource type="FontFile" uid="uid://cuavx05ndjw5g" path="res://font/m3x6.ttf" id="3_yoaie"]
+[ext_resource type="Script" uid="uid://cmfa1d5fwckcb" path="res://util/ui/colored_fps_counter.gd" id="4_g13y5"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_trprd"]
+font = ExtResource("3_yoaie")
+outline_size = 3
+outline_color = Color(0.047058824, 0.09803922, 0, 1)
+
+[node name="BatchTester" type="Node2D" unique_id=54125295]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=554778472]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 240.0
+offset_bottom = 320.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=378150551]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(240, 320)
+render_target_update_mode = 4
+
+[node name="Node3D" type="Node3D" parent="SubViewportContainer/SubViewport" unique_id=1761986334]
+script = ExtResource("1_66w7l")
+
+[node name="TopLayer" type="CanvasLayer" parent="." unique_id=270333467]
+layer = 4096
+
+[node name="TextureRect" type="TextureRect" parent="TopLayer" unique_id=198625945]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -120.0
+offset_right = -80.0
+offset_bottom = 40.0
+texture = ExtResource("2_ri6or")
+
+[node name="FpsCounter" type="Label" parent="TopLayer" unique_id=1677175066]
+offset_left = 3.0
+offset_top = -1.0
+offset_right = 26.0
+offset_bottom = 12.0
+text = "FPS: 0"
+label_settings = SubResource("LabelSettings_trprd")
+script = ExtResource("4_g13y5")
+great_color = Color(0.6431373, 0.8901961, 0, 1)
+ok_color = Color(0.98039216, 0.91764706, 0.7882353, 1)
+bad_color = Color(1, 0.16078432, 0, 1)
+
+[node name="ColorRect" type="ColorRect" parent="TopLayer/FpsCounter" unique_id=1012641723]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.231
+anchor_right = 1.0430001
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -0.003000021
+offset_right = 0.010997772
+color = Color(0.047058824, 0.09803922, 0, 1)
+
+[node name="FpsCounter2" type="Label" parent="TopLayer" unique_id=626552876]
+offset_left = 197.0
+offset_top = -1.0
+offset_right = 237.0
+offset_bottom = 12.0
+text = "MULTIMESH"
+label_settings = SubResource("LabelSettings_trprd")
+
+[node name="ColorRect" type="ColorRect" parent="TopLayer/FpsCounter2" unique_id=670221707]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.231
+anchor_right = 1.0430001
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -0.003000021
+offset_right = 0.010997772
+color = Color(0.047058824, 0.09803922, 0, 1)

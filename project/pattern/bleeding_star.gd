@@ -51,7 +51,7 @@ func fire_2() -> void:
 		for i in 6:
 			await get_tree().create_timer(0.08, false).timeout
 
-			bullet_engine.fire_bullet(ORIGIN, BulletPatternHelper.get_angle_to_player(ORIGIN), 100.0, BulletSkin.Type.ENEMY_BULLET_ALT_LONG)
+			bullet_engine.fire_bullet(ORIGIN, BulletPatternHelper.get_angle_to_player(ORIGIN), randf_range(120.0, 200.0), BulletSkin.Type.ENEMY_BULLET_ALT_LONG)
 	else:
 		sun_spawner.spawn_sun(ORIGIN, Vector2.from_angle(BulletPatternHelper.get_angle_to_player(ORIGIN)) * 100.0)
 
