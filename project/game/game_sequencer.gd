@@ -19,6 +19,8 @@ class_name GameSequencer extends Node
 @export var patterns_flavor: Array[PatternFlavor] = []
 @export var patterns_bgm: Array[BGMManager.BGMType] = []
 
+@export var wall_chip_damage_hitbox: WallChipDamageHitbox = null
+
 @export var scoring: Scoring = null
 
 @export var enemy_bullet_engine: BulletEngine = null
@@ -49,6 +51,10 @@ func _ready() -> void:
 	if not Debug.IS_DEBUG:
 		show_boss_warning = true
 		starting_pattern = 0
+
+	wall_chip_damage_hitbox.on_hit.connect(func(dmg, flash: bool = true):
+		if current_pattern:
+			current_pattern.on_entity_hit(null, dmg, flash))
 
 func _process(delta: float) -> void:
 	if current_pattern:
@@ -129,10 +135,11 @@ func get_all_health_percentagees() -> Array[float]:
 
 	return result
 
-func on_pattern_hit(pattern: Pattern) -> void:
+func on_pattern_hit(pattern: Pattern, flash: bool = true) -> void:
 	propagate_pattern_hit.emit(pattern)
 
-	hitflash = 1.0
+	if flash:
+		hitflash = 1.0
 
 func on_pattern_timeout(pattern: Pattern) -> void:
 	timeout_pause = true

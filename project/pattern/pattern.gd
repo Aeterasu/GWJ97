@@ -62,7 +62,7 @@ func _ready() -> void:
 		freeze.append(node)
 
 	if animation_player:
-		animation_player.animation_finished.connect(_on_animation_finished)	
+		animation_player.animation_finished.connect(on_animation_finished)	
 
 	timeout_pattern = TimeoutPattern.new()
 
@@ -80,9 +80,7 @@ func start() -> void:
 	is_started = true
 
 func _physics_process(delta: float) -> void:
-	if is_started and (not is_dead):
-		#time_left -= delta
-
+	if is_started and (not is_dead):	
 		if time_left <= 0.0:
 			if not is_timeout:
 				is_timeout = true
@@ -93,7 +91,7 @@ func _physics_process(delta: float) -> void:
 func update(delta: float) -> void:
 	pass
 
-func on_entity_hit(entity: Enemy, damage: float) -> void:
+func on_entity_hit(entity: Enemy, damage: float, flash: bool = true) -> void:
 	if immune:
 		return
 
@@ -102,13 +100,11 @@ func on_entity_hit(entity: Enemy, damage: float) -> void:
 
 	health -= damage
 
-	on_hit.emit(self)
+	on_hit.emit(self, flash)
 
 	if health < 0.0:
 		on_health_depleted.emit(self)
 		start_death()
-
-	#Game.get_player().bomb_restart_timer -= 0.01
 
 func start_death() -> void:
 	if is_dead:
@@ -134,14 +130,9 @@ func start_timeout() -> void:
 	if is_dead:
 		return
 
-	#is_dead = true
 	is_timeout = true
 
-	#bullet_engine.bullet_cancel()
-
-	#animation_player.play("timeout")
-
-func _on_animation_finished(anim_name: StringName) -> void:
+func on_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "death":
 		if animation_player.has_animation("death_loop"):
 			animation_player.play("death_loop")
@@ -150,8 +141,8 @@ func _on_animation_finished(anim_name: StringName) -> void:
 func deactivate() -> void:
 	if animation_player:
 		animation_player.stop()
-		if animation_player.animation_finished.is_connected(_on_animation_finished):
-			animation_player.animation_finished.disconnect(_on_animation_finished)
+		if animation_player.animation_finished.is_connected(on_animation_finished):
+			animation_player.animation_finished.disconnect(on_animation_finished)
 
 	for entity in entities:
 		if entity.get_parent():

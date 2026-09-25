@@ -71,6 +71,7 @@
 [ext_resource type="Texture2D" uid="uid://cag6n42kgn62k" path="res://bullet/texture/texture_player_bullet.png" id="53_rbb8s"]
 [ext_resource type="Texture2D" uid="uid://boo0j806k0aa1" path="res://ui/texture/texture_ui_panel.png" id="56_h86jf"]
 [ext_resource type="Script" uid="uid://c6wbdfvk65clw" path="res://ui/ui_health.gd" id="57_brma6"]
+[ext_resource type="Script" uid="uid://ckns857267sp7" path="res://enemy/wall_chip_damage_hitbox.gd" id="57_k6uy7"]
 [ext_resource type="Texture2D" uid="uid://77pn8cy5f8va" path="res://ui/texture/texture_ui_heart.png" id="57_osdpc"]
 [ext_resource type="PackedScene" uid="uid://wgri6c15rgpb" path="res://player/bomb_projectile.tscn" id="57_ulhlw"]
 [ext_resource type="Script" uid="uid://b0ma26hvq32jr" path="res://ui/result_screen.gd" id="58_1xbv1"]
@@ -192,6 +193,9 @@ point_count = 2
 [sub_resource type="Gradient" id="Gradient_ec3xy"]
 offsets = PackedFloat32Array(0.34042552, 0.57092196, 0.8475177, 1)
 colors = PackedColorArray(0.98039216, 0.91764706, 0.7882353, 1, 0.9992621, 0.7402699, 0.22591186, 1, 0.7921569, 0.20784314, 0.08627451, 1, 0.16862746, 0.05490196, 0.007843138, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3b7yk"]
+size = Vector2(276, 20)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wurgr"]
 shader = ExtResource("13_lw3qe")
@@ -1148,7 +1152,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("7_yfvcu")
 
-[node name="GameSequencer" type="Node" parent="SubViewport/Game/Pausable" unique_id=1424656608 node_paths=PackedStringArray("player", "boss_warning", "timeout_warning", "animation_player", "patterns", "scoring", "enemy_bullet_engine", "sun_spawner", "life_spawner", "results", "timer_ui")]
+[node name="GameSequencer" type="Node" parent="SubViewport/Game/Pausable" unique_id=1424656608 node_paths=PackedStringArray("player", "boss_warning", "timeout_warning", "animation_player", "patterns", "wall_chip_damage_hitbox", "scoring", "enemy_bullet_engine", "sun_spawner", "life_spawner", "results", "timer_ui")]
 process_mode = 1
 script = ExtResource("2_oryes")
 enabled = true
@@ -1161,6 +1165,7 @@ patterns_health = Array[float]([4000.0, 4200.0, 4400.0, 2000.0, 1500.0, 7200.0, 
 patterns_timer = Array[float]([45.0, 45.0, 45.0, 60.0, 60.0, 75.0, 75.0, 75.0, 90.0, 90.0])
 patterns_flavor = Array[ExtResource("3_ysh17")]([ExtResource("4_to2kc"), ExtResource("5_ino1g"), ExtResource("8_v7aj6"), ExtResource("6_gts4h"), ExtResource("7_j7fm5"), ExtResource("15_y37xm"), ExtResource("8_1vxhs"), ExtResource("9_bybv3"), ExtResource("10_y7kwi"), ExtResource("18_kjv07")])
 patterns_bgm = Array[int]([0, 0, 0, 1, 1, 1, 2, 2, 2, 2])
+wall_chip_damage_hitbox = NodePath("../WallChipDamage")
 scoring = NodePath("../Scoring")
 enemy_bullet_engine = NodePath("../EnemyBulletEngine")
 sun_spawner = NodePath("../Scoring/ScoreSunManager")
@@ -1374,6 +1379,17 @@ angle_max = 105.0
 scale_amount_max = 3.0
 scale_amount_curve = SubResource("Curve_k6uy7")
 color_ramp = SubResource("Gradient_ec3xy")
+
+[node name="WallChipDamage" type="Area2D" parent="SubViewport/Game/Pausable" unique_id=79837479]
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("57_k6uy7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewport/Game/Pausable/WallChipDamage" unique_id=1570416698]
+position = Vector2(119, -20)
+shape = SubResource("RectangleShape2D_3b7yk")
+debug_color = Color(1, 0.16078432, 0, 0.5058824)
 
 [node name="UI" type="Control" parent="." unique_id=339268598 node_paths=PackedStringArray("player_health", "immune_label", "boss_healthbar", "boss_pattern_name_block", "boss_pattern_name", "boss_ticker_text", "boss_timer", "boss_timer_panel", "bomb_bar")]
 custom_minimum_size = Vector2(240, 320)
@@ -1960,7 +1976,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(-0.6010455, -0.66554344)
+position = Vector2(0.38190365, -0.05974691)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -1972,7 +1988,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(-4.2678013, -3.9983454)
+position = Vector2(-2.087649, -5.0374355)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
