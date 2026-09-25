@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://c3vnjudksfc25"]
+
+[ext_resource type="Texture2D" uid="uid://pbvi3x36nsw6" path="res://player/texture/texture_player_muzzle_flash.png" id="1_pbm8c"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_boad6"]
+blend_mode = 1
+
+[node name="MuzzleFlash" type="Sprite2D" unique_id=1382477109]
+z_index = 2048
+material = SubResource("CanvasItemMaterial_boad6")
+texture = ExtResource("1_pbm8c")
+offset = Vector2(0, -20)

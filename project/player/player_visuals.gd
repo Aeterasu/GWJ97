@@ -52,6 +52,6 @@ func update_frame(delta: float, is_focused: bool, is_invul: bool, is_firing: boo
 
 func on_fire() -> void:
 	for flash: Sprite2D in muzzle_flashes:
-		flash.scale = Vector2.ONE * randf_range(0.8, 1.5)
-		flash.position.x = randf_range(-2.0, 2.0)
-		flash.visible = not flash.visible
+		flash.scale = Vector2(randf_range(1.0, 2.0), randf_range(0.75, 1.1))
+		flash.position.x = randf_range(-3.0, 3.0)
+		#flash.visible = not flash.visible

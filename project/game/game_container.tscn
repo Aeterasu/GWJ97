@@ -3,16 +3,12 @@
 [ext_resource type="Script" uid="uid://dsn2rdoa26phn" path="res://game/game.gd" id="1_q4ejq"]
 [ext_resource type="Script" uid="uid://cm7708ogl281p" path="res://bullet/bullet_skin_manager.gd" id="2_ijhnq"]
 [ext_resource type="Script" uid="uid://ccit5a7gc55fv" path="res://scoring/scoring.gd" id="2_jld1g"]
-[ext_resource type="Shader" uid="uid://dup2w6cevjqvn" path="res://backdrop/skies.gdshader" id="2_lhvh0"]
 [ext_resource type="Script" uid="uid://dbaxnfdbt6cyt" path="res://game/game_sequencer.gd" id="2_oryes"]
 [ext_resource type="Script" uid="uid://cnhr5ggnp7gby" path="res://bullet/bullet_skin.gd" id="3_07ulu"]
-[ext_resource type="Script" uid="uid://llf5q5lfma04" path="res://backdrop/3d_backdrop.gd" id="3_lw3qe"]
 [ext_resource type="Script" uid="uid://c3gpckl5lcjkm" path="res://scoring/score_item_manager.gd" id="3_s5735"]
-[ext_resource type="Texture2D" uid="uid://b8aw3o2fpa1sw" path="res://backdrop/texture/texture_clouds.png" id="3_v3i0y"]
 [ext_resource type="Script" uid="uid://c0dqn8ky0me73" path="res://pattern/flavor/pattern_flavor.gd" id="3_ysh17"]
 [ext_resource type="Resource" uid="uid://gfyg5kwmpnkp" path="res://bullet/skin/enemy_bullet_red_small.tres" id="4_1cebb"]
 [ext_resource type="Resource" uid="uid://c4wk0a2wym7o5" path="res://pattern/flavor/flavor_1.tres" id="4_to2kc"]
-[ext_resource type="ArrayMesh" uid="uid://b3yur11e2x152" path="res://backdrop/mesh/backdrop_base.obj" id="4_ysh17"]
 [ext_resource type="Resource" uid="uid://o0ecupb4u38w" path="res://pattern/flavor/flavor_2.tres" id="5_ino1g"]
 [ext_resource type="Resource" uid="uid://cu1imy27jfa6v" path="res://bullet/skin/enemy_bullet_red_long.tres" id="5_kjv07"]
 [ext_resource type="Script" uid="uid://dpcpbpske8jii" path="res://bullet/bullet_engine.gd" id="5_wurgr"]
@@ -33,7 +29,6 @@
 [ext_resource type="Texture2D" uid="uid://ca8qamvsoarpw" path="res://bullet/texture/texture_enemy_bullet.png" id="9_ag8gt"]
 [ext_resource type="Resource" uid="uid://tbkoqcc0igv0" path="res://pattern/flavor/flavor_8.tres" id="9_bybv3"]
 [ext_resource type="Resource" uid="uid://cg3iiieqxuqqs" path="res://pattern/flavor/flavor_9.tres" id="10_y7kwi"]
-[ext_resource type="Script" uid="uid://16mvw7i2q77s" path="res://pattern/pattern.gd" id="11_j7fm5"]
 [ext_resource type="Texture2D" uid="uid://87vn2h1jbhv2" path="res://ui/texture/texture_ui_boss_healthbar_under.png" id="12_q4ejq"]
 [ext_resource type="Shader" uid="uid://cer0tvbjg2xqt" path="res://ui/boss_healthbar_decorative_stripe.gdshader" id="13_lw3qe"]
 [ext_resource type="Texture2D" uid="uid://2n03m4k3vmdc" path="res://ui/texture/texture_ui_boss_healthbar_vertical_stripe.png" id="14_ysh17"]
@@ -94,54 +89,6 @@
 [ext_resource type="Script" uid="uid://c7k0g572ll0ve" path="res://ui/dark_screen.gd" id="80_pu0v6"]
 [ext_resource type="AudioStream" uid="uid://b5tpf1y7p8n23" path="res://audio/sfx/sfx_alarm.ogg" id="84_k6uy7"]
 [ext_resource type="Script" uid="uid://dgpfcue61u456" path="res://ui/pause_overlay.gd" id="93_584sq"]
-
-[sub_resource type="Gradient" id="Gradient_uamdk"]
-offsets = PackedFloat32Array(0.05511811, 0.511811, 0.8937008, 1)
-colors = PackedColorArray(0.16862746, 0.05490196, 0.007843138, 1, 0.36862746, 0.11372549, 0.05490196, 1, 0.7921569, 0.20784314, 0.08627451, 1, 0.9411765, 0.45882353, 0.1254902, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_v3i0y"]
-gradient = SubResource("Gradient_uamdk")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_lhvh0"]
-shader = ExtResource("2_lhvh0")
-shader_parameter/scroll_speed = Vector2(0, -0.4)
-shader_parameter/gradient_ramp = SubResource("GradientTexture2D_v3i0y")
-shader_parameter/use_rec709 = false
-
-[sub_resource type="Environment" id="Environment_y36n6"]
-background_mode = 1
-background_color = Color(0.16862746, 0.05490196, 0.007843138, 1)
-ambient_light_source = 2
-ambient_light_color = Color(0.16862746, 0.05490196, 0.007843138, 1)
-
-[sub_resource type="World3D" id="World3D_u5opy"]
-environment = SubResource("Environment_y36n6")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u5opy"]
-albedo_color = Color(0.36862746, 0.11372549, 0.05490196, 1)
-
-[sub_resource type="Gradient" id="Gradient_ms3xe"]
-colors = PackedColorArray(0.16862746, 0.05490196, 0.007843138, 1, 0.7921569, 0.20784314, 0.08627451, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_3b7yk"]
-gradient = SubResource("Gradient_ms3xe")
-width = 240
-height = 320
-fill_from = Vector2(0, 0.32051283)
-fill_to = Vector2(0, 1)
-
-[sub_resource type="Gradient" id="Gradient_3b7yk"]
-offsets = PackedFloat32Array(0, 0.18439716, 0.5177305, 1)
-colors = PackedColorArray(0.16862746, 0.05490196, 0.007843138, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0.16862746, 0.05490196, 0.007843138, 0)
-
-[sub_resource type="Curve" id="Curve_qafsl"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.54545456, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="Curve" id="Curve_uamdk"]
-_limits = [0.0, 8.0, 0.0, 1.0]
-_data = [Vector2(0, 8), 0.0, 0.0, 0, 0]
-point_count = 1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yfvcu"]
 shader = ExtResource("6_k5ync")
@@ -1152,107 +1099,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.16862746, 0.05490196, 0.007843138, 1)
-
-[node name="Clouds" type="Sprite2D" parent="SubViewport/Game/Pausable/ColorRect" unique_id=1154139099]
-material = SubResource("ShaderMaterial_lhvh0")
-position = Vector2(-39, 0)
-texture = ExtResource("3_v3i0y")
-centered = false
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="SubViewport/Game/Pausable/ColorRect" unique_id=2063333912]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="3DSubViewport" type="SubViewport" parent="SubViewport/Game/Pausable/ColorRect/SubViewportContainer" unique_id=234768842]
-own_world_3d = true
-world_3d = SubResource("World3D_u5opy")
-transparent_bg = true
-handle_input_locally = false
-oversampling = false
-size = Vector2i(240, 320)
-render_target_update_mode = 0
-
-[node name="Node3D" type="Node3D" parent="SubViewport/Game/Pausable/ColorRect/SubViewportContainer/3DSubViewport" unique_id=908136797]
-script = ExtResource("3_lw3qe")
-speed = 1.0
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport/Game/Pausable/ColorRect/SubViewportContainer/3DSubViewport/Node3D" unique_id=1004624382]
-mesh = ExtResource("4_ysh17")
-surface_material_override/0 = SubResource("StandardMaterial3D_u5opy")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="SubViewport/Game/Pausable/ColorRect/SubViewportContainer/3DSubViewport/Node3D" unique_id=1784111236]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -22)
-mesh = ExtResource("4_ysh17")
-surface_material_override/0 = SubResource("StandardMaterial3D_u5opy")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport/Game/Pausable/ColorRect/SubViewportContainer/3DSubViewport/Node3D" unique_id=1187236356]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 4.038269, 0)
-
-[node name="Camera3D" type="Camera3D" parent="SubViewport/Game/Pausable/ColorRect/SubViewportContainer/3DSubViewport" unique_id=605191865]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 20.952, 6.406)
-fov = 21.0
-
-[node name="TextureRect" type="TextureRect" parent="SubViewport/Game/Pausable/ColorRect" unique_id=474938826]
-modulate = Color(1, 1, 1, 0.22352941)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("GradientTexture2D_3b7yk")
-
-[node name="CPUParticles2D" type="CPUParticles2D" parent="SubViewport/Game/Pausable/ColorRect" unique_id=361261354]
-modulate = Color(1, 1, 1, 0.14901961)
-position = Vector2(120, 160)
-amount = 32
-lifetime = 3.0
-lifetime_randomness = 1.0
-emission_shape = 3
-emission_rect_extents = Vector2(120, 160)
-direction = Vector2(0, -1)
-spread = 0.0
-gravity = Vector2(0, 9.8)
-initial_velocity_min = 8.0
-initial_velocity_max = 24.0
-orbit_velocity_min = -0.05
-orbit_velocity_max = 0.05
-tangential_accel_min = -0.1
-tangential_accel_max = 0.1
-color = Color(0.9411765, 0.45882353, 0.1254902, 1)
-color_ramp = SubResource("Gradient_3b7yk")
-
-[node name="CPUParticles2D2" type="CPUParticles2D" parent="SubViewport/Game/Pausable/ColorRect" unique_id=71195660]
-modulate = Color(1, 1, 1, 0.4745098)
-position = Vector2(119, -6)
-amount = 128
-lifetime = 4.0
-emission_shape = 3
-emission_rect_extents = Vector2(120, 0)
-direction = Vector2(0, 1)
-spread = 1.0
-gravity = Vector2(0, 0)
-initial_velocity_min = 260.87
-initial_velocity_max = 354.04
-tangential_accel_min = -0.1
-tangential_accel_max = 0.1
-split_scale = true
-scale_curve_x = SubResource("Curve_qafsl")
-scale_curve_y = SubResource("Curve_uamdk")
-color = Color(0.9411765, 0.45882353, 0.1254902, 1)
-color_ramp = SubResource("Gradient_3b7yk")
-
-[node name="ColorRect" type="ColorRect" parent="SubViewport/Game/Pausable/ColorRect" unique_id=143873928]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.16862746, 0.05490196, 0.007843138, 0.63529414)
+color = Color(0.047058824, 0.09803922, 0, 1)
 
 [node name="BombFlash" type="Control" parent="SubViewport/Game/Pausable" unique_id=636132118 node_paths=PackedStringArray("flash_1", "flash_2", "flash_3", "particles")]
 layout_mode = 3
@@ -1300,8 +1147,8 @@ texture = ExtResource("7_yfvcu")
 [node name="GameSequencer" type="Node" parent="SubViewport/Game/Pausable" unique_id=1424656608 node_paths=PackedStringArray("player", "boss_warning", "timeout_warning", "animation_player", "patterns", "scoring", "enemy_bullet_engine", "sun_spawner", "life_spawner", "results", "timer_ui")]
 process_mode = 1
 script = ExtResource("2_oryes")
-enabled = true
 player = NodePath("../Player")
+show_boss_warning = false
 boss_warning = NodePath("../../../../Overlay/BossWarning")
 timeout_warning = NodePath("../../../../Overlay/TimeoutWarning")
 animation_player = NodePath("AnimationPlayer")
@@ -1319,10 +1166,6 @@ timer_ui = NodePath("../../../../UI/UITimer")
 metadata/_custom_type_script = "uid://dbaxnfdbt6cyt"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="SubViewport/Game/Pausable/GameSequencer" unique_id=450444269]
-
-[node name="TestPattern" type="Node" parent="SubViewport/Game/Pausable/GameSequencer" unique_id=961206150]
-script = ExtResource("11_j7fm5")
-metadata/_custom_type_script = "uid://16mvw7i2q77s"
 
 [node name="Omen" parent="SubViewport/Game/Pausable/GameSequencer" unique_id=1949596727 instance=ExtResource("17_ijhnq")]
 
@@ -2078,7 +1921,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(-0.1830722, 0.36258602)
+position = Vector2(-0.9825048, -0.9365345)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -2090,7 +1933,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(3.412545, -5.4711227)
+position = Vector2(-6.034269, 0.23947541)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")

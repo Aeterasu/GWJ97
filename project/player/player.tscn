@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://cw3vre4x0mjwl" path="res://player/texture/texture_player_option.png" id="4_qjkh3"]
 [ext_resource type="Script" uid="uid://daly1svuqwggy" path="res://player/player_weapon.gd" id="4_yw30f"]
 [ext_resource type="Shader" uid="uid://bx6v6qu8uop7f" path="res://player/player.gdshader" id="5_hg6s5"]
-[ext_resource type="Texture2D" uid="uid://pbvi3x36nsw6" path="res://player/texture/texture_player_muzzle_flash.png" id="7_boad6"]
 [ext_resource type="Shader" uid="uid://dnjynoll1mra0" path="res://player/player_option.gdshader" id="8_2ieo8"]
+[ext_resource type="PackedScene" uid="uid://c3vnjudksfc25" path="res://player/muzzle_flash.tscn" id="8_kb6p2"]
 [ext_resource type="Script" uid="uid://cnksq2oeepu0y" path="res://util/2d/trail_2d.gd" id="8_yllr7"]
 [ext_resource type="PackedScene" uid="uid://35v81h21xsoj" path="res://fx/explosion.tscn" id="11_2ieo8"]
 [ext_resource type="Script" uid="uid://dpcpbpske8jii" path="res://bullet/bullet_engine.gd" id="12_kb6p2"]
@@ -49,9 +49,6 @@ colors = PackedColorArray(1, 1, 1, 1)
 gradient = SubResource("Gradient_8t03j")
 width = 26
 height = 27
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_boad6"]
-blend_mode = 1
 
 [sub_resource type="Curve" id="Curve_3b7yk"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -221,7 +218,7 @@ options = [NodePath("VisibilityOrigin/Option1"), NodePath("VisibilityOrigin/Opti
 options_transition_duration = 0.3
 bullet_engine = NodePath("PlayerBulletEngine")
 sprite = NodePath("VisibilityOrigin/ShipSprite")
-muzzle_flashes = [NodePath("VisibilityOrigin/MuzzleFlash"), NodePath("VisibilityOrigin/Option1/MuzzleFlash"), NodePath("VisibilityOrigin/Option2/MuzzleFlash")]
+muzzle_flashes = [NodePath("VisibilityOrigin/MuzzleFlash"), NodePath("VisibilityOrigin/Option2/MuzzleFlash2"), NodePath("VisibilityOrigin/Option1/MuzzleFlash3")]
 visibilty_origin = NodePath("VisibilityOrigin")
 death_explosion = NodePath("Explosion")
 death_delay = 1.0
@@ -255,10 +252,10 @@ texture = SubResource("GradientTexture2D_2ieo8")
 offset = Vector2(0, 3.5)
 
 [node name="ShotOrigin1" type="Marker2D" parent="VisibilityOrigin" unique_id=1864858623]
-position = Vector2(-5, -32)
+position = Vector2(-5, -21)
 
 [node name="ShotOrigin2" type="Marker2D" parent="VisibilityOrigin" unique_id=1002547425]
-position = Vector2(5, -32)
+position = Vector2(5, -21)
 
 [node name="Option1" type="Sprite2D" parent="VisibilityOrigin" unique_id=703252772]
 material = SubResource("ShaderMaterial_yllr7")
@@ -268,12 +265,6 @@ texture = SubResource("GradientTexture2D_hg6s5")
 [node name="ShotOrigin1" type="Marker2D" parent="VisibilityOrigin/Option1" unique_id=681034560]
 position = Vector2(0, -27)
 
-[node name="MuzzleFlash" type="Sprite2D" parent="VisibilityOrigin/Option1" unique_id=1687499647]
-material = SubResource("CanvasItemMaterial_boad6")
-position = Vector2(0, -11)
-texture = ExtResource("7_boad6")
-offset = Vector2(0, -16)
-
 [node name="Trail2D" type="Line2D" parent="VisibilityOrigin/Option1" unique_id=752564385]
 width = 6.0
 width_curve = SubResource("Curve_3b7yk")
@@ -281,6 +272,9 @@ default_color = Color(0.9843137, 0.654902, 0.3647059, 1)
 script = ExtResource("8_yllr7")
 length = 45
 metadata/_custom_type_script = "uid://cnksq2oeepu0y"
+
+[node name="MuzzleFlash3" parent="VisibilityOrigin/Option1" unique_id=1382477109 instance=ExtResource("8_kb6p2")]
+position = Vector2(0.5, -12)
 
 [node name="Option2" type="Sprite2D" parent="VisibilityOrigin" unique_id=1015326118]
 material = SubResource("ShaderMaterial_yllr7")
@@ -290,12 +284,6 @@ texture = SubResource("GradientTexture2D_hg6s5")
 [node name="ShotOrigin1" type="Marker2D" parent="VisibilityOrigin/Option2" unique_id=1266983150]
 position = Vector2(0, -27)
 
-[node name="MuzzleFlash" type="Sprite2D" parent="VisibilityOrigin/Option2" unique_id=1787583620]
-material = SubResource("CanvasItemMaterial_boad6")
-position = Vector2(0, -11)
-texture = ExtResource("7_boad6")
-offset = Vector2(0, -16)
-
 [node name="Trail2D" type="Line2D" parent="VisibilityOrigin/Option2" unique_id=495003315]
 width = 6.0
 width_curve = SubResource("Curve_3b7yk")
@@ -304,11 +292,11 @@ script = ExtResource("8_yllr7")
 length = 45
 metadata/_custom_type_script = "uid://cnksq2oeepu0y"
 
-[node name="MuzzleFlash" type="Sprite2D" parent="VisibilityOrigin" unique_id=1549284357]
-material = SubResource("CanvasItemMaterial_boad6")
-position = Vector2(0, -20)
-texture = ExtResource("7_boad6")
-offset = Vector2(0, -16)
+[node name="MuzzleFlash2" parent="VisibilityOrigin/Option2" unique_id=1627585457 instance=ExtResource("8_kb6p2")]
+position = Vector2(-0.5, -12)
+
+[node name="MuzzleFlash" parent="VisibilityOrigin" unique_id=1961016811 instance=ExtResource("8_kb6p2")]
+position = Vector2(-0.5, -11)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=128030895]
 z_index = 4096
