@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BulletSkin" format=3 uid="uid://c10qsjs4qmmdv"]
+
+[ext_resource type="Script" uid="uid://cnhr5ggnp7gby" path="res://bullet/bullet_skin.gd" id="1_bdru1"]
+
+[resource]
+script = ExtResource("1_bdru1")
+size = Vector2(18, 66)
+atlas_offset = Vector2(10, 0)
+h_frames = 1
+align_angle = true
+metadata/_custom_type_script = "uid://cnhr5ggnp7gby"

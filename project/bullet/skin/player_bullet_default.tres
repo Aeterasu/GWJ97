@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_b5q0w")
-size = Vector2(10, 41)
+size = Vector2(9, 47)
 h_frames = 1
 align_angle = true
 metadata/_custom_type_script = "uid://cnhr5ggnp7gby"

@@ -10,6 +10,8 @@ var fire_time_left: float = 0.0
 
 @export var shot_speed: float = 0.0
 
+@export var skin: BulletSkin.Type = BulletSkin.Type.PLAYER_BULLET_DEFAULT
+
 var is_firing: bool = false
 
 var bullet_engine: BulletEngine = null
@@ -35,7 +37,7 @@ func fire() -> void:
 		var offset: Vector2 = Vector2(
 			randf_range(-origin_random_offset.x, origin_random_offset.x),
 			randf_range(-origin_random_offset.y, origin_random_offset.y))
-		var bullet = bullet_engine.fire_bullet(origin.global_position + offset, Vector2.UP.angle(), shot_speed, BulletSkin.Type.PLAYER_BULLET_DEFAULT, Bullet.process_standard_bullet, z)
+		var bullet = bullet_engine.fire_bullet(origin.global_position + offset, Vector2.UP.angle(), shot_speed, skin, Bullet.process_standard_bullet, z)
 		bullet.damage = damage
 
 	if z > 100:

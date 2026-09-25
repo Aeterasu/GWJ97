@@ -42,6 +42,8 @@ var timeout_pause: bool = false
 signal on_pattern_init
 signal propagate_pattern_hit
 
+signal on_player_intro_finish
+
 func _ready() -> void:
 	# sanity checking
 	if not Debug.IS_DEBUG:
@@ -58,6 +60,10 @@ func _process(delta: float) -> void:
 func start_game() -> void:
 	if not enabled:
 		return
+
+	animate_player_intro()
+
+	await on_player_intro_finish
 
 	life_spawner.on_life_collected.connect(on_life_collected)
 
@@ -141,14 +147,6 @@ func on_pattern_health_depleted(pattern: Pattern) -> void:
 	enemy_bullet_engine.bullet_cancel()
 
 func on_pattern_death(pattern: Pattern) -> void:
-	#if pattern.is_timeout:
-	#	results.ticker_label.text = ("TOO BAD! // ").repeat(10)
-	#	results.show_timeout_results(scoring)
-
-	#	await results.on_results_confirmed
-
-	#	results.hide_results()
-	#else:
 	await scoring.score_item_manager.await_all_items_cleared()
 
 	results.ticker_label.text = (patterns_flavor[current_idx].pattern_names + " // ").repeat(10)
@@ -187,3 +185,14 @@ func on_pattern_timer_tick() -> void:
 	tween.tween_property(timer_ui, "offset_transform_position", Vector2.ZERO, 0.3)\
 			.set_ease(Tween.EASE_OUT)\
 			.set_trans(Tween.TRANS_BACK)
+
+func animate_player_intro() -> void:
+	player.animation_player.play("intro")
+	player.state = Player.State.CUTSCENE
+
+	player.animation_player.animation_finished.connect(func(anim):
+		if anim == "intro":
+			player.state = Player.State.DEFAULT
+			on_player_intro_finish.emit())
+
+

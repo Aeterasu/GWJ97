@@ -60,6 +60,7 @@
 [ext_resource type="Resource" uid="uid://btwy200jo7pmh" path="res://bullet/skin/enemy_bullet_alt_small.tres" id="44_qafsl"]
 [ext_resource type="Resource" uid="uid://ynts8qfnmw0b" path="res://bullet/skin/enemy_bullet_alt_medium.tres" id="45_k5ync"]
 [ext_resource type="Resource" uid="uid://blwqflhoq2fv3" path="res://bullet/skin/enemy_bullet_alt_long.tres" id="46_yfvcu"]
+[ext_resource type="Resource" uid="uid://c10qsjs4qmmdv" path="res://bullet/skin/player_bullet_alt.tres" id="48_ulhlw"]
 [ext_resource type="Texture2D" uid="uid://c3061256a3yof" path="res://bullet/texture/texture_enemy_muzzle_flash.png" id="49_6w6lo"]
 [ext_resource type="Script" uid="uid://gylipsriuh21" path="res://bullet/bullet_muzzle_flash.gd" id="50_v3i0y"]
 [ext_resource type="Shader" uid="uid://cj4sdfqxylu30" path="res://ui/broken_tv.gdshader" id="51_5vun2"]
@@ -1150,11 +1151,10 @@ texture = ExtResource("7_yfvcu")
 [node name="GameSequencer" type="Node" parent="SubViewport/Game/Pausable" unique_id=1424656608 node_paths=PackedStringArray("player", "boss_warning", "timeout_warning", "animation_player", "patterns", "scoring", "enemy_bullet_engine", "sun_spawner", "life_spawner", "results", "timer_ui")]
 process_mode = 1
 script = ExtResource("2_oryes")
+enabled = true
 player = NodePath("../Player")
-show_boss_warning = false
 boss_warning = NodePath("../../../../Overlay/BossWarning")
 timeout_warning = NodePath("../../../../Overlay/TimeoutWarning")
-starting_pattern = 9
 animation_player = NodePath("AnimationPlayer")
 patterns = [NodePath("Omen"), NodePath("Breakout"), NodePath("Riot"), NodePath("Dogfight"), NodePath("Pilebunker"), NodePath("HighRoller"), NodePath("Naysayer"), NodePath("SnakeEyes"), NodePath("Meltdown"), NodePath("BleedingStar")]
 patterns_health = Array[float]([4000.0, 4200.0, 4400.0, 2000.0, 1500.0, 7200.0, 4000.0, 4200.0, 9000.0, 10500.0])
@@ -1283,7 +1283,8 @@ skins = Dictionary[int, ExtResource("3_07ulu")]({
 200: ExtResource("44_qafsl"),
 201: ExtResource("45_k5ync"),
 202: ExtResource("46_yfvcu"),
-300: ExtResource("8_qiqgi")
+300: ExtResource("8_qiqgi"),
+301: ExtResource("48_ulhlw")
 })
 metadata/_custom_type_script = "uid://cm7708ogl281p"
 
@@ -1336,7 +1337,7 @@ transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -100)
 top_level = true
 
 [node name="EnemyBulletVisual" type="MultiMeshInstance3D" parent="SubViewport/Game/Pausable/EnemyBulletVisuals/SubViewport" unique_id=184972893]
-transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -100)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="SubViewport/Game/Pausable/EnemyBulletVisuals/SubViewport" unique_id=311092198]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1000)
@@ -1959,7 +1960,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D" unique_id=374035742]
 self_modulate = Color(1, 1, 1, 0.44705883)
-position = Vector2(0.6428695, -0.53140455)
+position = Vector2(-0.6010455, -0.66554344)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")
@@ -1971,7 +1972,7 @@ position = Vector2(0, 101)
 
 [node name="Sprite2D" type="Sprite2D" parent="Overlay/BossWarning/Node2D2" unique_id=127437227]
 self_modulate = Color(1, 1, 1, 0.0627451)
-position = Vector2(0.9134648, -2.0620422)
+position = Vector2(-4.2678013, -3.9983454)
 texture = ExtResource("43_wuin1")
 centered = false
 script = ExtResource("53_l8p4d")

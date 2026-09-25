@@ -184,7 +184,7 @@ _data = {
 &"intro": SubResource("Animation_yllr7")
 }
 
-[node name="Player" type="Area2D" unique_id=1584514943 node_paths=PackedStringArray("base_weapon", "focus_weapon", "options", "bullet_engine", "sprite", "muzzle_flashes", "visibilty_origin", "death_explosion", "animation_player", "cutscene_config")]
+[node name="Player" type="Area2D" unique_id=1584514943 node_paths=PackedStringArray("base_weapon", "focus_weapon", "options", "sprite", "muzzle_flashes", "visibilty_origin", "death_explosion", "animation_player", "cutscene_config")]
 y_sort_enabled = true
 position = Vector2(54, 260)
 script = ExtResource("1_rkbax")
@@ -197,7 +197,6 @@ options_base_distance = 54.0
 options_focus_distance = 16.0
 options = [NodePath("VisibilityOrigin/Option1"), NodePath("VisibilityOrigin/Option2")]
 options_transition_duration = 0.3
-bullet_engine = NodePath("")
 sprite = NodePath("VisibilityOrigin/ShipSprite")
 muzzle_flashes = [NodePath("VisibilityOrigin/MuzzleFlash"), NodePath("VisibilityOrigin/Option2/MuzzleFlash2"), NodePath("VisibilityOrigin/Option1/MuzzleFlash3")]
 visibilty_origin = NodePath("VisibilityOrigin")
@@ -209,7 +208,7 @@ cutscene_config = NodePath("CutsceneConfig")
 [node name="BaseWeapon" type="Node2D" parent="." unique_id=1696975318 node_paths=PackedStringArray("shot_origins")]
 script = ExtResource("4_yw30f")
 shot_origins = [NodePath("../VisibilityOrigin/ShotOrigin1"), NodePath("../VisibilityOrigin/ShotOrigin2"), NodePath("../VisibilityOrigin/Option1/ShotOrigin1"), NodePath("../VisibilityOrigin/Option2/ShotOrigin1")]
-origin_random_offset = Vector2(2, 2)
+origin_random_offset = Vector2(5, 6)
 fire_rate = 0.024
 damage = 1.0
 shot_speed = 1000.0
@@ -218,10 +217,10 @@ metadata/_custom_type_script = "uid://daly1svuqwggy"
 [node name="FocusWeapon" type="Node2D" parent="." unique_id=1213521630 node_paths=PackedStringArray("shot_origins")]
 script = ExtResource("4_yw30f")
 shot_origins = [NodePath("../VisibilityOrigin/ShotOrigin1"), NodePath("../VisibilityOrigin/ShotOrigin2"), NodePath("../VisibilityOrigin/Option1/ShotOrigin1"), NodePath("../VisibilityOrigin/Option2/ShotOrigin1")]
-origin_random_offset = Vector2(1, 0)
 fire_rate = 0.024
 damage = 1.5
-shot_speed = 1500.0
+shot_speed = 1200.0
+skin = 301
 metadata/_custom_type_script = "uid://daly1svuqwggy"
 
 [node name="VisibilityOrigin" type="Node2D" parent="." unique_id=1244139579]
@@ -233,10 +232,10 @@ texture = SubResource("GradientTexture2D_2ieo8")
 offset = Vector2(0, 3.5)
 
 [node name="ShotOrigin1" type="Marker2D" parent="VisibilityOrigin" unique_id=1864858623]
-position = Vector2(-5, -26)
+position = Vector2(-5, -34)
 
 [node name="ShotOrigin2" type="Marker2D" parent="VisibilityOrigin" unique_id=1002547425]
-position = Vector2(5, -26)
+position = Vector2(5, -34)
 
 [node name="Option1" type="Sprite2D" parent="VisibilityOrigin" unique_id=703252772]
 material = SubResource("ShaderMaterial_yllr7")
@@ -251,7 +250,7 @@ width = 6.0
 width_curve = SubResource("Curve_3b7yk")
 default_color = Color(0.9843137, 0.654902, 0.3647059, 1)
 script = ExtResource("8_yllr7")
-length = 45
+length = 80
 metadata/_custom_type_script = "uid://cnksq2oeepu0y"
 
 [node name="MuzzleFlash3" parent="VisibilityOrigin/Option1" unique_id=1382477109 instance=ExtResource("8_kb6p2")]
@@ -270,7 +269,7 @@ width = 6.0
 width_curve = SubResource("Curve_3b7yk")
 default_color = Color(0.9843137, 0.654902, 0.3647059, 1)
 script = ExtResource("8_yllr7")
-length = 45
+length = 80
 metadata/_custom_type_script = "uid://cnksq2oeepu0y"
 
 [node name="MuzzleFlash2" parent="VisibilityOrigin/Option2" unique_id=1627585457 instance=ExtResource("8_kb6p2")]

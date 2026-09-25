@@ -13,6 +13,7 @@ enum Type
 	ENEMY_BULLET_ALT_LONG = 202,
 
 	PLAYER_BULLET_DEFAULT = 300,
+	PLAYER_BULLET_ALT = 301,
 }
 
 @export var size: Vector2 = Vector2(16.0, 16.0)
